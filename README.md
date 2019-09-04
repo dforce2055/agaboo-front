@@ -4,66 +4,99 @@
 <em>by DForce2055</em>
 
 ### Prerequisites
-You need to have create-react-app and firebase-tools installed globally.
-#### `npm install -g create-react-app`
-&&
-#### `npm install -g firebase-tools`
+Necesitas tener instalado un entorno **Node.js (node -v^10.15.3)**, **create-react-app (v^3.1.1)**, **yarn (v^1.17.3)**,
+**GIT (^2.17.1)**, y **Firebase CLI (^7.3.0)**<br>
 
-### Step-1
-First, you need to create your React.js app call firebase-deploy using the create-react-app tool
-#### `create-react-app agaboo-front`
+1. [NodeJS](https://www.hostinger.com.ar/tutoriales/instalar-node-js-ubuntu/)
 
-### Step-2
-Once the installation is done, you need to get your app ready to deploy. To do so, Open your project folder and build your app for production.
+2. [Create React APP](https://create-react-app.dev/docs/getting-started)
+    - `npm install -g create-react-app`
+
+3. [yarn](https://yarnpkg.com/es-ES/docs/install#debian-stable)
+    - `apt-get install -yarn`
+
+4. [Firebase CLI](https://firebase.google.com/docs/cli/?hl=es-419)
+    - `npm install -g firebase-tools`
+
+5. [GIT](https://git-scm.com/)
+    - `apt-get install git`
+
+
+### Paso-1
+Bajarse el repositior de Git
+#### `git clone https://github.com/dforce2055/agaboo-frontyarn -v.git`
+
+### Paso-2
+Una vez que la copia del repositorio finalizó, necesitas dejar lista tu aplicación para la implementación <em>(deploy)</em>para lo cual es necesario instalar dependencias y construir el proyecto <em>(build)</em><br>
+Dentro de la carpeta del repositorio recientemente clonado ejecutar:
 #### `cd agaboo-front`
+#### `npm install`
 #### `yarn build`
 
-### Step-3
+
+### Paso-3
+Crearse un proyecto en Firebase
+1. En Firebase console, haz clic en Agregar proyecto y, luego, selecciona o ingresa el Nombre del proyecto.<br>
+Si ya tienes un proyecto de Google Cloud Platform (GCP) existente, puedes seleccionarlo del menú desplegable Nombre del proyecto. De lo contrario, ingresa un nombre de proyecto nuevo.<br>
+
+2. Edita el ID del proyecto (opcional).
+Firebase asignará de manera automática un ID único a tu proyecto de Firebase. Consulta la Información sobre los proyectos de Firebase para obtener detalles sobre cómo usa Firebase el ID del proyecto.
+Una vez que Firebase aprovisione los recursos para tu proyecto, no podrás cambiar su ID. 
+Para usar un identificador específico, debes editar el ID del proyecto durante este paso de la configuración.<br>
+
+3. Sigue los pasos de configuración restantes en Firebase console y, luego, haz clic en Crear proyecto (o Agregar Firebase si usas un proyecto de Google existente).<br>
+
+Firebase aprovisiona los recursos para tu proyecto de forma automática. Cuando finalice, verás la página de descripción general del proyecto en Firebase console.
+![Step-6](https://miro.medium.com/max/1200/1*Rx4-_9d33LDquRCyLOk49w.gif)
+
+
+### Paso-4
 After, you need to install the Firebase command line tool. Because it’s a good practice to frequently update the CLI to the latest version, I suggest you run this command even if you have already installed the CLI.
+Luego, es necesario tener instalada la consola de Firebase, ya ques es una practica mantener siempre actualizadas tus herramientas a la ultima versión, la sugerencia es que corras el siguiente comando siempre que instales la CLI de Firebase.
 #### `yarn global add firebase-tools`
-or witout global
+o sin global
 #### `yarn add firebase-tools` 
 
-### Step-4
-It’s now the time to connect your local computer to your Firebase account. You can login to Firebase using the following command. You will be redirected to a Google authentification web page.
+### Paso-5
+Ahora es momento de conectar tu computadora local a la cuenta de Firebase. Te podes loguear en Firebase utilizando el siguiente comando. Vas a ser redirigido a la pagina de autentificación de Google.
 #### `firebase login`
 
-### Step-5
-Next, it’s time to initialize your website using the command line. Run the following command:
+### Paso-6
+Ahora es momento de inicializar tu sitio web utilizando la linea de comando. Ejecuta el siguiente comando:
 #### `firebase init`
 
-1-Choose Hosting: Configure and deploy Firebase Hosting sites<br>
-2-Choose [create a new project]<br>
-3-Answer the following questions like below:<br>
 
-What do you want to use as your public directory? (public) <b>build</b>
-Configure as a single-page app (rewrite all urls to /index.html)? <b>Yes</b>
-File build/index.html already exists. Overwrite? <b>No</b>
+1. **Selecciona** Hosting: Configure and deploy Firebase Hosting sites<br>
+2. **Selecciona** el Proyecto <em>(previamente creado)</em><br>
+3. **Responde** las siguientes preguntas como se indica a continuación:<br>
+
+What do you want to use as your public directory? (public) **build**
+Configure as a single-page app (rewrite all urls to /index.html)? **Yes**
+File build/index.html already exists. Overwrite? **No**
 
 ![Step-5](https://miro.medium.com/max/1600/1*9h8ykXF0nM2OOjxH6hvPTQ.png)
 
 
-### Step-6
-Now, you will need to create a new project. To do so, go inside your Firebase console (https://console.firebase.google.com/), click on the add project button, give it a name and create your new project.
-![Step-6](https://miro.medium.com/max/1200/1*Rx4-_9d33LDquRCyLOk49w.gif)
-
-
-### Step-7
-After your app is initialized, add your newly created project using the following command and create an alias for the project (here I choose firebase-react-deploy).
+### Paso-7
+Seleccionar el Proyecto previamente creado en Firebase, y brindale un **alias** ejecutando el siguiente comando:
 #### `firebase use --add`
+
 ![Step-7](https://miro.medium.com/max/1138/1*3skC6tTLfXv3mTV40f3M9g.png)
 
-### Step-8
-The last step is to actually deploy the app and let the magic happen!
+### Paso-8
+El último paso es realizar la implementación **(deploy)** de la aplicación, previamente corre de manera automática un **build**
 #### `firebase deploy`
 ![Step-8](https://miro.medium.com/max/1343/1*dmR_ojBzKeEpRBb4YXQp6w.png)
 
 Your web application is now running on the server. You can visit your website using the provided Hosting URL.
+Tu aplicación web ahora esta corriendo en el servidor de Firbase. Podes visitar tu pagina web utilizando la URL del Hosting provista por la **CLI**.
 
-###You made it 
-Congratulation, you are now able to deploy your next awesome apps using Firebase!
+###Lo lograste
+Felicitaciones :+1:, ahora ya sabes como realizar una implementación de tu aplicación en Firebase!
 
 =========================================================================================================================
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
