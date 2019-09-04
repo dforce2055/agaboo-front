@@ -1,4 +1,4 @@
-## AGABOO Script Front End 
+## AGABOO Front End - Web Hosting en Firebase
 ![REACT + Firebase = love](https://miro.medium.com/max/1624/1*CywxT9za2jlqaemf9vjYAQ.png)
 <br>
 <em>by DForce2055</em>
@@ -51,7 +51,7 @@ Firebase aprovisiona los recursos para tu proyecto de forma automática. Cuando 
 
 
 ### Paso-4
-Luego, es necesario tener instalada la consola de Firebase, ya ques es una practica mantener siempre actualizadas tus herramientas a la ultima versión, la sugerencia es que corras el siguiente comando siempre que instales la CLI de Firebase.
+Luego, es necesario tener instalada la consola de Firebase, ya que es es una buena practica mantener siempre actualizadas tus herramientas a la ultima versión, la sugerencia es que corras el siguiente comando para instalar la **CLI de Firebase**:
 #### `yarn global add firebase-tools`
 o sin global
 #### `yarn add firebase-tools` 
@@ -69,9 +69,9 @@ Ahora es momento de inicializar tu sitio web utilizando la linea de comando. Eje
 2. **Selecciona** el Proyecto <em>(previamente creado)</em><br>
 3. **Responde** las siguientes preguntas como se indica a continuación:<br>
 
-What do you want to use as your public directory? (public) **build**
-Configure as a single-page app (rewrite all urls to /index.html)? **Yes**
-File build/index.html already exists. Overwrite? **No**
+What do you want to use as your public directory? (public) **build**<br>
+Configure as a single-page app (rewrite all urls to /index.html)? **Yes**<br>
+File build/index.html already exists. Overwrite? **No**<br>
 
 ![Step-5](https://miro.medium.com/max/1600/1*9h8ykXF0nM2OOjxH6hvPTQ.png)
 
