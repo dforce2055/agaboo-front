@@ -3,7 +3,7 @@
 <br>
 <em>by DForce2055</em>
 
-### Prerequisites
+### Prerequisitos
 Necesitas tener instalado un entorno **Node.js (node -v^10.15.3)**, **create-react-app (v^3.1.1)**, **yarn (v^1.17.3)**,
 **GIT (^2.17.1)**, y **Firebase CLI (^7.3.0)**<br>
 
@@ -24,7 +24,7 @@ Necesitas tener instalado un entorno **Node.js (node -v^10.15.3)**, **create-rea
 
 ### Paso-1
 Bajarse el repositior de Git
-#### `git clone https://github.com/dforce2055/agaboo-frontyarn -v.git`
+#### `git clone https://github.com/dforce2055/agaboo-front.git`
 
 ### Paso-2
 Una vez que la copia del repositorio finalizó, necesitas dejar lista tu aplicación para la implementación <em>(deploy)</em>para lo cual es necesario instalar dependencias y construir el proyecto <em>(build)</em><br>
@@ -47,11 +47,10 @@ Para usar un identificador específico, debes editar el ID del proyecto durante 
 3. Sigue los pasos de configuración restantes en Firebase console y, luego, haz clic en Crear proyecto (o Agregar Firebase si usas un proyecto de Google existente).<br>
 
 Firebase aprovisiona los recursos para tu proyecto de forma automática. Cuando finalice, verás la página de descripción general del proyecto en Firebase console.
-![Step-6](https://miro.medium.com/max/1200/1*Rx4-_9d33LDquRCyLOk49w.gif)
+![Step-3](https://miro.medium.com/max/1200/1*Rx4-_9d33LDquRCyLOk49w.gif)
 
 
 ### Paso-4
-After, you need to install the Firebase command line tool. Because it’s a good practice to frequently update the CLI to the latest version, I suggest you run this command even if you have already installed the CLI.
 Luego, es necesario tener instalada la consola de Firebase, ya ques es una practica mantener siempre actualizadas tus herramientas a la ultima versión, la sugerencia es que corras el siguiente comando siempre que instales la CLI de Firebase.
 #### `yarn global add firebase-tools`
 o sin global
@@ -88,15 +87,14 @@ El último paso es realizar la implementación **(deploy)** de la aplicación, p
 #### `firebase deploy`
 ![Step-8](https://miro.medium.com/max/1343/1*dmR_ojBzKeEpRBb4YXQp6w.png)
 
-Your web application is now running on the server. You can visit your website using the provided Hosting URL.
 Tu aplicación web ahora esta corriendo en el servidor de Firbase. Podes visitar tu pagina web utilizando la URL del Hosting provista por la **CLI**.
 
-###Lo lograste
+### Lo lograste
 Felicitaciones :+1:, ahora ya sabes como realizar una implementación de tu aplicación en Firebase!
 
-=========================================================================================================================
+==============================================================================================
 
-
+<br><br>
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
