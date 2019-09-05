@@ -11,15 +11,24 @@ Necesitas tener instalado un entorno **Node.js (node -v^10.15.3)**, **create-rea
 
 2. [Create React APP](https://create-react-app.dev/docs/getting-started)
     - `npm install -g create-react-app`
-
-3. [yarn](https://yarnpkg.com/es-ES/docs/install#debian-stable)
+        --ADVERTENCIA--
+            - Ubicarse en el directorio donde esten por crear su aplicacion ReactJs.
+            
+3. [yarn](https://yarnpkg.com/es-ES/docs/install#debian-stable) 
     - `apt-get install -yarn`
+        --ADVERTENCIA--
+            --Opcional.
+            -Solo para Linux.          
 
 4. [Firebase CLI](https://firebase.google.com/docs/cli/?hl=es-419)
     - `npm install -g firebase-tools`
+    --ADVERTENCIA--
+            - Todos los comandos de firebase se tendran que ejecutar en la **Intérprete de comandos (CLI) de NodeJs**.
 
 5. [GIT](https://git-scm.com/)
     - `apt-get install git`
+    --ADVERTENCIA--
+        -Solo en Linux.
 
 
 ### Paso-1
@@ -28,10 +37,10 @@ Bajarse el repositior de Git
 
 ### Paso-2
 Una vez que la copia del repositorio finalizó, necesitas dejar lista tu aplicación para la implementación <em>(deploy)</em>para lo cual es necesario instalar dependencias y construir el proyecto <em>(build)</em><br>
-Dentro de la carpeta del repositorio recientemente clonado ejecutar:
+Dentro de la carpeta del repositorio recientemente clonado ejecutar desde la consola de NodeJS o de VSCode:
 #### `cd agaboo-front`
 #### `npm install`
-#### `yarn build`
+#### `npm install build`
 
 
 ### Paso-3
@@ -52,7 +61,10 @@ Firebase aprovisiona los recursos para tu proyecto de forma automática. Cuando 
 
 ### Paso-4
 Luego, es necesario tener instalada la consola de Firebase, ya que es es una buena practica mantener siempre actualizadas tus herramientas a la ultima versión, la sugerencia es que corras el siguiente comando para instalar la **CLI de Firebase**:
-#### `yarn global add firebase-tools`
+
+#### Para Windows: `npm install -g firebase-tools` 
+
+#### Para Linux: `yarn global add firebase-tools` 
 o sin global
 #### `yarn add firebase-tools` 
 
@@ -63,7 +75,6 @@ Ahora es momento de conectar tu computadora local a la cuenta de Firebase. Te po
 ### Paso-6
 Ahora es momento de inicializar tu sitio web utilizando la linea de comando. Ejecuta el siguiente comando:
 #### `firebase init`
-
 
 1. **Selecciona** Hosting: Configure and deploy Firebase Hosting sites<br>
 2. **Selecciona** el Proyecto <em>(previamente creado)</em><br>
@@ -76,18 +87,18 @@ File build/index.html already exists. Overwrite? **No**<br>
 ![Step-5](https://miro.medium.com/max/1600/1*9h8ykXF0nM2OOjxH6hvPTQ.png)
 
 
-### Paso-7
+### Paso-7 OPCIONAL
 Seleccionar el Proyecto previamente creado en Firebase, y brindale un **alias** ejecutando el siguiente comando:
 #### `firebase use --add`
 
 ![Step-7](https://miro.medium.com/max/1138/1*3skC6tTLfXv3mTV40f3M9g.png)
 
 ### Paso-8
-El último paso es realizar la implementación **(deploy)** de la aplicación, previamente corre de manera automática un **build**
+El último paso es realizar la implementación **(deploy)** de la aplicación, previamente correr en la CLI de VSCode **npm run build**, el cual guardara todos los cambios realizados en un archivo .html que podra leer firebase al momento de realizar el deploy.
 #### `firebase deploy`
 ![Step-8](https://miro.medium.com/max/1343/1*dmR_ojBzKeEpRBb4YXQp6w.png)
 
-Tu aplicación web ahora esta corriendo en el servidor de Firbase. Podes visitar tu pagina web utilizando la URL del Hosting provista por la **CLI**.
+Tu aplicación web ahora esta corriendo en el servidor de Firebase. Podes visitar tu pagina web utilizando la URL del Hosting provista por la **CLI**.
 
 ### Lo lograste
 Felicitaciones :+1:, ahora ya sabes como realizar una implementación de tu aplicación en Firebase!
