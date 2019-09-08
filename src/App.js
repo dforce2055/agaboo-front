@@ -1,27 +1,31 @@
-import React from 'react';
+import React, {Component} from 'react';
 import logo from './logo.svg';
+import FormPage from './views/Login';
 import './App.css';
+import { BrowserRouter, Route } from "react-router-dom";
+import MainMenu from "./views/MainMenu";
+import Navbar from "./views/Navigation";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>AGABOO News</h1>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component 
+  {  
+
+  render(){ 
+    
+    return (
+     
+        <BrowserRouter>
+          <React.Fragment>
+            <Route path= "/login" component={FormPage}/>
+            <Route path= "/mainMenu" component={MainMenu}/>
+            <Route path= "/nav" component={Navbar}/>
+
+           
+          </React.Fragment>
+        </BrowserRouter>
+   
+    );  
+}
 }
 
 export default App;
