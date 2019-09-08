@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 .form-elegant .font-small {
@@ -11,3 +12,8 @@
 .form-elegant .btn:hover {
   -webkit-box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15);
   box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15); }
+=======
+.body {
+    background-color: #f1f1f1;
+}
+>>>>>>> 875c936a2a61de21d133bd9a5337ff33d48595fa
