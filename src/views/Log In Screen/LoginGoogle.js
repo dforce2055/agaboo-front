@@ -2,7 +2,7 @@ import React from 'react';
 import withFirebaseAuth from 'react-with-firebase-auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import firebaseConfig from '../firebase';
+import firebaseConfig from '../../firebase';
 import Button from '@material-ui/core/Button';
 import GoogleLogin from 'react-google-login';
 
