@@ -5,6 +5,11 @@ import './App.css';
 import { BrowserRouter, Route } from "react-router-dom";
 import MainMenu from "./views/MainMenu";
 import Navbar from "./views/Navigation";
+import * as serviceWorker from './serviceWorker';
+import SignIn from './views/Login';
+
+
+
 
 
 class App extends Component 
@@ -16,6 +21,7 @@ class App extends Component
      
         <BrowserRouter>
           <React.Fragment>
+            <Route path="/SignIn" component={SignIn}/>
             <Route path= "/login" component={FormPage}/>
             <Route path= "/mainMenu" component={MainMenu}/>
             <Route path= "/nav" component={Navbar}/>
@@ -29,3 +35,5 @@ class App extends Component
 }
 
 export default App;
+
+serviceWorker.unregister();
