@@ -15,8 +15,14 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import FaceIcon from '@material-ui/icons/Face';
+import StoreIcon from '@material-ui/icons/Store';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
+import LocalAtmIcon from '@material-ui/icons/LocalAtm';
+import BuildIcon from '@material-ui/icons/Build';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -76,7 +82,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Navbar() {
+export default function NavBar() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -90,14 +96,14 @@ export default function Navbar() {
   }
 
   return (
-    <div className={classes.root} >
+    <div className={classes.root}>
       <CssBaseline />
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
-        >
+      >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -129,14 +135,35 @@ export default function Navbar() {
         </div>
         <Divider />
         <List>
-          {['Usuarios', 'Clientes', 'Pedidos', 'Servicios','Estado Cuenta'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button key={'Usuarios'}>
+            <ListItemIcon> <AccountCircleIcon/> </ListItemIcon>
+            <ListItemText primary={'Usuarios'}/>
+          </ListItem>
+          <ListItem button key={'Clientes'}>
+            <ListItemIcon> <FaceIcon/> </ListItemIcon>
+            <ListItemText primary={'Clientes'}/>
+          </ListItem>
+          <ListItem button key={'Productos'}>
+            <ListItemIcon> <StoreIcon/> </ListItemIcon>
+            <ListItemText primary={'Productos'}/>
+          </ListItem>
+          <ListItem button key={'Stock'}>
+            <ListItemIcon> <AssignmentIcon/> </ListItemIcon>
+            <ListItemText primary={'Stock'}/>
+          </ListItem>
+          <ListItem button key={'Pedidos'}>
+            <ListItemIcon> <LocalShippingIcon/> </ListItemIcon>
+            <ListItemText primary={'Pedidos'}/>
+          </ListItem>
+          <ListItem button key={'Estado de Cuenta'}>
+            <ListItemIcon> <LocalAtmIcon/> </ListItemIcon>
+            <ListItemText primary={'Estado de Cuenta'}/>
+          </ListItem>
+          <ListItem button key={'Mantenimientos a Realizar'}>
+            <ListItemIcon> <BuildIcon/> </ListItemIcon>
+            <ListItemText primary={'Mantenimientos a Realizar'}/>
+          </ListItem>
         </List>
-       
        
       </Drawer>
       <main
@@ -145,10 +172,6 @@ export default function Navbar() {
         })}
       >
         <div className={classes.drawerHeader} />
-        <Typography paragraph>
-            
-        </Typography>
-        
       </main>
     </div>
   );

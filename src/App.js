@@ -19,9 +19,9 @@ class App extends Component
      
         <BrowserRouter>
           <React.Fragment>
-            <Route exact path="/" component={SignIn}/>
-            <Route path= "/mainMenu" component={MainMenu}/>
-            <Route path= "/nav" component={Navbar}/>
+            <Route path="/" component={SignIn} exact/>
+            <Route path= "/mainMenu" component={MainMenu} />
+            <Route path= "/nav" component={Navbar} />
 
            
           </React.Fragment>

@@ -4,7 +4,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 //import FormControlLabel from '@material-ui/core/FormControlLabel';
 //import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -15,13 +14,14 @@ import LoginGoogle from './LoginGoogle';
 import FormDialog from './DialogMissPass';
 import argenbath from './logo-argenbath.png';
 import './Login.css';
+import { Link } from "react-router-dom";
 
 
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © Agaboo '}
+      {'Copyright © AGABOO '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -91,15 +91,17 @@ export default function SignIn() {
             control={<Checkbox value="remember" color="primary" />}
             label="Recuérdame"
           /> */}
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Ingresar
-          </Button>
+          <Link to='/mainMenu'>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Ingresar
+            </Button>
+          </Link>
         </form>
         {/* <GoogleLogin
             clientId="817185700205-tupiffo62ieibvp5hbv1d7hhn3h32gi2.apps.googleusercontent.com"
