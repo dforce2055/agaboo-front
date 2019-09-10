@@ -19,7 +19,7 @@ class App extends Component
      
         <BrowserRouter>
           <React.Fragment>
-            <Route path="/SignIn" component={SignIn}/>
+            <Route exact path="/" component={SignIn}/>
             <Route path= "/mainMenu" component={MainMenu}/>
             <Route path= "/nav" component={Navbar}/>
 
