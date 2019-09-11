@@ -19,8 +19,8 @@ class MainMenu extends Component
         return(
             <div>
                  <Navbar/>
-                <div  className = {"ButtonLeftt"}><ButtonClient /></div>
-                <div  className = {"ButtonRight"}><ButtonProduct/></div>
+                <div  className = {"Button"}><ButtonClient /></div>
+                <div  className = {"Button"}><ButtonProduct/></div>
                  <div  className = {"Button"}><ButtonStock/></div>
                  <div  className = {"Button"}><ButtonOrder/></div>
                  <div  className = {"Button"}><ButtonSimple nombre = {'Estado de cuenta'/*Utilizo los props para reutilizar el boton simple*/}/></div>
