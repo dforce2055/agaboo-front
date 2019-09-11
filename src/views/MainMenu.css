@@ -1,5 +1,33 @@
 .Button {
    
     /* IMPORTANTE */
+    
+    padding:3px;
     text-align: center;
+    margin: 30px;
+  
+  }
+
+  
+  
+  
+  
+  
+  .DobleButton {  /*Intento de poner dos botones en la misma linea falta investigar*/
+    width:500px; padding:3px;
+
+  }
+
+  .ButtonLeft {
+    width:245px;
+    float:left;
+    text-align: center;
+    margin: 30px;
+  }
+
+  .ButtonRight{
+    width:245px;
+    float: right;
+    text-align: center;
+    margin: 30px;
   }

@@ -5,9 +5,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import FaceIcon from '@material-ui/icons/Face';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import CreateIcon from '@material-ui/icons/Create';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import DoneOtulineIcon from '@material-ui/icons/DoneOutline';
 
 
 
@@ -62,7 +61,7 @@ export default function CustomizedMenus() {
         color="primary"
         onClick={handleClick}
       >
-        Clientes
+        Stock
       </Button>
       <StyledMenu
         id="customized-menu"
@@ -73,22 +72,17 @@ export default function CustomizedMenus() {
       >
         <StyledMenuItem>
           <ListItemIcon>
-          <FaceIcon/> 
+          <DoneOtulineIcon/> 
           </ListItemIcon>
-          <ListItemText primary="Crear" />
+          <ListItemText primary="Disponibles" />
         </StyledMenuItem>   
         <StyledMenuItem>
           <ListItemIcon>
-            <CreateIcon />
+            <RemoveCircleIcon />
           </ListItemIcon>
-          <ListItemText primary="Modificar" />
+          <ListItemText primary="Alquilados" />
         </StyledMenuItem>
-        <StyledMenuItem>
-          <ListItemIcon>
-            <DeleteOutlineIcon />
-          </ListItemIcon>
-          <ListItemText primary="Eliminar" />
-        </StyledMenuItem>
+        
       </StyledMenu>
     </div>
   );

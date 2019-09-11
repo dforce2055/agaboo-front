@@ -5,9 +5,9 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import FaceIcon from '@material-ui/icons/Face';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import CreateIcon from '@material-ui/icons/Create';
+import ArchiveIcon from '@material-ui/icons/Archive';
+import DoneOtulineIcon from '@material-ui/icons/DoneOutline';
 
 
 
@@ -62,7 +62,7 @@ export default function CustomizedMenus() {
         color="primary"
         onClick={handleClick}
       >
-        Clientes
+        Pedidos
       </Button>
       <StyledMenu
         id="customized-menu"
@@ -73,21 +73,21 @@ export default function CustomizedMenus() {
       >
         <StyledMenuItem>
           <ListItemIcon>
-          <FaceIcon/> 
+          <ArchiveIcon/> 
           </ListItemIcon>
-          <ListItemText primary="Crear" />
+          <ListItemText primary="Registrar" />
         </StyledMenuItem>   
-        <StyledMenuItem>
-          <ListItemIcon>
-            <CreateIcon />
-          </ListItemIcon>
-          <ListItemText primary="Modificar" />
-        </StyledMenuItem>
         <StyledMenuItem>
           <ListItemIcon>
             <DeleteOutlineIcon />
           </ListItemIcon>
           <ListItemText primary="Eliminar" />
+        </StyledMenuItem>
+        <StyledMenuItem>
+          <ListItemIcon>
+            < DoneOtulineIcon/>
+          </ListItemIcon>
+          <ListItemText primary="Listos" />
         </StyledMenuItem>
       </StyledMenu>
     </div>
