@@ -5,7 +5,7 @@ import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
+import List from '@material-ui/core/List'; //https://material-ui.com/es/api/list/ --> Permite listar componentes
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,10 +15,18 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-
+//Para la utilizacion del boton desplegable
+import ExpandLess from '@material-ui/icons/ExpandLess'; //Icono de flecha expandida
+import ExpandMore from '@material-ui/icons/ExpandMore'; //Icono de flecha
+import Collapse from '@material-ui/core/Collapse'; //https://material-ui.com/components/transitions/ --> Componente que permite desplegar
+//ICONOS DE BOTONES
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import ContactsIcon from '@material-ui/icons/Contacts';
+import PeopleIcon from '@material-ui/icons/People';
+import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 const drawerWidth = 240;
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -74,12 +82,24 @@ const useStyles = makeStyles(theme => ({
     }),
     marginLeft: 0,
   },
+  nested: { //CLASE CSS DE BOTON DESPLEGADO
+    paddingLeft: theme.spacing(4),
+  },
 }));
 
 export default function Navbar() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+
+  const [visible, setVisible] = React.useState(true);
+  /*Hook que permite en clases Function utilizar 
+    state y cambiar su estado. Es decir el visible es el estado y 
+    el setVisible es sinonimo de this.setState*/
+
+  function handleClick() { 
+    setVisible(!visible);
+  }
 
   function handleDrawerOpen() {
     setOpen(true);
@@ -128,15 +148,56 @@ export default function Navbar() {
           </IconButton>
         </div>
         <Divider />
+
         <List>
-          {['Usuarios', 'Clientes', 'Pedidos', 'Servicios','Estado Cuenta'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+        
+        <ListItem button onClick={handleClick}> {/*Sub boton en forma de List*/}
+          <ListItemIcon> {/*Se utiliza para encerrar el icono que contrenda al lado el boton -->>ABRIENDO*/}          
+              <PeopleIcon /> {/*IMAGEN DEL BOTON*/}
+          </ListItemIcon> {/*Se utiliza para encerrar el icono que contrenda al lado el boton -->>CERRANDO*/}
+        <ListItemText primary="Clientes" />  {/*Nombre del boton*/}
+        {visible ? <ExpandLess /> : <ExpandMore />} {/*Si el valor visible es verdadero toma el icono ExpandLess. En cambio si el valor es false toma el icono ExpandMore*/}      
+      </ListItem> 
+{/*Collapse permite generar desplegables. Para mas informacion leer URL ubicada en import*/}
+      <Collapse in={visible} timeout="auto" unmountOnExit> 
+        <List component="div" disablePadding> {/*disablePadding-->Si true, el relleno vertical se eliminará de la lista.*/}
+          <ListItem button className={classes.nested}> {/*nested es el CSS que permite que este un poco mas a la izquierda que el boton de padre.*/}
+            <ListItemIcon>
+              <GroupAddIcon />
+            </ListItemIcon>
+            <ListItemText primary="Crear Cliente" />
+          </ListItem>
         </List>
-       
+
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+            <ListItemIcon>
+              <AssignmentIndIcon />
+            </ListItemIcon>
+            <ListItemText primary="Modificar Cliente" />
+          </ListItem>
+        </List>
+
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+            <ListItemIcon>
+              <PersonAddDisabledIcon />
+            </ListItemIcon>
+            <ListItemText primary="Eliminar Cliente" />
+          </ListItem>
+        </List>
+        
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+            <ListItemIcon>
+              <ContactsIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Listar Clientes" />
+          </ListItem>
+        </List>
+      </Collapse>
+
+        </List>       
        
       </Drawer>
       <main
