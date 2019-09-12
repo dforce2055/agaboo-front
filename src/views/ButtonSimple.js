@@ -2,7 +2,6 @@ import React  from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 
 
 
@@ -32,7 +31,7 @@ export default function CustomizedMenus(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   function handleClick(event) {
-    setAnchorEl(event.currentTarget);
+   
   }
 
   function handleClose() {
