@@ -23,12 +23,12 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { Link } from "react-router-dom";
 import './UsersTable.css';
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
+function createData(name, calories, fat, carbs, protein, CUIT, obraSocial) {
+  return { name, calories, fat, carbs, protein, CUIT, obraSocial};
 }
 
 const rows = [
-  createData('Leandro', 'Romagnoli', 'pipid10s@gmail.com', 22315675423, 32647546),
+  createData('Leandro', 'Romagnoli', 'pipid10s@gmail.com', 22315675423, 32647546, 215215, 'OSECAC'),
   createData('Donut', 452, 25.0, 51, 4.9),
   createData('Eclair', 262, 16.0, 24, 6.0),
   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
@@ -73,6 +73,8 @@ const headCells = [
   { id: 'Email', numeric: true, disablePadding: false, label: 'Email' },
   { id: 'Telefono', numeric: true, disablePadding: false, label: 'Telefono' },
   { id: 'DNI', numeric: true, disablePadding: false, label: 'DNI' },
+  { id: 'CUIT', numeric: true, disablePadding: false, label: 'CUIT' },
+  { id: 'Obra Social', numeric: true, disablePadding: false, label: 'Obra Social' },
 ];
 
 function EnhancedTableHead(props) {
@@ -104,6 +106,7 @@ function EnhancedTableHead(props) {
               direction={order}
               onClick={createSortHandler(headCell.id)}
             >
+              {console.log(headCell.label)}
               {headCell.label}
               {orderBy === headCell.id ? (
                 <span className={classes.visuallyHidden}>
@@ -186,8 +189,8 @@ const EnhancedTableToolbar = props => {
           </Tooltip>
         ) : (
           <Tooltip title="Filter list">
-            <IconButton aria-label="filter list">
-              <FilterListIcon />
+            <IconButton>
+              
             </IconButton>
           </Tooltip>
         )}
@@ -338,6 +341,8 @@ export default function EnhancedTable() {
                       <TableCell align="right">{row.fat}</TableCell>
                       <TableCell align="right">{row.carbs}</TableCell>
                       <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">{row.CUIT}</TableCell>
+                      <TableCell align="right">{row.obraSocial}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -356,19 +361,16 @@ export default function EnhancedTable() {
           rowsPerPage={rowsPerPage}
           page={page}
           backIconButtonProps={{
-            'aria-label': 'previous page',
+            'aria-label': 'Pagina Anterior',
           }}
           nextIconButtonProps={{
-            'aria-label': 'next page',
+            'aria-label': 'Siguiente Pagina',
           }}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
+      
     </div>
   );
 }
