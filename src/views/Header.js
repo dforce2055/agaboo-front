@@ -25,8 +25,6 @@ import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import ContactsIcon from '@material-ui/icons/Contacts';
 import PeopleIcon from '@material-ui/icons/People';
 import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
-import ButtonSearch from './ListUsers/buttonSearch';
-import EnhancedTable from './ListUsers/UsersTable2'; 
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 const drawerWidth = 240;
 
@@ -236,11 +234,8 @@ export default function Navbar() {
         })}
       >
         <div className={classes.drawerHeader} />        
+        {/*ACA METO TODOS LOS COMPONENTES*/}
 
-         <ButtonSearch styles={{position:'rigth'}} /> {/*Importo el componente Boton de busqueda.*/}
-          <EnhancedTable/> {/*Importo la tabla donde se encontraran la List*/}
-        
-        
       </main>
     </div>
     </MuiThemeProvider>

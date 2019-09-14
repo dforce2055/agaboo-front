@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { lighten, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -15,8 +15,6 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { black } from 'material-ui/styles/colors';
@@ -176,47 +174,19 @@ const EnhancedTableToolbar = props => {
         
       </div>
       <div className={classes.spacer} />
-     
-        {/*numSelected > 0 ? (
+
           <Tooltip title="Editar/Borrar">
             <IconButton aria-label="delete">
               <EditIcon/>
               <DeleteIcon className={"DeleteButton"}/>
             </IconButton>
           </Tooltip>
-        ) : (
-          <Tooltip title="Filter list">
-            <IconButton>
-              
-            </IconButton>
-          </Tooltip>
-        )*/}
-{numSelected > 0 ? (
-          <Tooltip title="Editar/Borrar">
-            <IconButton aria-label="delete">
-              <EditIcon/>
-              <DeleteIcon className={"DeleteButton"}/>
-            </IconButton>
-          </Tooltip>
-        ) : (
+
           <Tooltip title="Filter list">
             <IconButton>
 
             </IconButton>
           </Tooltip>
-        )}
-        {/*<Tooltip button title="Editar">
-            <IconButton aria-label="filter list">
-              <EditIcon/>
-            </IconButton>
-          </Tooltip>
-
-        <Tooltip button title="Borrar">
-            <IconButton aria-label="delete">
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>  */}
-     
     </Toolbar>
   );
 };
@@ -258,7 +228,7 @@ export default function EnhancedTable() {
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
+  const [dense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   function handleRequestSort(event, property) {
@@ -303,10 +273,6 @@ export default function EnhancedTable() {
   function handleChangeRowsPerPage(event) {
     setRowsPerPage(+event.target.value);
     setPage(0);
-  }
-
-  function handleChangeDense(event) {
-    setDense(event.target.checked);
   }
 
   const isSelected = name => selected.indexOf(name) !== -1;

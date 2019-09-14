@@ -49,11 +49,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const responseGoogle = (response) => {  //funcion que corresponde con el LoginGoogle que esta bueno
-    console.log(response);
-}
-
-
 export default function SignIn() {
   const classes = useStyles();
 
@@ -61,6 +56,7 @@ export default function SignIn() {
     <Container component="main" maxWidth="sm">
       <CssBaseline />
       <div className={classes.paper}>
+      {/* eslint-disable-next-line*/}
         <img src = {argenbath} className={"Logo"}/>           {/* logo solo para probar tamaños */}
         {/* <Typography component="h1" variant="h5" >
           Inicio de Sesión

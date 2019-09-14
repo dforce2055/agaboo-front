@@ -1,13 +1,14 @@
+//Dependencias
 import React, {Component} from 'react';
-//import Navbar from './Navigation';
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+
+//Componentes
 import ButtonClient from './ButtonClient';
 import ButtonProduct from './ButtonProduct';
 import ButtonStock from './ButtonStock';
 import ButtonOrder from './ButtonOrder';
-import Navbar from './BM-UsersScreen/AppBarAlt';
-import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import './MainMenu.css';
-//import Navbar from './Navigation';
+import NavBar from './Header';
 import ButtonSimple from './ButtonSimple';
 
 
@@ -39,7 +40,7 @@ class MainMenu extends Component
         return(
             <div>
                 <MuiThemeProvider theme={theme}>
-                <Navbar/>
+                <NavBar/>
                 
                 <div  className = {"Button"}><ButtonClient/></div>
                 <div  className = {"Button"}><ButtonProduct/></div>
