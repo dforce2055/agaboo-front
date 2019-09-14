@@ -7,7 +7,7 @@ export default function ButtonSearch() {
   
   return (
     <div align="right">  
-     <Input type="text" placeholder="Buscar" />  
+     <Input type="text" className='boton' hover='#42cfd6' placeholder="Buscar" />  
     </div>
   );
 }

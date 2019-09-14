@@ -175,18 +175,20 @@ const EnhancedTableToolbar = props => {
       </div>
       <div className={classes.spacer} />
 
+          <Tooltip title="Filter list">
+            <IconButton>
+            <EditIcon/>
+            </IconButton>
+          </Tooltip>
+          
           <Tooltip title="Editar/Borrar">
             <IconButton aria-label="delete">
-              <EditIcon/>
+              
               <DeleteIcon className={"DeleteButton"}/>
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="Filter list">
-            <IconButton>
-
-            </IconButton>
-          </Tooltip>
+          
     </Toolbar>
   );
 };

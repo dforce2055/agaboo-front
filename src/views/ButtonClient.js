@@ -73,13 +73,16 @@ export default function CustomizedMenus() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
+      <Link to='/registrarCliente'>
         <StyledMenuItem>
           <ListItemIcon>
           <FaceIcon/> 
           </ListItemIcon>
           <ListItemText primary="Crear" />
         </StyledMenuItem> 
-        <Link to='/bmUsers'>                  {/* Linkeo a pantalla de baja/modificacion de clientes */}
+      </Link>
+
+        <Link to='/registrarCliente'>                  {/* Linkeo a pantalla de baja/modificacion de clientes */}
         <StyledMenuItem>
           <ListItemIcon>
             <CreateIcon />

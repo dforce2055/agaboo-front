@@ -27,9 +27,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
-import ButtonSearch from './Delete-Update-List/buttonSearch';
-import EnhancedTable from './Delete-Update-List/UsersTable2'; 
-
+import Form from './createClient';
 const drawerWidth = 240;
 
 
@@ -239,9 +237,7 @@ export default function Navbar() {
       >
         <div className={classes.drawerHeader} />        
 
-         <ButtonSearch styles={{position:'rigth'}} /> {/*Importo el componente Boton de busqueda.*/}
-          <EnhancedTable/> {/*Importo la tabla donde se encontraran la List*/}
-        
+         <Form/> {/*Importo el componente Boton de busqueda.*/}       
         
       </main>
     </div>
