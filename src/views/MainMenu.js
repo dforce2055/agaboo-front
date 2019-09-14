@@ -4,8 +4,6 @@ import ButtonClient from './ButtonClient';
 import ButtonProduct from './ButtonProduct';
 import ButtonStock from './ButtonStock';
 import ButtonOrder from './ButtonOrder';
-import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-import './MainMenu.css';
 import Navbar from './BM-UsersScreen/AppBarAlt';
 import ButtonSimple from './ButtonSimple';
 

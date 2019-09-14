@@ -25,6 +25,8 @@ import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import ContactsIcon from '@material-ui/icons/Contacts';
 import PeopleIcon from '@material-ui/icons/People';
 import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
+import ButtonSearch from './ListUsers/buttonSearch';
+import EnhancedTable from './ListUsers/UsersTable2'; 
 const drawerWidth = 240;
 
 
@@ -144,7 +146,8 @@ export default function Navbar() {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : 
+            <ChevronRightIcon />}
           </IconButton>
         </div>
         <Divider />
@@ -200,14 +203,17 @@ export default function Navbar() {
         </List>       
        
       </Drawer>
-      <main
+      <main /*Esta clase, permite que cada vez que abramos el componente Drawers, los componentes que esten dentro de main, se correran al costado. */
         className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}
       >
         <div className={classes.drawerHeader} />
         <Typography paragraph>
-            
+
+         <ButtonSearch/> {/*Importo el componente Boton de busqueda.*/}
+          <EnhancedTable/> {/*Importo la tabla donde se encontraran la List*/}
+
         </Typography>
         
       </main>

@@ -1,0 +1,14 @@
+/*CSS de la clase buttonSearch.*/
+input[type="text"] {
+  border: 2px solid #aaa;
+  border-radius: 5px;
+  padding: 17px;
+  transition: 0.3s;
+  background: #fff;
+  padding-right: 100px;      
+}
+
+input[type="text"]:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 8px 0 dodgerBlue;
+}

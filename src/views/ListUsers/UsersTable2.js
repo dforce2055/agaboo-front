@@ -19,9 +19,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import { Link } from "react-router-dom";
-import './UsersTable.css';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -41,6 +38,7 @@ const rows = [
   createData('Marshmallow', 318, 0, 81, 2.0),
   createData('Nougat', 360, 19.0, 9, 37.0),
   createData('Oreo', 437, 18.0, 63, 4.0),
+  
 ];
 
 function desc(a, b, orderBy) {
@@ -176,8 +174,8 @@ const EnhancedTableToolbar = props => {
         )}
       </div>
       <div className={classes.spacer} />
-      <div className={classes.actions}>
-        {numSelected > 0 ? (
+     
+        {/*numSelected > 0 ? (
           <Tooltip title="Editar/Borrar">
             <IconButton aria-label="delete">
               <EditIcon/>
@@ -190,8 +188,20 @@ const EnhancedTableToolbar = props => {
               <FilterListIcon />
             </IconButton>
           </Tooltip>
-        )}
-      </div>
+        )*/}
+
+        <Tooltip button title="Borrar">
+            <IconButton aria-label="delete">
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip button title="Editar">
+            <IconButton aria-label="filter list">
+              <EditIcon/>
+            </IconButton>
+          </Tooltip>
+     
     </Toolbar>
   );
 };
@@ -227,7 +237,6 @@ const useStyles = makeStyles(theme => ({
     width: 1,
   },
 }));
-
 export default function EnhancedTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
@@ -351,6 +360,9 @@ export default function EnhancedTable() {
         </div>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
+          labelRowsPerPage='' // Saco la palabra "ROWS PER PAGE". Se puede agregar cualquier grase entre ' ' .
+          labelDisplayedRows={({ from, to, count }) => `Mostrando las páginas ${from}-${to} del total de ${count} páginas
+`} //MODIFICO EL OF
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
