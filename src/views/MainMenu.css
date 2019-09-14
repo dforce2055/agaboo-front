@@ -1,9 +1,5 @@
 .Button {
-   
-    /* IMPORTANTE */
-    width:500px; 
-    padding:3px;
     text-align: center;
-    margin: 30px;
-    
+    margin-bottom: 30px;
   }
+

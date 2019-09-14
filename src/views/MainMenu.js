@@ -5,10 +5,26 @@ import ButtonProduct from './ButtonProduct';
 import ButtonStock from './ButtonStock';
 import ButtonOrder from './ButtonOrder';
 import Navbar from './BM-UsersScreen/AppBarAlt';
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import './MainMenu.css';
+//import Navbar from './Navigation';
 import ButtonSimple from './ButtonSimple';
 
 
-
+const theme = createMuiTheme({ /* Plantilla de edicion */
+    overrides: { 
+      MuiAppBar: {
+        colorPrimary: {
+          backgroundColor: '#3fb5a5',
+        }
+      },
+      MuiButton: {
+        containedPrimary: {
+          backgroundColor: '#3fb5a5',
+          },
+      },
+    }
+  })
 
 class MainMenu extends Component
 {
@@ -16,13 +32,16 @@ class MainMenu extends Component
     {
         return(
             <div>
-                 <Navbar/>
-                <div  className = {"Button"}><ButtonClient /></div>
+                <MuiThemeProvider theme={theme}>
+                <Navbar/>
+                
+                <div  className = {"Button"}><ButtonClient/></div>
                 <div  className = {"Button"}><ButtonProduct/></div>
-                 <div  className = {"Button"}><ButtonStock/></div>
-                 <div  className = {"Button"}><ButtonOrder/></div>
-                 <div  className = {"Button"}><ButtonSimple nombre = {'Estado de cuenta'/*Utilizo los props para reutilizar el boton simple*/}/></div>
-                 <div  className = {"Button"}><ButtonSimple nombre = {'Mantenimientos a realizar'}/></div>
+                <div  className = {"Button"}><ButtonStock/></div>
+                <div  className = {"Button"}><ButtonOrder/></div>
+                <div  className = {"Button"}><ButtonSimple nombre = {'Estado de cuenta'/*Utilizo los props para reutilizar el boton simple*/}/></div>
+                <div  className = {"Button"}><ButtonSimple nombre = {'Mantenimientos a realizar'}/></div>
+                </MuiThemeProvider>
             </div>
            
             
