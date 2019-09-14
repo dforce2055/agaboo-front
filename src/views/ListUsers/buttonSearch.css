@@ -5,10 +5,11 @@ input[type="text"] {
   padding: 17px;
   transition: 0.3s;
   background: #fff;
-  padding-right: 100px;      
+  padding-right: 100px;     
+
 }
 
 input[type="text"]:focus {
-  border-color: dodgerBlue;
-  box-shadow: 0 0 8px 0 dodgerBlue;
+  border-color: #42cfd6;
+  box-shadow: 0 0 8px 0 #42cfd6;
 }

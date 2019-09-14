@@ -27,6 +27,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 import ButtonSearch from './ListUsers/buttonSearch';
 import EnhancedTable from './ListUsers/UsersTable2'; 
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 const drawerWidth = 240;
 
 
@@ -89,6 +90,30 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const theme2 = createMuiTheme({ /* Plantilla de edicion */
+  overrides: { 
+    MuiAppBar: {
+      colorPrimary: {
+        backgroundColor: '#3fb5a5',
+      }
+    },
+    MuiButton: {
+      containedPrimary: {
+        backgroundColor: '#3fb5a5',
+        }
+    },
+    MuiCheckbox:{
+      colorSecondary: {
+        color: '#42cfd6',
+        '&$checked': {
+          color: '#42cfd6',
+        },
+      }
+    },
+    
+}
+});
+
 export default function Navbar() {
   const classes = useStyles();
   const theme = useTheme();
@@ -111,7 +136,9 @@ export default function Navbar() {
     setOpen(false);
   }
 
+  
   return (
+    <MuiThemeProvider theme={theme2}>
     <div className={classes.root} >
       <CssBaseline />
       <AppBar
@@ -208,15 +235,14 @@ export default function Navbar() {
           [classes.contentShift]: open,
         })}
       >
-        <div className={classes.drawerHeader} />
-        <Typography paragraph>
+        <div className={classes.drawerHeader} />        
 
-         <ButtonSearch/> {/*Importo el componente Boton de busqueda.*/}
+         <ButtonSearch styles={{position:'rigth'}} /> {/*Importo el componente Boton de busqueda.*/}
           <EnhancedTable/> {/*Importo la tabla donde se encontraran la List*/}
-
-        </Typography>
+        
         
       </main>
     </div>
+    </MuiThemeProvider>
   );
 }

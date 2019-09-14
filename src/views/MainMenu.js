@@ -21,10 +21,16 @@ const theme = createMuiTheme({ /* Plantilla de edicion */
       MuiButton: {
         containedPrimary: {
           backgroundColor: '#3fb5a5',
+          '&:hover': {
+            backgroundColor: '#0ce8ca',
+            "@media (hover: none)": {
+              backgroundColor: "#0ce8ca"
+            },
           },
-      },
+        },
+    },
     }
-  })
+  });
 
 class MainMenu extends Component
 {

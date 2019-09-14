@@ -19,13 +19,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
+import { black } from 'material-ui/styles/colors';
+function createData(name, calories, fat, carbs, protein, CUIT, obraSocial) {
+  return { name, calories, fat, carbs, protein, CUIT, obraSocial};
 }
 
 const rows = [
-  createData('Leandro', 'Romagnoli', 'pipid10s@gmail.com', 22315675423, 32647546),
+  createData('Leandro', 'Romagnoli', 'pipid10s@gmail.com', 22315675423, 32647546, 215215, 'OSECAC'),
   createData('Donut', 452, 25.0, 51, 4.9),
   createData('Eclair', 262, 16.0, 24, 6.0),
   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
@@ -71,6 +71,8 @@ const headCells = [
   { id: 'Email', numeric: true, disablePadding: false, label: 'Email' },
   { id: 'Telefono', numeric: true, disablePadding: false, label: 'Telefono' },
   { id: 'DNI', numeric: true, disablePadding: false, label: 'DNI' },
+  { id: 'CUIT', numeric: true, disablePadding: false, label: 'CUIT' },
+  { id: 'Obra Social', numeric: true, disablePadding: false, label: 'Obra Social' },
 ];
 
 function EnhancedTableHead(props) {
@@ -134,8 +136,8 @@ const useToolbarStyles = makeStyles(theme => ({
   highlight:
     theme.palette.type === 'light'
       ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+          color: black,
+          backgroundColor: '#42cfd66b',
         }
       : {
           color: theme.palette.text.primary,
@@ -151,27 +153,27 @@ const useToolbarStyles = makeStyles(theme => ({
     flex: '0 0 auto',
   },
 }));
-
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
 
   return (
+    
     <Toolbar
       className={clsx(classes.root, {
         [classes.highlight]: numSelected > 0,
       })}
     >
       <div className={classes.title}>
-        {numSelected > 0 ? (
+        
           <Typography color="inherit" variant="subtitle1">
             {numSelected} seleccionado
           </Typography>
-        ) : (
+       
           <Typography variant="h6" id="tableTitle">
             Usuarios
           </Typography>
-        )}
+        
       </div>
       <div className={classes.spacer} />
      
@@ -184,23 +186,36 @@ const EnhancedTableToolbar = props => {
           </Tooltip>
         ) : (
           <Tooltip title="Filter list">
-            <IconButton aria-label="filter list">
-              <FilterListIcon />
+            <IconButton>
+              
             </IconButton>
           </Tooltip>
         )*/}
+{numSelected > 0 ? (
+          <Tooltip title="Editar/Borrar">
+            <IconButton aria-label="delete">
+              <EditIcon/>
+              <DeleteIcon className={"DeleteButton"}/>
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <Tooltip title="Filter list">
+            <IconButton>
+
+            </IconButton>
+          </Tooltip>
+        )}
+        {/*<Tooltip button title="Editar">
+            <IconButton aria-label="filter list">
+              <EditIcon/>
+            </IconButton>
+          </Tooltip>
 
         <Tooltip button title="Borrar">
             <IconButton aria-label="delete">
               <DeleteIcon />
             </IconButton>
-          </Tooltip>
-
-          <Tooltip button title="Editar">
-            <IconButton aria-label="filter list">
-              <EditIcon/>
-            </IconButton>
-          </Tooltip>
+          </Tooltip>  */}
      
     </Toolbar>
   );
@@ -299,7 +314,8 @@ export default function EnhancedTable() {
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
-    <div className={classes.root}>
+    
+    <div className={classes.root}> 
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <div className={classes.tableWrapper}>
@@ -347,6 +363,8 @@ export default function EnhancedTable() {
                       <TableCell align="right">{row.fat}</TableCell>
                       <TableCell align="right">{row.carbs}</TableCell>
                       <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">{row.CUIT}</TableCell>
+                      <TableCell align="right">{row.obraSocial}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -368,19 +386,16 @@ export default function EnhancedTable() {
           rowsPerPage={rowsPerPage}
           page={page}
           backIconButtonProps={{
-            'aria-label': 'previous page',
+            'aria-label': 'Pagina Anterior',
           }}
           nextIconButtonProps={{
-            'aria-label': 'next page',
+            'aria-label': 'Siguiente Pagina',
           }}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
+      
     </div>
   );
 }
