@@ -5,6 +5,7 @@ import MainMenu from "./views/MainMenu";
 import Navbar from "./views/Navigation";
 import * as serviceWorker from './serviceWorker';
 import SignIn from './views/Log In Screen/Login';
+import BMUsers from './views/BM-UsersScreen/BMUsers';
 
 
 
@@ -22,7 +23,7 @@ class App extends Component
             <Route path="/" component={SignIn} exact/>
             <Route path= "/mainMenu" component={MainMenu} />
             <Route path= "/nav" component={Navbar} />
-
+            <Route path= "/BMUsers" component={BMUsers}/>      
            
           </React.Fragment>
         </BrowserRouter>
