@@ -1,14 +1,12 @@
 import React from 'react';
-import NavBar from './Navigation';
 import './BMUsers.css';
-
-export default function BMUsers() {
+import Dashboard from './Dashboard';
+export default function DeleteUpdateUserAdmin() {
 
     return (
         
         <div className="UsersScreen">
-            <header><NavBar/></header>
-                        
+            <Dashboard></Dashboard>
         </div>
         
     )

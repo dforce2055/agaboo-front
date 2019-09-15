@@ -7,21 +7,25 @@ medium green: #7EB09B
 light green: #A3C4BC
 */
 
-.wrapper {
+/*.wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
+}*/
 
-.form-wrapper {
-  width: 400px;
+/*.form-wrapper {
+  width: 600px;
   display: flex;
   flex-direction: column;
   padding: 20px 40px;
   border-radius: 10px;
   box-shadow: 0px 10px 50px #555;
   background-color: #ffffff;
+}*/
+
+.nuevo{
+  padding-top: 4em;
 }
 
 form {

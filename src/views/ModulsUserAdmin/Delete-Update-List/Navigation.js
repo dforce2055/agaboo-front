@@ -116,7 +116,7 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
 }
 });
 
-export default function Navbar() {
+export default function NavbarDeleteUpdate() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);

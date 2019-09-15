@@ -82,7 +82,7 @@ export default function CustomizedMenus() {
         </StyledMenuItem> 
       </Link>
 
-        <Link to='/registrarCliente'>                  {/* Linkeo a pantalla de baja/modificacion de clientes */}
+        <Link to='/bmUsers'>                  {/* Linkeo a pantalla de baja/modificacion de clientes */}
         <StyledMenuItem>
           <ListItemIcon>
             <CreateIcon />

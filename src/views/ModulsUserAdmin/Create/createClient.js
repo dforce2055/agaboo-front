@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./buttonForm.css";
 import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
 const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 ); //Verificacion que gmail no contenga campos extraños
@@ -134,11 +133,11 @@ class Form extends Component {
 
     return (
       <React.Fragment>
-      <Container component="main" maxWidth="sm">
-      <CssBaseline >
+      <Container  maxWidth="sm" className='nuevo'>
+    
       
-      <div >{/*<div className="wrapper"> -->PRUEBA*/}
-        <div > {/*<div className="form-wrapper">*/}
+      {/*<div className="wrapper"> -->PRUEBA*/}
+         {/*<div className="nuevo">*/}
           <h1>Formulario</h1>
           <form onSubmit={this.handleSubmit} noValidate>
 
@@ -302,9 +301,8 @@ class Form extends Component {
               <button type="submit">Registrar Cliente</button>
             </div>
           </form>
-        </div>
-      </div>
-      </CssBaseline>
+        {/*</div>
+      </div>*/}
       </Container>
     </React.Fragment>
     );
