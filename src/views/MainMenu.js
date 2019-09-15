@@ -3,13 +3,8 @@ import React, {Component} from 'react';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
 //Componentes
-import ButtonClient from './ButtonClient';
-import ButtonProduct from './ButtonProduct';
-import ButtonStock from './ButtonStock';
-import ButtonOrder from './ButtonOrder';
 import './MainMenu.css';
-import NavBar from './Header';
-import ButtonSimple from './ButtonSimple';
+import Dashboard from './Dashboard';
 
 
 const theme = createMuiTheme({ /* Plantilla de edicion */
@@ -40,14 +35,8 @@ class MainMenu extends Component
         return(
             <div>
                 <MuiThemeProvider theme={theme}>
-                <NavBar/>
-                
-                <div  className = {"Button"}><ButtonClient/></div>
-                <div  className = {"Button"}><ButtonProduct/></div>
-                <div  className = {"Button"}><ButtonStock/></div>
-                <div  className = {"Button"}><ButtonOrder/></div>
-                <div  className = {"Button"}><ButtonSimple nombre = {'Estado de cuenta'/*Utilizo los props para reutilizar el boton simple*/}/></div>
-                <div  className = {"Button"}><ButtonSimple nombre = {'Mantenimientos a realizar'}/></div>
+               <Dashboard></Dashboard>
+
                 </MuiThemeProvider>
             </div>
            
