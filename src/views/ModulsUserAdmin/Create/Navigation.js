@@ -25,6 +25,9 @@ import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import ContactsIcon from '@material-ui/icons/Contacts';
 import PeopleIcon from '@material-ui/icons/People';
 import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+
+import Form from './createClient';
 const drawerWidth = 240;
 
 
@@ -87,6 +90,30 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const theme2 = createMuiTheme({ /* Plantilla de edicion */
+  overrides: { 
+    MuiAppBar: {
+      colorPrimary: {
+        backgroundColor: '#3fb5a5',
+      }
+    },
+    MuiButton: {
+      containedPrimary: {
+        backgroundColor: '#3fb5a5',
+        }
+    },
+    MuiCheckbox:{
+      colorSecondary: {
+        color: '#42cfd6',
+        '&$checked': {
+          color: '#42cfd6',
+        },
+      }
+    },
+    
+}
+});
+
 export default function Navbar() {
   const classes = useStyles();
   const theme = useTheme();
@@ -109,7 +136,9 @@ export default function Navbar() {
     setOpen(false);
   }
 
+  
   return (
+    <MuiThemeProvider theme={theme2}>
     <div className={classes.root} >
       <CssBaseline />
       <AppBar
@@ -144,7 +173,8 @@ export default function Navbar() {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : 
+            <ChevronRightIcon />}
           </IconButton>
         </div>
         <Divider />
@@ -200,17 +230,17 @@ export default function Navbar() {
         </List>       
        
       </Drawer>
-      <main
+      <main /*Esta clase, permite que cada vez que abramos el componente Drawers, los componentes que esten dentro de main, se correran al costado. */
         className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}
       >
-        <div className={classes.drawerHeader} />
-        <Typography paragraph>
-            
-        </Typography>
+        <div className={classes.drawerHeader} />        
+
+         <Form/> {/*Importo el componente Boton de busqueda.*/}       
         
       </main>
     </div>
+    </MuiThemeProvider>
   );
 }

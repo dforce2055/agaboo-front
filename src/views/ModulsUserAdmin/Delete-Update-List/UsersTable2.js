@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { lighten, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -15,20 +15,15 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import { Link } from "react-router-dom";
-import './UsersTable.css';
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
+import { black } from 'material-ui/styles/colors';
+function createData(name, calories, fat, carbs, protein, CUIT, obraSocial) {
+  return { name, calories, fat, carbs, protein, CUIT, obraSocial};
 }
 
 const rows = [
-  createData('Leandro', 'Romagnoli', 'pipid10s@gmail.com', 22315675423, 32647546),
+  createData('Leandro', 'Romagnoli', 'pipid10s@gmail.com', 22315675423, 32647546, 215215, 'OSECAC'),
   createData('Donut', 452, 25.0, 51, 4.9),
   createData('Eclair', 262, 16.0, 24, 6.0),
   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
@@ -41,6 +36,7 @@ const rows = [
   createData('Marshmallow', 318, 0, 81, 2.0),
   createData('Nougat', 360, 19.0, 9, 37.0),
   createData('Oreo', 437, 18.0, 63, 4.0),
+  
 ];
 
 function desc(a, b, orderBy) {
@@ -73,6 +69,8 @@ const headCells = [
   { id: 'Email', numeric: true, disablePadding: false, label: 'Email' },
   { id: 'Telefono', numeric: true, disablePadding: false, label: 'Telefono' },
   { id: 'DNI', numeric: true, disablePadding: false, label: 'DNI' },
+  { id: 'CUIT', numeric: true, disablePadding: false, label: 'CUIT' },
+  { id: 'Obra Social', numeric: true, disablePadding: false, label: 'Obra Social' },
 ];
 
 function EnhancedTableHead(props) {
@@ -136,8 +134,8 @@ const useToolbarStyles = makeStyles(theme => ({
   highlight:
     theme.palette.type === 'light'
       ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+          color: black,
+          backgroundColor: '#42cfd66b',
         }
       : {
           color: theme.palette.text.primary,
@@ -153,45 +151,44 @@ const useToolbarStyles = makeStyles(theme => ({
     flex: '0 0 auto',
   },
 }));
-
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
 
   return (
+    
     <Toolbar
       className={clsx(classes.root, {
         [classes.highlight]: numSelected > 0,
       })}
     >
       <div className={classes.title}>
-        {numSelected > 0 ? (
+        
           <Typography color="inherit" variant="subtitle1">
             {numSelected} seleccionado
           </Typography>
-        ) : (
+       
           <Typography variant="h6" id="tableTitle">
             Usuarios
           </Typography>
-        )}
+        
       </div>
       <div className={classes.spacer} />
-      <div className={classes.actions}>
-        {numSelected > 0 ? (
+
+          <Tooltip title="Filter list">
+            <IconButton>
+            <EditIcon/>
+            </IconButton>
+          </Tooltip>
+          
           <Tooltip title="Editar/Borrar">
             <IconButton aria-label="delete">
-              <EditIcon/>
+              
               <DeleteIcon className={"DeleteButton"}/>
             </IconButton>
           </Tooltip>
-        ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-        )}
-      </div>
+
+          
     </Toolbar>
   );
 };
@@ -227,14 +224,13 @@ const useStyles = makeStyles(theme => ({
     width: 1,
   },
 }));
-
 export default function EnhancedTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
+  const [dense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   function handleRequestSort(event, property) {
@@ -281,16 +277,13 @@ export default function EnhancedTable() {
     setPage(0);
   }
 
-  function handleChangeDense(event) {
-    setDense(event.target.checked);
-  }
-
   const isSelected = name => selected.indexOf(name) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
-    <div className={classes.root}>
+    
+    <div className={classes.root}> 
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <div className={classes.tableWrapper}>
@@ -338,6 +331,8 @@ export default function EnhancedTable() {
                       <TableCell align="right">{row.fat}</TableCell>
                       <TableCell align="right">{row.carbs}</TableCell>
                       <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">{row.CUIT}</TableCell>
+                      <TableCell align="right">{row.obraSocial}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -351,24 +346,24 @@ export default function EnhancedTable() {
         </div>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
+          labelRowsPerPage='' // Saco la palabra "ROWS PER PAGE". Se puede agregar cualquier grase entre ' ' .
+          labelDisplayedRows={({ from, to, count }) => `Mostrando las páginas ${from}-${to} del total de ${count} páginas
+`} //MODIFICO EL OF
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           backIconButtonProps={{
-            'aria-label': 'previous page',
+            'aria-label': 'Pagina Anterior',
           }}
           nextIconButtonProps={{
-            'aria-label': 'next page',
+            'aria-label': 'Siguiente Pagina',
           }}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
+      
     </div>
   );
 }

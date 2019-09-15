@@ -8,6 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import FaceIcon from '@material-ui/icons/Face';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import CreateIcon from '@material-ui/icons/Create';
+import { Link } from "react-router-dom";
 
 
 
@@ -39,6 +40,7 @@ const StyledMenuItem = withStyles(theme => ({
         color: theme.palette.common.white,
       },
     },
+    
   },
 }))(MenuItem);
 
@@ -71,18 +73,23 @@ export default function CustomizedMenus() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
+      <Link to='/registrarCliente'>
         <StyledMenuItem>
           <ListItemIcon>
           <FaceIcon/> 
           </ListItemIcon>
           <ListItemText primary="Crear" />
-        </StyledMenuItem>   
+        </StyledMenuItem> 
+      </Link>
+
+        <Link to='/registrarCliente'>                  {/* Linkeo a pantalla de baja/modificacion de clientes */}
         <StyledMenuItem>
           <ListItemIcon>
             <CreateIcon />
           </ListItemIcon>
           <ListItemText primary="Modificar" />
         </StyledMenuItem>
+        </Link>                                {/* Fin linkeo */}
         <StyledMenuItem>
           <ListItemIcon>
             <DeleteOutlineIcon />

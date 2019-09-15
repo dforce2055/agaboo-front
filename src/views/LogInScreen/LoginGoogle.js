@@ -4,16 +4,8 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseConfig from '../../firebase';
 import Button from '@material-ui/core/Button';
-import GoogleLogin from 'react-google-login';
-
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
-
-const responseGoogle = (response) => {
-    console.log(response);
-}
-
-
 
 class LoginGoogle extends React.Component{
     render() {

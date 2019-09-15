@@ -16,8 +16,6 @@ import argenbath from './logo-argenbath.png';
 import './Login.css';
 import { Link } from "react-router-dom";
 
-
-
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -49,11 +47,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const responseGoogle = (response) => {  //funcion que corresponde con el LoginGoogle que esta bueno
-    console.log(response);
-}
-
-
 export default function SignIn() {
   const classes = useStyles();
 
@@ -61,12 +54,14 @@ export default function SignIn() {
     <Container component="main" maxWidth="sm">
       <CssBaseline />
       <div className={classes.paper}>
+      {/* eslint-disable-next-line*/}
         <img src = {argenbath} className={"Logo"}/>           {/* logo solo para probar tamaños */}
         {/* <Typography component="h1" variant="h5" >
           Inicio de Sesión
         </Typography> */}
         <form className={classes.form} noValidate>
           <TextField
+            variant="outlined"
             margin="normal"
             fullWidth
             id="email"
@@ -76,6 +71,7 @@ export default function SignIn() {
             /* autoFocus */
           />
           <TextField
+            variant="outlined"
             margin="normal"
             fullWidth
             name="password"
