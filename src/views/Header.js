@@ -26,6 +26,9 @@ import ContactsIcon from '@material-ui/icons/Contacts';
 import PeopleIcon from '@material-ui/icons/People';
 import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import StoreIcon from '@material-ui/icons/Store';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import CreateIcon from '@material-ui/icons/Create';
 const drawerWidth = 240;
 
 
@@ -117,13 +120,19 @@ export default function Navbar() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
-  const [visible, setVisible] = React.useState(true);
+  const [visible , setVisible] = React.useState(false);
+  const [visibleProduct , setVisibleProduct] = React.useState(false);
   /*Hook que permite en clases Function utilizar 
     state y cambiar su estado. Es decir el visible es el estado y 
     el setVisible es sinonimo de this.setState*/
 
+
   function handleClick() { 
     setVisible(!visible);
+  }
+
+  function handleClickProduct () { 
+    setVisibleProduct(!visibleProduct);
   }
 
   function handleDrawerOpen() {
@@ -133,6 +142,7 @@ export default function Navbar() {
   function handleDrawerClose() {
     setOpen(false);
   }
+
 
   
   return (
@@ -225,9 +235,57 @@ export default function Navbar() {
         </List>
       </Collapse>
 
-        </List>       
+      <ListItem button onClick={ handleClickProduct}> {/*Sub boton en forma de List*/}
+          <ListItemIcon> {/*Se utiliza para encerrar el icono que contrenda al lado el boton -->>ABRIENDO*/}          
+              <StoreIcon /> {/*IMAGEN DEL BOTON*/}
+          </ListItemIcon> {/*Se utiliza para encerrar el icono que contrenda al lado el boton -->>CERRANDO*/}
+        <ListItemText primary="Productos" />  {/*Nombre del boton*/}
+        {visibleProduct ? <ExpandLess /> : <ExpandMore />} {/*Si el valor visible es verdadero toma el icono ExpandLess. En cambio si el valor es false toma el icono ExpandMore*/}      
+      </ListItem> 
+      
+
+      <Collapse in={visibleProduct} timeout="auto" unmountOnExit> 
+        <List component="div" disablePadding> {/*disablePadding-->Si true, el relleno vertical se eliminará de la lista.*/}
+          <ListItem button className={classes.nested}> {/*nested es el CSS que permite que este un poco mas a la izquierda que el boton de padre.*/}
+            <ListItemIcon>
+              <GroupAddIcon />
+            </ListItemIcon>
+            <ListItemText primary="Crear Cliente" />
+          </ListItem>
+        </List>
+
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+            <ListItemIcon>
+              <AssignmentIndIcon />
+            </ListItemIcon>
+            <ListItemText primary="Modificar Cliente" />
+          </ListItem>
+        </List>
+
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+            <ListItemIcon>
+              <PersonAddDisabledIcon />
+            </ListItemIcon>
+            <ListItemText primary="Eliminar Cliente" />
+          </ListItem>
+        </List>
+        
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+            <ListItemIcon>
+              <ContactsIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Listar Clientes" />
+          </ListItem>
+        </List>
+      </Collapse>
+
+        </List>         
        
       </Drawer>
+      
       <main /*Esta clase, permite que cada vez que abramos el componente Drawers, los componentes que esten dentro de main, se correran al costado. */
         className={clsx(classes.content, {
           [classes.contentShift]: open,

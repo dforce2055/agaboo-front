@@ -6,8 +6,7 @@ import Navbar from "./views/ModulsUserAdmin/Delete-Update-List/Navigation";
 import SignIn from './views/LogInScreen/Login';
 import BMUsers from "./views/ModulsUserAdmin/Delete-Update-List/indexUserAdm";
 import * as serviceWorker from './serviceWorker';
-import SignIn from './views/Log In Screen/Login';
-import BMUsers from './views/BM-UsersScreen/BMUsers';
+import Navbar2 from './views/ModulsUserAdmin/Create/Navigation'; //Componente para registrar un nuevo cliente
 
 
 
@@ -25,8 +24,9 @@ class App extends Component
             <Route path="/" component={SignIn} exact/>
             <Route path= "/mainMenu" component={MainMenu} />
             <Route path= "/nav" component={Navbar} />
-            <Route path= "/BMUsers" component={BMUsers}/>      
-           
+            <Route path= "/bmUsers" component={BMUsers} />
+            <Route path= "/registrarCliente" component={Navbar2} />
+
           </React.Fragment>
         </BrowserRouter>
    
