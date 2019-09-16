@@ -133,8 +133,7 @@ class Form extends Component {
 
     return (
       <React.Fragment>
-      <Container  maxWidth="sm" className='nuevo'>
-    
+      <Container  maxWidth="sm" className='nuevo'>    
       
       {/*<div className="wrapper"> -->PRUEBA*/}
          {/*<div className="nuevo">*/}

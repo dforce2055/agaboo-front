@@ -21,6 +21,8 @@ import ButtonProduct from './ButtonProduct';
 import ButtonStock from './ButtonStock';
 import ButtonOrder from './ButtonOrder';
 import './MainMenu.css';
+import Chart from './Statistics/Chart.js';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -181,6 +183,7 @@ export default function NavBarCreate() {
       </Drawer>
       
       <main className={classes.content}>
+      <div><Chart></Chart></div>
         <div className = {"Button"}>
           <ButtonClient/>
           <ButtonProduct/>        
