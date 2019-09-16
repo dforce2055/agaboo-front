@@ -1,13 +1,40 @@
-/* Colors */
-/*
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5em;
+  padding:2mm;
+}
+
+.component-wrapper {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px 10px 15px;
+  border-radius: 10px;
+  box-shadow: 0px 10px 50px #555;
+  background-color: #ffffff;
+}
+
+.statistics-wrapper{
+  padding: 6em;
+  padding-left: 10em;
+  flex-direction: row;
+  display: flex;  
+  justify-content: center;
+}
+
+/* Colors 
+
 dark blue: #476A6F
 light blue: #258EA6
 dark green: #519E8A
 medium green: #7EB09B
 light green: #A3C4BC
-*/
 
-/*.wrapper {
+
+.wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -23,7 +50,7 @@ light green: #A3C4BC
   border-radius: 10px;
   box-shadow: 0px 10px 50px #555;
   background-color: #ffffff;
-}*/
+}
 
 .nuevo{
   padding-top: 4em;
@@ -85,7 +112,7 @@ input.error {
 .firstName,
 .lastName,
 .email,
-.dni, /*AGREGO DNI*/
+.dni, 
 .password {
   display: flex;
   flex-direction: column;
@@ -97,8 +124,6 @@ input.error {
   width: 49%;
 }
 
-/*<--------AGREGADO------>*/
-
 .dni,
 .cuit {
   margin-right: 1%;
@@ -106,20 +131,15 @@ input.error {
 
 .cuit{
   width: 51%;
-}
-/*QUIERO QUE MUESTRE EN VERDE CUANDO YA ESTAN BIEN PUESTO*/
 input.ok {
   border: 1px solid rgb(255, 238, 0);
 }
-/*QUIERO QUE MUESTRE EN VERDE CUANDO YA ESTAN BIEN PUESTO*/
 .okMessage {
   color: rgb(0, 255, 0);
   font-size: 0.75em;
   display: relative;
 }
 
-
-/*<--------AGREGADO------>*/
 .email,
 .password {
   width: 100%;
@@ -153,4 +173,4 @@ input.ok {
 .createAccount small {
   color: #999;
   font-weight: lighter;
-}
+}*/

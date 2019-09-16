@@ -35,7 +35,8 @@ class MainMenu extends Component
         return(
             <div>
                 <MuiThemeProvider theme={theme}>
-               <Dashboard></Dashboard>
+               
+                  <Dashboard></Dashboard>
 
                 </MuiThemeProvider>
             </div>

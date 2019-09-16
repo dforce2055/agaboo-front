@@ -19,8 +19,7 @@ class App extends Component
             <Route path="/" component={SignIn} exact/>
             <Route path= "/mainMenu" component={MainMenu} />
             <Route path= "/bmUsers" component={DeleteUpdateUserAdmin} />
-            <Route path= "/registrarCliente" component={CreateUserAdm} />
-           
+            <Route path= "/registrarCliente" component={CreateUserAdm} />           
           </React.Fragment>
         </BrowserRouter>
    
