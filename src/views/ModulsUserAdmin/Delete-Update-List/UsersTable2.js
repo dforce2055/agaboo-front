@@ -20,12 +20,14 @@ import EditIcon from '@material-ui/icons/Edit';
 import Visibility from '@material-ui/icons/Visibility';
 
 import { black } from 'material-ui/styles/colors';
-function createData(name, calories, fat, carbs, protein, CUIT, obraSocial) {
-  return { name, calories, fat, carbs, protein, CUIT, obraSocial};
+function createData(name, surname, email, tel, CUIT) {
+  return { name, surname, email, tel, CUIT};
 }
 
 const rows = [
-  createData('Leandro', 'Romagnoli', 'pipid10s@gmail.com', 22315675423, 32647546, 215215, 'OSECAC')
+  createData('Leandro', 'Romagnoli', 'pipid10s@gmail.com', 22315675423, 3035025779 ),
+  createData('Ivan', 'Cuadrado', 'icuadrado@gmail.com', 1538219585, 3025879645 ),
+  
   
 ];
 
@@ -56,18 +58,16 @@ function getSorting(order, orderBy) {
 const headCells = [
   { id: 'Nombre', numeric: false, disablePadding: true, label: 'Nombre' },
   { id: 'Apellido', numeric: true, disablePadding: false, label: 'Apellido' },
-  { id: 'Email', numeric: true, disablePadding: false, label: 'Email' },
+  { id: 'Email', numeric: true, disablePadding: false, label: 'Email' },  
   { id: 'Telefono', numeric: true, disablePadding: false, label: 'Telefono' },
-  { id: 'DNI', numeric: true, disablePadding: false, label: 'DNI' },
   { id: 'CUIT', numeric: true, disablePadding: false, label: 'CUIT' },
-  { id: 'Obra Social', numeric: true, disablePadding: false, label: 'Obra Social' },
 ];
 
 function EnhancedTableHead(props) {
   const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
   const createSortHandler = property => event => {
     onRequestSort(event, property);
-  };
+  };  
 
   return (
     <TableHead>
@@ -154,16 +154,12 @@ const EnhancedTableToolbar = props => {
     >
       <div className={classes.title}>
         
-          <Typography color="inherit" variant="subtitle1">
-            {numSelected} seleccionado
-          </Typography>
-       
+          
           <Typography variant="h6" id="tableTitle">
-            Usuarios
+            Clientes
           </Typography>
         
       </div>
-      <div className={classes.spacer} />
 
       <Tooltip title="Filter list">
             <IconButton>
@@ -319,15 +315,28 @@ export default function EnhancedTable() {
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
                       </TableCell>
+                      {/* return { name, surname, email, tel, CUIT}; */}
+                      <IconButton aria-label="delete">              
+                        <DeleteIcon className={"DeleteButton"}/>
+                      </IconButton>
+                      <IconButton aria-label="delete">              
+                        <EditIcon className={"DeleteButton"}/>
+                      </IconButton>
+                      <IconButton aria-label="delete">              
+                        <Visibility className={"DeleteButton"}/>
+                      </IconButton>
+                      
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.name}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">{row.surname}</TableCell>
+                      <TableCell align="right">{row.email}</TableCell>
+                      <TableCell align="right">{row.tel}</TableCell>
                       <TableCell align="right">{row.CUIT}</TableCell>
-                      <TableCell align="right">{row.obraSocial}</TableCell>
+                      
+                      
+            
+
                     </TableRow>
                   );
                 })}

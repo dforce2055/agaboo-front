@@ -8,7 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import FaceIcon from '@material-ui/icons/Face';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import CreateIcon from '@material-ui/icons/Create';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 
 
@@ -44,8 +44,10 @@ const StyledMenuItem = withStyles(theme => ({
   },
 }))(MenuItem);
 
-export default function CustomizedMenus() {
+function CustomizedMenus(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const {history} = props;
 
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
@@ -73,23 +75,21 @@ export default function CustomizedMenus() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-      <Link to='/registrarCliente'>
         <StyledMenuItem>
           <ListItemIcon>
-          <FaceIcon/> 
+            <FaceIcon/> 
           </ListItemIcon>
-          <ListItemText primary="Crear" />
-        </StyledMenuItem> 
-      </Link>
-
-        <Link to='/bmUsers'>                  {/* Linkeo a pantalla de baja/modificacion de clientes */}
+          <ListItemText primary="Crear" onClick ={ () => history.push('/registrarCliente')}  />{/*Utilizo el onClick en lugar del link, es de la librería de router dom hay que exportarlo con withRouter*/ }
+        </StyledMenuItem>
+        
         <StyledMenuItem>
           <ListItemIcon>
             <CreateIcon />
           </ListItemIcon>
-          <ListItemText primary="Modificar" />
+          <ListItemText primary="Modificar" onClick ={ () => history.push('/bmUsers')} />
         </StyledMenuItem>
-        </Link>                                {/* Fin linkeo */}
+
+
         <StyledMenuItem>
           <ListItemIcon>
             <DeleteOutlineIcon />
@@ -100,3 +100,5 @@ export default function CustomizedMenus() {
     </div>
   );
 }
+
+export default withRouter(CustomizedMenus);

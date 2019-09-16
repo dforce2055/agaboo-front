@@ -7,6 +7,7 @@ import './MainMenu.css';
 import Dashboard from './Dashboard';
 
 
+
 const theme = createMuiTheme({ /* Plantilla de edicion */
     overrides: { 
       MuiAppBar: {
@@ -35,14 +36,8 @@ class MainMenu extends Component
         return(
             <div>
                 <MuiThemeProvider theme={theme}>
-                    <NavBar/>
+                   
                 
-                    <div  className = {"Button"}><ButtonClient/></div>
-                    <div  className = {"Button"}><ButtonProduct/></div>
-                    <div  className = {"Button"}><ButtonStock/></div>
-                    <div  className = {"Button"}><ButtonOrder/></div>
-                    <div  className = {"Button"}><ButtonSimple nombre = {'Estado de cuenta'/*Utilizo los props para reutilizar el boton simple*/}/></div>
-                    <div  className = {"Button"}><ButtonSimple nombre = {'Mantenimientos a realizar'}/></div>
                <Dashboard></Dashboard>
 
                 </MuiThemeProvider>
