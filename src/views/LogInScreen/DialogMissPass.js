@@ -73,7 +73,6 @@ export default function FormDialog() {
           <form className={classes.form} noValidate>
           <TextField
             margin="dense"
-
             label="Correo Electrónico"
             fullWidth
           />
@@ -95,7 +94,6 @@ export default function FormDialog() {
             </FormControl>
             <TextField
             margin="dense"
-
             label="Respuesta Secreta"
             fullWidth
           />

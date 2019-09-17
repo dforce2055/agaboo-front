@@ -1,0 +1,122 @@
+/* Colors */
+/*
+dark blue: #476A6F
+light blue: #258EA6
+dark green: #519E8A
+medium green: #7EB09B
+light green: #A3C4BC
+*/
+
+/*.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5em;
+}
+
+.form-wrapper {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 40px;
+  border-radius: 10px;
+  box-shadow: 0px 10px 50px #555;
+  background-color: #ffffff;
+}*/
+
+.nuevo{
+  padding-top: 4em;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+h1 {
+  text-align: center;
+  width: 100%;
+  color: #111;
+  font-weight: lighter;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+label {
+  font-size: 0.8em;
+  margin-bottom: 0.25em;
+  color: #222;
+  font-weight: lighter;
+}
+
+input {
+  padding: 10px 10px;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid #cfcfcf;
+}
+
+input::placeholder {
+  font-size: 1.2em;
+  font-weight: lighter;
+  color: #999;
+}
+
+input.error {
+  border: 1px solid rgb(255, 0, 0);
+}
+
+.errorMessage {
+  color: rgb(255, 17, 0);
+  font-size: 0.75em;
+  display: relative;
+}
+
+.firstName {
+  margin-right: 1%;
+}
+
+.lastName {
+  margin-left: 1%;
+}
+
+.firstName,
+.lastName,
+.email,
+.password {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.firstName,
+.lastName {
+  width: 49%;
+}
+
+/*<--------AGREGADO------>*/
+
+
+.cuit{
+  width: 0%;
+  margin-bottom: 2%;
+}
+/*QUIERO QUE MUESTRE EN VERDE CUANDO YA ESTAN BIEN PUESTO*/
+input.ok {
+  border: 1px solid rgb(0, 255, 0);
+}
+/*QUIERO QUE MUESTRE EN VERDE CUANDO YA ESTAN BIEN PUESTO*/
+.okMessage {
+  color: rgb(0, 255, 0);
+  font-size: 0.75em;
+  display: relative;
+}
+
+
+/*<--------AGREGADO------>*/
+.email,
+.password {
+  width: 100%;
+}

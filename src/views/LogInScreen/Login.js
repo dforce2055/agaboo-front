@@ -14,7 +14,8 @@ import LoginGoogle from './LoginGoogle';
 import FormDialog from './DialogMissPass';
 import argenbath from './logo-argenbath.png';
 import './Login.css';
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+
 
 function Copyright() {
   return (
@@ -25,6 +26,7 @@ function Copyright() {
     </Typography>
   );
 }
+
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -47,8 +49,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn() {
+function SignIn(props) {
   const classes = useStyles();
+  const {history} = props;
 
   return (
     <Container component="main" maxWidth="sm">
@@ -87,17 +90,20 @@ export default function SignIn() {
             control={<Checkbox value="remember" color="primary" />}
             label="Recuérdame"
           /> */}
-          <Link to='/mainMenu'>
+          {/* <Link to='/mainMenu'> */}
+            
             <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick ={ () => history.push('/mainMenu')}
             >
               Ingresar
             </Button>
-          </Link>
+            
+          {/* </Link> */}
         </form>
         {/* <GoogleLogin
             clientId="817185700205-tupiffo62ieibvp5hbv1d7hhn3h32gi2.apps.googleusercontent.com"
@@ -115,3 +121,4 @@ export default function SignIn() {
     </Container>
   );
 }
+export default withRouter(SignIn);
