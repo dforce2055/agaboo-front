@@ -25,12 +25,8 @@ class App extends Component
             <Route path= "/mainMenu" component={MainMenu} />
             {/* <Route path= "/nav" component={Navbar} /> */}
             <Route path= "/bmUsers" component={DeleteUpdateUserAdmin} />
-<<<<<<< HEAD
             <Route path= "/registrarCliente" component={CreateUserAdm} />
 
-=======
-            <Route path= "/registrarCliente" component={CreateUserAdm} />           
->>>>>>> 3d40f2c26715d30acc77dddb3cfc64f23174473c
           </React.Fragment>
         </BrowserRouter>
    
