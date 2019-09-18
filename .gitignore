@@ -27,3 +27,6 @@ yarn.lock
 /yarn.lock
 .yarn.lock
 /.yarn.lock
+
+# config Firebase
+/src/config/firebase-config.js
