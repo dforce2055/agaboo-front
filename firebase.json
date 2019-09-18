@@ -10,19 +10,12 @@
       {
         "source": "**",
         "destination": "/index.html"
-      },
-      {
-        "source": "/getallusers",
-        "function": "getAllUsers"
-      },
-      {
-        "source": "/hellodude",
-        "function": "helloDude"
-      },
-      {
-        "source": "/helloworld{,/**}",
-        "function": "helloWorld"
       }
+    ]
+  },
+  "functions": {
+    "predeploy": [
+      "npm --prefix \"$RESOURCE_DIR\" run lint"
     ]
   }
 }
