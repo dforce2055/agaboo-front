@@ -2,10 +2,10 @@ import React from 'react';
 import withFirebaseAuth from 'react-with-firebase-auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import firebaseConfig from '../../firebase';
+//import firebaseConfig from '../../firebase';
 import Button from '@material-ui/core/Button';
-
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+import { firebaseApp } from '../../config/firebase' 
+//const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 class LoginGoogle extends React.Component{
     render() {
