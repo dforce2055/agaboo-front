@@ -8,6 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import ArchiveIcon from '@material-ui/icons/Archive';
 import DoneOtulineIcon from '@material-ui/icons/DoneOutline';
+import { withRouter } from "react-router-dom";
 
 
 
@@ -42,8 +43,9 @@ const StyledMenuItem = withStyles(theme => ({
   },
 }))(MenuItem);
 
-export default function CustomizedMenus() {
+function CustomizedMenus(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const {history} = props;
 
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
@@ -75,7 +77,7 @@ export default function CustomizedMenus() {
           <ListItemIcon>
           <ArchiveIcon/> 
           </ListItemIcon>
-          <ListItemText primary="Registrar" />
+          <ListItemText primary="Registrar" primary="Crear" onClick ={ () => history.push('/registrarPedido')}/>
         </StyledMenuItem>   
         <StyledMenuItem>
           <ListItemIcon>
@@ -93,3 +95,4 @@ export default function CustomizedMenus() {
     </div>
   );
 }
+export default withRouter(CustomizedMenus);

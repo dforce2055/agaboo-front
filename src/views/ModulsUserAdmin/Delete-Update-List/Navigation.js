@@ -28,7 +28,7 @@ import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
 import ButtonSearch from './buttonSearch';
-import EnhancedTable from './UsersTable2'; 
+import EnhancedTable from './UsersTable'; 
 
 const drawerWidth = 240;
 
