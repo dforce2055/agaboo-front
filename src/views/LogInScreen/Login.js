@@ -16,7 +16,6 @@ import argenbath from './logo-argenbath.png';
 import './Login.css';
 import { withRouter } from "react-router-dom";
 
-import CustomerController from '../../controllers/customer';
 
 function Copyright() {
   return (
@@ -102,15 +101,7 @@ function SignIn(props) {
               onClick ={ () => history.push('/mainMenu')}
             >
               Ingresar
-            </Button>
-            <Button fullWidth
-              variant="contained"
-              color="primary"
-              onClick={CustomerController.getCustomers}
-              >
-                Ver Clientes (console.log)
-            </Button>
-            
+            </Button>            
           {/* </Link> */}
         </form>
         {/* <GoogleLogin
