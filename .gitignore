@@ -27,3 +27,14 @@ yarn.lock
 /yarn.lock
 .yarn.lock
 /.yarn.lock
+
+# config Firebase
+/src/config/firebase-config.js
+### Firebase ###
+.idea
+**/node_modules/*
+**/.firebaserc
+
+### Firebase Patch ###
+.runtimeconfig.json
+.firebase/
