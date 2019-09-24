@@ -3,26 +3,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import './ModuleProduct.css';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import Button from './Button' ;
 
-// const StyledTextField = styled(TextField)
-//   label.focused {
-//     color: green; 💚
-//   }
-//   .MuiOutlinedInput-root {
-//     fieldset {
-//       border-color: red; 💔
-//     }
-//     &:hover fieldset {
-//       border-color: yellow; 💛
-//     }
-//     &.Mui-focused fieldset {
-//       border-color: green; 💚
-//     }
-//   }
-// ;
+import NavBar from '../Header';
 
 
-const currencies = [
+
+
+const typeProduct = [
   {
     value: "Baño Quimico",
     label: "Baño Quimico"
@@ -30,13 +18,19 @@ const currencies = [
   {
     value: "Oficina",
     label: "Oficina"
+  },
+  {
+    value: "Boletería",
+    label: "Boletría",
   }
+  
 ];
 
 const useStyles = makeStyles(theme => ({
   container: {
     display: "flex",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    align: "center",
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -51,9 +45,11 @@ const useStyles = makeStyles(theme => ({
 }));
 const theme2 = createMuiTheme({ /* Plantilla de edicion */
   overrides: { 
-    MuiAppBar: {
+    MuiTextField: {
       colorPrimary: {
         backgroundColor: '#3fb5a5',
+        align: 'center', 
+        
       }
     },
     MuiButton: {
@@ -69,28 +65,32 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
 export default function ProductForm() {
   const classes = useStyles();
   const [values, setValues] = React.useState({
-    name: "Cat in the Hat",
-    age: "",
-    multiline: "Controlled",
-    currency: "EUR"
+    code: "",
+    typeProduct: "",
+    description: "",
   });
 
   const handleChange = name => event => {
+    
+    
     setValues({ ...values, [name]: event.target.value });
+    console.log(event.target  );
   };
 
   return (
     <MuiThemeProvider theme={theme2}>
+      <NavBar/>
     
     <form className={classes.container} noValidate autoComplete="off">
-      <h1>Registro de productos</h1>
-      <div className = {"form"}><TextField
-        id="outlined-select-currency-native"
+      <h1 >Registro de productos</h1>
+      <div  ><TextField
+        id="type-product"
         select
         label="Producto"
         className={classes.textField}
-        value={values.currency}
-        onChange={handleChange("currency")}
+        value={values.typeProduct   }
+        
+        onChange={handleChange("typeProduct")}
         SelectProps={{
           native: true,
           MenuProps: {
@@ -101,7 +101,7 @@ export default function ProductForm() {
         margin="normal"
         variant="outlined"
       >
-        {currencies.map(option => (
+        {typeProduct.map(option => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>
@@ -109,11 +109,14 @@ export default function ProductForm() {
         
       </TextField>
       <TextField
-        id="outlined-name"
+        
+      
+        id="Code"
         label="Codigo"
         className={classes.textField}
-        value={""}
-        onChange={handleChange("name")}
+        type= "number"
+        value={values.code}
+        onChange={handleChange("code")}
         margin="normal"
         variant="outlined"
       />
@@ -122,12 +125,14 @@ export default function ProductForm() {
         id="outlined-name"
         label="Descripcion"
         className={classes.textField}
-        value={""}
-        onChange={handleChange("name")}
+        value={values.description}
+        onChange={handleChange("description")}
         margin="normal"
         variant="outlined"
       /></div>
     </form>
+    <Button label ={"Registrar Producto"} ></Button>
+    <Button label ={"Cancelar"}></Button>
     </MuiThemeProvider>
   );
 }
