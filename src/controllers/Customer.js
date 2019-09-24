@@ -1,8 +1,9 @@
 /**
- * Controlador de Cliente
+ * @Controller Class
+ * Customer Controller
  */
 import { Component } from 'react';
-import CustomerRepo from '../repositories/customer';
+import CustomerRepo from '../repositories/Customer';
 
 class CustomerController extends Component {
     constructor(props) {
@@ -19,7 +20,8 @@ class CustomerController extends Component {
         try {
             let cliente = await CustomerRepo.getCustomer();
             if (cliente) {
-                console.log(cliente);
+                //console.log(cliente);
+                return cliente;
             } else {
                 throw new Error();
             }
