@@ -13,9 +13,17 @@ import firebase from "firebase";
  *   };
  *
  */
-import  { firebaseConfig } from './firebase-config'; 
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+const config = {
+  apiKey:'AIzaSyDLVYnr_2LjpA8aYS8ycRUllV5DTudWs7Q',
+  authDomain:'agaboodb.firebaseapp.com',
+  databaseURL:'https://agaboodb.firebaseapp.com',  
+  storageBucket: 'agaboodb.firebaseio.appspot.com',
+  projectId:'agaboodb',
+  messaginSendID:'892253944017'
+};
+
+
+const firebaseApp = firebase.initializeApp(config);
 const db = firebaseApp.firestore();
-
 export { db, firebaseApp };

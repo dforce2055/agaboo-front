@@ -18,18 +18,23 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Visibility from '@material-ui/icons/Visibility';
-
 import { black } from 'material-ui/styles/colors';
+
+//Import clases de db
+import CustomerController from '../../../controllers/Customer'
 function createData(name, surname, email, tel, CUIT) {
   return { name, surname, email, tel, CUIT};
 }
 
 const rows = [
-  createData('Leandro', 'Romagnoli', 'pipid10s@gmail.com', 22315675423, 3035025779 ),
-  createData('Ivan', 'Cuadrado', 'icuadrado@gmail.com', 1538219585, 3025879645 ),
-  
+  createData('Leandro', 'Romagnoli', 'pipid10s@gmail.com', 22315675423 ),
+  createData('Ivan', 'Cuadrado', 'icuadrado@gmail.com', 1538219585 ), 
   
 ];
+
+
+const collection = CustomerController.getCustomers();
+
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -167,9 +172,9 @@ const EnhancedTableToolbar = props => {
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="Filter list">
+          <Tooltip title="Filter list" >
             <IconButton>
-            <EditIcon/>
+            <EditIcon />
             </IconButton>
           </Tooltip>
           
@@ -230,6 +235,10 @@ export default function EnhancedTable() {
     setOrderBy(property);
   }
 
+  function componentDidMount(){
+    console.log('Muestro datps de la db',collection)
+  }
+
   function handleSelectAllClick(event) {
     if (event.target.checked) {
       const newSelecteds = rows.map(n => n.name);
@@ -274,7 +283,7 @@ export default function EnhancedTable() {
 
   return (
     
-    <div className={classes.root}> 
+    <div className={classes.root}> {componentDidMount()}
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <div className={classes.tableWrapper}>
@@ -316,15 +325,6 @@ export default function EnhancedTable() {
                         />
                       </TableCell>
                       {/* return { name, surname, email, tel, CUIT}; */}
-                      <IconButton aria-label="delete">              
-                        <DeleteIcon className={"DeleteButton"}/>
-                      </IconButton>
-                      <IconButton aria-label="delete">              
-                        <EditIcon className={"DeleteButton"}/>
-                      </IconButton>
-                      <IconButton aria-label="delete">              
-                        <Visibility className={"DeleteButton"}/>
-                      </IconButton>
                       
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.name}

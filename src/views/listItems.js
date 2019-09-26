@@ -8,7 +8,6 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import {withRouter } from 'react-router-dom';
 
  export const mainListItems = (
   <div>
