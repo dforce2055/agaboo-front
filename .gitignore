@@ -38,3 +38,5 @@ yarn.lock
 ### Firebase Patch ###
 .runtimeconfig.json
 .firebase/
+/.firebase/hosting.YnVpbGQ.cache
+/.firebaserc
