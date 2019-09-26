@@ -27,3 +27,5 @@ yarn.lock
 /yarn.lock
 .yarn.lock
 /.yarn.lock
+/.firebase/hosting.YnVpbGQ.cache
+/.firebaserc

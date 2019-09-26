@@ -6,7 +6,7 @@ import SignIn from './views/LogInScreen/Login';
 import DeleteUpdateUserAdmin from "./views/ModulsUserAdmin/Delete-Update-List/index";
 import * as serviceWorker from './serviceWorker';
 import CreateUserAdm from './views/ModulsUserAdmin/Create/index'; //Componente para registrar un nuevo cliente
-import CreateOrder from './views/ModulOrders/Create/createOrder';
+import Checkout from './views/ModulOrders/Create/createOrderFinal';
 
 
 
@@ -27,7 +27,7 @@ class App extends Component
             {/* <Route path= "/nav" component={Navbar} /> */}
             <Route path= "/bmUsers" component={DeleteUpdateUserAdmin} />
             <Route path= "/registrarCliente" component={CreateUserAdm} />
-            <Route path= "/registrarPedido" component={CreateOrder} />
+            <Route path= "/registrarPedido" component={Checkout} />
           </React.Fragment>
         </BrowserRouter>
    
