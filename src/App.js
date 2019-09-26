@@ -7,6 +7,7 @@ import DeleteUpdateUserAdmin from "./views/ModulsUserAdmin/Delete-Update-List/in
 import * as serviceWorker from './serviceWorker';
 import CreateUserAdm from './views/ModulsUserAdmin/Create/index'; //Componente para registrar un nuevo cliente
 import ProductForm from './views/ModuleProduct/RegisterProduct'
+import Checkout from './views/ModulOrders/Create/createOrderFinal';
 
 
 
@@ -28,6 +29,7 @@ class App extends Component
             <Route path= "/bmUsers" component={DeleteUpdateUserAdmin} />
             <Route path= "/registrarCliente" component={CreateUserAdm} />
             <Route path= "/createProduct" component={ProductForm} />
+            <Route path= "/registrarPedido" component={Checkout} />
           </React.Fragment>
         </BrowserRouter>
    

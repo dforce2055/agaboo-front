@@ -26,7 +26,7 @@ import ContactsIcon from '@material-ui/icons/Contacts';
 import PeopleIcon from '@material-ui/icons/People';
 import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-
+import { withRouter } from "react-router-dom";
 import ButtonSearch from './buttonSearch';
 import EnhancedTable from './UsersTable'; 
 
@@ -116,10 +116,11 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
 }
 });
 
-export default function NavbarDeleteUpdate() {
+function NavbarDeleteUpdate(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const {history} = props;
 
   const [visible, setVisible] = React.useState(true);
   /*Hook que permite en clases Function utilizar 
@@ -193,11 +194,11 @@ export default function NavbarDeleteUpdate() {
 {/*Collapse permite generar desplegables. Para mas informacion leer URL ubicada en import*/}
       <Collapse in={visible} timeout="auto" unmountOnExit> 
         <List component="div" disablePadding> {/*disablePadding-->Si true, el relleno vertical se eliminará de la lista.*/}
-          <ListItem button className={classes.nested}> {/*nested es el CSS que permite que este un poco mas a la izquierda que el boton de padre.*/}
+          <ListItem button className={classes.nested} onClick ={ () => history.push('/registrarCliente')}> {/*nested es el CSS que permite que este un poco mas a la izquierda que el boton de padre.*/}
             <ListItemIcon>
               <GroupAddIcon />
             </ListItemIcon>
-            <ListItemText primary="Crear Cliente" />
+            <ListItemText primary="Crear Cliente"/>
           </ListItem>
         </List>
 
@@ -248,3 +249,4 @@ export default function NavbarDeleteUpdate() {
     </MuiThemeProvider>
   );
 }
+export default withRouter(NavbarDeleteUpdate);

@@ -20,6 +20,14 @@ export default function AddressForm() {
     altura:'',
   });  
 
+  const auth = () =>{
+    if(values.nombre.length > 3){
+      return false
+    }else{
+      return true
+    }
+  }
+
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });  
   };
@@ -148,15 +156,14 @@ export default function AddressForm() {
 
       <Button
       variant="contained"
-      color="secondary"
-      
+      color="secondary"      
       /*onClick={handleBack}*/
       >Cancelar</Button>
 
-      {values.nombre.length === 0 ? 
+      {auth() === true ? 
       <Button
       variant="contained"
-      color="secondary">Guardar</Button>
+      color="inherit">Guardar</Button>
       :
       <Button
       variant="contained"
