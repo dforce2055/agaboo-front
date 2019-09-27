@@ -68,7 +68,7 @@ class CustomerRepo extends Component {
     };
 
     addCustomer = async (newCustomer) => {
-        console.log('guardo el nuevo CLI9ENTEEE')
+        console.log('guardo el nuevo CLIENTEEE')
          await db.collection(collection)
             .doc(newCustomer.dni)
             .set({

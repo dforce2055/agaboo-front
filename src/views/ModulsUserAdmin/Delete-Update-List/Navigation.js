@@ -19,16 +19,35 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ExpandLess from '@material-ui/icons/ExpandLess'; //Icono de flecha expandida
 import ExpandMore from '@material-ui/icons/ExpandMore'; //Icono de flecha
 import Collapse from '@material-ui/core/Collapse'; //https://material-ui.com/components/transitions/ --> Componente que permite desplegar
-//ICONOS DE BOTONES
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import ContactsIcon from '@material-ui/icons/Contacts';
-import PeopleIcon from '@material-ui/icons/People';
-import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
 import ButtonSearch from './buttonSearch';
-import EnhancedTable from './UsersTable'; 
+import EnhancedTable from './UsersTable';
+//ICONOS DE BOTONES
+  //ICONOS DE CLIENTES
+  import GroupAddIcon from '@material-ui/icons/GroupAdd';
+  import ContactsIcon from '@material-ui/icons/Contacts';
+  import PeopleIcon from '@material-ui/icons/People';
+  //ICONOS DE PRODUCTOS
+  import StoreIcon from '@material-ui/icons/Store';
+  import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+  import BallotIcon from '@material-ui/icons/Ballot';
+  //ICONOS DE STOCK
+  import LocalShippingIcon from '@material-ui/icons/LocalShipping';
+  import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+  import AssignmentIcon from '@material-ui/icons/Assignment';
+  import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
+  //ICONOS PEDIDOS
+  import DoneOtulineIcon from '@material-ui/icons/DoneOutline';
+  import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+  import ArchiveIcon from '@material-ui/icons/Archive';
+  //ICONOS DE ESTADOS DE CUENTA
+  import LocalAtmIcon from '@material-ui/icons/LocalAtm';
+  //ICONOS DE MANTENIMIENTO
+  import BuildIcon from '@material-ui/icons/Build';
+
+
+
 
 const drawerWidth = 240;
 
@@ -122,13 +141,28 @@ function NavbarDeleteUpdate(props) {
   const [open, setOpen] = React.useState(false);
   const {history} = props;
 
-  const [visible, setVisible] = React.useState(true);
+  const [visible, setVisible] = React.useState(false);
+  const [productos, setProductos] = React.useState(false);
+  const [stock, setStock] = React.useState(false);
+  const [pedidos, setPedidos] = React.useState(false);
   /*Hook que permite en clases Function utilizar 
     state y cambiar su estado. Es decir el visible es el estado y 
     el setVisible es sinonimo de this.setState*/
 
   function handleClick() { 
     setVisible(!visible);
+  }
+
+  function handleClickProductos() { 
+    setProductos(!productos);
+  }
+
+  function handleClickStock() { 
+    setStock(!stock);
+  }
+
+  function handleClickPedidos() { 
+    setPedidos(!pedidos);
   }
 
   function handleDrawerOpen() {
@@ -181,56 +215,159 @@ function NavbarDeleteUpdate(props) {
           </IconButton>
         </div>
         <Divider />
-
+{/* *********************************** LISTA CLIENTES ****************************************** */}
         <List>
         
-        <ListItem button onClick={handleClick}> {/*Sub boton en forma de List*/}
-          <ListItemIcon> {/*Se utiliza para encerrar el icono que contrenda al lado el boton -->>ABRIENDO*/}          
-              <PeopleIcon /> {/*IMAGEN DEL BOTON*/}
-          </ListItemIcon> {/*Se utiliza para encerrar el icono que contrenda al lado el boton -->>CERRANDO*/}
-        <ListItemText primary="Clientes" />  {/*Nombre del boton*/}
-        {visible ? <ExpandLess /> : <ExpandMore />} {/*Si el valor visible es verdadero toma el icono ExpandLess. En cambio si el valor es false toma el icono ExpandMore*/}      
+        <ListItem button onClick={handleClick}>
+          <ListItemIcon>         
+              <PeopleIcon />
+          </ListItemIcon>
+        <ListItemText primary="Clientes" />
+        {visible ? <ExpandLess /> : <ExpandMore />}      
       </ListItem> 
-{/*Collapse permite generar desplegables. Para mas informacion leer URL ubicada en import*/}
       <Collapse in={visible} timeout="auto" unmountOnExit> 
-        <List component="div" disablePadding> {/*disablePadding-->Si true, el relleno vertical se eliminará de la lista.*/}
-          <ListItem button className={classes.nested} onClick ={ () => history.push('/registrarCliente')}> {/*nested es el CSS que permite que este un poco mas a la izquierda que el boton de padre.*/}
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested} >
             <ListItemIcon>
               <GroupAddIcon />
             </ListItemIcon>
             <ListItemText primary="Crear Cliente"/>
           </ListItem>
         </List>
-
-        <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon>
-              <AssignmentIndIcon />
-            </ListItemIcon>
-            <ListItemText primary="Modificar Cliente" />
-          </ListItem>
-        </List>
-
-        <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon>
-              <PersonAddDisabledIcon />
-            </ListItemIcon>
-            <ListItemText primary="Eliminar Cliente" />
-          </ListItem>
-        </List>
         
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem button className={classes.nested} onClick ={ () => history.push('/bmUsers')}>
             <ListItemIcon>
               <ContactsIcon/>
             </ListItemIcon>
-            <ListItemText primary="Listar Clientes" />
+            <ListItemText primary="Modificar/Eliminar Clientes" />
           </ListItem>
         </List>
       </Collapse>
 
-        </List>       
+      </List>
+{/* *********************************** LISTA PRODUCTOS ****************************************** */}
+      <List>
+        <ListItem button onClick={handleClickProductos}>
+          <ListItemIcon>         
+          <StoreIcon/> 
+          </ListItemIcon>
+        <ListItemText primary="Productos" /> 
+        {productos ? <ExpandLess /> : <ExpandMore />}     
+      </ListItem> 
+
+      <Collapse in={productos} timeout="auto" unmountOnExit> 
+        <List component="div" disablePadding> 
+          <ListItem button className={classes.nested} onClick ={ () => history.push('/createProduct')}> 
+            <ListItemIcon>
+              <AddCircleOutlineIcon />
+            </ListItemIcon>
+            <ListItemText primary="Crear Productos"/>
+          </ListItem>
+        </List>
+
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+            <ListItemIcon>
+              <BallotIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Modificar/Eliminar Productos" />
+          </ListItem>
+        </List>
+      </Collapse>
+
+      </List>
+{/* *********************************** LISTA STOCK ****************************************** */}
+      <List>
+        <ListItem button onClick={handleClickStock}> 
+          <ListItemIcon>      
+          <AssignmentIcon/>
+          </ListItemIcon> 
+        <ListItemText primary="Stock" />  
+        {stock ? <ExpandLess /> : <ExpandMore />}      
+      </ListItem> 
+
+      <Collapse in={stock} timeout="auto" unmountOnExit> 
+        <List component="div" disablePadding> 
+          <ListItem button className={classes.nested}> 
+            <ListItemIcon>
+              <AssignmentTurnedInIcon />
+            </ListItemIcon>
+            <ListItemText primary="Disponibles"/>
+          </ListItem>
+        </List>
+
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+            <ListItemIcon>
+              <AssignmentLateIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Alquilados" />
+          </ListItem>
+        </List>
+      </Collapse>
+
+      </List> 
+{/* *********************************** LISTA PEDIDOS ****************************************** */}
+      <List>
+        <ListItem button onClick={handleClickPedidos}> 
+          <ListItemIcon>      
+          <LocalShippingIcon/>
+          </ListItemIcon> 
+        <ListItemText primary="Pedidos" />  
+        {pedidos ? <ExpandLess /> : <ExpandMore />}      
+      </ListItem> 
+
+      <Collapse in={pedidos} timeout="auto" unmountOnExit> 
+        <List component="div" disablePadding> 
+          <ListItem button className={classes.nested} onClick ={ () => history.push('/registrarPedido')}> 
+            <ListItemIcon>
+              <ArchiveIcon />
+            </ListItemIcon>
+            <ListItemText primary="Registrar pedido"/>
+          </ListItem>
+        </List>
+
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+            <ListItemIcon>
+              <DeleteOutlineIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Eliminar pedido" />
+          </ListItem>
+        </List>
+
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+            <ListItemIcon>
+              <DoneOtulineIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Pedidos listos" />
+          </ListItem>
+        </List>
+      </Collapse>
+
+      </List>
+{/* *********************************** LISTA ESTADO DE CUENTA ****************************************** */}
+      <List>
+        <ListItem button> 
+          <ListItemIcon>      
+          <LocalAtmIcon/>
+          </ListItemIcon> 
+        <ListItemText primary="Estado de cuenta" />      
+      </ListItem>
+
+      </List>
+{/* *********************************** LISTA MANTENIMIENTOS A REALIZAR ****************************************** */}
+      <List>
+        <ListItem button> 
+          <ListItemIcon>      
+          <BuildIcon/>
+          </ListItemIcon> 
+        <ListItemText primary="Mantenimientos a realizar" />      
+      </ListItem>
+
+      </List>
        
       </Drawer>
       <main /*Esta clase, permite que cada vez que abramos el componente Drawers, los componentes que esten dentro de main, se correran al costado. */

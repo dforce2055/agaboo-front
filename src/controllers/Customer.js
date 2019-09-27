@@ -30,6 +30,7 @@ class CustomerController extends Component {
             let clientes = await CustomerRepo.getCustomers();
             if (clientes.length > 0) {
                 console.log(clientes);
+                return clientes;
             } else {
                 throw new Error();
             }

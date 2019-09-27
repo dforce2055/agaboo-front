@@ -132,6 +132,7 @@ function Navbar(props) {
   const {history} = props;
 
   const [visible, setVisible] = React.useState(true);
+  
   /*Hook que permite en clases Function utilizar 
     state y cambiar su estado. Es decir el visible es el estado y 
     el setVisible es sinonimo de this.setState*/
@@ -188,7 +189,7 @@ function Navbar(props) {
           </IconButton>
         </div>
         <Divider />
-
+        
         <List>
         
         <ListItem button onClick={handleClick}> {/*Sub boton en forma de List*/}
@@ -237,7 +238,7 @@ function Navbar(props) {
         </List>
       </Collapse>
 
-        </List>       
+        </List>     
        
       </Drawer>
       <main

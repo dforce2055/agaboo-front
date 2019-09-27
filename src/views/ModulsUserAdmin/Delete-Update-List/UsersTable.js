@@ -22,6 +22,7 @@ import { black } from 'material-ui/styles/colors';
 
 //Import clases de db
 import CustomerController from '../../../controllers/Customer'
+
 function createData(name, surname, email, tel, CUIT) {
   return { name, surname, email, tel, CUIT};
 }
@@ -236,7 +237,8 @@ export default function EnhancedTable() {
   }
 
   function componentDidMount(){
-    console.log('Muestro datps de la db',collection)
+    console.log('Muestro datos de la db', collection)
+    console.log('coleccion en user table', collection.then);
   }
 
   function handleSelectAllClick(event) {
