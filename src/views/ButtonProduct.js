@@ -84,7 +84,7 @@ const StyledMenuItem = withStyles(theme => ({
           <ListItemIcon>
             <CreateIcon />
           </ListItemIcon>
-          <ListItemText primary="Modificar" />
+          <ListItemText primary="Modificar" onClick ={ () => history.push('/tableProduct')}/>
         </StyledMenuItem>
         <StyledMenuItem>
           <ListItemIcon>

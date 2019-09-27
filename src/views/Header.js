@@ -118,7 +118,7 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
 export default function Navbar() {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen, hide] = React.useState(false);
 
   const [visible , setVisible] = React.useState(false);
   const [visibleProduct , setVisibleProduct] = React.useState(false);
@@ -165,7 +165,7 @@ export default function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography align = {"center"} variant="h6" noWrap>
             AGABOO
           </Typography>
         </Toolbar>

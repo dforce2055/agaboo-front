@@ -4,6 +4,7 @@ import {
   makeStyles
 } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import {withRouter} from 'react-router-dom' ;
 
 const BootstrapButton = withStyles({
   root: {
@@ -53,6 +54,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function CustomizedButtons(props) {
   const classes = useStyles();
+  const {history}  = props
 
   return (
     <div>
@@ -61,9 +63,13 @@ export default function CustomizedButtons(props) {
         color="primary"
         disableRipple
         className={classes.margin}
+       // onClick =  { () => history.push(props.route)}
+        onClick = {props.onClick} // para reutilizar codigo lo mando por props 
       >
         {props.label}
       </BootstrapButton>
+      
     </div>
   );
 }
+
