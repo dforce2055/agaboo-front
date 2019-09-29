@@ -8,6 +8,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import StoreIcon from '@material-ui/icons/Store';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import CreateIcon from '@material-ui/icons/Create';
+import {withRouter } from 'react-router-dom';
+
 
 
 
@@ -42,8 +44,9 @@ const StyledMenuItem = withStyles(theme => ({
   },
 }))(MenuItem);
 
-export default function CustomizedMenus() {
+ function CustomizedMenus(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { history } = props;
 
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
@@ -75,7 +78,7 @@ export default function CustomizedMenus() {
           <ListItemIcon>
           <StoreIcon/> 
           </ListItemIcon>
-          <ListItemText primary="Crear" />
+          <ListItemText primary="Crear" onClick ={ () => history.push('/createProduct')} />
         </StyledMenuItem>   
         <StyledMenuItem>
           <ListItemIcon>
@@ -93,3 +96,5 @@ export default function CustomizedMenus() {
     </div>
   );
 }
+
+export default withRouter(CustomizedMenus);

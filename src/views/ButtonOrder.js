@@ -77,7 +77,7 @@ function CustomizedMenus(props) {
           <ListItemIcon>
           <ArchiveIcon/> 
           </ListItemIcon>
-          <ListItemText primary="Registrar" primary="Crear" onClick ={ () => history.push('/registrarPedido')}/>
+          <ListItemText primary="Registrar" onClick ={ () => history.push('/registrarPedido')}/>
         </StyledMenuItem>   
         <StyledMenuItem>
           <ListItemIcon>

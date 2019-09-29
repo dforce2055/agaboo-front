@@ -85,11 +85,12 @@ export default function FormDialog() {
                   name: 'max-width',
                   id: 'max-width',
                 }}>
-                <MenuItem value="xs">¿Nombre de la primer mascota?</MenuItem>
-                <MenuItem value="sm">¿Club del que sos hincha?</MenuItem>
-                <MenuItem value="md">¿Un amigo de la infancia?</MenuItem>
-                <MenuItem value="lg">¿Profesor de la escuela preferido?</MenuItem>
-                <MenuItem value="xl">¿Deporte favorito?</MenuItem>
+                  {console.log("valor: ", maxWidth)}
+                <MenuItem value="mascota">¿Nombre de la primer mascota?</MenuItem>
+                <MenuItem value="club">¿Club del que sos hincha?</MenuItem>
+                <MenuItem value="amigo">¿Un amigo de la infancia?</MenuItem>
+                <MenuItem value="profesor">¿Profesor de la escuela preferido?</MenuItem>
+                <MenuItem value="deporte">¿Deporte favorito?</MenuItem>
               </Select>
             </FormControl>
             <TextField

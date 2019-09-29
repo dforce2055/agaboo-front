@@ -20,6 +20,7 @@ const CustomerTest = new Customer(
     "role_test"
 );
 const customerMock = {
+    nombre:expect.any(String),
     apellido: expect.any(String),
     nombre: expect.any(String),
     cuil: expect.any(String),

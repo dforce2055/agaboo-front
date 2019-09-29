@@ -1,8 +1,7 @@
 {
   "projects": {
-    "staging": "agabooivan",
-    "agaboopruebas": "agabooivan",
-    "testing-dforce": "agaboodforce",
-    "default": "agaboodforce"
+    "default": "agaboofront-francisco ",
+    "staging": "agaboofront-francisco",
+    "agaboopruebas": "agaboofront-francisco"
   }
 }
