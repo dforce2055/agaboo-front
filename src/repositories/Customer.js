@@ -18,18 +18,10 @@ export default new class CustomerRepo extends Component {
 
     getCustomer = async (id) => {
         try {
+            // Lo busco por ide de documento en la colección, el cual deberia ser el cuil/cuit
             let cliente = await db.collection(collection).doc(id).get();
-            //console.log(cliente.data());
-            return cliente.data();
-            //let cliente = await db.collection(collection)
-                                    //.where('cuil', '==', '20-32465169-2')
-                                    //.select()
-                                    //.limit(1)
-                                    //.get();
-            //console.log(cliente.val());
-            //return cliente.val();
-            //return cliente.snapshot.doc.data();
             
+            return cliente.data();            
         } catch (error) {
             throw new Error();
         }        

@@ -19,9 +19,14 @@ export default new class UserRepo extends Component {
 
     getUser = async (email) => {
         try {
+            if ( !email ){
+                return null;
+            }
             let query = await db.collection(collection).doc(email).get();
             let result = query.data();
             let usuario = new User();
+            
+            //var bar = JSON.parse(JSON.stringify(foo));
             
             //Mapeo los resultados en el User:usuario
             for (let prop in result) {
