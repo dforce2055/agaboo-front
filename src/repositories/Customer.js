@@ -3,7 +3,7 @@
  */
 import { Component } from 'react';
 import { db } from '../config/firebase';
-const collection = '/usuarios';
+const collection = 'customers';
 
 class CustomerRepo extends Component {
     constructor(props) {
@@ -60,29 +60,32 @@ class CustomerRepo extends Component {
     };
 
     addCustomer = async (newCustomer) => {
-        console.log('guardo el nuevo CLIENTEEE')
-         await db.collection(collection)
-            .doc(newCustomer.dni)
+        if (!newCustomer) throw new Error(`Error: no se envio un cliente para registrar`);
+        let result = await db.collection(collection)
+            .doc(newCustomer.cuil)
             .set({
+                apellido: newCustomer.apellido,
                 nombre: newCustomer.nombre,
-      apellido: newCustomer.apellido,
-      fechaNac: newCustomer.fechaNac,
-      dni: newCustomer.dni,
-      cuit: newCustomer.cuit,
-      calle:newCustomer.calle,
-      altura: newCustomer.altura,
-      localidad:newCustomer.localidad,
-      celular:newCustomer.celular,
-      email:newCustomer.email,
-        })
-        .then(() => {
-            console.log("Documento guardado exitosamente!");
-            return true;
-        })
-        .catch(function (error) {
-            console.error("Error al guardar el documento: ", error);
-            return false;
-        });
+                cuit: newCustomer.cuit,
+                cuil: newCustomer.cuil,
+                tipoDocumento: newCustomer.tipoDocumento,
+                numeroDocumento: newCustomer.numeroDocumento,
+                direccion: newCustomer.direccion,
+                telefono: newCustomer.telefono,
+                email: newCustomer.email,
+                estado: newCustomer.estado,
+                role: newCustomer.role,
+            })
+            .then(() => {
+                console.log("Documento guardado exitosamente!");
+                return true;
+            })
+            .catch(function (error) {
+                console.error("Error al guardar el documento: ", error);
+                return false;
+            });
+        // Retorna True o False
+        return result;
     }
 
     editCustomer = async (cuil, customer) => {
@@ -95,7 +98,7 @@ class CustomerRepo extends Component {
                 cuit: customer.cuit,
                 cuil: customer.cuil,
                 tipoDocumento: customer.tipoDocumento,
-                dni: customer.numeroDocumento,
+                numeroDocumento: customer.numeroDocumento,
                 direccion: customer.direccion,
                 telefono: customer.telefono,
                 email: customer.email,
