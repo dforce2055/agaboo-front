@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import ProductRepo from '../repositories/Product';
+import ProductRepo from '../repositories/ProductRepo';
 
 
 class ProductController extends Component {
@@ -15,52 +15,35 @@ class ProductController extends Component {
 
 
 
-    async getProduct() {
+    async getProducts() {
         try {
-            let product  = await ProductRepo.getCustomer();
-            if (product) {
-                //console.log(cliente);
-                return product;
+            let products  = await ProductRepo.getProducts();
+            //console.log('largo de array: ' , products.l)
+            if (products.length > 0) {
+                return products;
             } else {
                 throw new Error();
             }
         } catch (error) {
-            console.log("No se pudo obtener el cliente");
+            console.log("No se pudo obtener los productos", error);
         }
 
     }
 
-    async getCustomers() {
+
+
+    async addProduct(product) {
+
+        let newProduct = product
         try {
-            let clientes = await CustomerRepo.getCustomers();
-            if (clientes.length > 0) {
-                console.log(clientes);
+            const indicador = ProductRepo.addProduct(newProduct);
+            if (indicador) {
+                console.log("Se agrego un nuevo producto", product);
             } else {
                 throw new Error();
             }
         } catch (error) {
-            console.log("No se pudo obtener los clientes");
-        }
-    }
-
-    async addProduct() {
-
-        let Product = {
-            code: "1234",
-            typeProdcut: "typeProduct",
-            nombre: "Nombre",
-            dni: "123123123"
-        }
-
-        try {
-            CustomerRepo.addCustomer(newCustomer);
-            if (true) {
-                console.log("Se agrego un nuevo cliente");
-            } else {
-                throw new Error();
-            }
-        } catch (error) {
-            console.log("No se pudo agregar el cliente");
+            console.log(error);
         }
     }
 

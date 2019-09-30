@@ -21,8 +21,6 @@ import ExpandMore from '@material-ui/icons/ExpandMore'; //Icono de flecha
 import Collapse from '@material-ui/core/Collapse'; //https://material-ui.com/components/transitions/ --> Componente que permite desplegar
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
-import ButtonSearch from './buttonSearch';
-import EnhancedTable from './UsersTable';
 //ICONOS DE BOTONES
   //ICONOS DE CLIENTES
   import GroupAddIcon from '@material-ui/icons/GroupAdd';
@@ -135,7 +133,7 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
 }
 });
 
-function NavbarDeleteUpdate(props) {
+function NavBar(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -267,7 +265,7 @@ function NavbarDeleteUpdate(props) {
         </List>
 
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem button className={classes.nested} onClick ={ () => history.push('/tableProduct')}>
             <ListItemIcon>
               <BallotIcon/>
             </ListItemIcon>
@@ -377,8 +375,6 @@ function NavbarDeleteUpdate(props) {
       >
         <div className={classes.drawerHeader} />        
 
-         <ButtonSearch styles={{position:'rigth'}} /> {/*Importo el componente Boton de busqueda.*/}
-          <EnhancedTable/> {/*Importo la tabla donde se encontraran la List*/}
         
         
       </main>
@@ -386,4 +382,4 @@ function NavbarDeleteUpdate(props) {
     </MuiThemeProvider>
   );
 }
-export default withRouter(NavbarDeleteUpdate);
+export default withRouter(NavBar);

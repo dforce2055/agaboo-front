@@ -1,7 +1,7 @@
 {
   "projects": {
-    "default": "agabooivan",
-    "agaboo": "agabooivan",
-    "agabooivan": "agabooivan"
+    "default": "agaboofront-francisco ",
+    "staging": "agaboofront-francisco",
+    "agaboopruebas": "agaboofront-francisco"
   }
 }

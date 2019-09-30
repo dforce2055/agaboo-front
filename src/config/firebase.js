@@ -1,4 +1,5 @@
 import firebase from "firebase";
+import firebaseConfig from "./firebase-config";
 
 /**
  * acá va tu config de Firebase, en un archivo firebase-config.js ignorado por git
@@ -13,9 +14,10 @@ import firebase from "firebase";
  *   };
  *
  */
-import  { firebaseConfig } from './firebase-config'; 
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+const config = firebaseConfig;
+
+
+const firebaseApp = firebase.initializeApp(config);
 const db = firebaseApp.firestore();
-
 export { db, firebaseApp };

@@ -5,10 +5,10 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import FaceIcon from '@material-ui/icons/Face';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import CreateIcon from '@material-ui/icons/Create';
-import { Link, withRouter } from "react-router-dom";
+import ArchiveIcon from '@material-ui/icons/Archive';
+import DoneOtulineIcon from '@material-ui/icons/DoneOutline';
+import { withRouter } from "react-router-dom";
 
 
 
@@ -40,13 +40,11 @@ const StyledMenuItem = withStyles(theme => ({
         color: theme.palette.common.white,
       },
     },
-    
   },
 }))(MenuItem);
 
 function CustomizedMenus(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
-
   const {history} = props;
 
   function handleClick(event) {
@@ -66,7 +64,7 @@ function CustomizedMenus(props) {
         color="primary"
         onClick={handleClick}
       >
-        Clientes
+        Pedidos
       </Button>
       <StyledMenu
         id="customized-menu"
@@ -77,28 +75,24 @@ function CustomizedMenus(props) {
       >
         <StyledMenuItem>
           <ListItemIcon>
-            <FaceIcon/> 
+          <ArchiveIcon/> 
           </ListItemIcon>
-          <ListItemText primary="Crear" onClick ={ () => history.push('/registrarCliente')}  />{/*Utilizo el onClick en lugar del link, es de la librería de router dom hay que exportarlo con withRouter*/ }
-        </StyledMenuItem>
-        
-        <StyledMenuItem>
-          <ListItemIcon>
-            <CreateIcon />
-          </ListItemIcon>
-          <ListItemText primary="Modificar" onClick ={ () => history.push('/bmUsers')} />
-        </StyledMenuItem>
-
-
+          <ListItemText primary="Registrar" onClick ={ () => history.push('/registrarPedido')}/>
+        </StyledMenuItem>   
         <StyledMenuItem>
           <ListItemIcon>
             <DeleteOutlineIcon />
           </ListItemIcon>
           <ListItemText primary="Eliminar" />
         </StyledMenuItem>
+        <StyledMenuItem>
+          <ListItemIcon>
+            < DoneOtulineIcon/>
+          </ListItemIcon>
+          <ListItemText primary="Listos" />
+        </StyledMenuItem>
       </StyledMenu>
     </div>
   );
 }
-
 export default withRouter(CustomizedMenus);

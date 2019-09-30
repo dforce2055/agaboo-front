@@ -7,7 +7,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from  './Button';
-import NavBar from '../Header';
+import NavBar from '../Navigation';
+import ProductController from '../../controllers/ProductController';
 import {withRouter } from 'react-router-dom';
 
 
@@ -32,17 +33,52 @@ const StyledTableRow = withStyles(theme => ({
 
 
 
+
+async function getProducts(products){
+  products =  await ProductController.getProducts();
+  console.log("products :" , products);
+  return await products;
+}
+
+
+const Products =   ProductController.getProducts()
+                        .then(function(products){
+                          console.log('products pormise: ', products)
+                          return products;
+                        });
+
+
+
+
+
+
+
+
 function createData(typeProduct, code, state, description ) {
   return { typeProduct, code, state, description};
 }
 
-const rows = [
+
+
+
+let rows = [
   createData('Baño Quimico', 5001, 'Alquilado'),
   createData('Baño Quimico', 5002, 'Alquilado'),
   createData('Baño Quimico', 5003, 'Disponible'),
   createData('Baño Quimico', 5004, 'Disponible'),
   createData('Baño Quimico', 5005, 'Averiado'),
 ];
+
+ProductController.getProducts()
+                        .then(function(products){
+                          console.log('products pormise: ', products)
+                          rows = products ;
+                          return products;
+                        });
+
+console.log('Rows despues de getProducts: ', rows);
+
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -58,7 +94,6 @@ const useStyles = makeStyles(theme => ({
 export default function CustomizedTables(props) {
   const classes = useStyles();
   const {history}  = props;
-  console.log('history' , history);
 
   return (
       <React.Fragment>

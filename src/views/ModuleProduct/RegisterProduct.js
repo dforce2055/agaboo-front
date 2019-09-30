@@ -4,9 +4,10 @@ import TextField from "@material-ui/core/TextField";
 import './ModuleProduct.css';
 import Button from './Button' ;
 import Grid from '@material-ui/core/Grid'
-import NavBar from '../Header';
+import NavBar from '../Navigation';
 import {withRouter} from 'react-router-dom' ;
 import Paper from '@material-ui/core/Paper';
+import ProductController from '../../controllers/ProductController';
 
 
 const usuario={
@@ -76,7 +77,7 @@ const useStyles = makeStyles(theme => ({
   const {history} = props;
 
   useEffect(() => {
-    if(usuario.rol == "Esclavo"){
+    if(usuario.rol =! "Esclavo"){
       history.push('/')
       console.log('useEffect')
     }
@@ -97,22 +98,21 @@ const useStyles = makeStyles(theme => ({
     
     
     setValues({ ...values, [name]: event.target.value });
-    console.log(event.target  );
   };
 
   function registerProduct(){
     console.log("llegue a register Product")
-    console.log(values.typeProduct);
 
 
     const product = {
-      tipo : values.typeProduct,
+      typeProduct : values.typeProduct,
       code : values.code,
       description : values.description,
       state : values.state,
     };
     
     console.log("product : ", product);
+    ProductController.addProduct(product);
 
 
 

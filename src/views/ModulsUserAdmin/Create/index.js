@@ -1,13 +1,10 @@
 import React from 'react';
-import Dashboard from './Dashboard';
+import Navbar from './Navigation';
 
 export default function CreateUserAdm() {
-
-    return (
-        
+    return (        
         <div className="UsersScreen">
-            <Dashboard></Dashboard>
-        </div>
-        
+            <Navbar/>            
+        </div>        
     )
 }
