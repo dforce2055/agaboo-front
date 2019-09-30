@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 //import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -49,9 +48,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function SignIn(props) {
+function SignIn() {
   const classes = useStyles();
-  const {history} = props;
 
   return (
     <Container component="main" maxWidth="sm">
@@ -102,8 +100,10 @@ function SignIn(props) {
             onFailure={responseGoogle}
             cookiePolicy={'single_host_origin'}
         /> */}
-        <LoginGoogle/> {/*Login que funciona seguro pero esteticamente feo */}
-        
+        <div className="login">
+          <LoginGoogle/> {/*Login que funciona seguro pero esteticamente feo */}
+        </div>
+
       </div>
       <Box mt={7}>
         <Copyright />

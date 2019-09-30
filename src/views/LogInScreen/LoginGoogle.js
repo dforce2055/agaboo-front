@@ -2,10 +2,22 @@ import React from 'react';
 import withFirebaseAuth from 'react-with-firebase-auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-
 import Button from '@material-ui/core/Button';
 import { firebaseApp } from '../../config/firebase' 
 import userController from '../../controllers/User';
+import BotonIngresar from "./BotonIngresar";
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+
+const theme = createMuiTheme({ /* Plantilla de edicion */
+    overrides: { 
+      MuiButtonBase: {
+        root:{
+            margin:'1',
+            },
+        },
+    }
+  });
+
 
 class LoginGoogle extends React.Component{
     render() {
@@ -30,14 +42,17 @@ class LoginGoogle extends React.Component{
             //user.uid
             if ( result ) {
                 return (
-                    <Button
+                <MuiThemeProvider theme={theme}>
+                    {/* <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                     >
                         Ingresar a la Aplicación
-                    </Button>  
+                    </Button> */}
+                    <BotonIngresar className="boton"/>
+                </MuiThemeProvider>
                 )
             }
         }
@@ -47,19 +62,21 @@ class LoginGoogle extends React.Component{
                 {
                     user ?
                         
-                        <div> 
+                        <div>
                             <p>Hola, {user.displayName}</p>
                             {veriricarInicioSesion(user)}     
                             <br />
+                        <MuiThemeProvider theme={theme}>
                             <Button
                                 onClick={signOut}
                                 fullWidth
                                 variant="contained"
                                 color="secondary"
+                                className="boton"
                             >
                                 Cerrar sesión
                             </Button>   
-                            
+                        </MuiThemeProvider>
                         </div>
                     
                     : 
@@ -69,6 +86,7 @@ class LoginGoogle extends React.Component{
                             fullWidth
                             variant="contained"
                             color="primary"
+                            className="boton"
                         >
                             Iniciar Sesión con Google
                     </Button>
