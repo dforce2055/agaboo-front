@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import AddressForm from './clientForm';
 import PaymentForm from './orderForm';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import { withRouter } from "react-router-dom";
 
 
 const theme = createMuiTheme({ /* Plantilla de edicion */
@@ -84,9 +85,10 @@ function getStepContent(step) {
   }
 }
 
-export default function Checkout() {
+function Checkout(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const {history} = props;
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -117,7 +119,7 @@ export default function Checkout() {
                 <Typography variant="h5" gutterBottom>
                   Pedido registrado con éxito.
                 </Typography>
-                <Button variant="contained" color="primary" className={classes.button} onClick={handleBack}>
+                <Button variant="contained" color="primary" className={classes.button} onClick ={ () => history.push('/mainMenu')}>
                     Cerrar
                 </Button>
               </React.Fragment>
@@ -148,3 +150,4 @@ export default function Checkout() {
     </MuiThemeProvider>
   );
 }
+export default withRouter(Checkout);

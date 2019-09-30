@@ -6,7 +6,9 @@ import SignIn from './views/LogInScreen/Login';
 import DeleteUpdateUserAdmin from "./views/ModulsUserAdmin/Delete-Update-List/index";
 import * as serviceWorker from './serviceWorker';
 import CreateUserAdm from './views/ModulsUserAdmin/Create/index'; //Componente para registrar un nuevo cliente
-import Checkout from './views/ModulOrders/Create/createOrderFinal';
+import ProductForm from './views/ModuleProduct/RegisterProduct'
+import CreateOrder from './views/ModulOrders/Create/index';
+import OrderReady from './views/ModulOrders/Ready/index';
 
 
 
@@ -27,7 +29,9 @@ class App extends Component
             {/* <Route path= "/nav" component={Navbar} /> */}
             <Route path= "/bmUsers" component={DeleteUpdateUserAdmin} />
             <Route path= "/registrarCliente" component={CreateUserAdm} />
-            <Route path= "/registrarPedido" component={Checkout} />
+            <Route path= "/createProduct" component={ProductForm} />
+            <Route path= "/registrarPedido" component={CreateOrder} />
+            <Route path= "/pedidosListos" component={OrderReady} />
           </React.Fragment>
         </BrowserRouter>
    
