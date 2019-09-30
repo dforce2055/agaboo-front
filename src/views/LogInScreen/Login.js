@@ -92,16 +92,7 @@ function SignIn(props) {
           /> */}
           {/* <Link to='/mainMenu'> */}
             
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick ={ () => history.push('/mainMenu')}
-            >
-              Ingresar
-            </Button>        
+                  
           {/* </Link> */}
         </form>
         {/* <GoogleLogin

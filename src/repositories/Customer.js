@@ -1,4 +1,5 @@
 /**
+ * @Repository
  * Customer Repository Class
  */
 import { Component } from 'react';
