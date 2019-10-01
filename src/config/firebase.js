@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 import firebase from "firebase";
 import firebaseConfig from "./firebase-config";
 
-=======
->>>>>>> 7e5babdb8750e09c2e2827abb76ba7140369710b
 /**
  *                          ===================
  *                          | IMPORTANTE LEER |
@@ -22,12 +19,7 @@ import firebaseConfig from "./firebase-config";
  *
  */
 
-<<<<<<< HEAD
 const config = firebaseConfig;
-=======
-import firebase from "firebase";
-import {firebaseConfig}  from './firebase-config';
->>>>>>> 7e5babdb8750e09c2e2827abb76ba7140369710b
 
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);

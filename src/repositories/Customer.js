@@ -66,7 +66,6 @@ class CustomerRepo extends Component {
             .set({
                 apellido: newCustomer.apellido,
                 nombre: newCustomer.nombre,
-<<<<<<< HEAD
                 apellido: newCustomer.apellido,
                 fechaNac: newCustomer.fechaNac,
                 dni: newCustomer.dni,
@@ -85,28 +84,6 @@ class CustomerRepo extends Component {
             console.error("Error al guardar el documento: ", error);
             return false;
         });
-=======
-                cuit: newCustomer.cuit,
-                cuil: newCustomer.cuil,
-                tipoDocumento: newCustomer.tipoDocumento,
-                numeroDocumento: newCustomer.numeroDocumento,
-                direccion: newCustomer.direccion,
-                telefono: newCustomer.telefono,
-                email: newCustomer.email,
-                estado: newCustomer.estado,
-                role: newCustomer.role,
-            })
-            .then(() => {
-                console.log("Documento guardado exitosamente!");
-                return true;
-            })
-            .catch(function (error) {
-                console.error("Error al guardar el documento: ", error);
-                return false;
-            });
-        // Retorna True o False
-        return result;
->>>>>>> 7e5babdb8750e09c2e2827abb76ba7140369710b
     }
 
     editCustomer = async (cuil, customer) => {
