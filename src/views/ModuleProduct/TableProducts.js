@@ -54,20 +54,20 @@ const Products =   ProductController.getProducts()
 
 
 
-function createData(typeProduct, code, state, description ) {
-  return { typeProduct, code, state, description};
+function createData(type, code, state, description ) {
+  return { type, code, state, description};
 }
 
 
 
 
-let rows = [
-  createData('Baño Quimico', 5001, 'Alquilado'),
-  createData('Baño Quimico', 5002, 'Alquilado'),
-  createData('Baño Quimico', 5003, 'Disponible'),
-  createData('Baño Quimico', 5004, 'Disponible'),
-  createData('Baño Quimico', 5005, 'Averiado'),
-];
+  let rows = [
+    createData('Baño Quimico', 5001, 'Alquilado'),
+    createData('Baño Quimico', 5002, 'Alquilado'),
+    createData('Baño Quimico', 5003, 'Disponible'),
+    createData('Baño Quimico', 5004, 'Disponible'),
+    createData('Baño Quimico', 5005, 'Averiado'),
+  ];
 
 ProductController.getProducts()
                         .then(function(products){
@@ -109,9 +109,9 @@ export default function CustomizedTables(props) {
                 </TableHead>
                 <TableBody>
                 {rows.map(row => (
-                    <StyledTableRow key={row.name}>
+                    <StyledTableRow key={row.typeProduct}>
                     <StyledTableCell component="th" scope="row">
-                        {row.typeProduct}
+                        {row.type}
                     </StyledTableCell>
                     <StyledTableCell align="justyfy">{row.code}</StyledTableCell>
                     <StyledTableCell align="justyfy">{row.state}</StyledTableCell>

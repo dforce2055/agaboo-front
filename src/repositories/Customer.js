@@ -3,7 +3,7 @@
  */
 import { Component } from 'react';
 import { db } from '../config/firebase';
-const collection = '/usuarios';
+const collection = 'customers';
 
 class CustomerRepo extends Component {
     constructor(props) {
@@ -18,18 +18,10 @@ class CustomerRepo extends Component {
 
     getCustomer = async (id) => {
         try {
+            // Lo busco por ide de documento en la colección, el cual deberia ser el cuil/cuit
             let cliente = await db.collection(collection).doc(id).get();
-            //console.log(cliente.data());
-            return cliente.data();
-            //let cliente = await db.collection(collection)
-                                    //.where('cuil', '==', '20-32465169-2')
-                                    //.select()
-                                    //.limit(1)
-                                    //.get();
-            //console.log(cliente.val());
-            //return cliente.val();
-            //return cliente.snapshot.doc.data();
             
+            return cliente.data();            
         } catch (error) {
             throw new Error();
         }        
@@ -68,11 +60,13 @@ class CustomerRepo extends Component {
     };
 
     addCustomer = async (newCustomer) => {
-        console.log('guardo el nuevo CLIENTEEE')
-         await db.collection(collection)
-            .doc(newCustomer.dni)
+        if (!newCustomer) throw new Error(`Error: no se envio un cliente para registrar`);
+        let result = await db.collection(collection)
+            .doc(newCustomer.cuil)
             .set({
+                apellido: newCustomer.apellido,
                 nombre: newCustomer.nombre,
+<<<<<<< HEAD
                 apellido: newCustomer.apellido,
                 fechaNac: newCustomer.fechaNac,
                 dni: newCustomer.dni,
@@ -91,6 +85,28 @@ class CustomerRepo extends Component {
             console.error("Error al guardar el documento: ", error);
             return false;
         });
+=======
+                cuit: newCustomer.cuit,
+                cuil: newCustomer.cuil,
+                tipoDocumento: newCustomer.tipoDocumento,
+                numeroDocumento: newCustomer.numeroDocumento,
+                direccion: newCustomer.direccion,
+                telefono: newCustomer.telefono,
+                email: newCustomer.email,
+                estado: newCustomer.estado,
+                role: newCustomer.role,
+            })
+            .then(() => {
+                console.log("Documento guardado exitosamente!");
+                return true;
+            })
+            .catch(function (error) {
+                console.error("Error al guardar el documento: ", error);
+                return false;
+            });
+        // Retorna True o False
+        return result;
+>>>>>>> 7e5babdb8750e09c2e2827abb76ba7140369710b
     }
 
     editCustomer = async (cuil, customer) => {
@@ -103,7 +119,7 @@ class CustomerRepo extends Component {
                 cuit: customer.cuit,
                 cuil: customer.cuil,
                 tipoDocumento: customer.tipoDocumento,
-                dni: customer.numeroDocumento,
+                numeroDocumento: customer.numeroDocumento,
                 direccion: customer.direccion,
                 telefono: customer.telefono,
                 email: customer.email,

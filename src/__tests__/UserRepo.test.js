@@ -4,7 +4,9 @@
  */
 import UserRepo from '../repositories/User';
 import { User } from '../models/User';
-let userTest = new User(
+
+const Users = expect.any(Array);
+const userTest = new User(
     "apellido_test",
     "nombre_test",
     "cuit_test",
@@ -32,14 +34,176 @@ const userMock = {
     role : expect.any(String)
     
 };
+describe('Metodo getUser', () => {
+    // Pruebas del metodo getUser
+    test('getUser', async () => {
+        //Debería devolver un objeto Json del tipo User
+        let user = await UserRepo.getUser('aperez2055@gmail.com');
 
-test('Metodo getUser', async () => {
-    //Debería devolver un objeto Json del tipo User
-    let user = await UserRepo.getUser('dperez2055@gmail.com');
+        expect(typeof user).toBe('object');
+        
+        //Comparo el objeto con un objeto del tipo user
+        expect(user).toMatchObject(userMock);
+    });
 
-    expect(typeof user).toBe('object');
-    //console.log(user);
-    
-    //Comparo el objeto con un objeto del tipo user
-    expect(user).toMatchObject(userMock);
+    test('Metodo getUser sin PARAMETRO', async () => {
+        //No le envió ningun parametro
+        //Debería devolver un mensaje de error
+        let message = false
+        try {
+            await UserRepo.getUser();
+        } catch (e) {
+            message = e.message
+        }
+        console.log(message);
+        expect(message).toBeTruthy()
+    });
+});
+
+describe('Metodo getUserByCUIL', () => {
+    // Pruebas del metodo getUser
+    test('getUserByCUIL', async () => {
+        //Debería devolver un objeto Json del tipo User
+        let user = await UserRepo.getUserByCUIL('20-32465169-2');
+
+        expect(typeof user).toBe('object');
+
+        //Comparo el objeto con un objeto del tipo user
+        expect(user).toMatchObject(userMock);
+    });
+
+    test('Metodo getUserByCUIL sin PARAMETRO', async () => {
+        //No le envió ningun parametro
+        //Debería devolver un mensaje de error
+        let message = false
+        try {
+            await UserRepo.getUserByCUIL();
+        } catch (e) {
+            message = e.message
+        }
+        console.log(message);
+        expect(message).toBeTruthy()
+    });
+});
+
+describe('Metodo getUserByEMAIL', () => {
+    // Pruebas del metodo getUser
+    test('getUserByEMAIL', async () => {
+        //Debería devolver un objeto Json del tipo User
+        let user = await UserRepo.getUserByEMAIL('aperez2055@gmail.com');
+
+        expect(typeof user).toBe('object');
+
+        //Comparo el objeto con un objeto del tipo user
+        expect(user).toMatchObject(userMock);
+    });
+
+    test('Metodo getUserByEMAIL sin PARAMETRO', async () => {
+        //No le envió ningun parametro
+        //Debería devolver un mensaje de error
+        let message = false
+        try {
+            await UserRepo.getUserByEMAIL();
+        } catch (e) {
+            message = e.message
+        }
+        console.log(message);
+        expect(message).toBeTruthy()
+    });
+});
+
+
+describe('Metodo getUsers', () => {
+    // Pruebas del metodo getUsers
+    test('getUsers', async () => {
+        //Debería devolver un array de objetos del tipo User en Json
+        let users = await UserRepo.getUsers();
+
+        expect(typeof users).toBe('object');
+
+        //Comparo el objeto con un objeto del tipo User
+        expect(users).toMatchObject(Users);
+
+        // Verifico que me llegue un array de objetos del tipo User
+        expect(users).toEqual(
+            expect.arrayContaining([
+                userMock
+            ])
+        )
+    });
+});
+
+
+describe('Metodo addUser', () => {
+    // Pruebas del metodo getUser
+    test('addUser', async () => {
+        //Debería devolver un objeto Json del tipo User
+        let result = await UserRepo.addUser(userTest);
+
+        expect(typeof result).toBe('boolean');
+        expect(result).toBe(true);
+    });
+
+    test('Metodo addUser sin PARAMETRO', async () => {
+        //No le envió ningun parametro
+        //Debería devolver un mensaje de error
+        let message = false
+        try {
+            await UserRepo.addUser();
+        } catch (e) {
+            message = e.message
+        }
+        console.log(message);
+        expect(message).toBeTruthy()
+    });
+});
+
+
+describe('Metodo editUser', () => {
+    test('Metodo editUser', async () => {
+        //Debería devolver true si encuentra el email
+        //y logra modificar al usuario
+
+        let result = await UserRepo.editUser('email_test', userTest);
+        expect(typeof result).toBe('boolean');
+        expect(result).toBe(true);
+    });
+
+    test('Metodo editUser sin parametros', async () => {
+        //Debería devolver un mensaje de error
+        let message = false
+        try {
+            await UserRepo.editUser();
+        } catch (e) {
+            message = e.message
+        }
+        //console.log(message);
+        expect(message).toBeTruthy()
+    });
+});
+
+describe('Metodo deleteUser', () => {
+    test('Metodo deleteUser', async () => {
+        //Debería devolver true si encuentra el email
+        //y logra eliminar al usuario
+        //Creo un user
+        await UserRepo.addUser(userTest);
+
+        //Lo elimino y evaluo el resultado
+        let result = await UserRepo.deleteUser(userTest.email);
+        expect(typeof result).toBe('boolean');
+        expect(result).toBe(true);
+    });
+
+    test('Metodo deleteUser sin parametros', async () => {
+        //Debería devolver un mensaje de error
+        let message = false
+        try {
+            await UserRepo.deleteUser();
+        } catch (e) {
+            message = e.message
+        }
+        //console.log(message);
+        expect(message).toBeTruthy()
+    });
 });

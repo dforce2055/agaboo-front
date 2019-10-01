@@ -5,7 +5,6 @@
 import CustomerRepo from '../repositories/Customer';
 import { Customer } from '../models/Customer';
 
-const Clientes = expect.any(Array);
 const CustomerTest = new Customer(
     "apellido_test",
     "nombre_test",
@@ -74,14 +73,29 @@ test('Metodo getCustomers', async () => {
     let customers = await CustomerRepo.getCustomers();
     expect(typeof customers).toBe('object');
 
-    //Comparo el objeto con un array [] de objetos del tipo Customer
-    expect(customers).toMatchObject(Clientes);
+        // Verifico que me llegue un array de objetos del tipo User
+    expect(customers).toEqual(
+        expect.arrayContaining([
+            customerMock
+        ])
+    )
 });
 
 test('Metodo addCustomer', async () => {
-    //Debería devolver true
-    let customer = await CustomerRepo.addCustomer(CustomerTest);
-    expect(customer).toBe(true);
+    //Intento agregar un cliente debería devolver true
+    let result = await CustomerRepo.addCustomer(CustomerTest);
+    expect(result).toBe(true);
+
+    //No le envió ningun parametro
+    //Debería devolver un mensaje de error
+    let message = false
+    try {
+        await CustomerRepo.addCustomer();
+    } catch (e) {
+        message = e.message
+    }
+    //console.log(message);
+    expect(message).toBeTruthy()
 });
 
 
@@ -109,9 +123,10 @@ test('Metodo editCustomer sin parametros', async () => {
 test('Metodo deleteCustomer', async () => {
     //Debería devolver true si encuentra el cuil
     //y logra eliminar al cliente
+    
     //Creo un customer
-
     await CustomerRepo.addCustomer(CustomerTest);
+
     //Lo elimino y evaluo el resultado
     let customer = await CustomerRepo.deleteCustomer('cuil_test');
     expect(customer).toBe(true);
