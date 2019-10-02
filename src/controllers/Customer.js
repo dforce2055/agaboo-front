@@ -48,5 +48,17 @@ class CustomerController extends Component {
             CustomerRepo.addCustomer(newCustomer)
     }
 
+   async deleteCustomer(DNI){
+        let dni = DNI;        
+        try {
+            console.log("Estoy pasando el dni ' "+dni+" ' a repositorio.");
+            CustomerRepo.deleteCustomer(dni);            
+        } catch (error) {
+            console.error("Error en controller.",error)
+        }        
+    }
+
+
 }
+
 export default new CustomerController();

@@ -62,30 +62,14 @@ class CustomerRepo extends Component {
     addCustomer = async (newCustomer) => {
         if (!newCustomer) throw new Error(`Error: no se envio un cliente para registrar`);
         let result = await db.collection(collection)
-            .doc(newCustomer.cuil)
+            .doc(newCustomer.dni)
             .set({
-                apellido: newCustomer.apellido,
                 nombre: newCustomer.nombre,
-<<<<<<< HEAD
                 apellido: newCustomer.apellido,
-                fechaNac: newCustomer.fechaNac,
                 dni: newCustomer.dni,
-                cuit: newCustomer.cuit,
-                calle:newCustomer.calle,
-                altura: newCustomer.altura,
                 localidad:newCustomer.localidad,
                 celular:newCustomer.celular,
-                email:newCustomer.email,
-        })
-        .then(() => {
-            console.log("Documento guardado exitosamente!");
-            return true;
-        })
-        .catch(function (error) {
-            console.error("Error al guardar el documento: ", error);
-            return false;
-        });
-=======
+                /*                
                 cuit: newCustomer.cuit,
                 cuil: newCustomer.cuil,
                 tipoDocumento: newCustomer.tipoDocumento,
@@ -94,7 +78,7 @@ class CustomerRepo extends Component {
                 telefono: newCustomer.telefono,
                 email: newCustomer.email,
                 estado: newCustomer.estado,
-                role: newCustomer.role,
+                role: newCustomer.role,*/
             })
             .then(() => {
                 console.log("Documento guardado exitosamente!");
@@ -106,7 +90,6 @@ class CustomerRepo extends Component {
             });
         // Retorna True o False
         return result;
->>>>>>> 7e5babdb8750e09c2e2827abb76ba7140369710b
     }
 
     editCustomer = async (cuil, customer) => {
@@ -135,11 +118,11 @@ class CustomerRepo extends Component {
         return result;
     }
     
-    deleteCustomer = async (cuil) => {
-       if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
-       let result = this.getCustomerByCUIL(cuil)
+    deleteCustomer = async (dni) => {
+       if (!dni) throw new Error(`Error: el CUIL es obligatorio`);
+       let result = this.getCustomerByCUIL(dni)
         .then(() => {
-            db.collection(collection).doc(cuil).delete();
+            db.collection(collection).doc(dni).set({EstadoEnDb:false});
             return true;
         })
         .catch(function (error) {
@@ -147,6 +130,23 @@ class CustomerRepo extends Component {
             return false;
         });
         return result;
+
+        if(dni != undefined || !dni){
+            try {
+                let customer = db.collection(collection)
+                    .doc(dni)
+                    .set({
+                        EstadoEnDb:false,
+                    })
+                console.log("Estado cambiado en db.");
+                console.log(customer);
+                
+                
+            } catch (error) {
+                console.error(error);            
+            }
+
+        }
     }
 }
 export default new CustomerRepo();
