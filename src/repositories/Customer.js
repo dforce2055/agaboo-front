@@ -3,7 +3,7 @@
  * Customer Repository Class
  */
 import { Component } from 'react';
-import { db } from '../config/firebase';
+import firebase from '../config/firebase';
 const collection = 'customers';
 
 class CustomerRepo extends Component {
@@ -20,7 +20,7 @@ class CustomerRepo extends Component {
     getCustomer = async (id) => {
         try {
             // Lo busco por ide de documento en la colección, el cual deberia ser el cuil/cuit
-            let cliente = await db.collection(collection).doc(id).get();
+            let cliente = await firebase.db.collection(collection).doc(id).get();
             
             return cliente.data();            
         } catch (error) {
@@ -31,7 +31,7 @@ class CustomerRepo extends Component {
     getCustomerByCUIL = async (cuil) => {
         if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
         let customer = {};
-         await db.collection(collection)
+         await firebase.db.collection(collection)
             .where('cuil', '==', cuil)
             .limit(1)
             .get()
@@ -52,7 +52,7 @@ class CustomerRepo extends Component {
 
     getCustomers = async (res) => {
         try {
-            let coleccion = await db.collection(collection).get();
+            let coleccion = await firebase.db.collection(collection).get();
             let clientes = coleccion.docs.map(doc => doc.data());
             return clientes;
         } catch (error) {
@@ -62,7 +62,7 @@ class CustomerRepo extends Component {
 
     addCustomer = async (newCustomer) => {
         if (!newCustomer) throw new Error(`Error: no se envio un cliente para registrar`);
-        let result = await db.collection(collection)
+        let result = await firebase.db.collection(collection)
             .doc(newCustomer.cuil)
             .set({
                 apellido: newCustomer.apellido,
@@ -93,7 +93,7 @@ class CustomerRepo extends Component {
        if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
        let result = this.getCustomerByCUIL(cuil)
         .then(() => {
-            db.collection(collection).doc(cuil).update({        
+            firebase.db.collection(collection).doc(cuil).update({        
                 nombre: customer.nombre,
                 apellido: customer.apellido,
                 cuit: customer.cuit,
@@ -119,7 +119,7 @@ class CustomerRepo extends Component {
        if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
        let result = this.getCustomerByCUIL(cuil)
         .then(() => {
-            db.collection(collection).doc(cuil).delete();
+            firebase.db.collection(collection).doc(cuil).delete();
             return true;
         })
         .catch(function (error) {

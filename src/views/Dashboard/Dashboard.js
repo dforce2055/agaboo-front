@@ -20,8 +20,8 @@ import ButtonClient from './ButtonClient';
 import ButtonProduct from './ButtonProduct';
 import ButtonStock from './ButtonStock';
 import ButtonOrder from './ButtonOrder';
-import './MainMenu.css';
-import Chart from './Statistics/Chart.js';
+import '../MainMenu/MainMenu.js';
+import Chart from '../Statistics/Chart.js';
 
 const drawerWidth = 240;
 
