@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useState, useEffect }from "react";
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -34,18 +34,7 @@ const StyledTableRow = withStyles(theme => ({
 
 
 
-async function getProducts(products){
-  products =  await ProductController.getProducts();
-  console.log("products :" , products);
-  return await products;
-}
 
-
-const Products =   ProductController.getProducts()
-                        .then(function(products){
-                          console.log('products pormise: ', products)
-                          return products;
-                        });
 
 
 
@@ -61,22 +50,6 @@ function createData(type, code, state, description ) {
 
 
 
-  let rows = [
-    createData('Baño Quimico', 5001, 'Alquilado'),
-    createData('Baño Quimico', 5002, 'Alquilado'),
-    createData('Baño Quimico', 5003, 'Disponible'),
-    createData('Baño Quimico', 5004, 'Disponible'),
-    createData('Baño Quimico', 5005, 'Averiado'),
-  ];
-
-ProductController.getProducts()
-                        .then(function(products){
-                          console.log('products pormise: ', products)
-                          rows = products ;
-                          return products;
-                        });
-
-console.log('Rows despues de getProducts: ', rows);
 
 
 
@@ -92,9 +65,38 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function CustomizedTables(props) {
+    const [rows,setRows] = React.useState([
+      createData('Baño Quimico', 5001, 'Alquilado'),
+      createData('Baño Quimico', 5002, 'Alquilado'),
+      createData('Baño Quimico', 5003, 'Disponible'),
+      createData('Baño Quimico', 5004, 'Disponible'),
+      createData('Baño Quimico', 5005, 'Averiado'),
+    ]);
+
   const classes = useStyles();
   const {history}  = props;
+  
 
+
+console.log('Rows despues de getProducts: ', rows);
+
+
+  
+  async function getProducts(){
+    const products = await ProductController.getProducts();
+    console.log("Cantidad de productos :", products.length);
+    if(rows.length != products.length){
+      setRows(products); 
+      console.log("products :" , rows);    
+    }
+    
+  };
+
+  useEffect(() => {
+    getProducts();
+    
+  });
+  
   return (
       <React.Fragment>
         <NavBar/>
@@ -102,7 +104,7 @@ export default function CustomizedTables(props) {
             <Table className={classes.table}>
                 <TableHead>
                 <TableRow>
-                    <StyledTableCell align= "justyfy">Prodcuto</StyledTableCell>
+                    <StyledTableCell align= "justyfy">Producto</StyledTableCell>
                     <StyledTableCell align="justyfy">Codigo</StyledTableCell>
                     <StyledTableCell align="justyfy">Estado</StyledTableCell>
                 </TableRow>
