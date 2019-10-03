@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
 import CustomerController from '../../../controllers/Customer';
+import DialogAcept from './dialogAcept';
 
 export default function AddressForm() {
   const [values, setValues] = React.useState({
@@ -18,6 +19,7 @@ export default function AddressForm() {
     localidad:'',
     calle:'',
     altura:'',
+    mostrarDialog:false,
   });  
 
   const auth = () =>{
@@ -46,8 +48,17 @@ export default function AddressForm() {
       celular:values.celular,
       email:values.email,
     }
-    CustomerController.addCustomer(data)
+    CustomerController.addCustomer(data)    
+    handleCloseDialog();
   }
+
+  const [mostrarDialog, setMostrarDialog] = React.useState(false);  
+  const handleCloseDialog = () =>{
+    setMostrarDialog(mostrarDialog===false);
+  };
+   const handleOpenDialog = () =>{
+    setMostrarDialog(mostrarDialog===false);
+  };
 
   /*const handleAuth = () => {
     if(values.nombre.length >3 && values.apellido.length >3 && values.dni.length >8){
@@ -59,6 +70,11 @@ export default function AddressForm() {
 
   return (
     <React.Fragment>
+
+    <DialogAcept
+    mostrarDialog={mostrarDialog}
+    handleCloseDialog={handleCloseDialog}
+    />
       <Typography variant="h6" gutterBottom>
         Rellenar los campos para registrar cliente
       </Typography>
@@ -69,6 +85,7 @@ export default function AddressForm() {
             variant="outlined"            
             label="Nombre"            
             onChange={handleChange('nombre')}
+            required
             fullWidth
           />
         </Grid>
@@ -79,6 +96,7 @@ export default function AddressForm() {
             id="apellido"           
             label="Apellido"
             fullWidth
+            required
           />
         </Grid>
         
@@ -89,6 +107,7 @@ export default function AddressForm() {
             label="DNI"         
             onChange={handleChange('dni')}
             fullWidth
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -97,6 +116,7 @@ export default function AddressForm() {
             variant="outlined"        
             label="CUIT"
             fullWidth
+            required
           />
         </Grid>
         <Grid item xs={12}>
@@ -105,6 +125,7 @@ export default function AddressForm() {
             variant="outlined"
             label="E-mail"
             fullWidth
+            required
           />
         </Grid>              
         <Grid item xs={12} sm={6}>
@@ -115,6 +136,7 @@ export default function AddressForm() {
             label="Localidad"
             fullWidth
             variant="outlined"     
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -122,7 +144,9 @@ export default function AddressForm() {
             onChange={handleChange('calle')}
           label="Calle"
           variant="outlined"
-          fullWidth />
+          fullWidth 
+          required
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField   
@@ -130,6 +154,7 @@ export default function AddressForm() {
             variant="outlined"
             label="Altura"
             fullWidth
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -138,7 +163,7 @@ export default function AddressForm() {
             type="date"
             variant="outlined"            
             helperText="Fecha De Nacimiento"
-            
+            required
             fullWidth            
           />
         </Grid>  
@@ -147,7 +172,8 @@ export default function AddressForm() {
             onChange={handleChange('celular')}
             label="Celular"
             fullWidth
-            variant="outlined"     
+            variant="outlined"  
+            required   
           />
         </Grid>      
         <Grid item xs={12}>          
@@ -159,18 +185,14 @@ export default function AddressForm() {
       color="secondary"      
       /*onClick={handleBack}*/
       >Cancelar</Button>
-
-      {auth() === true ? 
-      <Button
-      variant="contained"
-      color="inherit">Guardar</Button>
-      :
+      
       <Button
       variant="contained"
       color="primary"
       onClick={handleOnClick}
+      disabled={auth()}
       >Guardar</Button>
-      }
+      
     </React.Fragment>
   );
 }
