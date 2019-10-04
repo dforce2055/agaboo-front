@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
-import CustomerController from '../../../controllers/Customer';
+import CustomerController from '../../../../controllers/Customer';
 import DialogAcept from './dialogAcept';
 
 export default function AddressForm() {
@@ -52,6 +52,8 @@ export default function AddressForm() {
     handleCloseDialog();
   }
 
+  
+  const {clienteById,setClienteById} = React.useState([]);
   const [mostrarDialog, setMostrarDialog] = React.useState(false);  
   const handleCloseDialog = () =>{
     setMostrarDialog(mostrarDialog===false);
@@ -59,6 +61,15 @@ export default function AddressForm() {
    const handleOpenDialog = () =>{
     setMostrarDialog(mostrarDialog===false);
   };
+
+  const getCustomerById = (e) => {
+    e.value = '3845698';
+    CustomerController.getCustomer(e).then(result => {
+      console.log("Guardo clienteById.",result);      
+      setClienteById(result);
+    });
+    console.log("Muestro cliente traido de db",clienteById);  
+  }
 
   return (
     <React.Fragment>

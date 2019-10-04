@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 
-import Checkout from '../../Create/Checkout';
+import Checkout from './Checkout';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -30,15 +30,16 @@ export default function FullScreenDialog(props) {
   const {handleClickDebotonEditarCerrar} = props;
   const {botonEditar} = props;
 
+  const {cliente} = props;
+
   const handleClose = () => {
     handleClickDebotonEditarCerrar();
   };
 
+
+
   return (
     <div>
-     {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open full-screen dialog
-      </Button>*/}
       <Dialog fullScreen open={botonEditar} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
           <Toolbar>
@@ -54,7 +55,7 @@ export default function FullScreenDialog(props) {
           </Toolbar>
         </AppBar>
 
-        <Checkout/>        
+        <Checkout cliente={cliente}/>        
 
       </Dialog>
     </div>

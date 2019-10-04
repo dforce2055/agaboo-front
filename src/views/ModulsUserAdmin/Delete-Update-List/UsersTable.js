@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -16,21 +16,22 @@ import CustomerController from '../../../controllers/Customer';
 import FullScreenDialog from './Update/UpdateUser';
 import AlertDialog from './Delete/DialogDelete';
 
-const useStyles = makeStyles(theme => ({
-  seeMore: {
-    marginTop: theme.spacing(3),
-    display:'Left'
-  },
-}));
-
-
-
 export default function Orders(props) {
-  const classes = useStyles();
   const [clientes, setClientes] = React.useState([]);
   
+  useEffect(()=>{
+    if (clientes.length == 0) {
+      console.log("Guardo el valor de clientes de db")
+      CustomerController.getCustomers()
+      .then(value=> {
+      setClientes(value);      
+    })
+    }
+  });
+
   //Funciones de Editar usuario.
   const [botonEditar,setBotonEditar] = React.useState(false);
+
   function handleClickDebotonEditarOpen(){ 
     setBotonEditar(true);
   }
@@ -48,46 +49,12 @@ export default function Orders(props) {
   }  
   function handleClickDeleteClose(){ 
     setBotonEliminar(false);
-  }
-
-
-
-
-  //Funcion para traer el listado de customer de firestore
-  function listarClientes(){
-
-    CustomerController.getCustomers()
-    .then(value => {
-      if(value.length != 0){
-        console.log('Base de datos vacia.');
-      }else if (value.length >= clientes.length) {        
-        setClientes(value);
-      }
-    });
-  }
-
-  //Metodo para actualizar el listado
-  function actualizarClientes(){
-    CustomerController.getCustomers()
-    .then(value=> {
-      setClientes(value);      
-    });
-  }
+  } 
 
   return (    
-    <React.Fragment>{listarClientes()}
-    <FullScreenDialog 
-    botonEditar={botonEditar} 
-    handleClickDebotonEditarCerrar={handleClickDebotonEditarCerrar}       
-    />
-
-    <AlertDialog
-      botonEliminar={botonEliminar}
-      handleClickDeleteClose={handleClickDeleteClose}
-    />
+    <React.Fragment>   
     <Paper>    
     <Typography variant="h4">Clientes</Typography>
-    <Button className={classes.seeMore} color="primary" variant="contained" onClick={actualizarClientes} >Actualizar</Button>
       <Table size="small">      
         <TableHead>
           <TableRow>
@@ -103,15 +70,27 @@ export default function Orders(props) {
         <TableBody>
           {clientes.map(row => (
             <TableRow key={row.dni}>
-              <TableCell>
-              <IconButton >                
-              <DeleteIcon onClick={handleClickDeleteOpen}/>
-            </IconButton>
+            
+              <TableCell>    
+              {/*Dialog de eliminar cliente*/}
+                <AlertDialog
+                  botonEliminar={botonEliminar}
+                  handleClickDeleteClose={handleClickDeleteClose}
+                />
+                <IconButton onClick={handleClickDeleteOpen}>      
+                  <DeleteIcon />
+                </IconButton>
               </TableCell>
 
               <TableCell>
-              <IconButton>      
-              <EditIcon onClick={handleClickDebotonEditarOpen}/> 
+              {/*Dialog de modificar cliente*/}
+                <FullScreenDialog 
+                  botonEditar={botonEditar} 
+                  handleClickDebotonEditarCerrar={handleClickDebotonEditarCerrar} 
+                  cliente={row}    
+                />
+              <IconButton onClick={handleClickDebotonEditarOpen}>  
+              <EditIcon /> 
             </IconButton>
               </TableCell>
 
@@ -129,8 +108,6 @@ export default function Orders(props) {
           ))}
         </TableBody>
       </Table>
-      
-        <Button className={classes.seeMore} color="primary" variant="contained" onClick={actualizarClientes} >Actualizar</Button>
       </Paper>
     </React.Fragment>
   );
