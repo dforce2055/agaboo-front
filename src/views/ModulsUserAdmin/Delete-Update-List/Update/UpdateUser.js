@@ -54,9 +54,7 @@ export default function FullScreenDialog(props) {
             </Button>
           </Toolbar>
         </AppBar>
-
-        <Checkout cliente={cliente}/>        
-
+          <Checkout cliente={cliente}/>
       </Dialog>
     </div>
   );

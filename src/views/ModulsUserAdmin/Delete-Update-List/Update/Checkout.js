@@ -66,8 +66,7 @@ export default function Checkout(props) {
           <Typography component="h1" variant="h4" align="center">
             Formulario
           </Typography>          
-          <React.Fragment>
-          {console.log("Muestro el cliente en checkout de Update= ",cliente)}
+          <React.Fragment>          
           <AddressForm cliente={cliente}/>              
           </React.Fragment>
         </Paper>

@@ -6,7 +6,8 @@ import { Button } from '@material-ui/core';
 import CustomerController from '../../../../controllers/Customer';
 import DialogAcept from './dialogAcept';
 
-export default function AddressForm() {
+export default function AddressForm(props) {
+  
   const [values, setValues] = React.useState({
     nombre:'',
     apellido: '',
@@ -52,24 +53,21 @@ export default function AddressForm() {
     handleCloseDialog();
   }
 
-  
-  const {clienteById,setClienteById} = React.useState([]);
+  const {cliente} = props;
+
+  React.useEffect(()=>{
+    CustomerController.getCustomerById(cliente)
+    .then(result => {
+      console.log("Guardo clienteById.",result);
+    }); 
+    console.log("Muestro cliente", cliente)
+  });
+
+  console.log(cliente)
   const [mostrarDialog, setMostrarDialog] = React.useState(false);  
   const handleCloseDialog = () =>{
     setMostrarDialog(mostrarDialog===false);
   };
-   const handleOpenDialog = () =>{
-    setMostrarDialog(mostrarDialog===false);
-  };
-
-  const getCustomerById = (e) => {
-    e.value = '3845698';
-    CustomerController.getCustomer(e).then(result => {
-      console.log("Guardo clienteById.",result);      
-      setClienteById(result);
-    });
-    console.log("Muestro cliente traido de db",clienteById);  
-  }
 
   return (
     <React.Fragment>

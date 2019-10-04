@@ -22,6 +22,17 @@ class CustomerController extends Component {
         } catch (error) {
             console.log("No se pudo obtener el cliente");
         }
+    }
+
+    async getCustomerById(e) {
+        try {
+            console.log("Entro a buscar");
+            
+            await CustomerRepo.getCustomerById(e);
+            
+        } catch (error) {
+            console.log("No se pudo obtener el cliente");
+        }
 
     }
 

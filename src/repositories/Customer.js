@@ -3,7 +3,7 @@
  */
 import { Component } from 'react';
 import { db } from '../config/firebase';
-const collection = 'customers';
+const collection = '/customers';
 
 class CustomerRepo extends Component {
     constructor(props) {
@@ -27,11 +27,11 @@ class CustomerRepo extends Component {
         }        
     }
 
-    getCustomerByCUIL = async (cuil) => {
+    getCustomerById = async (cuil) => {
         if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
         let customer = {};
          await db.collection(collection)
-            .where('cuil', '==', cuil)
+            .where('dni', '==', cuil)
             .limit(1)
             .get()
             .then(function (querySnapshot) {
