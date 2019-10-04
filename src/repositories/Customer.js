@@ -68,17 +68,18 @@ class CustomerRepo extends Component {
                 apellido: newCustomer.apellido,
                 dni: newCustomer.dni,
                 localidad:newCustomer.localidad,
-                celular:newCustomer.celular,
-                /*                
+                celular:newCustomer.celular,                              
+                
+                /*fechaDeNacimiento:newCustomer.fechNac,
+                calle: newCustomer.calle,
+                AlturaDeCalle: newCustomer.altura,
+                email: newCustomer.email,
+                
+                estado: newCustomer.estado,
+                role: newCustomer.role,
                 cuit: newCustomer.cuit,
                 cuil: newCustomer.cuil,
-                tipoDocumento: newCustomer.tipoDocumento,
-                numeroDocumento: newCustomer.numeroDocumento,
-                direccion: newCustomer.direccion,
-                telefono: newCustomer.telefono,
-                email: newCustomer.email,
-                estado: newCustomer.estado,
-                role: newCustomer.role,*/
+                tipoDocumento: newCustomer.tipoDocumento,*/
             })
             .then(() => {
                 console.log("Documento guardado exitosamente!");

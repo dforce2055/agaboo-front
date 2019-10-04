@@ -12,7 +12,8 @@ export default function AlertDialog(props) {
   const open = botonEliminar;
   const {handleClickDeleteClose} = props;  
   const [aceptarEliminacion,setAceptarEliminacion]=React.useState(false);
-
+  const {dni} = props;
+  console.log(dni);
   function deleteCustomer(){
     const {dni} = props;
     if(aceptarEliminacion === true){

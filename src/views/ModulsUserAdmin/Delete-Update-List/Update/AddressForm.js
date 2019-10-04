@@ -23,6 +23,8 @@ export default function AddressForm(props) {
     mostrarDialog:false,
   });  
 
+  const {cliente} = props;
+  console.log(cliente)
   const auth = () =>{
     if(values.nombre.length > 3){
       return false
@@ -53,17 +55,6 @@ export default function AddressForm(props) {
     handleCloseDialog();
   }
 
-  const {cliente} = props;
-
-  React.useEffect(()=>{
-    CustomerController.getCustomerById(cliente)
-    .then(result => {
-      console.log("Guardo clienteById.",result);
-    }); 
-    console.log("Muestro cliente", cliente)
-  });
-
-  console.log(cliente)
   const [mostrarDialog, setMostrarDialog] = React.useState(false);  
   const handleCloseDialog = () =>{
     setMostrarDialog(mostrarDialog===false);
@@ -82,9 +73,10 @@ export default function AddressForm(props) {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
+            value={cliente.nombre}
             id="nombre"
             variant="outlined"            
-            label="Nombre"            
+            label="Nombre"      
             onChange={handleChange('nombre')}
             required
             fullWidth
@@ -92,7 +84,8 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            onChange={handleChange('apellido')}  
+            value={cliente.apellido}
+            onChange={handleChange('apellido')}              
             variant="outlined"
             id="apellido"           
             label="Apellido"
@@ -106,20 +99,21 @@ export default function AddressForm(props) {
             id="nombre"
             variant="outlined"            
             label="DNI"         
+            value={cliente.dni}
             onChange={handleChange('dni')}
             fullWidth
             required
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
+         {/*<Grid item xs={12} sm={6}>
+         <TextField
             onChange={handleChange('cuit')}
             variant="outlined"        
             label="CUIT"
             fullWidth
             required
           />
-        </Grid>
+        </Grid>*/}
         <Grid item xs={12}>
           <TextField       
             onChange={handleChange('email')}
@@ -131,8 +125,8 @@ export default function AddressForm(props) {
         </Grid>              
         <Grid item xs={12} sm={6}>
           <TextField
-          onChange={handleChange('localidad')}
-            value={values.localidad}                   
+           onChange={handleChange('localidad')}
+            value={cliente.localidad}                   
             required
             label="Localidad"
             fullWidth
@@ -169,7 +163,8 @@ export default function AddressForm(props) {
           />
         </Grid>  
         <Grid item xs={12} sm={6}>
-          <TextField            
+          <TextField 
+            value={cliente.celular}           
             onChange={handleChange('celular')}
             label="Celular"
             fullWidth

@@ -76,6 +76,7 @@ export default function Orders(props) {
                 <AlertDialog
                   botonEliminar={botonEliminar}
                   handleClickDeleteClose={handleClickDeleteClose}
+                  dni={row.dni}
                 />
                 <IconButton onClick={handleClickDeleteOpen}>      
                   <DeleteIcon />
@@ -87,7 +88,7 @@ export default function Orders(props) {
                 <FullScreenDialog 
                   botonEditar={botonEditar} 
                   handleClickDebotonEditarCerrar={handleClickDebotonEditarCerrar} 
-                  cliente={row.dni}    
+                  cliente={row}    
                 />
               <IconButton onClick={handleClickDebotonEditarOpen}>  
               <EditIcon /> 
