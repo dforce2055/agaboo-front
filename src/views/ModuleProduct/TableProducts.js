@@ -9,7 +9,13 @@ import Paper from '@material-ui/core/Paper';
 import Button from  './Button';
 import NavBar from '../Navigation';
 import ProductController from '../../controllers/ProductController';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
+import FormDialog from './DialogUpdateProduct';
+
 import {withRouter } from 'react-router-dom';
+import { Icon } from "@material-ui/core";
 
 
 
@@ -77,7 +83,6 @@ export default function CustomizedTables(props) {
   const {history}  = props;
   
 
-
 console.log('Rows despues de getProducts: ', rows);
 
 
@@ -113,7 +118,11 @@ console.log('Rows despues de getProducts: ', rows);
                 {rows.map(row => (
                     <StyledTableRow key={row.typeProduct}>
                     <StyledTableCell component="th" scope="row">
-                        {row.type}
+                      <FormDialog values = {row}/>
+                    
+                      
+                      
+                      {row.type}
                     </StyledTableCell>
                     <StyledTableCell align="justyfy">{row.code}</StyledTableCell>
                     <StyledTableCell align="justyfy">{row.state}</StyledTableCell>
