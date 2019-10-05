@@ -1,13 +1,13 @@
 /**
  * @Repository
- User Repository Class
+ * User Repository Class
  */
 import { Component } from 'react';
-import { db } from '../config/firebase';
+import  firebase   from '../config/firebase';
 import { User } from '../models/User';
 const collection = 'users';
 
-export default new class UserRepo extends Component {
+class UserRepo extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,8 +20,8 @@ export default new class UserRepo extends Component {
     getUser = async (email) => {
         if (!email) throw new Error(`Error: el email es obligatorio`);
         try {
-
-            let query = await db.collection(collection).doc(email).get();
+            
+            let query = await firebase.db.collection(collection).doc(email).get();
             let result = query.data();
             let usuario = new User();
             //Mapeo los resultados en el User:usuario
@@ -42,7 +42,7 @@ export default new class UserRepo extends Component {
     getUserByCUIL = async (cuil) => {
         if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
         let user = {};
-        await db.collection(collection)
+        await firebase.db.collection(collection)
             .where('cuil', '==', cuil)
             .limit(1)
             .get()
@@ -64,7 +64,7 @@ export default new class UserRepo extends Component {
     getUserByEMAIL = async (email) => {
         if (!email) throw new Error(`Error: el EMAIL es obligatorio`);
         let user = {};
-        await db.collection(collection)
+        await firebase.db.collection(collection)
             .where('email', '==', email)
             .limit(1)
             .get()
@@ -85,7 +85,7 @@ export default new class UserRepo extends Component {
 
     getUsers = async (res) => {
         try {
-            let coleccion = await db.collection(collection).get();
+            let coleccion = await firebase.db.collection(collection).get();
             let usuarios = coleccion.docs.map(doc => doc.data());
             return usuarios;
         } catch (error) {
@@ -95,7 +95,7 @@ export default new class UserRepo extends Component {
 
     addUser = async (newUser) => {
         if (!newUser) throw new Error(`Error: no se envio un cliente para registrar`);
-        let result = await db.collection(collection)
+        let result = await firebase.db.collection(collection)
             .doc(newUser.email)
             .set({
                 apellido: newUser.apellido,
@@ -126,7 +126,7 @@ export default new class UserRepo extends Component {
         if (!email) throw new Error(`Error: el EMAIL es obligatorio`);
         let result = this.getUserByEMAIL(email)
             .then(() => {
-                db.collection(collection).doc(email).update({
+                firebase.db.collection(collection).doc(email).update({
                     nombre: user.nombre,
                     apellido: user.apellido,
                     cuit: user.cuit,
@@ -152,7 +152,7 @@ export default new class UserRepo extends Component {
         if (!email) throw new Error(`Error: el EMAIL es obligatorio`);
         let result = this.getUserByEMAIL(email)
             .then(() => {
-                db.collection(collection).doc(email).delete();
+                firebase.db.collection(collection).doc(email).delete();
                 return true;
             })
             .catch(function (error) {
@@ -162,3 +162,4 @@ export default new class UserRepo extends Component {
         return result;
     }
 }
+export default new UserRepo();

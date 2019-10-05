@@ -12,7 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-import { mainListItems, secondaryListItems } from '../../listItems';
+import { mainListItems, secondaryListItems } from '../../Dashboard/listItems';
 //Componentes
 import Form from './createOrder';
 
