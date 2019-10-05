@@ -146,7 +146,7 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
 }
 });
 
-function NavbarDeleteUpdate(props) {
+function Navbar(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -340,7 +340,7 @@ function NavbarDeleteUpdate(props) {
         </List>
 
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem button className={classes.nested} onClick ={ () => history.push('/eliminarPedidos')}>
             <ListItemIcon>
               <DeleteOutlineIcon/>
             </ListItemIcon>
@@ -392,4 +392,4 @@ function NavbarDeleteUpdate(props) {
     </MuiThemeProvider>
   );
 }
-export default withRouter(NavbarDeleteUpdate);
+export default withRouter(Navbar);

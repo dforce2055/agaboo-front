@@ -79,7 +79,7 @@ function CustomizedMenus(props) {
           </ListItemIcon>
           <ListItemText primary="Registrar"/>
         </StyledMenuItem>   
-        <StyledMenuItem>
+        <StyledMenuItem onClick ={ () => history.push('/eliminarPedidos')}>
           <ListItemIcon>
             <DeleteOutlineIcon />
           </ListItemIcon>

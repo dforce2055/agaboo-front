@@ -1,8 +1,7 @@
 import React from 'react';
-import './OrderReady.css';
+import './OrderDelete.css';
 import Navbar from '../../Header/Navigation'
-//import CustomizedTables from './OrdersTable';
-import EnhancedTable from './OrdersTable2';
+import CustomizedTables from './OrdersTable';
 import Typography from '@material-ui/core/Typography';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
@@ -16,7 +15,7 @@ const theme = createMuiTheme({
     }
 });
 
-export default function OrderReady() {
+export default function DeleteOrder() {
 
     return (
         <div>
@@ -25,11 +24,10 @@ export default function OrderReady() {
                 <Navbar/>
             </header>
             <div className='contenido'>
-                {/* <Typography variant="overline" align="left">
-                    Pedidos pendientes de confirmación
-                </Typography> */}
-                {/* <CustomizedTables/> */}
-                <EnhancedTable/>
+                <Typography variant="overline" align="left">
+                    Pedidos a eliminar
+                </Typography>
+                <CustomizedTables/>
             </div>
             </MuiThemeProvider>
         </div>

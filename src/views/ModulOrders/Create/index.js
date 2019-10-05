@@ -1,12 +1,15 @@
 import React from 'react';
-import NavbarDeleteUpdate from './Navigation'
+import Navbar from '../../Header/Navigation';
+import Checkout from './createOrderFinal';
+
 
 export default function CreateOrder() {
 
     return (
         
         <div className="UsersScreen">
-            <NavbarDeleteUpdate/>
+            <Navbar/>
+            <Checkout/>
         </div>
         
     )

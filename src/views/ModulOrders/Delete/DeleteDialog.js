@@ -5,7 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import IconButton from '@material-ui/core/IconButton';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
@@ -13,16 +13,16 @@ const theme = createMuiTheme({ /* Plantilla de edicion */
   overrides: {
     MuiIconButton:{
         root:{
-          color:'#19a952',
+          color:'#ff2f20',
         },
       },
     MuiButton:{
       containedSecondary:{
-        backgroundColor:'#19a952',
+        backgroundColor:'#f13f32',
         '&:hover': {
-          backgroundColor: '#3dd479',
+          backgroundColor: '#f11c0c',
           "@media (hover: none)": {
-            backgroundColor: "#3dd479"
+            backgroundColor: "#f11c0c"
           },
         },
       },
@@ -48,26 +48,26 @@ export default function ResponsiveDialog() {
   return (
     <div>
     <MuiThemeProvider theme={theme}>
-      <IconButton aria-label="Confirmar" onClick={handleClickOpen}>
-            <CheckBoxIcon />
+      <IconButton aria-label="Eliminar" onClick={handleClickOpen}>
+          <DeleteForeverIcon />
         </IconButton>
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
       >
-        <DialogTitle id="responsive-dialog-title">{"Confirmar entrega de pedido"}</DialogTitle>
+        <DialogTitle id="responsive-dialog-title">{"Confirmar eliminación de pedido"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Está seguro que desea marcar el pedido seleccionado como "Entregado"?.
+            Está seguro que desea eliminar el pedido seleccionado?.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancelar
           </Button>
-          <Button variant='contained' onClick={handleClose} color="secondary" autoFocus startIcon={<CheckBoxIcon />}>
-            Confirmar
+          <Button variant='contained' onClick={handleClose} color="secondary" autoFocus startIcon={<DeleteForeverIcon />}>
+            Eliminar
           </Button>
         </DialogActions>
       </Dialog>

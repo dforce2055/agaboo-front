@@ -97,6 +97,7 @@ function Checkout(props) {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+  
 
   return (
     <MuiThemeProvider theme={theme}>
@@ -132,14 +133,26 @@ function Checkout(props) {
                       Volver
                     </Button>
                   )}
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? 'Registrar pedido' : 'Siguiente'}
-                  </Button>
+                    
+                  {activeStep === steps.length - 1 ? (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.button}
+                    >
+                        Registrar pedido
+                    </Button>
+                    ) : (
+                      <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.button}
+                    >
+                        Siguiente
+                    </Button>
+                    )}
                 </div>
               </React.Fragment>
             )}
