@@ -10,12 +10,9 @@ import Button from  './Button';
 import NavBar from '../Navigation';
 import ProductController from '../../controllers/ProductController';
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import IconButton from '@material-ui/core/IconButton';
 import FormDialog from './DialogUpdateProduct';
+import SearchBox from './SearchBox';
 
-import {withRouter } from 'react-router-dom';
-import { Icon } from "@material-ui/core";
 
 
 
@@ -72,11 +69,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function CustomizedTables(props) {
     const [rows,setRows] = React.useState([
-      createData('Baño Quimico', 5001, 'Alquilado'),
-      createData('Baño Quimico', 5002, 'Alquilado'),
-      createData('Baño Quimico', 5003, 'Disponible'),
-      createData('Baño Quimico', 5004, 'Disponible'),
-      createData('Baño Quimico', 5005, 'Averiado'),
     ]);
 
   const classes = useStyles();
@@ -105,6 +97,7 @@ console.log('Rows despues de getProducts: ', rows);
   return (
       <React.Fragment>
         <NavBar/>
+        <SearchBox/>
         <Paper className={classes.root}>
             <Table className={classes.table}>
                 <TableHead>

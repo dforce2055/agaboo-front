@@ -61,9 +61,9 @@ class ProductRepo extends Component {
     getProducts = async (res) => {
         try {
             let coleccion = await db.collection(collection).get();
-            let products = coleccion.docs.map(doc => doc.data());
-            console.log("Products en Repo",products);
-            return products;
+            let products2 = coleccion.docs.map(doc => doc.data());
+            console.log("Products en Repo",products2);
+            return products2;
         } catch (error) {
             throw new Error();
         }
