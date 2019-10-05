@@ -49,11 +49,11 @@ const userDTOMock = {
     role: expect.any(String)
 }
 
-describe('Metodo getUserStatus', () => {
+describe('Metodo getUserStatusAndRole', () => {
     // Pruebas del metodo getUserStatus
     test('getUserStatus', async () => {
         //Debería devolver un objeto Json del tipo UserDTO
-        let userDTO = await UserController.getUserStatus('dperez2055@gmail.com');
+        let userDTO = await UserController.getUserStatusAndRole('dperez2055@gmail.com');
 
         expect(typeof userDTO).toBe('object');
 
@@ -61,12 +61,12 @@ describe('Metodo getUserStatus', () => {
         expect(userDTO).toMatchObject(userDTOMock);
     });
 
-    test('Metodo getUserStatus sin PARAMETRO', async () => {
+    test('Metodo getUserStatusAndRole sin PARAMETRO', async () => {
         //No le envió ningun parametro
         //Debería devolver un mensaje de error
         let message = false
         try {
-            await UserController.getUserStatus();
+            await UserController.getUserStatusAndRole();
         } catch (e) {
             message = e.message
         }

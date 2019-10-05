@@ -115,6 +115,7 @@ function HomePage(props) {
                         </div>
                     :
                     <div>
+                        {/*
                         <Button
                             type="submit"
                             fullWidth
@@ -125,6 +126,7 @@ function HomePage(props) {
                             className={classes.submit}>
                             Registrarse
                         </Button>
+                        */}
                         <Button
                             type="submit"
                             fullWidth

@@ -46,7 +46,7 @@ class Firebase {
     async signInWithGoogle() {
         let email = await this.auth.signInWithPopup(this.googleProvider)
             .then((socialAuthUser) => {
-                alert(socialAuthUser.user.uid + socialAuthUser.user.email);
+                //alert(socialAuthUser.user.uid + socialAuthUser.user.email);
                 return socialAuthUser.user.email
             });
         return email;
