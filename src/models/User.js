@@ -5,8 +5,10 @@
 import { Person } from "./Person";
 
 export class User extends Person{
-    constructor(nombre, apellido, cuit, cuil, tipoDocumento, numeroDocumento, direccion, telefono, email, estado, role, password) {
-        super(nombre, apellido, cuit, cuil, tipoDocumento, numeroDocumento, direccion, telefono, email, estado)
+    constructor(nombre, apellido, cuit, cuil, tipoDocumento, numeroDocumento, fechNac,
+        direccion, calle, altura, localidad, celular, telefono, email, estado, role, password) {
+        super(nombre, apellido, cuit, cuil, tipoDocumento, numeroDocumento, fechNac,
+            direccion, calle, altura, localidad, celular, telefono, email, estado)
         this.role = role;
         this.password = password;
     }

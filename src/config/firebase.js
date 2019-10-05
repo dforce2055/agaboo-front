@@ -1,6 +1,3 @@
-import firebase from "firebase";
-import firebaseConfig from "./firebase-config";
-
 /**
  *                          ===================
  *                          | IMPORTANTE LEER |
@@ -23,9 +20,6 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firebase-firestore';
 
-<<<<<<< HEAD
-const config = firebaseConfig;
-=======
 class Firebase {
     constructor() {
         app.initializeApp(firebaseConfig);
@@ -33,7 +27,6 @@ class Firebase {
         this.db = app.firestore();
         this.googleProvider = new app.auth.GoogleAuthProvider();
     }
->>>>>>> loginGoogle
 
     login(email, password) {
         return this.auth.signInWithEmailAndPassword(email, password);

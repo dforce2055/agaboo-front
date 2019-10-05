@@ -21,7 +21,7 @@ class UserController extends Component {
         try {
             let user = await UserRepo.getUserByEMAIL(email);
 
-            if( user.estado === 'true') {
+            if( user.estado === true) {
                 const UserDTO = { estado: user.estado, role: user.role };
                 // console.log(UserDTO);
                 // no puedo devolver usuario, tengo que devolver estado y rol a la vista

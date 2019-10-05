@@ -6,18 +6,23 @@ import CustomerRepo from '../repositories/Customer';
 import { Customer } from '../models/Customer';
 
 const CustomerTest = new Customer(
-    "apellido_test",
     "nombre_test",
+    "apellido_test",
     "cuit_test",
-    "cuil_test",
+    "cuil_test",   
     "tipoDocumento_test",
     "numeroDocumento_test",
+    "fechNac_test",
     "direccion_test",
+    "calle_test",
+    "altura_test",
+    "localidad_test",
+    "celular_test",
     "telefono_test",
     "email_test",
-    "estado_test",
-    "role_test"
+    true //"estado_test",
 );
+
 const customerMock = {
     nombre:expect.any(String),
     apellido: expect.any(String),
@@ -26,11 +31,15 @@ const customerMock = {
     cuit: expect.any(String),    
     tipoDocumento: expect.any(String),
     numeroDocumento: expect.any(String),
+    fechNac: expect.any(Object),
     direccion: expect.any(String),
+    calle: expect.any(String),
+    altura: expect.any(String),
+    localidad: expect.any(String),
+    celular: expect.any(String),
     telefono: expect.any(String),
     email: expect.any(String),
     estado: expect.any(Boolean),
-    role: expect.any(String)
 };
 
 test('Metodo getCustomer', async () => {
@@ -86,7 +95,7 @@ test('Metodo addCustomer', async () => {
     let result = await CustomerRepo.addCustomer(CustomerTest);
     expect(result).toBe(true);
 
-    //No le envió ningun parametro
+    //No le envío ningun parametro
     //Debería devolver un mensaje de error
     let message = false
     try {

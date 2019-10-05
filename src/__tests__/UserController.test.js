@@ -7,36 +7,45 @@ import { User } from '../models/User';
 
 const Users = expect.any(Array);
 const userTest = new User(
-    "apellido_test",
     "nombre_test",
+    "apellido_test",
     "cuit_test",
     "cuil_test",
     "tipoDocumento_test",
     "numeroDocumento_test",
+    "fechNac_test",
     "direccion_test",
+    "calle_test",
+    "altura_test",
+    "localidad_test",
+    "celular_test",
     "telefono_test",
     "email_test",
-    "estado_test",
+    true,//estado
     "role_test"
 );
 
 const userMock = {
-    apellido: expect.any(String),
     nombre: expect.any(String),
+    apellido: expect.any(String),
     cuit: expect.any(String),
     cuil: expect.any(String),
     tipoDocumento: expect.any(String),
     numeroDocumento: expect.any(String),
+    fechNac: expect.any(Object),
     direccion: expect.any(String),
+    calle: expect.any(String),
+    altura: expect.any(String),
+    localidad: expect.any(String),
+    celular: expect.any(String),
     telefono: expect.any(String),
     email: expect.any(String),
-    estado: expect.any(String),
+    estado: expect.any(Boolean),
     role: expect.any(String)
-
 };
 
 const userDTOMock = {
-    estado: expect.any(String),
+    estado: expect.any(Boolean),
     role: expect.any(String)
 }
 

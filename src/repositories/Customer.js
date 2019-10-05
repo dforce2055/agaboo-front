@@ -19,7 +19,7 @@ class CustomerRepo extends Component {
 
     getCustomer = async (id) => {
         try {
-            // Lo busco por ide de documento en la colección, el cual deberia ser el cuil/cuit
+            // Lo busco por id de documento en la colección, el cual deberia ser el cuil/cuit
             let cliente = await firebase.db.collection(collection).doc(id).get();
             
             return cliente.data();            
@@ -65,17 +65,21 @@ class CustomerRepo extends Component {
         let result = await firebase.db.collection(collection)
             .doc(newCustomer.cuil)
             .set({
-                apellido: newCustomer.apellido,
                 nombre: newCustomer.nombre,
-                apellido: newCustomer.apellido,
-                fechaNac: newCustomer.fechaNac,
-                dni: newCustomer.dni,
+                apellido: newCustomer.apellido,                
+                cuil: newCustomer.cuil,
                 cuit: newCustomer.cuit,
+                tipoDocumento: newCustomer.tipoDocumento,
+                numeroDocumento: newCustomer.numeroDocumento,
+                fechNac: newCustomer.fechNac,
+                direccion: newCustomer.direccion,
                 calle:newCustomer.calle,
                 altura: newCustomer.altura,
                 localidad:newCustomer.localidad,
                 celular:newCustomer.celular,
+                telefono:newCustomer.telefono,
                 email:newCustomer.email,
+                estado:newCustomer.estado,
         })
         .then(() => {
             console.log("Documento guardado exitosamente!");
@@ -85,6 +89,8 @@ class CustomerRepo extends Component {
             console.error("Error al guardar el documento: ", error);
             return false;
         });
+        
+        return result;
     }
 
     editCustomer = async (cuil, customer) => {
@@ -98,11 +104,16 @@ class CustomerRepo extends Component {
                 cuil: customer.cuil,
                 tipoDocumento: customer.tipoDocumento,
                 numeroDocumento: customer.numeroDocumento,
+                fechNac: customer.fechNac,
                 direccion: customer.direccion,
+                calle: customer.calle,
+                altura: customer.altura,
+                localidad: customer.localidad,
+                celular: customer.celular,
                 telefono: customer.telefono,
                 email: customer.email,
                 estado: customer.estado,
-                role: customer.role,
+                
             });
             return true;
         })

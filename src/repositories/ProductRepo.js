@@ -1,9 +1,9 @@
 /**
- * Customer ProductRepository Class
+ * Product ProductRepository Class
  */
 
 import { Component } from 'react';
-import { db } from '../config/firebase';
+import firebase from '../config/firebase';
 const collection = '/products';
 
 class ProductRepo extends Component {
@@ -19,10 +19,10 @@ class ProductRepo extends Component {
 
     // getCustomer = async (id) => {
     //     try {
-    //         let cliente = await db.collection(collection).doc(id).get();
+    //         let cliente = await firebase.db.collection(collection).doc(id).get();
     //         //console.log(cliente.data());
     //         return cliente.data();
-    //         //let cliente = await db.collection(collection)
+    //         //let cliente = await firebase.db.collection(collection)
     //                                 //.where('cuil', '==', '20-32465169-2')
     //                                 //.select()
     //                                 //.limit(1)
@@ -60,7 +60,7 @@ class ProductRepo extends Component {
 
     getProducts = async (res) => {
         try {
-            let coleccion = await db.collection(collection).get();
+            let coleccion = await firebase.db.collection(collection).get();
             let products2 = coleccion.docs.map(doc => doc.data());
             console.log("Products en Repo",products2);
             return products2;
@@ -72,7 +72,7 @@ class ProductRepo extends Component {
     addProduct = async (newProduct) => {
         console.log('guardo el nuevo producto', newProduct)
         
-         await db.collection(collection)
+         await firebase.db.collection(collection)
             .doc(newProduct.code)
             .set({
                 type : newProduct.typeProduct,
@@ -96,7 +96,7 @@ class ProductRepo extends Component {
     //    if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
     //    let result = this.getCustomerByCUIL(cuil)
     //     .then(() => {
-    //         db.collection(collection).doc(cuil).update({        
+    //         firebase.db.collection(collection).doc(cuil).update({        
     //             nombre: customer.nombre,
     //             apellido: customer.apellido,
     //             cuit: customer.cuit,
@@ -122,7 +122,7 @@ class ProductRepo extends Component {
     //    if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
     //    let result = this.getCustomerByCUIL(cuil)
     //     .then(() => {
-    //         db.collection(collection).doc(cuil).delete();
+    //         firebase.db.collection(collection).doc(cuil).delete();
     //         return true;
     //     })
     //     .catch(function (error) {
