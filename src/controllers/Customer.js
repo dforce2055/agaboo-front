@@ -2,7 +2,7 @@
  * Customer Controller
  */
 import { Component } from 'react';
-import CustomerRepo from '.././repositories/Customer';
+import CustomerRepo from '../repositories/Customer';
 
 class CustomerController extends Component {
     constructor(props) {
@@ -15,12 +15,31 @@ class CustomerController extends Component {
         }
     }
 
+    async setCustomer(e) {
+        try {
+            let data = e;
+            await CustomerRepo.setCustomer(data);            
+        } catch (error) {
+            console.log("No se pudo obtener el cliente");
+        }
+    }
+
     async getCustomer(e) {
         try {
             await CustomerRepo.getCustomer(e);
             
         } catch (error) {
             console.log("No se pudo obtener el cliente");
+        }
+    }
+
+    async searchCustomer(e) {
+        let valor = e;
+        try {
+            let cliente = await CustomerRepo.searchCustomer(valor);
+            return cliente;
+        } catch (error) {
+            console.log("No se pudo buscar el cliente.");
         }
     }
 
@@ -58,11 +77,12 @@ class CustomerController extends Component {
             CustomerRepo.addCustomer(newCustomer)
     }
 
-   async deleteCustomer(DNI){
-        let dni = DNI;        
+   async deleteCustomer(customer){
+        let deleteCustomer = customer;        
         try {
-            console.log("Estoy pasando el dni ' "+dni+" ' a repositorio.");
-            CustomerRepo.deleteCustomer(dni);            
+            console.log("Cambiando estado al cliente: ",deleteCustomer.dni);
+            let valor = CustomerRepo.deleteCustomer(deleteCustomer);               
+            return valor;
         } catch (error) {
             console.error("Error en controller.",error)
         }        

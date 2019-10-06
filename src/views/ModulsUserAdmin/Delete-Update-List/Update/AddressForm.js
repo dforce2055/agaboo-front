@@ -7,8 +7,11 @@ import CustomerController from '../../../../controllers/Customer';
 import DialogAcept from './dialogAcept';
 
 export default function AddressForm(props) {
+  //const {cliente} = props;
   
-  const [values, setValues] = React.useState({
+  const [values, setValues] = React.useState(props.cliente);  
+ /*
+ {
     nombre:'',
     apellido: '',
     fechaNac:'',
@@ -21,10 +24,8 @@ export default function AddressForm(props) {
     calle:'',
     altura:'',
     mostrarDialog:false,
-  });  
+  }*/
 
-  const {cliente} = props;
-  console.log(cliente)
   const auth = () =>{
     if(values.nombre.length > 3){
       return false
@@ -42,16 +43,16 @@ export default function AddressForm(props) {
     let data = {
       nombre: values.nombre,
       apellido: values.apellido,
-      fechaNac: values.fechaNac,
+      fechNac: values.fechNac,
       dni: values.dni,
-      cuit: values.cuit,
+     // cuit: values.cuit,
       calle:values.calle,
       altura: values.altura,
       localidad:values.localidad,
       celular:values.celular,
       email:values.email,
     }
-    CustomerController.addCustomer(data)    
+    CustomerController.setCustomer(data)    //BORRA LOS CAMPOS QUE NO ESTEN EN EL DATA
     handleCloseDialog();
   }
 
@@ -73,10 +74,10 @@ export default function AddressForm(props) {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
-            value={cliente.nombre}
             id="nombre"
             variant="outlined"            
             label="Nombre"      
+            value={values.nombre}
             onChange={handleChange('nombre')}
             required
             fullWidth
@@ -84,7 +85,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            value={cliente.apellido}
+            value={values.apellido}
             onChange={handleChange('apellido')}              
             variant="outlined"
             id="apellido"           
@@ -96,10 +97,10 @@ export default function AddressForm(props) {
         
         <Grid item xs={12} sm={6}>
           <TextField
-            id="nombre"
+            id="dni"
             variant="outlined"            
             label="DNI"         
-            value={cliente.dni}
+            value={values.dni}
             onChange={handleChange('dni')}
             fullWidth
             required
@@ -115,7 +116,9 @@ export default function AddressForm(props) {
           />
         </Grid>*/}
         <Grid item xs={12}>
-          <TextField       
+          <TextField 
+            id='email'
+            value={values.email}      
             onChange={handleChange('email')}
             variant="outlined"
             label="E-mail"
@@ -126,16 +129,16 @@ export default function AddressForm(props) {
         <Grid item xs={12} sm={6}>
           <TextField
            onChange={handleChange('localidad')}
-            value={cliente.localidad}                   
+            value={values.localidad}                   
             required
             label="Localidad"
             fullWidth
-            variant="outlined"     
-            required
+            variant="outlined"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField      
+          <TextField   
+          value={values.calle}   
             onChange={handleChange('calle')}
           label="Calle"
           variant="outlined"
@@ -144,7 +147,8 @@ export default function AddressForm(props) {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField   
+          <TextField
+            value={values.altura}   
             onChange={handleChange('altura')}
             variant="outlined"
             label="Altura"
@@ -154,7 +158,8 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-          onChange={handleChange('fechaNac')}
+            value={values.fechNac}
+            onChange={handleChange('fechNac')}
             type="date"
             variant="outlined"            
             helperText="Fecha De Nacimiento"
@@ -164,7 +169,7 @@ export default function AddressForm(props) {
         </Grid>  
         <Grid item xs={12} sm={6}>
           <TextField 
-            value={cliente.celular}           
+            value={values.celular}   
             onChange={handleChange('celular')}
             label="Celular"
             fullWidth

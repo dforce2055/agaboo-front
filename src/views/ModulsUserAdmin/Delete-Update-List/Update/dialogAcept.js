@@ -18,10 +18,10 @@ export default function AlertDialog(props) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Cliente guardado"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Cliente modificado"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Se agrego un cliente a la base de datos.
+            Se modifico el cliente en la base de datos.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

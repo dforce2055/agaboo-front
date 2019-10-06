@@ -6,11 +6,16 @@ import { Button } from '@material-ui/core';
 import CustomerController from '../../../controllers/Customer';
 import DialogAcept from './dialogAcept';
 
+/*
+const emailRegex = RegExp(
+  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+);*/
+
 export default function AddressForm() {
   const [values, setValues] = React.useState({
     nombre:'',
     apellido: '',
-    fechaNac:'',
+    fechNac:'',
     dni:'',
     celular: '',
     telefono: '',
@@ -19,6 +24,7 @@ export default function AddressForm() {
     localidad:'',
     calle:'',
     altura:'',
+    eliminado:false,
     mostrarDialog:false,
   });  
 
@@ -39,7 +45,7 @@ export default function AddressForm() {
     let data = {
       nombre: values.nombre,
       apellido: values.apellido,
-      fechaNac: values.fechaNac,
+      fechNac: values.fechNac,
       dni: values.dni,
       cuit: values.cuit,
       calle:values.calle,
@@ -47,6 +53,7 @@ export default function AddressForm() {
       localidad:values.localidad,
       celular:values.celular,
       email:values.email,
+      eliminado:false,
     }
     CustomerController.addCustomer(data)    
     handleCloseDialog();
@@ -54,9 +61,6 @@ export default function AddressForm() {
 
   const [mostrarDialog, setMostrarDialog] = React.useState(false);  
   const handleCloseDialog = () =>{
-    setMostrarDialog(mostrarDialog===false);
-  };
-   const handleOpenDialog = () =>{
     setMostrarDialog(mostrarDialog===false);
   };
 
@@ -128,7 +132,7 @@ export default function AddressForm() {
             label="Localidad"
             fullWidth
             variant="outlined"     
-            required
+            
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -151,7 +155,7 @@ export default function AddressForm() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-          onChange={handleChange('fechaNac')}
+          onChange={handleChange('fechNac')}
             type="date"
             variant="outlined"            
             helperText="Fecha De Nacimiento"

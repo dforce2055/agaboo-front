@@ -45,9 +45,8 @@ import { withRouter } from "react-router-dom";
   //ICONOS DE MANTENIMIENTO
   import BuildIcon from '@material-ui/icons/Build';
 
-
-
-
+  import ButtonSearch from './buttonSearch';
+  import EnhancedTable from './UsersTable';
 const drawerWidth = 240;
 
 
@@ -144,9 +143,12 @@ function NavbarDeleteUpdate(props) {
   const [productos, setProductos] = React.useState(false);
   const [stock, setStock] = React.useState(false);
   const [pedidos, setPedidos] = React.useState(false);
-  /*Hook que permite en clases Function utilizar 
-    state y cambiar su estado. Es decir el visible es el estado y 
-    el setVisible es sinonimo de this.setState*/
+
+  //FUNCIONALIDADES DE BOTON BUSCAR
+  const [foundInTheDb,setFoundInTheDb] = React.useState([]);
+  function handleFounDb(e){
+    setFoundInTheDb(e);
+  } 
 
   function handleClick() { 
     setVisible(!visible);
@@ -369,15 +371,25 @@ function NavbarDeleteUpdate(props) {
       </List>
        
       </Drawer>
-      <main /*Esta clase, permite que cada vez que abramos el componente Drawers, los componentes que esten dentro de main, se correran al costado. */
+      
+      <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}
       >
         <div className={classes.drawerHeader} />      
 
-         
-        
+        <div>
+        <ButtonSearch 
+          foundInTheDb={foundInTheDb}
+          handleFounDb={handleFounDb}
+
+        />
+        <br></br>
+        <EnhancedTable
+          foundInTheDb={foundInTheDb}
+        />
+        </div>
         
       </main>
     </div>

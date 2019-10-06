@@ -27,6 +27,22 @@ class CustomerRepo extends Component {
         }        
     }
 
+    searchCustomer = async (e) => {
+        try {
+            console.log("LLEGUE A REPO");
+            
+            // Lo busco por ide de documento en la colección, el cual deberia ser el cuil/cuit
+            let encontrados = await db.collection(collection)
+            .where('dni','==',e)
+            .get()
+
+            let cliente = encontrados.docs.map(doc=>doc.data());            
+            return cliente;            
+        } catch (error) {
+            throw new Error();
+        }        
+    }
+
     getCustomerById = async (cuil) => {
         if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
         let customer = {};
@@ -49,9 +65,9 @@ class CustomerRepo extends Component {
         return customer;
     }
 
-    getCustomers = async (res) => {
+    getCustomers = async () => {
         try {
-            let coleccion = await db.collection(collection).get();
+            let coleccion = await db.collection(collection).where('eliminado','==', false).get();
             let clientes = coleccion.docs.map(doc => doc.data());
             return clientes;
         } catch (error) {
@@ -70,11 +86,14 @@ class CustomerRepo extends Component {
                 localidad:newCustomer.localidad,
                 celular:newCustomer.celular,                              
                 
-                /*fechaDeNacimiento:newCustomer.fechNac,
+                fechNac:newCustomer.fechNac,
                 calle: newCustomer.calle,
-                AlturaDeCalle: newCustomer.altura,
+                altura: newCustomer.altura,
                 email: newCustomer.email,
-                
+
+                //DELETE
+                eliminado:false,
+                /*
                 estado: newCustomer.estado,
                 role: newCustomer.role,
                 cuit: newCustomer.cuit,
@@ -93,12 +112,28 @@ class CustomerRepo extends Component {
         return result;
     }
 
-    editCustomer = async (cuil, customer) => {
-       if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
-       let result = this.getCustomerByCUIL(cuil)
-        .then(() => {
-            db.collection(collection).doc(cuil).update({        
-                nombre: customer.nombre,
+    setCustomer = async (setCustomer) => {
+       let result = db.collection(collection)
+        .doc(setCustomer.dni)
+        .get()
+        .then(() => {            
+            db.collection(collection)
+            .doc(setCustomer.dni)
+            .set({    
+                nombre: setCustomer.nombre,
+                apellido: setCustomer.apellido,
+                dni: setCustomer.dni,
+                localidad:setCustomer.localidad,
+                celular:setCustomer.celular,                              
+                
+                fechNac:setCustomer.fechNac,
+                calle: setCustomer.calle,
+                altura: setCustomer.altura,
+                email: setCustomer.email,
+                
+                //DELETE
+                eliminado:false,
+               /* nombre: customer.nombre,
                 apellido: customer.apellido,
                 cuit: customer.cuit,
                 cuil: customer.cuil,
@@ -108,22 +143,31 @@ class CustomerRepo extends Component {
                 telefono: customer.telefono,
                 email: customer.email,
                 estado: customer.estado,
-                role: customer.role,
+                role: customer.role,*/
+            })
+            .catch(error=>{console.error("Error al modificar cliente: ",error);
+            return false;
             });
             return true;
         })
         .catch(function (error) {
-            console.error("Error al guardar el documento: ", error);
+            console.error("Error al buscar el cliente: ", error);
             return false;
         });
         return result;
     }
     
-    deleteCustomer = async (dni) => {
-       if (!dni) throw new Error(`Error: el CUIL es obligatorio`);
-       let result = this.getCustomerByCUIL(dni)
+    deleteCustomer = async (deleteCustomer) => {
+       if (!deleteCustomer.dni) throw new Error(`Error: el DNI es obligatorio`);
+       let result = db.collection(collection)
+        .doc(deleteCustomer.dni)
+        .get()
         .then(() => {
-            db.collection(collection).doc(dni).set({EstadoEnDb:false});
+            db.collection(collection).doc(deleteCustomer.dni)
+            .update({
+                //DELETE
+                eliminado:true,
+            })
             return true;
         })
         .catch(function (error) {
@@ -131,23 +175,6 @@ class CustomerRepo extends Component {
             return false;
         });
         return result;
-
-        if(dni != undefined || !dni){
-            try {
-                let customer = db.collection(collection)
-                    .doc(dni)
-                    .set({
-                        EstadoEnDb:false,
-                    })
-                console.log("Estado cambiado en db.");
-                console.log(customer);
-                
-                
-            } catch (error) {
-                console.error(error);            
-            }
-
-        }
     }
 }
 export default new CustomerRepo();

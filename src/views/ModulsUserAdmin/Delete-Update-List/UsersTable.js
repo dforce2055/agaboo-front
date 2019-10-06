@@ -1,59 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { Paper, IconButton, Button } from '@material-ui/core';
+import { Paper, IconButton } from '@material-ui/core';
 import {Typography} from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import Visibility from '@material-ui/icons/Visibility';
-import CustomerController from '../../../controllers/Customer';
 
+import CustomerController from '../../../controllers/Customer';
 import FullScreenDialog from './Update/UpdateUser';
 import AlertDialog from './Delete/DialogDelete';
+import VisibilityClient from './Visibility/visibility';
 
-export default function Orders(props) {
+export default function Orders() {
   const [clientes, setClientes] = React.useState([]);
   
-  useEffect(()=>{
-    if (clientes.length == 0) {
-      console.log("Guardo el valor de clientes de db")
+  React.useEffect(()=>{
+    if (clientes.length === 0) {
       CustomerController.getCustomers()
       .then(value=> {
-      setClientes(value);      
+        setClientes(value);      
+    }).catch(error=>{
+      console.log("Error al traer el cliente= ",error);
     })
     }
-  });
 
-  //Funciones de Editar usuario.
-  const [botonEditar,setBotonEditar] = React.useState(false);
+    /*if(updateList === true){
+      console.log("Update list es verdadero?",updateList);
+      
+      CustomerController.getCustomers()
+      .then(value=> {
+        console.log("SETEO CLIENTES");        
+      setClientes(value);      
+    });
 
-  function handleClickDebotonEditarOpen(){ 
-    setBotonEditar(true);
-  }
-  function handleClickDebotonEditarCerrar(){ 
-    setBotonEditar(false);
-  }
-
-  //Funcion de dialog eliminar usuario
-  const [botonEliminar,setBotonEliminar] = React.useState(false);
-  
-//Funciones para pasar a dialog y poder utilizarlas al apretar el bnoton aceptar
-  
-  function handleClickDeleteOpen(){ 
-    setBotonEliminar(true);
-  }  
-  function handleClickDeleteClose(){ 
-    setBotonEliminar(false);
-  } 
+    setUpdateList(false);
+    console.log("Seteo para que no quede en verdadero el updateList==>",updateList);
+    
+    }*/
+  }); 
 
   return (    
     <React.Fragment>   
-    <Paper>    
+    <Paper >    
     <Typography variant="h4">Clientes</Typography>
       <Table size="small">      
         <TableHead>
@@ -69,36 +58,25 @@ export default function Orders(props) {
         </TableHead>
         <TableBody>
           {clientes.map(row => (
+            /*Dialog de ELIMINAR cliente*/
             <TableRow key={row.dni}>
-            
-              <TableCell>    
-              {/*Dialog de eliminar cliente*/}
+              <TableCell>   
                 <AlertDialog
-                  botonEliminar={botonEliminar}
-                  handleClickDeleteClose={handleClickDeleteClose}
-                  dni={row.dni}
+                  //setUpdateList={setUpdateList}
+                  cliente={row}
                 />
-                <IconButton onClick={handleClickDeleteOpen}>      
-                  <DeleteIcon />
-                </IconButton>
               </TableCell>
 
+              {/*Dialog de MODIFICAR cliente*/}
               <TableCell>
-              {/*Dialog de modificar cliente*/}
                 <FullScreenDialog 
-                  botonEditar={botonEditar} 
-                  handleClickDebotonEditarCerrar={handleClickDebotonEditarCerrar} 
-                  cliente={row}    
-                />
-              <IconButton onClick={handleClickDebotonEditarOpen}>  
-              <EditIcon /> 
-            </IconButton>
+                  valor={row}    
+                />  
               </TableCell>
-
-              <TableCell>
-              <IconButton>      
-              <Visibility/>              
-            </IconButton>
+              
+              {/*Dialog de VER cliente*/}
+              <TableCell>              
+                <VisibilityClient cliente = {row}/>
               </TableCell>
 
               <TableCell>{row.nombre}</TableCell>

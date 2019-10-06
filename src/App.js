@@ -5,9 +5,7 @@ import MainMenu from "./views/MainMenu";
 import SignIn from './views/LogInScreen/Login';
 import DeleteUpdateUserAdmin from "./views/ModulsUserAdmin/Delete-Update-List/index";
 import * as serviceWorker from './serviceWorker';
-import CreateUserAdm from './views/ModulsUserAdmin/Create/index'; //Componente para registrar un nuevo cliente
-import CreateOrder from './views/ModulOrders/Create/createOrder';
-import indexProduct from './views/ModuleProduct/index';
+import CreateUserAdm from './views/ModulsUserAdmin/Create/index'; //Componente para registrar un nuevo cliente¿
 import ProductForm from './views/ModuleProduct/RegisterProduct'
 import Checkout from './views/ModulOrders/Create/createOrderFinal';
 import CustomizedTables from './views/ModuleProduct/TableProducts';
