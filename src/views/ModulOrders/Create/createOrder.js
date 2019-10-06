@@ -345,7 +345,7 @@ export default function Form() {
               type="number"
               name="totalPrice"  //Nombre state a utilizar
               noValidate
-              onChange={handleTotalPriceChange}  // Guardo los cambios 
+              onChange={handleTotalPriceChange} // Guardo los cambios 
             />             
           </div>
 

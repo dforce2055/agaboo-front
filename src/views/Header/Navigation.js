@@ -20,7 +20,6 @@ import ExpandLess from '@material-ui/icons/ExpandLess'; //Icono de flecha expand
 import ExpandMore from '@material-ui/icons/ExpandMore'; //Icono de flecha
 import Collapse from '@material-ui/core/Collapse'; //https://material-ui.com/components/transitions/ --> Componente que permite desplegar
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-import Checkout from './Checkout';
 import { withRouter } from "react-router-dom";
 //ICONOS DE BOTONES
   //ICONOS DE CLIENTES
@@ -120,6 +119,11 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
         backgroundColor: '#3fb5a5',
       }
     },
+    MuiButton: {
+      containedPrimary: {
+        backgroundColor: '#3fb5a5',
+        }
+    },
     MuiCheckbox:{
       colorSecondary: {
         color: '#42cfd6',
@@ -138,43 +142,20 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
         color:'#16984a',
       },
     },
-    MuiButton: {
-      containedPrimary: {
-        backgroundColor: '#3fb5a5',
-        '&:hover': {
-          backgroundColor: '#0ce8ca',
-          "@media (hover: none)": {
-            backgroundColor: "#0ce8ca"
-          },
-        },
-      },
-      fullWidth: {
-          width: '200%'
-      },
-  },
     
 }
 });
 
-<<<<<<< HEAD:src/views/ModulsUserAdmin/Create/Navigation.js
 function Navbar(props) {
-=======
-function NavbarDeleteUpdate(props) {
->>>>>>> Pedidos:src/views/ModulOrders/Ready/Navigation.js
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const {history} = props;
 
-<<<<<<< HEAD:src/views/ModulsUserAdmin/Create/Navigation.js
-  const [visible, setVisible] = React.useState(true);
-  
-=======
   const [visible, setVisible] = React.useState(false);
   const [productos, setProductos] = React.useState(false);
   const [stock, setStock] = React.useState(false);
   const [pedidos, setPedidos] = React.useState(false);
->>>>>>> Pedidos:src/views/ModulOrders/Ready/Navigation.js
   /*Hook que permite en clases Function utilizar 
     state y cambiar su estado. Es decir el visible es el estado y 
     el setVisible es sinonimo de this.setState*/
@@ -183,8 +164,6 @@ function NavbarDeleteUpdate(props) {
     setVisible(!visible);
   }
 
-<<<<<<< HEAD:src/views/ModulsUserAdmin/Create/Navigation.js
-=======
   function handleClickProductos() { 
     setProductos(!productos);
   }
@@ -197,7 +176,6 @@ function NavbarDeleteUpdate(props) {
     setPedidos(!pedidos);
   }
 
->>>>>>> Pedidos:src/views/ModulOrders/Ready/Navigation.js
   function handleDrawerOpen() {
     setOpen(true);
   }
@@ -206,10 +184,7 @@ function NavbarDeleteUpdate(props) {
     setOpen(false);
   }
 
-<<<<<<< HEAD:src/views/ModulsUserAdmin/Create/Navigation.js
-=======
   
->>>>>>> Pedidos:src/views/ModulOrders/Ready/Navigation.js
   return (
     <MuiThemeProvider theme={theme2}>
     <div className={classes.root} >
@@ -246,15 +221,12 @@ function NavbarDeleteUpdate(props) {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : 
+            <ChevronRightIcon />}
           </IconButton>
         </div>
         <Divider />
-<<<<<<< HEAD:src/views/ModulsUserAdmin/Create/Navigation.js
-        
-=======
 {/* *********************************** LISTA CLIENTES ****************************************** */}
->>>>>>> Pedidos:src/views/ModulOrders/Ready/Navigation.js
         <List>
         
         <ListItem button onClick={handleClick}>
@@ -265,13 +237,8 @@ function NavbarDeleteUpdate(props) {
         {visible ? <ExpandLess /> : <ExpandMore />}      
       </ListItem> 
       <Collapse in={visible} timeout="auto" unmountOnExit> 
-<<<<<<< HEAD:src/views/ModulsUserAdmin/Create/Navigation.js
-        <List component="div" disablePadding> {/*disablePadding-->Si true, el relleno vertical se eliminará de la lista.*/}
-          <ListItem button className={classes.nested} onClick ={ () => history.push('/registrarCliente')}>  {/*nested es el CSS que permite que este un poco mas a la izquierda que el boton de padre.*/}
-=======
         <List component="div" disablePadding>
           <ListItem button className={classes.nested} >
->>>>>>> Pedidos:src/views/ModulOrders/Ready/Navigation.js
             <ListItemIcon>
               <GroupAddIcon />
             </ListItemIcon>
@@ -320,12 +287,6 @@ function NavbarDeleteUpdate(props) {
         </List>
       </Collapse>
 
-<<<<<<< HEAD:src/views/ModulsUserAdmin/Create/Navigation.js
-        </List>     
-       
-      </Drawer>
-      <main
-=======
       </List>
 {/* *********************************** LISTA STOCK ****************************************** */}
       <List>
@@ -379,7 +340,7 @@ function NavbarDeleteUpdate(props) {
         </List>
 
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem button className={classes.nested} onClick ={ () => history.push('/eliminarPedidos')}>
             <ListItemIcon>
               <DeleteOutlineIcon/>
             </ListItemIcon>
@@ -421,24 +382,14 @@ function NavbarDeleteUpdate(props) {
        
       </Drawer>
       <main /*Esta clase, permite que cada vez que abramos el componente Drawers, los componentes que esten dentro de main, se correran al costado. */
->>>>>>> Pedidos:src/views/ModulOrders/Ready/Navigation.js
         className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}
       >
         <div className={classes.drawerHeader} />
-<<<<<<< HEAD:src/views/ModulsUserAdmin/Create/Navigation.js
-        <Checkout></Checkout>
-=======
->>>>>>> Pedidos:src/views/ModulOrders/Ready/Navigation.js
       </main>
     </div>
     </MuiThemeProvider>
   );
 }
-<<<<<<< HEAD:src/views/ModulsUserAdmin/Create/Navigation.js
-
 export default withRouter(Navbar);
-=======
-export default withRouter(NavbarDeleteUpdate);
->>>>>>> Pedidos:src/views/ModulOrders/Ready/Navigation.js

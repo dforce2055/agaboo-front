@@ -10,10 +10,12 @@ import DeleteUpdateUserAdmin from "./views/ModulsUserAdmin/Delete-Update-List/in
 import * as serviceWorker from './serviceWorker';
 import CreateUserAdm from './views/ModulsUserAdmin/Create/index'; //Componente para registrar un nuevo cliente
 import CreateOrder from './views/ModulOrders/Create/createOrder';
-import indexProduct from './views/ModuleProduct/index';
+//import indexProduct from './views/ModuleProduct/index';
 import ProductForm from './views/ModuleProduct/RegisterProduct'
-import Checkout from './views/ModulOrders/Create/createOrderFinal';
 import CustomizedTables from './views/ModuleProduct/TableProducts';
+import CreateOrder from './views/ModulOrders/Create/index';
+import OrderReady from './views/ModulOrders/Ready/index';
+import DeleteOrder from './views/ModulOrders/Delete/index';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { CssBaseline, CircularProgress } from '@material-ui/core'
@@ -46,7 +48,9 @@ export default function App() {
             <Route path= "/registrarCliente" component={CreateUserAdm} />
             <Route path= "/createProduct" component={ProductForm} />
             <Route path= "/tableProduct" component= {CustomizedTables}/>
-            <Route path= "/registrarPedido" component={Checkout} />
+            <Route path= "/registrarPedido" component={CreateOrder} />
+            <Route path= "/pedidosListos" component={OrderReady} />
+            <Route path= "/eliminarPedidos" component={DeleteOrder} />
           </React.Fragment>
         </BrowserRouter>
     </MuiThemeProvider>
