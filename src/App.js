@@ -8,8 +8,7 @@ import LogIn from './views/LogIn/Login';
 import SignIn from './views/Register/Register';
 import DeleteUpdateUserAdmin from "./views/ModulsUserAdmin/Delete-Update-List/index";
 import * as serviceWorker from './serviceWorker';
-import CreateUserAdm from './views/ModulsUserAdmin/Create/index'; //Componente para registrar un nuevo cliente
-//import indexProduct from './views/ModuleProduct/index';
+import CreateUserAdm from './views/ModulsUserAdmin/Create/index'; //Componente para registrar un nuevo cliente¿
 import ProductForm from './views/ModuleProduct/RegisterProduct'
 import CustomizedTables from './views/ModuleProduct/TableProducts';
 import CreateOrder from './views/ModulOrders/Create/index';

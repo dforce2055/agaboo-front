@@ -3,19 +3,18 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
-import CustomerController from '../../../controllers/Customer';
+import CustomerController from '../../../../controllers/Customer';
 import DialogAcept from './dialogAcept';
 
-/*
-const emailRegex = RegExp(
-  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-);*/
-
-export default function AddressForm() {
-  const [values, setValues] = React.useState({
+export default function AddressForm(props) {
+  //const {cliente} = props;
+  
+  const [values, setValues] = React.useState(props.cliente);  
+ /*
+ {
     nombre:'',
     apellido: '',
-    fechNac:'',
+    fechaNac:'',
     dni:'',
     celular: '',
     telefono: '',
@@ -24,9 +23,8 @@ export default function AddressForm() {
     localidad:'',
     calle:'',
     altura:'',
-    eliminado:false,
     mostrarDialog:false,
-  });  
+  }*/
 
   const auth = () =>{
     if(values.nombre.length > 3){
@@ -47,15 +45,14 @@ export default function AddressForm() {
       apellido: values.apellido,
       fechNac: values.fechNac,
       dni: values.dni,
-      cuit: values.cuit,
+     // cuit: values.cuit,
       calle:values.calle,
       altura: values.altura,
       localidad:values.localidad,
       celular:values.celular,
       email:values.email,
-      eliminado:false,
     }
-    CustomerController.addCustomer(data)    
+    CustomerController.setCustomer(data)    //BORRA LOS CAMPOS QUE NO ESTEN EN EL DATA
     handleCloseDialog();
   }
 
@@ -79,7 +76,8 @@ export default function AddressForm() {
           <TextField
             id="nombre"
             variant="outlined"            
-            label="Nombre"            
+            label="Nombre"      
+            value={values.nombre}
             onChange={handleChange('nombre')}
             required
             fullWidth
@@ -87,7 +85,8 @@ export default function AddressForm() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            onChange={handleChange('apellido')}  
+            value={values.apellido}
+            onChange={handleChange('apellido')}              
             variant="outlined"
             id="apellido"           
             label="Apellido"
@@ -98,25 +97,28 @@ export default function AddressForm() {
         
         <Grid item xs={12} sm={6}>
           <TextField
-            id="nombre"
+            id="dni"
             variant="outlined"            
             label="DNI"         
+            value={values.dni}
             onChange={handleChange('dni')}
             fullWidth
             required
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
+         {/*<Grid item xs={12} sm={6}>
+         <TextField
             onChange={handleChange('cuit')}
             variant="outlined"        
             label="CUIT"
             fullWidth
             required
           />
-        </Grid>
+        </Grid>*/}
         <Grid item xs={12}>
-          <TextField       
+          <TextField 
+            id='email'
+            value={values.email}      
             onChange={handleChange('email')}
             variant="outlined"
             label="E-mail"
@@ -126,17 +128,17 @@ export default function AddressForm() {
         </Grid>              
         <Grid item xs={12} sm={6}>
           <TextField
-          onChange={handleChange('localidad')}
+           onChange={handleChange('localidad')}
             value={values.localidad}                   
             required
             label="Localidad"
             fullWidth
-            variant="outlined"     
-            
+            variant="outlined"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField      
+          <TextField   
+          value={values.calle}   
             onChange={handleChange('calle')}
           label="Calle"
           variant="outlined"
@@ -145,7 +147,8 @@ export default function AddressForm() {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField   
+          <TextField
+            value={values.altura}   
             onChange={handleChange('altura')}
             variant="outlined"
             label="Altura"
@@ -155,7 +158,8 @@ export default function AddressForm() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-          onChange={handleChange('fechNac')}
+            value={values.fechNac}
+            onChange={handleChange('fechNac')}
             type="date"
             variant="outlined"            
             helperText="Fecha De Nacimiento"
@@ -164,7 +168,8 @@ export default function AddressForm() {
           />
         </Grid>  
         <Grid item xs={12} sm={6}>
-          <TextField            
+          <TextField 
+            value={values.celular}   
             onChange={handleChange('celular')}
             label="Celular"
             fullWidth

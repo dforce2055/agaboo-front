@@ -21,8 +21,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore'; //Icono de flecha
 import Collapse from '@material-ui/core/Collapse'; //https://material-ui.com/components/transitions/ --> Componente que permite desplegar
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
-import ButtonSearch from './buttonSearch';
-import EnhancedTable from './UsersTable';
+
 //ICONOS DE BOTONES
   //ICONOS DE CLIENTES
   import GroupAddIcon from '@material-ui/icons/GroupAdd';
@@ -46,9 +45,8 @@ import EnhancedTable from './UsersTable';
   //ICONOS DE MANTENIMIENTO
   import BuildIcon from '@material-ui/icons/Build';
 
-
-
-
+  import ButtonSearch from './buttonSearch';
+  import EnhancedTable from './UsersTable';
 const drawerWidth = 240;
 
 
@@ -145,9 +143,12 @@ function NavbarDeleteUpdate(props) {
   const [productos, setProductos] = React.useState(false);
   const [stock, setStock] = React.useState(false);
   const [pedidos, setPedidos] = React.useState(false);
-  /*Hook que permite en clases Function utilizar 
-    state y cambiar su estado. Es decir el visible es el estado y 
-    el setVisible es sinonimo de this.setState*/
+
+  //FUNCIONALIDADES DE BOTON BUSCAR
+  const [foundInTheDb,setFoundInTheDb] = React.useState([]);
+  function handleFounDb(e){
+    setFoundInTheDb(e);
+  } 
 
   function handleClick() { 
     setVisible(!visible);
@@ -370,16 +371,25 @@ function NavbarDeleteUpdate(props) {
       </List>
        
       </Drawer>
-      <main /*Esta clase, permite que cada vez que abramos el componente Drawers, los componentes que esten dentro de main, se correran al costado. */
+      
+      <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}
       >
-        <div className={classes.drawerHeader} />        
+        <div className={classes.drawerHeader} />      
 
-         <ButtonSearch styles={{position:'rigth'}} /> {/*Importo el componente Boton de busqueda.*/}
-          <EnhancedTable/> {/*Importo la tabla donde se encontraran la List*/}
-        
+        <div>
+        <ButtonSearch 
+          foundInTheDb={foundInTheDb}
+          handleFounDb={handleFounDb}
+
+        />
+        <br></br>
+        <EnhancedTable
+          foundInTheDb={foundInTheDb}
+        />
+        </div>
         
       </main>
     </div>
