@@ -26,7 +26,7 @@ import ContactsIcon from '@material-ui/icons/Contacts';
 import PeopleIcon from '@material-ui/icons/People';
 import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-import Checkout from './Checkout';
+
 import { withRouter } from "react-router-dom";
 
 
@@ -247,7 +247,7 @@ function Navbar(props) {
         })}
       >
         <div className={classes.drawerHeader} />
-        <Checkout></Checkout>
+        
       </main>
     </div>
     </MuiThemeProvider>

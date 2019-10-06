@@ -4,7 +4,6 @@ import {
   makeStyles
 } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import {withRouter} from 'react-router-dom' ;
 
 const BootstrapButton = withStyles({
   root: {
@@ -54,7 +53,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function CustomizedButtons(props) {
   const classes = useStyles();
-  const {history}  = props
 
   return (
     <div>

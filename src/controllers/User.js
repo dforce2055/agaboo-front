@@ -16,7 +16,7 @@ class UserController extends Component {
         };
     };
 
-    getUserStatus = async (email) => {
+    getUserStatusAndRole = async (email) => {
         if (!email) throw new Error(`Error: el email es obligatorio`);
         try {
             let user = await UserRepo.getUserByEMAIL(email);
@@ -27,7 +27,7 @@ class UserController extends Component {
                 // no puedo devolver usuario, tengo que devolver estado y rol a la vista
                 return UserDTO;
             } else {
-                const UserDTO = { estado: "false", role: "inactivo" };
+                const UserDTO = { estado: false, role: "inactivo" };
                 return UserDTO;
             }
             

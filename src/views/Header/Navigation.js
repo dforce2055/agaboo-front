@@ -107,6 +107,9 @@ const useStyles = makeStyles(theme => ({
   nested: { //CLASE CSS DE BOTON DESPLEGADO
     paddingLeft: theme.spacing(4),
   },
+  title: {
+    flexGrow: 0.87,
+  },
 }));
 
 const theme2 = createMuiTheme({ /* Plantilla de edicion */
@@ -127,13 +130,23 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
         '&$checked': {
           color: '#42cfd6',
         },
-      }
+      },
+    },
+    MuiTypography:{
+      overline:{
+        fontSize: '0.9rem',
+      },
+    },
+    MuiSvgIcon:{
+      colorPrimary:{
+        color:'#16984a',
+      },
     },
     
 }
 });
 
-function NavBar(props) {
+function Navbar(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -192,7 +205,7 @@ function NavBar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" align="center" className={classes.title} onClick ={ () => history.push('/mainMenu')}>
             AGABOO
           </Typography>
         </Toolbar>
@@ -265,7 +278,7 @@ function NavBar(props) {
         </List>
 
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested} onClick ={ () => history.push('/tableProduct')}>
+          <ListItem button className={classes.nested}>
             <ListItemIcon>
               <BallotIcon/>
             </ListItemIcon>
@@ -327,7 +340,7 @@ function NavBar(props) {
         </List>
 
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem button className={classes.nested} onClick ={ () => history.push('/eliminarPedidos')}>
             <ListItemIcon>
               <DeleteOutlineIcon/>
             </ListItemIcon>
@@ -336,7 +349,7 @@ function NavBar(props) {
         </List>
 
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem button className={classes.nested} onClick ={ () => history.push('/pedidosListos')}>
             <ListItemIcon>
               <DoneOtulineIcon/>
             </ListItemIcon>
@@ -373,13 +386,10 @@ function NavBar(props) {
           [classes.contentShift]: open,
         })}
       >
-        <div className={classes.drawerHeader} />        
-
-        
-        
+        <div className={classes.drawerHeader} />
       </main>
     </div>
     </MuiThemeProvider>
   );
 }
-export default withRouter(NavBar);
+export default withRouter(Navbar);

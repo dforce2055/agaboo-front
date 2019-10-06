@@ -11,10 +11,6 @@ import { makeStyles , useTheme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-
-
-
-
 const useStyles = makeStyles(theme => ({
     textField: {
         marginLeft: theme.spacing(1),
@@ -100,7 +96,7 @@ export default function FormDialog(props) {
         <DialogTitle id="form-dialog-title">Modificar Producto</DialogTitle>
         <DialogContent>
             <Grid container spacing = {1} justify = { "center" } className = { "grid"} >
-             <Grid item xs = {12} xl = {9}alignItems = {"center"}  >
+             <Grid item xs = {12} xl = {9} alignItems = {"center"}  >
 
                 <TextField
                     id="type-product"

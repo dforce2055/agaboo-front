@@ -56,6 +56,7 @@ function SignIn(props) {
                     Iniciar sesión
        			</Typography>
                 <form className={classes.form} onSubmit={e => e.preventDefault() && false}>
+                    {/*
                     <FormControl margin="normal" required fullWidth>
                         <InputLabel htmlFor="email">Email</InputLabel>
                         <Input id="email" name="email" autoComplete="off" autoFocus value={email} onChange={e => setEmail(e.target.value)} />
@@ -64,6 +65,7 @@ function SignIn(props) {
                         <InputLabel htmlFor="password">Contraseña</InputLabel>
                         <Input name="password" type="password" id="password" autoComplete="off" value={password} onChange={e => setPassword(e.target.value)} />
                     </FormControl>
+                    */}
                     <Button
                         type="button"
                         fullWidth
@@ -73,6 +75,7 @@ function SignIn(props) {
                         className={classes.submit}>
                         Iniciar sesión con Google
                     </Button>  
+                    {/*
                     <Button
                         type="submit"
                         fullWidth
@@ -92,6 +95,7 @@ function SignIn(props) {
                         className={classes.submit}>
                         Registrarse
           			</Button>
+                      */}
                 </form>
             </Paper>
             
@@ -100,8 +104,15 @@ function SignIn(props) {
 
     async function login() {
         try {
-            await firebase.login(email, password);
-            props.history.replace('/mainMenu');
+            let result = await firebase.login(email, password);
+            if ( result ) {
+                props.history.replace('/mainMenu');
+            } else {
+                alert("Su usario no esta habilitado, comuniquese con el administrador");
+                await firebase.logout();
+                props.history.replace('/');
+            }
+            
         } catch (error) {
             alert(error.message)
         }
@@ -110,21 +121,26 @@ function SignIn(props) {
         try {
             let userGoogleEmail = await firebase.signInWithGoogle();
 
-            const result = userController.getUserStatus(userGoogleEmail)
-                .then((userStatus) => {
+            // verifico que el usuario exista en la bbdd y este habilitado
+            userController.getUserStatusAndRole(userGoogleEmail)
+                .then(async (userStatus)  => {
                     console.log(`Estado y Rol del usuario:`);
                     console.log(userStatus);
 
-                    return true;
+                    if ( userStatus.estado ) {
+                        props.history.replace('/mainMenu');
+                    } else {
+                        alert("Su usario no esta habilitado, comuniquese con el administrador");
+                        await firebase.logout();
+                        props.history.replace('/');
+                    }
+                    
                 })
                 .catch((error) => {
                     console.error("Error: ", error);
                     return false;
                 });
-
-            if (result) {
-                props.history.replace('/mainMenu');
-            }
+           
             
         } catch (error) {
             alert(error.message)
