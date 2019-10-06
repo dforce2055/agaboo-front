@@ -7,7 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from  './Button';
-import NavBar from '../Navigation';
+import NavBar from '../Header/Navigation';
 import ProductController from '../../controllers/Product';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FormDialog from './DialogUpdateProduct';
