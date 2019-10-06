@@ -1,16 +1,16 @@
 import React from "react";
 import "./Form.css";
 import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
+//import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 
-const emailRegex = RegExp(
+/*const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 ); //Verificacion que gmail no contenga campos extraños
-
+*/
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
 
@@ -345,7 +345,7 @@ export default function Form() {
               type="number"
               name="totalPrice"  //Nombre state a utilizar
               noValidate
-              onChange={handleTotalPriceChange}  // Guardo los cambios 
+              onChange={handleTotalPriceChange} // Guardo los cambios 
             />             
           </div>
 

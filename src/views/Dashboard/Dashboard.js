@@ -15,13 +15,13 @@ import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
 //Componentes
 import { mainListItems, secondaryListItems } from './listItems';
-import ButtonSimple from './ButtonsMenu/ButtonSimple';
-import ButtonClient from './ButtonsMenu/ButtonClient';
-import ButtonProduct from './ButtonsMenu/ButtonProduct';
-import ButtonStock from './ButtonsMenu/ButtonStock';
-import ButtonOrder from './ButtonsMenu/ButtonOrder';
-import './MainMenu.css';
-import Chart from './Statistics/Chart.js';
+import ButtonSimple from './ButtonSimple';
+import ButtonClient from './ButtonClient';
+import ButtonProduct from './ButtonProduct';
+import ButtonStock from './ButtonStock';
+import ButtonOrder from './ButtonOrder';
+import '../MainMenu/MainMenu.js';
+import Chart from '../Statistics/Chart.js';
 
 const drawerWidth = 240;
 

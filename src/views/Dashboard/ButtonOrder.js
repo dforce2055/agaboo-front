@@ -73,19 +73,19 @@ function CustomizedMenus(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <StyledMenuItem onClick ={ () => history.push('/registrarPedido')}>
+        <StyledMenuItem>
           <ListItemIcon>
           <ArchiveIcon/> 
           </ListItemIcon>
           <ListItemText primary="Registrar" onClick ={ () => history.push('/registrarPedido')}/>
         </StyledMenuItem>   
-        <StyledMenuItem onClick ={ () => history.push('/eliminarPedidos')}>
+        <StyledMenuItem>
           <ListItemIcon>
             <DeleteOutlineIcon />
           </ListItemIcon>
           <ListItemText primary="Eliminar" />
         </StyledMenuItem>
-        <StyledMenuItem onClick ={ () => history.push('/pedidosListos')}>
+        <StyledMenuItem>
           <ListItemIcon>
             < DoneOtulineIcon/>
           </ListItemIcon>

@@ -5,19 +5,22 @@
 import { Person } from "./Person";
 
 export class Customer extends Person {
-    constructor(nombre, apellido, cuit, cuil, tipoDocumento, numeroDocumento, direccion, telefono, email, estado, role, password) {
-        super(nombre, apellido, cuit, cuil, tipoDocumento, numeroDocumento, direccion, telefono, email, estado)
-        this.role = role;
-        this.password = password;
+    constructor(nombre, apellido, cuit, cuil, tipoDocumento, numeroDocumento, fechNac,
+            direccion, calle, altura, localidad, celular, telefono, email, estado,
+            ) {
+        super(nombre, apellido, cuit, cuil, tipoDocumento, numeroDocumento, fechNac, 
+                direccion, calle, altura, localidad, celular, telefono, email, estado)
+        
+        
     }
     //@Methods
     sayHello() {
-        return `Hola soy un Usuario mi rol es ${this.role}`;
+        //return `Hola soy un Usuario mi rol es ${this.role}`;
     }
 
     sosAdmin() {
         //Comparo tipo y número de documento
-        return this.role.toUpperCase() === "ADMIN" ? true : false;
+        //return this.role.toUpperCase() === "ADMIN" ? true : false;
     }
 
     // Retorno objeto JSON omitiendo algunos campos
@@ -29,6 +32,7 @@ export class Customer extends Person {
             /*cuit: this.cuit,
             tipoDocumento: this.tipoDocumento,
             numeroDocumento: this.numeroDocumento,
+            fechNac: this.fechNac,
             direccion: this.direccion,
             telefono: this.telefono,
             email: this.email,
@@ -41,9 +45,7 @@ export class Customer extends Person {
     //@Getters
 
     //@Setters
-    set setRole(newRole) {
-        this.role = newRole;
-    }
+    
 
 }
 

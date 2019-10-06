@@ -3,14 +3,20 @@
  * Person Model Class
  */
 export class Person {
-    constructor(nombre, apellido, cuit, cuil, tipoDocumento, numeroDocumento, direccion, telefono, email, estado) {
+    constructor(nombre, apellido, cuit, cuil, tipoDocumento, numeroDocumento, fechNac, 
+            direccion, calle, altura, localidad, celular, telefono, email, estado) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.cuit = cuit;
         this.cuil = cuil;
         this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
+        this.fechNac = fechNac;
         this.direccion = direccion;
+        this.calle = calle;
+        this.altura =  altura;
+        this.localidad = localidad;
+        this.celular = celular;
         this.telefono = telefono;
         this.email = email;
         this.estado = estado;
@@ -60,6 +66,9 @@ export class Person {
     }
     get getEstado() {
         return this.estado;
+    }
+    get getFechNac() {
+        return this.fechNac;
     }
 
     "@Setters"

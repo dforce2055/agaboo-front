@@ -1,12 +1,15 @@
 import React from 'react';
-import Dashboard from './Dashboard';
+import Navbar from '../../Header/Navigation';
+import Checkout from './createOrderFinal';
+
 
 export default function CreateOrder() {
 
     return (
         
         <div className="UsersScreen">
-            <Dashboard/>
+            <Navbar/>
+            <Checkout/>
         </div>
         
     )

@@ -15,39 +15,41 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import Visibility from '@material-ui/icons/Visibility';
-import { black } from 'material-ui/styles/colors';
-
+import ResponsiveDialog from './ConfirmDialog';
 //Import clases de db
-import CustomerController from '../../../controllers/Customer'
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
- function createData(name, surname, email, tel, CUIT) {
-  return { name, surname, email, tel, CUIT};
+const theme = createMuiTheme({ /* Plantilla de edicion */
+  overrides: { 
+    MuiIconButton:{
+      root:{
+        color:'#19a952',
+      },
+    },
+    MuiCheckbox:{
+        colorSecondary: {
+          color: '#42cfd6',
+          '&$checked': {
+            color: '#42cfd6',
+          },
+        }
+      },
+    
+}
+});
+
+function createData(nombre, dni, fecha, direccion, telefono) {
+  return { nombre, dni, fecha, direccion, telefono};
 }
 
 const rows = [
-  createData('Leandro', 'Romagnoli', 'pipid10s@gmail.com', 22315675423 ),
-  createData('Ivan', 'Cuadrado', 'icuadrado@gmail.com', 1538219585 ), 
+    createData('Cesar Vega', 159, '24/05/2019', 24, 4.0),
+    createData('Ivan Cuadrado', 237, '27/09/2018', 37, 4.3),
+    createData('Diego Perez', 262, '17/10/2018', 24, 6.0),
+    createData("Francisco D'Anunzio", 4167323, '30/09/2019', 67, 4.3),
+    createData('Ionatan Tarragona', 356, '16/03/2019', 49, 3.9),
   
 ];
-
-
-async function getCollection(collect){
-  collect = await CustomerController.getCustomers();
-  console.log("collection: ", collect );
-};
-
-
-
-    
-  
-
-
-
-
-
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -75,15 +77,14 @@ function getSorting(order, orderBy) {
 
 const headCells = [
   { id: 'Nombre', numeric: false, disablePadding: true, label: 'Nombre' },
-  { id: 'Apellido', numeric: true, disablePadding: false, label: 'Apellido' },
-  { id: 'Email', numeric: true, disablePadding: false, label: 'Email' },  
-  { id: 'Telefono', numeric: true, disablePadding: false, label: 'Telefono' },
-  { id: 'CUIT', numeric: true, disablePadding: false, label: 'CUIT' },
+  { id: 'dni', numeric: true, disablePadding: false, label: 'DNI' },
+  { id: 'fecha', numeric: true, disablePadding: false, label: 'Fecha' },  
+  { id: 'direccion', numeric: true, disablePadding: false, label: 'Dirección' },
+  { id: 'telefono', numeric: true, disablePadding: false, label: 'Teléfono' },
 ];
 
- function EnhancedTableHead(props) {
+function EnhancedTableHead(props) {
   const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
-  
   const createSortHandler = property => event => {
     onRequestSort(event, property);
   };  
@@ -143,8 +144,8 @@ const useToolbarStyles = makeStyles(theme => ({
   highlight:
     theme.palette.type === 'light'
       ? {
-          color: black,
-          backgroundColor: '#42cfd66b',
+          color: '#000000d6',
+          backgroundColor: '#14ceb49e',
         }
       : {
           color: theme.palette.text.primary,
@@ -153,9 +154,9 @@ const useToolbarStyles = makeStyles(theme => ({
   spacer: {
     flex: '1 1 100%',
   },
-  actions: {
+  /* actions: {
     color: theme.palette.text.secondary,
-  },
+  }, */
   title: {
     flex: '0 0 auto',
   },
@@ -172,32 +173,31 @@ const EnhancedTableToolbar = props => {
       })}
     >
       <div className={classes.title}>
-        
-          
-          <Typography variant="h6" id="tableTitle">
-            Clientes
+        {numSelected > 0 ? (
+          <Typography color="inherit" variant="subtitle1">
+            {numSelected} seleccionado/s
           </Typography>
-        
+        ) : (
+          <Typography variant="h6" id="tableTitle">
+            Pedidos pendientes
+          </Typography>
+        )}
       </div>
-
-      <Tooltip title="Filter list">
-            <IconButton>
-            <Visibility/>
+      
+      <div className={classes.spacer} />
+      <div >
+        {numSelected > 0 ? (
+          <Tooltip title="Confirmar">
+            <ResponsiveDialog/>
+          </Tooltip>
+        ) : (
+          <Tooltip title="Filter list">
+            <IconButton aria-label="filter list">
+              
             </IconButton>
           </Tooltip>
-
-          <Tooltip title="Filter list" >
-            <IconButton>
-            <EditIcon />
-            </IconButton>
-          </Tooltip>
-          
-          <Tooltip title="Editar/Borrar">
-            <IconButton aria-label="delete">              
-              <DeleteIcon className={"DeleteButton"}/>
-            </IconButton>
-          </Tooltip>
-
+        )}
+      </div>
           
     </Toolbar>
   );
@@ -235,7 +235,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 export default function EnhancedTable() {
-  
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -243,33 +242,28 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [collect, setCollect] =React.useState([]);
+
   function handleRequestSort(event, property) {
     const isDesc = orderBy === property && order === 'desc';
     setOrder(isDesc ? 'asc' : 'desc');
     setOrderBy(property);
   }
 
- function componentDidMount(){
-    getCollection(collect);
-    console.log('Muestro datos de la db',collect);
-  }
-
   function handleSelectAllClick(event) {
     if (event.target.checked) {
-      const newSelecteds = rows.map(n => n.name);
+      const newSelecteds = rows.map(n => n.nombre);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   }
 
-  function handleClick(event, name) {
-    const selectedIndex = selected.indexOf(name);
+  function handleClick(event, nombre) {
+    const selectedIndex = selected.indexOf(nombre);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, nombre);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -293,13 +287,13 @@ export default function EnhancedTable() {
     setPage(0);
   }
 
-  const isSelected = name => selected.indexOf(name) !== -1;
+  const isSelected = nombre => selected.indexOf(nombre) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
-    
-    <div className={classes.root}> {componentDidMount()}
+    <MuiThemeProvider theme={theme}>
+    <div className={classes.root}>
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <div className={classes.tableWrapper}>
@@ -321,17 +315,17 @@ export default function EnhancedTable() {
               {stableSort(rows, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.nombre);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.name)}
+                      onClick={event => handleClick(event, row.nombre)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       
-                      key={row.name}
+                      key={row.nombre}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -343,12 +337,12 @@ export default function EnhancedTable() {
                       {/* return { name, surname, email, tel, CUIT}; */}
                       
                       <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.name}
+                        {row.nombre}
                       </TableCell>
-                      <TableCell align="right">{row.surname}</TableCell>
-                      <TableCell align="right">{row.email}</TableCell>
-                      <TableCell align="right">{row.tel}</TableCell>
-                      <TableCell align="right">{row.CUIT}</TableCell>
+                      <TableCell align="right">{row.dni}</TableCell>
+                      <TableCell align="right">{row.fecha}</TableCell>
+                      <TableCell align="right">{row.direccion}</TableCell>
+                      <TableCell align="right">{row.telefono}</TableCell>
                       
                       
             
@@ -366,9 +360,8 @@ export default function EnhancedTable() {
         </div>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
-          labelRowsPerPage='' // Saco la palabra "ROWS PER PAGE". Se puede agregar cualquier grase entre ' ' .
-          labelDisplayedRows={({ from, to, count }) => `Mostrando las páginas ${from}-${to} del total de ${count} páginas
-`} //MODIFICO EL OF
+          labelRowsPerPage='Filas por pagina:' // Saco la palabra "ROWS PER PAGE". Se puede agregar cualquier grase entre ' ' .
+          labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`} //MODIFICO EL OF
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
@@ -385,5 +378,6 @@ export default function EnhancedTable() {
       </Paper>
       
     </div>
+    </MuiThemeProvider>
   );
 }

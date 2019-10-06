@@ -1,5 +1,3 @@
-import firebase from "firebase";
-
 /**
  *                          ===================
  *                          | IMPORTANTE LEER |
@@ -17,18 +15,60 @@ import firebase from "firebase";
  *   };
  *
  */
+import { firebaseConfig } from './firebase-config';
+import app from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firebase-firestore';
 
-const config = {
-  apiKey:'AIzaSyDLVYnr_2LjpA8aYS8ycRUllV5DTudWs7Q',
-  authDomain:'agaboodb.firebaseapp.com',
-  databaseURL:'https://agaboodb.firebaseapp.com',  
-  storageBucket: 'agaboodb.firebaseio.appspot.com',
-  projectId:'agaboodb',
-  messaginSendID:'892253944017'
-};
+class Firebase {
+    constructor() {
+        app.initializeApp(firebaseConfig);
+        this.auth = app.auth();
+        this.db = app.firestore();
+        this.googleProvider = new app.auth.GoogleAuthProvider();
+    }
 
+    login(email, password) {
+        return this.auth.signInWithEmailAndPassword(email, password);
+    }
 
+    logout() {
+        return this.auth.signOut();
+    }
 
-const firebaseApp = firebase.initializeApp(config);
-const db = firebaseApp.firestore();
-export { db, firebaseApp };
+    async register(name, email, password) {
+        await this.auth.createUserWithEmailAndPassword(email, password);
+        return this.auth.currentUser.updateProfile({
+            displayName: name
+        })
+    }
+    
+    async signInWithGoogle() {
+        let email = await this.auth.signInWithPopup(this.googleProvider)
+            .then((socialAuthUser) => {
+                //alert(socialAuthUser.user.uid + socialAuthUser.user.email);
+                return socialAuthUser.user.email
+            });
+        return email;
+    }
+        
+    
+    signOut = () => this.auth.signOut();
+
+    isInitialized() {
+        return new Promise(resolve => {
+            this.auth.onAuthStateChanged(resolve)
+        })
+    }
+
+    getCurrentUsername() {
+        return this.auth.currentUser && this.auth.currentUser.displayName
+    }
+
+    getCurrentUserPhoto() {
+        return this.auth.currentUser && this.auth.currentUser.photoURL
+    }
+
+}
+
+export default new Firebase()

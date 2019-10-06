@@ -1,8 +1,9 @@
 /**
+ * @Repository
  * Customer Repository Class
  */
 import { Component } from 'react';
-import { db } from '../config/firebase';
+import firebase from '../config/firebase';
 const collection = 'customers';
 
 class CustomerRepo extends Component {
@@ -18,8 +19,8 @@ class CustomerRepo extends Component {
 
     getCustomer = async (id) => {
         try {
-            // Lo busco por ide de documento en la colección, el cual deberia ser el cuil/cuit
-            let cliente = await db.collection(collection).doc(id).get();
+            // Lo busco por id de documento en la colección, el cual deberia ser el cuil/cuit
+            let cliente = await firebase.db.collection(collection).doc(id).get();
             
             return cliente.data();            
         } catch (error) {
@@ -30,7 +31,7 @@ class CustomerRepo extends Component {
     getCustomerByCUIL = async (cuil) => {
         if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
         let customer = {};
-         await db.collection(collection)
+         await firebase.db.collection(collection)
             .where('cuil', '==', cuil)
             .limit(1)
             .get()
@@ -51,7 +52,7 @@ class CustomerRepo extends Component {
 
     getCustomers = async (res) => {
         try {
-            let coleccion = await db.collection(collection).get();
+            let coleccion = await firebase.db.collection(collection).get();
             let clientes = coleccion.docs.map(doc => doc.data());
             return clientes;
         } catch (error) {
@@ -61,20 +62,24 @@ class CustomerRepo extends Component {
 
     addCustomer = async (newCustomer) => {
         if (!newCustomer) throw new Error(`Error: no se envio un cliente para registrar`);
-        let result = await db.collection(collection)
+        let result = await firebase.db.collection(collection)
             .doc(newCustomer.cuil)
             .set({
-                apellido: newCustomer.apellido,
                 nombre: newCustomer.nombre,
-                apellido: newCustomer.apellido,
-                fechaNac: newCustomer.fechaNac,
-                dni: newCustomer.dni,
+                apellido: newCustomer.apellido,                
+                cuil: newCustomer.cuil,
                 cuit: newCustomer.cuit,
+                tipoDocumento: newCustomer.tipoDocumento,
+                numeroDocumento: newCustomer.numeroDocumento,
+                fechNac: newCustomer.fechNac,
+                direccion: newCustomer.direccion,
                 calle:newCustomer.calle,
                 altura: newCustomer.altura,
                 localidad:newCustomer.localidad,
                 celular:newCustomer.celular,
+                telefono:newCustomer.telefono,
                 email:newCustomer.email,
+                estado:newCustomer.estado,
         })
         .then(() => {
             console.log("Documento guardado exitosamente!");
@@ -84,24 +89,31 @@ class CustomerRepo extends Component {
             console.error("Error al guardar el documento: ", error);
             return false;
         });
+        
+        return result;
     }
 
     editCustomer = async (cuil, customer) => {
        if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
        let result = this.getCustomerByCUIL(cuil)
         .then(() => {
-            db.collection(collection).doc(cuil).update({        
+            firebase.db.collection(collection).doc(cuil).update({        
                 nombre: customer.nombre,
                 apellido: customer.apellido,
                 cuit: customer.cuit,
                 cuil: customer.cuil,
                 tipoDocumento: customer.tipoDocumento,
                 numeroDocumento: customer.numeroDocumento,
+                fechNac: customer.fechNac,
                 direccion: customer.direccion,
+                calle: customer.calle,
+                altura: customer.altura,
+                localidad: customer.localidad,
+                celular: customer.celular,
                 telefono: customer.telefono,
                 email: customer.email,
                 estado: customer.estado,
-                role: customer.role,
+                
             });
             return true;
         })
@@ -116,7 +128,7 @@ class CustomerRepo extends Component {
        if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
        let result = this.getCustomerByCUIL(cuil)
         .then(() => {
-            db.collection(collection).doc(cuil).delete();
+            firebase.db.collection(collection).doc(cuil).delete();
             return true;
         })
         .catch(function (error) {
