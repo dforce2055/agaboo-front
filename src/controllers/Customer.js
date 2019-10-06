@@ -24,9 +24,9 @@ class CustomerController extends Component {
         }
     }
 
-    async getCustomer(e) {
+    async getCustomer() {
         try {
-            await CustomerRepo.getCustomer(e);
+            await CustomerRepo.getCustomer();
             
         } catch (error) {
             console.log("No se pudo obtener el cliente");

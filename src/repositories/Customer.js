@@ -3,13 +3,8 @@
  * Customer Repository Class
  */
 import { Component } from 'react';
-<<<<<<< HEAD
-import firebase from '../config/firebase';
-const collection = 'customers';
-=======
 import { db } from '../config/firebase';
 const collection = '/customers';
->>>>>>> Clientes
 
 class CustomerRepo extends Component {
     constructor(props) {
@@ -52,13 +47,8 @@ class CustomerRepo extends Component {
     getCustomerById = async (cuil) => {
         if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
         let customer = {};
-<<<<<<< HEAD
-         await firebase.db.collection(collection)
-            .where('cuil', '==', cuil)
-=======
          await db.collection(collection)
             .where('dni', '==', cuil)
->>>>>>> Clientes
             .limit(1)
             .get()
             .then(function (querySnapshot) {
@@ -78,11 +68,7 @@ class CustomerRepo extends Component {
 
     getCustomers = async () => {
         try {
-<<<<<<< HEAD
-            let coleccion = await firebase.db.collection(collection).get();
-=======
             let coleccion = await db.collection(collection).where('eliminado','==', false).get();
->>>>>>> Clientes
             let clientes = coleccion.docs.map(doc => doc.data());
             return clientes;
         } catch (error) {
@@ -92,45 +78,6 @@ class CustomerRepo extends Component {
 
     addCustomer = async (newCustomer) => {
         if (!newCustomer) throw new Error(`Error: no se envio un cliente para registrar`);
-<<<<<<< HEAD
-        let result = await firebase.db.collection(collection)
-            .doc(newCustomer.cuil)
-            .set({
-                nombre: newCustomer.nombre,
-                apellido: newCustomer.apellido,                
-                cuil: newCustomer.cuil,
-                cuit: newCustomer.cuit,
-                tipoDocumento: newCustomer.tipoDocumento,
-                numeroDocumento: newCustomer.numeroDocumento,
-                fechNac: newCustomer.fechNac,
-                direccion: newCustomer.direccion,
-                calle:newCustomer.calle,
-                altura: newCustomer.altura,
-                localidad:newCustomer.localidad,
-                celular:newCustomer.celular,
-                telefono:newCustomer.telefono,
-                email:newCustomer.email,
-                estado:newCustomer.estado,
-        })
-        .then(() => {
-            console.log("Documento guardado exitosamente!");
-            return true;
-        })
-        .catch(function (error) {
-            console.error("Error al guardar el documento: ", error);
-            return false;
-        });
-        
-        return result;
-    }
-
-    editCustomer = async (cuil, customer) => {
-       if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
-       let result = this.getCustomerByCUIL(cuil)
-        .then(() => {
-            firebase.db.collection(collection).doc(cuil).update({        
-                nombre: customer.nombre,
-=======
         let result = await db.collection(collection)
             .doc(newCustomer.dni)
             .set({
@@ -188,7 +135,6 @@ class CustomerRepo extends Component {
                 //DELETE
                 eliminado:false,
                /* nombre: customer.nombre,
->>>>>>> Clientes
                 apellido: customer.apellido,
                 cuit: customer.cuit,
                 cuil: customer.cuil,
@@ -203,14 +149,10 @@ class CustomerRepo extends Component {
                 telefono: customer.telefono,
                 email: customer.email,
                 estado: customer.estado,
-<<<<<<< HEAD
-                
-=======
                 role: customer.role,*/
             })
             .catch(error=>{console.error("Error al modificar cliente: ",error);
             return false;
->>>>>>> Clientes
             });
             return true;
         })
@@ -227,15 +169,11 @@ class CustomerRepo extends Component {
         .doc(deleteCustomer.dni)
         .get()
         .then(() => {
-<<<<<<< HEAD
-            firebase.db.collection(collection).doc(cuil).delete();
-=======
             db.collection(collection).doc(deleteCustomer.dni)
             .update({
                 //DELETE
                 eliminado:true,
             })
->>>>>>> Clientes
             return true;
         })
         .catch(function (error) {
