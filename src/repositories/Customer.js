@@ -3,7 +3,7 @@
  * Customer Repository Class
  */
 import { Component } from 'react';
-import { db } from '../config/firebase';
+import firebase from '../config/firebase';
 const collection = '/customers';
 
 class CustomerRepo extends Component {
@@ -33,7 +33,7 @@ class CustomerRepo extends Component {
             console.log("LLEGUE A REPO");
             
             // Lo busco por ide de documento en la colección, el cual deberia ser el cuil/cuit
-            let encontrados = await db.collection(collection)
+            let encontrados = await firebase.db.collection(collection)
             .where('dni','==',e)
             .get()
 
@@ -47,7 +47,7 @@ class CustomerRepo extends Component {
     getCustomerById = async (cuil) => {
         if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
         let customer = {};
-         await db.collection(collection)
+         await firebase.db.collection(collection)
             .where('dni', '==', cuil)
             .limit(1)
             .get()
@@ -68,7 +68,7 @@ class CustomerRepo extends Component {
 
     getCustomers = async () => {
         try {
-            let coleccion = await db.collection(collection).where('eliminado','==', false).get();
+            let coleccion = await firebase.db.collection(collection).where('eliminado','==', false).get();
             let clientes = coleccion.docs.map(doc => doc.data());
             return clientes;
         } catch (error) {
@@ -78,7 +78,7 @@ class CustomerRepo extends Component {
 
     addCustomer = async (newCustomer) => {
         if (!newCustomer) throw new Error(`Error: no se envio un cliente para registrar`);
-        let result = await db.collection(collection)
+        let result = await firebase.db.collection(collection)
             .doc(newCustomer.dni)
             .set({
                 nombre: newCustomer.nombre,
@@ -114,11 +114,11 @@ class CustomerRepo extends Component {
     }
 
     setCustomer = async (setCustomer) => {
-       let result = db.collection(collection)
+       let result = firebase.db.collection(collection)
         .doc(setCustomer.dni)
         .get()
         .then(() => {            
-            db.collection(collection)
+            firebase.db.collection(collection)
             .doc(setCustomer.dni)
             .set({    
                 nombre: setCustomer.nombre,
@@ -165,11 +165,11 @@ class CustomerRepo extends Component {
     
     deleteCustomer = async (deleteCustomer) => {
        if (!deleteCustomer.dni) throw new Error(`Error: el DNI es obligatorio`);
-       let result = db.collection(collection)
+       let result = firebase.db.collection(collection)
         .doc(deleteCustomer.dni)
         .get()
         .then(() => {
-            db.collection(collection).doc(deleteCustomer.dni)
+            firebase.db.collection(collection).doc(deleteCustomer.dni)
             .update({
                 //DELETE
                 eliminado:true,
