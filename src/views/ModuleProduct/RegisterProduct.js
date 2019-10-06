@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid'
 import NavBar from '../Navigation';
 import {withRouter} from 'react-router-dom' ;
 import Paper from '@material-ui/core/Paper';
-import ProductController from '../../controllers/ProductController';
+import ProductController from '../../controllers/Product';
 
 
 const usuario={

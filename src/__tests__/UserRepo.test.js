@@ -201,6 +201,7 @@ describe('Metodo deleteUser', () => {
 
         //Lo elimino y evaluo el resultado
         let result = await UserRepo.deleteUser(userTest.email);
+        console.log("Eliminado " + result);
         expect(typeof result).toBe('boolean');
         expect(result).toBe(true);
     });

@@ -1,6 +1,6 @@
 /**
  * @Test Class
- * User Controller Test
+ * User **Controller** Test
  */
 import UserController  from '../controllers/User';
 import { User } from '../models/User';
