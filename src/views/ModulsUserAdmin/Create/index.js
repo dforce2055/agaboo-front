@@ -1,10 +1,12 @@
 import React from 'react';
-import Navbar from './Navigation';
+import Navbar from '../../Header/Navigation'
+import Checkout from './Checkout';
 
 export default function CreateUserAdm() {
     return (        
         <div className="UsersScreen">
-            <Navbar/>            
+            <Navbar/>
+            <Checkout/>
         </div>        
     )
 }

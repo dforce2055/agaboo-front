@@ -78,7 +78,7 @@ export default function ClientForm() {
         </div>
 
         <div className="firstName">   {/* Nombre del css a utilizar*/}
-          <label htmlFor="firstName">Telefono</label> 
+          <label htmlFor="firstName">Teléfono</label> 
           <input
             className={telephone.length > 0 ? "error" : null}
             placeholder="22546654**"
@@ -104,7 +104,7 @@ export default function ClientForm() {
         </div>
 
         <div className="password">
-          <label htmlFor="location">Direccion</label>
+          <label htmlFor="location">Dirección</label>
           <input
             className={location.length > 0 ? "error" : null}
             placeholder="Direccion"
