@@ -9,7 +9,6 @@ import SignIn from './views/Register/Register';
 import DeleteUpdateUserAdmin from "./views/ModulsUserAdmin/Delete-Update-List/index";
 import * as serviceWorker from './serviceWorker';
 import CreateUserAdm from './views/ModulsUserAdmin/Create/index'; //Componente para registrar un nuevo cliente
-import CreateOrder from './views/ModulOrders/Create/createOrder';
 //import indexProduct from './views/ModuleProduct/index';
 import ProductForm from './views/ModuleProduct/RegisterProduct'
 import CustomizedTables from './views/ModuleProduct/TableProducts';
