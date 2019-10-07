@@ -120,7 +120,7 @@ function Checkout(props) {
                 <Typography variant="h5" gutterBottom>
                   Pedido registrado con éxito.
                 </Typography>
-                <Button variant="contained" color="primary" className={classes.button} onClick ={ () => history.push('/mainMenu')}>
+                <Button variant="contained" color="primary" className={classes.button} onClick ={ () => history.goBack()}>
                     Cerrar
                 </Button>
               </React.Fragment>
