@@ -1,4 +1,4 @@
-import React , { useState, useEffect }from "react";
+import React , { useEffect }from "react";
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,12 +7,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from  './Button';
-import NavBar from '../Navigation';
-import ProductController from '../../controllers/ProductController';
+import NavBar from '../Header/Navigation';
+import ProductController from '../../controllers/Product';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FormDialog from './DialogUpdateProduct';
 import SearchBox from './SearchBox';
-
 
 
 
@@ -82,7 +81,7 @@ console.log('Rows despues de getProducts: ', rows);
   async function getProducts(){
     const products = await ProductController.getProducts();
     console.log("Cantidad de productos :", products.length);
-    if(rows.length != products.length){
+    if(rows.length !== products.length){
       setRows(products); 
       console.log("products :" , rows);    
     }

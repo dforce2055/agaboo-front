@@ -2,7 +2,7 @@
  * Customer Controller
  */
 import { Component } from 'react';
-import CustomerRepo from '.././repositories/Customer';
+import CustomerRepo from '../repositories/Customer';
 
 class CustomerController extends Component {
     constructor(props) {
@@ -15,9 +15,39 @@ class CustomerController extends Component {
         }
     }
 
+    async setCustomer(e) {
+        try {
+            let data = e;
+            await CustomerRepo.setCustomer(data);            
+        } catch (error) {
+            console.log("No se pudo obtener el cliente");
+        }
+    }
+
     async getCustomer() {
         try {
             await CustomerRepo.getCustomer();
+            
+        } catch (error) {
+            console.log("No se pudo obtener el cliente");
+        }
+    }
+
+    async searchCustomer(e) {
+        let valor = e;
+        try {
+            let cliente = await CustomerRepo.searchCustomer(valor);
+            return cliente;
+        } catch (error) {
+            console.log("No se pudo buscar el cliente.");
+        }
+    }
+
+    async getCustomerById(e) {
+        try {
+            console.log("Entro a buscar");
+            
+            await CustomerRepo.getCustomerById(e);
             
         } catch (error) {
             console.log("No se pudo obtener el cliente");
@@ -29,7 +59,6 @@ class CustomerController extends Component {
         try {
             let clientes = await CustomerRepo.getCustomers();
             if (clientes.length > 0) {
-                console.log(clientes);
                 return clientes;
             } else {
                 throw new Error();
@@ -48,5 +77,18 @@ class CustomerController extends Component {
             CustomerRepo.addCustomer(newCustomer)
     }
 
+   async deleteCustomer(customer){
+        let deleteCustomer = customer;        
+        try {
+            console.log("Cambiando estado al cliente: ",deleteCustomer.dni);
+            let valor = CustomerRepo.deleteCustomer(deleteCustomer);               
+            return valor;
+        } catch (error) {
+            console.error("Error en controller.",error)
+        }        
+    }
+
+
 }
+
 export default new CustomerController();

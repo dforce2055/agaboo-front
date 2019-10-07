@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import CustomerController from '../../../controllers/Customer';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,17 +26,46 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CustomizedInputBase() {
+export default function CustomizedInputBase(props) {
   const classes = useStyles();
+
+  const [values,setValues] = React.useState({
+    buscar:'',
+  });
+
+  const {foundInTheDb} = props;
+  const {handleFounDb} = props;
+
+  const handleChange = name => event => {
+    console.log(event.target.value);    
+    setValues({ ...values, [name]: event.target.value });  
+  };
+
+  function pulsar(e) {
+    CustomerController.searchCustomer(e)
+     .then(result=>{
+        handleFounDb(result);
+      });
+  }
 
   return (
     <Paper className={classes.root}>
       <InputBase
         className={classes.input}
+        onChange={handleChange('buscar')}
+        onKeyPress={ 
+                    event =>{
+                    if(event.keyCode===13 || event.key === 'Enter'){
+                      pulsar(values.buscar);
+                    }
+                  }}  
+
         placeholder="Buscar Cliente"
         inputProps={{ 'aria-label': 'search google maps' }}
       />
-      <IconButton className={classes.iconButton} aria-label="search">
+      <IconButton 
+      className={classes.iconButton} 
+      aria-label="search">
         <SearchIcon />
       </IconButton>     
     </Paper>

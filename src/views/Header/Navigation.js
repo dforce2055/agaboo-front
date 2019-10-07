@@ -43,6 +43,8 @@ import { withRouter } from "react-router-dom";
   import LocalAtmIcon from '@material-ui/icons/LocalAtm';
   //ICONOS DE MANTENIMIENTO
   import BuildIcon from '@material-ui/icons/Build';
+  //ICONO DE CIERRE DE SESION
+  import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
 
 
@@ -278,11 +280,11 @@ function Navbar(props) {
         </List>
 
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon>
+          <ListItem button className={classes.nested} onClick ={ () => history.push('/tableProduct')}>
+            <ListItemIcon >
               <BallotIcon/>
             </ListItemIcon>
-            <ListItemText primary="Modificar/Eliminar Productos" />
+            <ListItemText primary="Modificar/Eliminar Productos"  />
           </ListItem>
         </List>
       </Collapse>
@@ -379,6 +381,18 @@ function Navbar(props) {
       </ListItem>
 
       </List>
+{/* *********************************** LISTA MANTENIMIENTOS A REALIZAR ****************************************** */}
+      <List>
+        <ListItem button> 
+          <ListItemIcon>      
+          <PersonOutlineIcon/>
+          </ListItemIcon> 
+        <ListItemText primary="Cerrar sesion" />      
+      </ListItem>
+
+      </List>
+
+
        
       </Drawer>
       <main /*Esta clase, permite que cada vez que abramos el componente Drawers, los componentes que esten dentro de main, se correran al costado. */

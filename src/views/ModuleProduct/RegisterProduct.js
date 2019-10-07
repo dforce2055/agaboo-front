@@ -1,13 +1,13 @@
-import React , { useState, useEffect }from "react";
+import React , { useEffect }from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import './ModuleProduct.css';
 import Button from './Button' ;
 import Grid from '@material-ui/core/Grid'
-import NavBar from '../Navigation';
+import NavBar from '../Header/Navigation';
 import {withRouter} from 'react-router-dom' ;
 import Paper from '@material-ui/core/Paper';
-import ProductController from '../../controllers/ProductController';
+import ProductController from '../../controllers/Product';
 
 
 const usuario={
@@ -77,7 +77,7 @@ const useStyles = makeStyles(theme => ({
   const {history} = props;
 
   useEffect(() => {
-    if(usuario.rol =! "Esclavo"){
+    if(usuario.rol !== "Esclavo"){
       history.push('/')
       console.log('useEffect')
     }

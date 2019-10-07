@@ -1,9 +1,5 @@
 /**
- *                          ===================
- *                          | IMPORTANTE LEER |
- *                          ===================
  * acá va tu config de Firebase, en un archivo firebase-config.js ignorado por git
- * EN ESTA MISMA CARPETA DE COFIG, EXPORTAR LA VARIABLE CON EL NOMBRE firebaseConfig
  * export const firebaseConfig = {
  *   apiKey: "apiKey",
  *   authDomain: "TU-DOMINIO.firebaseapp.com",
@@ -15,6 +11,7 @@
  *   };
  *
  */
+
 import { firebaseConfig } from './firebase-config';
 import app from 'firebase/app';
 import 'firebase/auth';

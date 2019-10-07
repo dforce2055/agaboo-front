@@ -44,9 +44,7 @@ export default function SearchBox() {
         <SearchIcon />
       </IconButton>
       <Divider className={classes.divider} orientation="vertical" />
-      <IconButton color="primary" className={classes.iconButton} aria-label="directions">
-        <DirectionsIcon />
-      </IconButton>
+      
     </Paper>
   );
 }

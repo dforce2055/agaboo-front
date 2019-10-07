@@ -36,6 +36,30 @@ const theme = createMuiTheme({ /* Plantilla de edicion */
   }
 });
 
+  const theme2 = createMuiTheme({ /* Plantilla de edicion */
+    overrides: { 
+      MuiAppBar: {
+        colorPrimary: {
+          backgroundColor: '#3fb5a5',
+        }
+      },
+      MuiButton: {
+        containedPrimary: {
+          backgroundColor: '#3fb5a5',
+          '&:hover': {
+            backgroundColor: '#0ce8ca',
+            "@media (hover: none)": {
+              backgroundColor: "#0ce8ca"
+            },
+          },
+        },
+        fullWidth: {
+            width: '200%'
+        },
+    },
+
+  }});
+
 function MainMenu(props){
   
     
