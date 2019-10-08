@@ -41,11 +41,10 @@ export default function CustomizedInputBase(props) {
     setValues({ ...values, [name]: event.target.value });  
   };
 
-  function pulsar(e) {
+  function Search(e) {
     CustomerController.searchCustomer(e)
      .then(result=>{
        console.log(result);
-       
         handleFounDb(result);
       });
   }
@@ -58,12 +57,12 @@ export default function CustomizedInputBase(props) {
         onKeyPress={ 
                     event =>{
                     if(event.keyCode===13 || event.key === 'Enter'){
-                      pulsar(values.buscar);
+                      Search(values.buscar);
                     }
                   }}  
 
         placeholder="Buscar Cliente"
-        inputProps={{ 'aria-label': 'search google maps' }}
+        inputProps={{ 'aria-label': 'Buscar en la base de datos' }}
       />
       <IconButton 
       className={classes.iconButton} 

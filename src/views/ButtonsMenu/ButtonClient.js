@@ -75,18 +75,18 @@ function CustomizedMenus(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <StyledMenuItem>
+        <StyledMenuItem  onClick ={ () => history.push('/registrarCliente')}>
           <ListItemIcon>
             <FaceIcon/> 
           </ListItemIcon>
-          <ListItemText primary="Crear" onClick ={ () => history.push('/registrarCliente')}  />{/*Utilizo el onClick en lugar del link, es de la librería de router dom hay que exportarlo con withRouter*/ }
+          <ListItemText primary="Crear"  />
         </StyledMenuItem>
         
-        <StyledMenuItem>
+        <StyledMenuItem onClick ={ () => history.push('/bmUsers')}>
           <ListItemIcon>
             <CreateIcon />
           </ListItemIcon>
-          <ListItemText primary="Modificar" onClick ={ () => history.push('/bmUsers')} />
+          <ListItemText primary="Modificar"  />
         </StyledMenuItem>
 
 

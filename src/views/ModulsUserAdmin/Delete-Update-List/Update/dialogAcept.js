@@ -8,7 +8,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default function AlertDialog(props) {
   const {mostrarDialog} = props;
-  const {handleCloseDialog} = props;
+  const {handleClose} = props;
+
+  function handleCloseDialog(){
+    handleClose();
+  }
 
   return (
     <div>

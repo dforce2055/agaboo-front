@@ -58,6 +58,7 @@ const useStyles = makeStyles(theme => ({
 export default function Checkout(props) {
   const classes = useStyles();
   const {cliente} = props;
+  const {handleClose} = props;
   return (
     <React.Fragment>
       <CssBaseline />      
@@ -67,7 +68,7 @@ export default function Checkout(props) {
             Formulario
           </Typography>          
           <React.Fragment>          
-          <AddressForm cliente={cliente}/>              
+          <AddressForm cliente={cliente} handleClose={handleClose}/>              
           </React.Fragment>
         </Paper>
         <Copyright />

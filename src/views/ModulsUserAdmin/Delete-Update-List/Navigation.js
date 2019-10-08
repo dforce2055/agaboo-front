@@ -47,6 +47,8 @@ import { withRouter } from "react-router-dom";
 
   import ButtonSearch from './buttonSearch';
   import EnhancedTable from './UsersTable';
+  import {Button} from  '@material-ui/core';
+
 const drawerWidth = 240;
 
 
@@ -228,8 +230,8 @@ function NavbarDeleteUpdate(props) {
       </ListItem> 
       <Collapse in={visible} timeout="auto" unmountOnExit> 
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested} >
-            <ListItemIcon>
+          <ListItem button className={classes.nested} onClick ={ () => history.push('/registrarCliente')}>
+            <ListItemIcon >
               <GroupAddIcon />
             </ListItemIcon>
             <ListItemText primary="Crear Cliente"/>
@@ -379,7 +381,6 @@ function NavbarDeleteUpdate(props) {
       >
         <div className={classes.drawerHeader} />      
 
-        <div>
         <ButtonSearch 
           foundInTheDb={foundInTheDb}
           handleFounDb={handleFounDb}
@@ -389,8 +390,10 @@ function NavbarDeleteUpdate(props) {
         <EnhancedTable
           foundInTheDb={foundInTheDb}
         />
-        </div>
-        
+        <br></br>
+          <Button variant="contained" onClick={()=> history.push('/mainMenu')}>
+        Menu Principal
+      </Button>
       </main>
     </div>
     </MuiThemeProvider>

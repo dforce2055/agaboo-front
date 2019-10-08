@@ -6,6 +6,7 @@ import { Button } from '@material-ui/core';
 import CustomerController from '../../../../controllers/Customer';
 import DialogAcept from './dialogAcept';
 
+
 export default function AddressForm(props) {
   //const {cliente} = props;
   
@@ -26,6 +27,7 @@ export default function AddressForm(props) {
     mostrarDialog:false,
   }*/
 
+  const {handleClose} = props;
   const auth = () =>{
     if(values.nombre.length > 3){
       return false
@@ -56,7 +58,8 @@ export default function AddressForm(props) {
     handleCloseDialog();
   }
 
-  const [mostrarDialog, setMostrarDialog] = React.useState(false);  
+  const [mostrarDialog, setMostrarDialog] = React.useState(false); 
+
   const handleCloseDialog = () =>{
     setMostrarDialog(mostrarDialog===false);
   };
@@ -67,6 +70,7 @@ export default function AddressForm(props) {
     <DialogAcept
     mostrarDialog={mostrarDialog}
     handleCloseDialog={handleCloseDialog}
+    handleClose={handleClose}
     />
       <Typography variant="h6" gutterBottom>
         Rellenar los campos para registrar cliente
@@ -101,9 +105,7 @@ export default function AddressForm(props) {
             variant="outlined"            
             label="DNI"         
             value={values.dni}
-            onChange={handleChange('dni')}
             fullWidth
-            required
           />
         </Grid>
          {/*<Grid item xs={12} sm={6}>

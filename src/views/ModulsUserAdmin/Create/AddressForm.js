@@ -5,13 +5,20 @@ import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
 import CustomerController from '../../../controllers/Customer';
 import DialogAcept from './dialogAcept';
-
+import {ValidatorForm,TextValidator} from 'react-material-ui-form-validator'; //Validacion de campos
 /*
 const emailRegex = RegExp(
-  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/ 
 );*/
 
-export default function AddressForm() {
+//npm install react-material-ui-form-validator
+
+export default function AddressForm(props) {
+
+  React.useEffect(()=>{ //Agrego para validar por expresion regular
+    ValidatorForm.addValidationRule("isValidName", (string)=> /[a-zA-Z \u00E0-\u00FC]{1,20}/g.test(string))
+  })
+
   const [values, setValues] = React.useState({
     nombre:'',
     apellido: '',
@@ -27,6 +34,7 @@ export default function AddressForm() {
     eliminado:false,
     mostrarDialog:false,
   });  
+  const {history} = props;
 
   const auth = () =>{
     if(values.nombre.length > 3){
@@ -66,7 +74,7 @@ export default function AddressForm() {
 
   return (
     <React.Fragment>
-
+    <ValidatorForm onSubmit={handleOnClick}> {/*Agregue*/}
     <DialogAcept
     mostrarDialog={mostrarDialog}
     handleCloseDialog={handleCloseDialog}
@@ -76,13 +84,16 @@ export default function AddressForm() {
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
-          <TextField
+          <TextValidator //Cambie de text field
             id="nombre"
             variant="outlined"            
-            label="Nombre"            
+            label="Nombre"  
+            type="text"          
             onChange={handleChange('nombre')}
-            required
+            //required            
             fullWidth
+            validators = {["required","isValidName"]}
+            errorMessages={["El campo es requerido","El formato es invalido."]}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -178,17 +189,19 @@ export default function AddressForm() {
 
       <Button
       variant="contained"
-      color="secondary"      
+      color="secondary"    
+      //onClick ={ () => history.push('/pedidosListos')}  me tira error!!!
       /*onClick={handleBack}*/
       >Cancelar</Button>
       
       <Button
       variant="contained"
       color="primary"
-      onClick={handleOnClick}
+      type="submit"
+      //onClick={handleOnClick} ==> lo puse en validatorForm
       disabled={auth()}
       >Guardar</Button>
-      
+      </ValidatorForm>
     </React.Fragment>
   );
 }

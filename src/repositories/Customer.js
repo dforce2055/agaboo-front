@@ -156,10 +156,9 @@ class CustomerRepo extends Component {
         .then(() => {            
             firebase.db.collection(collection)
             .doc(setCustomer.dni)
-            .set({    
+            .update({    
                 nombre: setCustomer.nombre,
                 apellido: setCustomer.apellido,
-                dni: setCustomer.dni,
                 localidad:setCustomer.localidad,
                 celular:setCustomer.celular,                              
                 
@@ -188,9 +187,7 @@ class CustomerRepo extends Component {
                 role: customer.role,*/
             })
             .catch(error=>{console.error("Error al modificar cliente: ",error);
-            return false;
             });
-            return true;
         })
         .catch(function (error) {
             console.error("Error al buscar el cliente: ", error);

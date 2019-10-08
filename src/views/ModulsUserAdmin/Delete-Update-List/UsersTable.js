@@ -52,7 +52,7 @@ export default function Orders() {
             <TableCell>Ver</TableCell>
             <TableCell>Nombre</TableCell>
             <TableCell>Apellido</TableCell>
-            <TableCell>Celular</TableCell>
+            <TableCell>D.N.I</TableCell>
             <TableCell align="right">Localidad</TableCell>
           </TableRow>
         </TableHead>
@@ -81,7 +81,7 @@ export default function Orders() {
 
               <TableCell>{row.nombre}</TableCell>
               <TableCell>{row.apellido}</TableCell>
-              <TableCell>{row.celular}</TableCell>
+              <TableCell>{row.dni}</TableCell>
               <TableCell align="right">{row.localidad}</TableCell>
             </TableRow>
           ))}
@@ -90,4 +90,4 @@ export default function Orders() {
       </Paper>
     </React.Fragment>
   );
-}
+} 

@@ -202,8 +202,8 @@ function Navbar(props) {
 {/*Collapse permite generar desplegables. Para mas informacion leer URL ubicada en import*/}
       <Collapse in={visible} timeout="auto" unmountOnExit> 
         <List component="div" disablePadding> {/*disablePadding-->Si true, el relleno vertical se eliminará de la lista.*/}
-          <ListItem button className={classes.nested} onClick ={ () => history.push('/registrarCliente')}>  {/*nested es el CSS que permite que este un poco mas a la izquierda que el boton de padre.*/}
-            <ListItemIcon>
+          <ListItem button className={classes.nested} >  {/*nested es el CSS que permite que este un poco mas a la izquierda que el boton de padre.*/}
+            <ListItemIcon onClick ={ () => history.push('/registrarCliente')}>
               <GroupAddIcon />
             </ListItemIcon>
             <ListItemText primary="Crear Cliente"/>
