@@ -44,6 +44,8 @@ export default function CustomizedInputBase(props) {
   function pulsar(e) {
     CustomerController.searchCustomer(e)
      .then(result=>{
+       console.log(result);
+       
         handleFounDb(result);
       });
   }

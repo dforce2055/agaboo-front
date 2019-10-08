@@ -240,7 +240,7 @@ function Navbar(props) {
       </ListItem> 
       <Collapse in={visible} timeout="auto" unmountOnExit> 
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested} >
+          <ListItem button className={classes.nested} onClick ={ () => history.push('/registrarCliente')}>
             <ListItemIcon>
               <GroupAddIcon />
             </ListItemIcon>
