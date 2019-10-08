@@ -1,9 +1,17 @@
 import React from 'react';
 import Navbar from '../../Header/Navigation';
 import Checkout from './createOrderFinal';
+import firebase from '../../../config/firebase';
+import { withRouter } from 'react-router-dom';
 
+function CreateOrder(props) {
 
-export default function CreateOrder() {
+    if (!firebase.getCurrentUsername()) {
+        // not logged in
+        alert('Por favor inicie sesión para acceder')
+        props.history.replace('/login')
+        return null
+      }
 
     return (
         
@@ -14,3 +22,5 @@ export default function CreateOrder() {
         
     )
 }
+
+export default withRouter(CreateOrder);

@@ -4,6 +4,8 @@ import Navbar from '../../Header/Navigation'
 //import CustomizedTables from './OrdersTable';
 import EnhancedTable from './OrdersTable2';
 //import Typography from '@material-ui/core/Typography';
+import firebase from '../../../config/firebase';
+import { withRouter } from 'react-router-dom';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
@@ -16,7 +18,14 @@ const theme = createMuiTheme({
     }
 });
 
-export default function OrderReady() {
+function OrderReady(props) {
+
+    if (!firebase.getCurrentUsername()) {
+        // not logged in
+        alert('Por favor inicie sesión para acceder')
+        props.history.replace('/login')
+        return null
+      }
 
     return (
         <div>
@@ -36,3 +45,5 @@ export default function OrderReady() {
         
     )
 }
+
+export default withRouter(OrderReady);

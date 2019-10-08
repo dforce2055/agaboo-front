@@ -14,24 +14,28 @@ const styles = theme => ({
         marginLeft: theme.spacing(3),
         marginRight: theme.spacing(3),
         [theme.breakpoints.up(400 + theme.spacing(6))]: {
-            width: 400,
+            width: 700,
+            height: 800,
             marginLeft: 'auto',
             marginRight: 'auto',
         },
     },
     paper: {
         marginTop: theme.spacing(8),
+        marginBottom: theme.spacing(10),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         padding: `${theme.spacing(2)}px ${theme.spacing(3)}px ${theme.spacing(3)}px`,
     },
     avatar: {
-        margin: theme.spacing,
+        margin: theme.spacing(2),
         backgroundColor: theme.palette.primary.main,
     },
     submit: {
-        marginTop: theme.spacing(3),
+        marginTop: theme.spacing(2),
+        paddingLeft: theme.spacing(9),
+        paddingRight: theme.spacing(9),
     },
     logo: {
         marginTop: theme.spacing(3),
@@ -85,7 +89,7 @@ function HomePage(props) {
                 </Avatar>
 
                 <Typography component="h2" variant="h5">
-                    Bienvenido <br/> 
+                    Bienvenido a AGABOO <br/> 
                     {firebase.getCurrentUsername()}
 				</Typography>
                 {/* Si ya esta validado le permito ingresar al mainMenu y/o cerrar sesión */}

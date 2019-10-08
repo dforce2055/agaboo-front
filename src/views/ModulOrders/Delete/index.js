@@ -4,6 +4,8 @@ import Navbar from '../../Header/Navigation'
 import CustomizedTables from './OrdersTable';
 import Typography from '@material-ui/core/Typography';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import firebase from '../../../config/firebase';
+import { withRouter } from 'react-router-dom';
 
 const theme = createMuiTheme({
     overrides:{
@@ -15,7 +17,14 @@ const theme = createMuiTheme({
     }
 });
 
-export default function DeleteOrder() {
+function DeleteOrder(props) {
+
+    if (!firebase.getCurrentUsername()) {
+        // not logged in
+        alert('Por favor inicie sesión para acceder')
+        props.history.replace('/login')
+        return null
+      }
 
     return (
         <div>
@@ -34,3 +43,5 @@ export default function DeleteOrder() {
         
     )
 }
+
+export default withRouter(DeleteOrder);

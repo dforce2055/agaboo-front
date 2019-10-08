@@ -3,6 +3,7 @@
  */
 import { Component } from 'react';
 import CustomerRepo from '../repositories/Customer';
+import { Customer } from '../models/Customer';
 
 class CustomerController extends Component {
     constructor(props) {
@@ -15,23 +16,76 @@ class CustomerController extends Component {
         }
     }
 
-    async setCustomer(e) {
+    getCustomers = async () => {
         try {
-            let data = e;
-            await CustomerRepo.setCustomer(data);            
+            let customers = await CustomerRepo.getCustomers();
+            if (customers) {
+                return customers;
+            } else {
+                console.log("No se pudieron obtener los clientes");
+            }
         } catch (error) {
-            console.log("No se pudo obtener el cliente");
+            throw new Error();
         }
     }
 
-    async getCustomer() {
+    async getCustomerById(id) {
+        if (!id) throw new Error(`Error: el ID es obligatorio`);
         try {
-            await CustomerRepo.getCustomer();
-            
+            let result = await CustomerRepo.getCustomer(id);
+            let customer = new Customer();
+            //Mapeo los resultados en el Customer:customer
+            customer = Object.assign({}, result);
+            if ( customer ) {
+                return customer;
+            } else {
+                console.log(`No se encontro al cliente id: ${ id }`);
+            }
+
         } catch (error) {
-            console.log("No se pudo obtener el cliente");
+            throw new Error();
+        }
+
+    }
+
+    async getCustomerByEmail(email) {
+        if (!email) throw new Error(`Error: el Email es obligatorio`);
+        try {
+            let result = await CustomerRepo.getCustomerByEmail(email);
+            let customer = new Customer();
+            //Mapeo los resultados en el Customer:customer
+            customer = Object.assign({}, result);
+            if (customer) {
+                return customer;
+            } else {
+                console.log(`No se encontro al cliente con email: ${email}`);
+            }
+
+        } catch (error) {
+            throw new Error();
         }
     }
+
+    async getCustomerByName(name) {
+        /* Busco por nombre, obtengo un array de objetos Customer */
+        if (!name) throw new Error(`Error: el Nombre es obligatorio`);
+        try {
+            let result = await CustomerRepo.getCustomerByName(name);
+            let customers = new Customer([]);
+            //Mapeo los resultados en el Array de Objetos Customer:customer
+            customers = Object.assign([{}], result);
+            console.log(customers);
+            if (customers) {
+                return customers;
+            } else {
+                console.log(`No se encontro al cliente con nombre: ${name}`);
+            }
+
+        } catch (error) {
+            throw new Error();
+        }
+    }
+
 
     async searchCustomer(e) {
         let valor = e;
@@ -43,30 +97,23 @@ class CustomerController extends Component {
         }
     }
 
-    async getCustomerById(e) {
+
+
+
+    async setCustomer(e) {
         try {
-            console.log("Entro a buscar");
-            
-            await CustomerRepo.getCustomerById(e);
-            
+            let data = e;
+            await CustomerRepo.setCustomer(data);            
         } catch (error) {
             console.log("No se pudo obtener el cliente");
         }
-
     }
 
-    async getCustomers() {
-        try {
-            let clientes = await CustomerRepo.getCustomers();
-            if (clientes.length > 0) {
-                return clientes;
-            } else {
-                throw new Error();
-            }
-        } catch (error) {
-            console.log("No se pudo obtener los clientes");
-        }
-    }
+    
+
+    
+
+    
 
     async addCustomer(data) {
 
