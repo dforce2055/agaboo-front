@@ -1,12 +1,12 @@
 /**
  * @Model Class
- * Customer Model Class
+ * Customer **Model** Class
  */
 import { Person } from "./Person";
 
 export class Customer extends Person {
     constructor(nombre, apellido, cuit, cuil, tipoDocumento, numeroDocumento, fechNac,
-            direccion, calle, altura, localidad, celular, telefono, email, estado,
+            direccion, calle, altura, localidad, celular, telefono, email, estado
             ) {
         super(nombre, apellido, cuit, cuil, tipoDocumento, numeroDocumento, fechNac, 
                 direccion, calle, altura, localidad, celular, telefono, email, estado)

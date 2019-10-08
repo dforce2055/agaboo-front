@@ -1,10 +1,11 @@
 /**
  * @Repository
- * Customer Repository Class
+ * Customer **Repository** Class
  */
 import { Component } from 'react';
 import firebase from '../config/firebase';
-const collection = '/customers';
+import { Customer } from '../models/Customer';
+const collection = 'customers';
 
 class CustomerRepo extends Component {
     constructor(props) {
@@ -19,20 +20,55 @@ class CustomerRepo extends Component {
 
     getCustomer = async (id) => {
         try {
-            // Lo busco por id de documento en la colección, el cual deberia ser el cuil/cuit
-            let cliente = await firebase.db.collection(collection).doc(id).get();
-            
-            return cliente.data();            
+            let query = await firebase.db.collection(collection).doc(id).get();
+            return query.data();
         } catch (error) {
             throw new Error();
-        }        
+        }
+    }
+
+    getCustomerByEmail = async (email) => {
+        try {
+            let customer = {};
+            await firebase.db.collection(collection)
+                .where('email', '==', email)
+                .limit(1)
+                .get()
+                .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
+                        customer = doc.data();
+                    });
+                })
+            return customer;
+        } catch (error) {
+            throw new Error(`No se encontro el usuario con Email: ${ email }`);
+        }
+    }
+
+    getCustomerByName = async (name) => {
+        try {
+            let customers = [];
+            await firebase.db.collection(collection)
+                .where('nombre', '>=', name)
+                .orderBy('nombre')
+                //.limit(1)
+                .get()
+                .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
+                        customers.push(doc.data());
+                    });
+                })
+            return customers;
+        } catch (error) {
+            throw new Error(`No se encontro el usuario con Nombre: ${ name }`);
+        }
     }
 
     searchCustomer = async (e) => {
         try {
             console.log("LLEGUE A REPO");
             
-            // Lo busco por ide de documento en la colección, el cual deberia ser el cuil/cuit
+            // Lo busco por id de documento en la colección, el cual deberia ser el cuil/cuit
             let encontrados = await firebase.db.collection(collection)
             .where('dni','==',e)
             .get()
@@ -45,7 +81,7 @@ class CustomerRepo extends Component {
     }
 
     getCustomerById = async (cuil) => {
-        if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
+        
         let customer = {};
          await firebase.db.collection(collection)
             .where('dni', '==', cuil)
