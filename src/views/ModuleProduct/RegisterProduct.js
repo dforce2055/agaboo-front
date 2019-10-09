@@ -110,12 +110,16 @@ const useStyles = makeStyles(theme => ({
       description : values.description,
       state : values.state,
     };
-    
+
     console.log("product : ", product);
     ProductController.addProduct(product);
-
-
-
+    alert("El producto está registrado");
+    setValues({
+      code: "",
+      typeProduct: "Baño Químico",
+      state: "Disponible",
+      description:""
+    })
 
   } 
 
@@ -170,6 +174,7 @@ const useStyles = makeStyles(theme => ({
                     onChange={handleChange("code")}
                     margin="normal"
                     variant="outlined"
+                    disabled= "true"
                   />              
                 </Grid>
                 
@@ -190,6 +195,7 @@ const useStyles = makeStyles(theme => ({
                   label="Estado"
                   className={classes.textField}
                   value={values.state }
+                  
                   
                   onChange={handleChange("state")}
                   SelectProps={{
@@ -214,7 +220,7 @@ const useStyles = makeStyles(theme => ({
                 
             </form>
             <Button label ={"Registrar Producto"} onClick = { registerProduct } ></Button>
-            <Button label = {"Cancelar"} onClick ={ () => history.push('/mainMenu')  } ></Button>
+            <Button label = {"Salir"} onClick ={ () => history.push('/mainMenu')  } ></Button>
 
           </Grid> 
         </Grid>

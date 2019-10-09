@@ -10,6 +10,8 @@ import IconButton from '@material-ui/core/IconButton';
 import { makeStyles , useTheme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import ProductController from '../../controllers/Product';
+
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -67,6 +69,24 @@ export default function FormDialog(props) {
     setOpen(true);
   };
 
+  function updateProduct(){
+    console.log("llegue a register Product")
+
+
+    const product = {
+      typeProduct : values.typeProduct,
+      code : values.code,
+      description : values.description,
+      state : values.state,
+    };
+
+    console.log("product : ", product);
+    ProductController.editProduct(product);
+    alert("El producto ha sido aculizado");
+    setOpen(false);
+
+  }
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -104,6 +124,7 @@ export default function FormDialog(props) {
                     label="Producto"
                     className={classes.textField}
                     value={values.typeProduct   }
+                    disabled = "true"
                     
                     onChange={handleChange("typeProduct")}
                     SelectProps={{
@@ -135,6 +156,8 @@ export default function FormDialog(props) {
                     onChange={handleChange("code")}
                     margin="normal"
                     variant="outlined"
+                    disabled = "true"
+
                   />              
                 
 
@@ -176,7 +199,7 @@ export default function FormDialog(props) {
             </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={updateProduct} color="primary">
             Modifica
           </Button>
           <Button onClick={handleClose} color="primary">
