@@ -112,6 +112,12 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 0.87,
   },
+  bajarBoton:{
+    width:'inherit',
+    backgroundColor:'red',
+    position:'fixed',
+    bottom:'37px'
+  },
 }));
 
 const theme2 = createMuiTheme({ /* Plantilla de edicion */
@@ -383,7 +389,7 @@ function Navbar(props) {
       </List>
 {/* *********************************** LISTA MANTENIMIENTOS A REALIZAR ****************************************** */}
       <List>
-        <ListItem button> 
+        <ListItem button className={classes.bajarBoton} > 
           <ListItemIcon>      
           <PersonOutlineIcon/>
           </ListItemIcon> 

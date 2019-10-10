@@ -34,7 +34,7 @@ export default function CustomizedInputBase(props) {
   });
 
   const {foundInTheDb} = props;
-  const {handleFounDb} = props;
+  const {handleFounDb} = props; //Hacer un estado!!!!
 
   const handleChange = name => event => {
     console.log(event.target.value);    
