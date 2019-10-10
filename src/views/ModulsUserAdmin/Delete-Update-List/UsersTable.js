@@ -16,9 +16,11 @@ export default function Orders() {
   const [clientes, setClientes] = React.useState([]);
   
   React.useEffect(()=>{
-    if (clientes.length === 0) {
+    if (clientes.length === 0) {  
       CustomerController.getCustomers()
       .then(value=> {
+        console.log('En la promise', value);
+        
         setClientes(value);      
     }).catch(error=>{
       console.log("Error al traer el cliente= ",error);
@@ -62,8 +64,7 @@ export default function Orders() {
             <TableRow key={row.dni}>
               <TableCell>   
                 <AlertDialog
-                  //setUpdateList={setUpdateList}
-                  cliente={row}
+
                 />
               </TableCell>
 

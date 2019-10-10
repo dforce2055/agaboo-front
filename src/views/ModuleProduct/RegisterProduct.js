@@ -10,11 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import ProductController from '../../controllers/Product';
 
 
-const usuario={
-  usuario: "Ivan",
-  rol: "Esclavo"
 
-}
 
 
 const typeProduct = [
@@ -74,15 +70,8 @@ const useStyles = makeStyles(theme => ({
 
 
  function ProductForm(props) {
-  const {history} = props;
 
-  useEffect(() => {
-    if(usuario.rol !== "Esclavo"){
-      history.push('/')
-      console.log('useEffect')
-    }
-    
-  });
+  const {history} = props;
 
 
 
@@ -105,7 +94,7 @@ const useStyles = makeStyles(theme => ({
 
 
     const product = {
-      typeProduct : values.typeProduct,
+      type : values.typeProduct,
       code : values.code,
       description : values.description,
       state : values.state,
@@ -174,7 +163,6 @@ const useStyles = makeStyles(theme => ({
                     onChange={handleChange("code")}
                     margin="normal"
                     variant="outlined"
-                    disabled= "true"
                   />              
                 </Grid>
                 

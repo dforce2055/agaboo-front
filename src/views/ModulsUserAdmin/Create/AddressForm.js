@@ -6,6 +6,7 @@ import { Button } from '@material-ui/core';
 import CustomerController from '../../../controllers/Customer';
 import DialogAcept from './dialogAcept';
 import {ValidatorForm,TextValidator} from 'react-material-ui-form-validator'; //Validacion de campos
+import {withRouter} from 'react-router-dom';  
 /*
 const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/ 
@@ -13,7 +14,7 @@ const emailRegex = RegExp(
 
 //npm install react-material-ui-form-validator
 
-export default function AddressForm(props) {
+function AddressForm(props) {
 
   React.useEffect(()=>{ //Agrego para validar por expresion regular
     ValidatorForm.addValidationRule("isValidName", (string)=> /[a-zA-Z \u00E0-\u00FC]{1,20}/g.test(string))
@@ -84,7 +85,7 @@ export default function AddressForm(props) {
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
-          <TextValidator //Cambie de text field
+          <TextField //Cambie de text field
             id="nombre"
             variant="outlined"            
             label="Nombre"  
@@ -205,3 +206,5 @@ export default function AddressForm(props) {
     </React.Fragment>
   );
 }
+
+export default withRouter(AddressForm)

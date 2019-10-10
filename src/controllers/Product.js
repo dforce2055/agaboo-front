@@ -97,9 +97,9 @@ class ProductController extends Component {
 
         try {
             let productFound = await ProductRepo.getProductByCode(product.code);
-            let result = ProductRepo.editProduct(product.code, productFound);
+            let result = ProductRepo.editProduct(product.code, product);
             if (result) {
-                console.log(`Se editó correctamente el producto ${ product } `);
+                console.log(`Se editó correctamente el producto`, product);
                 return true;
             } else {
                 console.log(`No se pudó editar el producto ${ product } `);

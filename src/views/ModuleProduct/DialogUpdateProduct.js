@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -58,34 +58,62 @@ const useStyles = makeStyles(theme => ({
 
 
 export default function FormDialog(props) {
-  const [open, setOpen] = React.useState(false);
-  const [values, setValues] = React.useState(props.values)
+  const [open, setOpen] = useState(false);
+  const [values, setValues] = useState(props.values);
+  //const [products, setProducts] = useState(props.products);
+  //const [position, setPosition] = useState(-1);
+  let products = props.products;
+  let position = -1 ;
+  
   const theme = useTheme();
 
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  
 
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  function updateProduct(){
-    console.log("llegue a register Product")
+   function updateProduct(){
+    console.log("llegue a register Product", values);
 
 
-    const product = {
-      typeProduct : values.typeProduct,
+    const newProduct = {
+      type : values.type,
       code : values.code,
       description : values.description,
       state : values.state,
     };
 
-    console.log("product : ", product);
-    ProductController.editProduct(product);
+
+    console.log("product : ", newProduct);
+    ProductController.editProduct(newProduct);
     alert("El producto ha sido aculizado");
+    console.log('Products before: ', products);
+    
+    console.log ("Find por codigo :", products.findIndex(product => product.code === values.code));
+    position = products.findIndex(product => product.code === values.code);
+    //position = products.findIndex(product => product.code === values.code);
+    console.log('Position :' , position );
+    products[position] = newProduct;
+
+
+    //products[0] = newProduct;
+    console.log('Products after: ', products);
+    updateArray(products); 
     setOpen(false);
 
   }
+  
+  function updateArray(newArray){
+    //setProducts()
+    props.getArray(newArray);
+
+  }
+
+
 
   const handleClose = () => {
     setOpen(false);
@@ -116,17 +144,17 @@ export default function FormDialog(props) {
         <DialogTitle id="form-dialog-title">Modificar Producto</DialogTitle>
         <DialogContent>
             <Grid container spacing = {1} justify = { "center" } className = { "grid"} >
-             <Grid item xs = {12} xl = {9} alignItems = {"center"}  >
+             <Grid item xs = {6} xl = {6} alignItems = {"center"}  >
 
                 <TextField
                     id="type-product"
                     select
                     label="Producto"
                     className={classes.textField}
-                    value={values.typeProduct   }
+                    value={values.typeProduct }
                     disabled = "true"
                     
-                    onChange={handleChange("typeProduct")}
+                    onChange={handleChange("type")}
                     SelectProps={{
                       native: true,
                       MenuProps: {

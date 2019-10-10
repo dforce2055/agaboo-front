@@ -45,14 +45,6 @@ const StyledTableRow = withStyles(theme => ({
 
 
 
-function createData(type, code, state, description ) {
-  return { type, code, state, description};
-}
-
-
-
-
-
 
 
 const useStyles = makeStyles(theme => ({
@@ -72,7 +64,8 @@ export default function CustomizedTables(props) {
 
   const classes = useStyles();
   const {history}  = props;
-  
+
+
 
 console.log('Rows despues de getProducts: ', rows);
 
@@ -87,6 +80,11 @@ console.log('Rows despues de getProducts: ', rows);
     }
     
   };
+
+  function getArray(newArray){
+    console.log('getArray :',  newArray);
+    setRows(newArray);
+  }
 
   useEffect(() => {
     getProducts();
@@ -110,7 +108,10 @@ console.log('Rows despues de getProducts: ', rows);
                 {rows.map(row => (
                     <StyledTableRow key={row.typeProduct}>
                     <StyledTableCell component="th" scope="row">
-                      <FormDialog values = {row}/>
+                      <FormDialog values = {row} 
+                                  //setRows = {setRows()}
+                                  products = {rows}
+                                  getArray = {getArray}/>
                     
                       
                       

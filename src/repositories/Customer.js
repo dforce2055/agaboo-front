@@ -106,6 +106,7 @@ class CustomerRepo extends Component {
         try {
             let coleccion = await firebase.db.collection(collection).where('eliminado','==', false).get();
             let clientes = coleccion.docs.map(doc => doc.data());
+            console.log('En Repo: ', clientes);
             return clientes;
         } catch (error) {
             throw new Error();
