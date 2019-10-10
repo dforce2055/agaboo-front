@@ -1,8 +1,8 @@
 import React from 'react';
-import './BMUsers.css';
 import Navbar from '../../Header/Navigation'
 import ButtonSearch from './buttonSearch';
 import EnhancedTable from './UsersTable';
+import Dashboard from './Table/Dashboard';
 
 export default function DeleteUpdateUserAdmin() {
 
@@ -10,8 +10,8 @@ export default function DeleteUpdateUserAdmin() {
         
         <div className="UsersScreen">
             <Navbar></Navbar>
-            <ButtonSearch  /> {/*Importo el componente Boton de busqueda.*/}
-          <EnhancedTable/> {/*Importo la tabla donde se encontraran la List*/}
+            {/*<ButtonSearch  /> Importo el componente Boton de busqueda.*/}
+          <Dashboard></Dashboard>
         </div>
         
     )
