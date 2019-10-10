@@ -4,14 +4,14 @@ import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
-import CustomerController from '../../../controllers/Customer';
+import CustomerController from '../../../../controllers/Customer';
 
 const useStyles = makeStyles(theme => ({
   root: {
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
-    width: 400,
+    width: 300,
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -32,9 +32,7 @@ export default function CustomizedInputBase(props) {
   const [values,setValues] = React.useState({
     buscar:'',
   });
-
-  const {foundInTheDb} = props;
-  const {handleFounDb} = props; //Hacer un estado!!!!
+  const [handleFounDb,setHandleFounDb] = React.useState([]);
 
   const handleChange = name => event => {
     console.log(event.target.value);    
@@ -44,8 +42,9 @@ export default function CustomizedInputBase(props) {
   function Search(e) {
     CustomerController.searchCustomer(e)
      .then(result=>{
-       console.log(result);
-        handleFounDb(result);
+       setHandleFounDb(result);
+       console.log(handleFounDb);
+       
       });
   }
 

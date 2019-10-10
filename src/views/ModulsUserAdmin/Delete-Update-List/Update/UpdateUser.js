@@ -31,6 +31,7 @@ export default function FullScreenDialog(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   
+  const{updateStateArray} = props;
   const {valor} = props;
 
   const handleClickOpen = () => {
@@ -61,7 +62,7 @@ export default function FullScreenDialog(props) {
           </Toolbar>
         </AppBar>
         
-        <Checkout cliente={valor} handleClose={handleClose}/>
+        <Checkout updateStateArray={updateStateArray} cliente={valor} handleClose={handleClose}/>
       </Dialog>
     </div>
   );

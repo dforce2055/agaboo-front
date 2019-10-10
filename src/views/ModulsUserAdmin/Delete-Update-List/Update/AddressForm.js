@@ -28,6 +28,8 @@ export default function AddressForm(props) {
   }*/
 
   const {handleClose} = props;
+  const {updateStateArray} = props;
+
   const auth = () =>{
     if(values.nombre.length > 3){
       return false
@@ -55,6 +57,7 @@ export default function AddressForm(props) {
       email:values.email,
     }
     CustomerController.setCustomer(data)    //BORRA LOS CAMPOS QUE NO ESTEN EN EL DATA
+    updateStateArray();
     handleCloseDialog();
   }
 
