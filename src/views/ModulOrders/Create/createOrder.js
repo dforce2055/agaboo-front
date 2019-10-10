@@ -100,24 +100,6 @@ export default function Form() {
   function handleProductChange(event) {
     setProduct(event.target.value);
   }
-  /* function handleFirstNameChange(event) {
-    setFirstName(event.target.value);
-  }
-  function handleLastNameChange(event) {
-    setLastName(event.target.value);
-  }
-  function handleEmailChange(event) {
-    setEmail(event.target.value);
-  }
-  function handleTelephoneChange(event) {
-    setTelephone(event.target.value);
-  }
-  function handleTelephoneFixedChange(event) {
-    setTelephoneFixed(event.target.value);
-  }
-  function handleLocationChange(event) {
-    setLocation(event.target.value);
-  } */
   function handleCuitChange(event) {
     setCuit(event.target.value);
   }
@@ -149,81 +131,8 @@ export default function Form() {
   return (
     <React.Fragment>
     <Container  maxWidth="md" className='nuevo'>
-        {/* <h1>Registro de Pedido</h1> */}
         <form onSubmit={handleSubmit} noValidate>
-           {/* <div className="firstName">
-            <label htmlFor="firstName">Nombre</label>
-            <input
-              className={firstName.length > 0 ? "error" : null}
-              placeholder="Nombre"
-              type="text"
-              name="firstName"
-              noValidate
-              onChange={handleFirstNameChange}
-            />
-          </div>
-          <div className="lastName">
-            <label htmlFor="lastName">Apellido</label>
-            <input
-              className={lastName.length > 0 ? "error" : null}
-              placeholder="Apellido"
-              type="text"
-              name="lastName"
-              noValidate
-              onChange={handleLastNameChange}
-            />
-          </div>
-
-          <div className="email">
-            <label htmlFor="email">Email</label>
-            <input
-              className={email.length > 0 ? "error" : null}
-              placeholder="Email@correo.com"
-              type="email"
-              name="email"
-              noValidate
-              onChange={handleEmailChange}
-            />
-          </div> */}
-          {/*<------PRUBEA Y AGREGACION DE CAMPOS------->*/}
-
-           {/* <div className="firstName">   
-            <label htmlFor="firstName">Telefono</label> 
-            <input
-              className={telephone.length > 0 ? "error" : null}
-              placeholder="22546654**"
-              type="tel"
-              name="telephonefixed"  //Nombre state a utilizar
-              noValidate
-              onChange={handleTelephoneChange}  // Guardo los cambios 
-            />
-          </div>
-
-          <div className="lastName">   
-            <label htmlFor="lastName">Tel. de Contacto</label> 
-            <input
-              className={telephonefixed.length > 0 ? "error" : null}
-              placeholder="22674210**"
-              type="tel"
-              name="telephonefixed"  //Nombre state a utilizar
-              noValidate
-              onChange={handleTelephoneFixedChange}  // Guardo los cambios 
-            />             
-          </div>
-
-           <div className="password">
-            <label htmlFor="location">Direccion</label>
-            <input
-              className={location.length > 0 ? "error" : null}
-              placeholder="Direccion"
-              type="text"
-              name="location"
-              noValidate
-              onChange={handleLocationChange}
-            />
-          </div> */}
-
-          <div className="cuit">   {/* Nombre del css a utilizar*/}
+          <div className="firstName">   {/* Nombre del css a utilizar*/}
             <label htmlFor="cuit">CUIT</label> 
             <input
               className={cuit.length > 0 ? "error" : null}

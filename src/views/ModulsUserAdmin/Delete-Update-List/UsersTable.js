@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,14 +12,15 @@ import FullScreenDialog from './Update/UpdateUser';
 import AlertDialog from './Delete/DialogDelete';
 import VisibilityClient from './Visibility/visibility';
 
+
+
 export default function Orders() {
   const [clientes, setClientes] = React.useState([]);
-  
+
   React.useEffect(()=>{
     if (clientes.length === 0) {
-      CustomerController.getCustomers()
-      .then(value=> {
-        setClientes(value);      
+      CustomerController.getCustomers().then(value=> {
+        setClientes(value);
     }).catch(error=>{
       console.log("Error al traer el cliente= ",error);
     })
@@ -40,8 +41,8 @@ export default function Orders() {
     }*/
   }); 
 
-  return (    
-    <React.Fragment>   
+  return (
+    <React.Fragment>
     <Paper >    
     <Typography variant="h4">Clientes</Typography>
       <Table size="small">      
@@ -64,6 +65,7 @@ export default function Orders() {
                 <AlertDialog
                   //setUpdateList={setUpdateList}
                   cliente={row}
+                  setClientes={setClientes}
                 />
               </TableCell>
 

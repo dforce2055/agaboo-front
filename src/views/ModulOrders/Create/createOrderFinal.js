@@ -18,6 +18,15 @@ const theme = createMuiTheme({ /* Plantilla de edicion */
         containedPrimary: {
           backgroundColor: '#3fb5a5',
           '&:hover': {
+            backgroundColor: '#0ce8ca',
+            "@media (hover: none)": {
+              backgroundColor: "#0ce8ca"
+            },
+          },
+        },
+        containedSecondary: {
+          backgroundColor: '#3fb5a5',
+          '&:hover': {
             backgroundColor: '#3fb5a5',
             "@media (hover: none)": {
               backgroundColor: "#3fb5a5"
@@ -146,7 +155,7 @@ function Checkout(props) {
                     ) : (
                       <Button
                       variant="contained"
-                      color="primary"
+                      color="secondary"
                       onClick={handleNext}
                       className={classes.button}
                     >

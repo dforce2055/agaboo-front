@@ -116,25 +116,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const useForceUpdate = () => React.useState()[1];
+
 export default function CustomizedTables() {
   const classes = useStyles();
+  const forceUpdate = useForceUpdate();
 
   return (
     <MuiThemeProvider theme={theme}>
-      {/* <div className={classes.search}>
-        <div className={classes.searchIcon}>
-          <SearchIcon />
-        </div>
-          <Input
-            placeholder="Buscar por fecha"
-            classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-            }}
-            inputProps={{ 'aria-label': 'search' }}
-            type="date"
-          />
-      </div> */}
+      {console.log("renderizando...")}
       <div>
         <TextField variant="outlined" type="date">
           Buscar por fecha
@@ -159,7 +149,7 @@ export default function CustomizedTables() {
           {rows.map(row => (
             <StyledTableRow key={row.nombre}>
               <StyledTableCell padding="checkbox">
-                <ResponsiveDialog/>
+                <ResponsiveDialog reRender={forceUpdate}/>                {/* Dialog de confirmar */}
               </StyledTableCell>
               <StyledTableCell component="th" scope="row">
                 {row.nombre}
