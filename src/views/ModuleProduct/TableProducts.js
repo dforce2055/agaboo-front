@@ -74,9 +74,9 @@ console.log('Rows despues de getProducts: ', rows);
   async function getProducts(){
     const products = await ProductController.getProducts();
     console.log("Cantidad de productos :", products.length);
-    if(rows.length !== products.length){
+    if( rows.length !== products.length){
       setRows(products); 
-      console.log("products :" , rows);    
+      console.log("products :" , rows);  
     }
     
   };
@@ -84,11 +84,19 @@ console.log('Rows despues de getProducts: ', rows);
   function getArray(newArray){
     console.log('getArray :',  newArray);
     setRows(newArray);
-  }
+    console.log('Rows en table products: ' , rows);
+    getProducts();
+  };
+  
+  function pruebaSet(){
+    setRows([]);
+    console.log('Rows en pruebaSet', rows ); 
+  };
+  
 
   useEffect(() => {
     getProducts();
-    
+    setRows(rows);
   });
   
   return (
@@ -111,7 +119,8 @@ console.log('Rows despues de getProducts: ', rows);
                       <FormDialog values = {row} 
                                   //setRows = {setRows()}
                                   products = {rows}
-                                  getArray = {getArray}/>
+                                  getArray = {getArray}
+                                  setRows = {setRows}/>
                     
                       
                       
@@ -124,7 +133,7 @@ console.log('Rows despues de getProducts: ', rows);
                 </TableBody>
             </Table>
         </Paper>
-
+        <Button onClick = {pruebaSet} label = {'Prueba'}></Button>
         <Button label = {'Volver'} onClick={()=> history.push('/mainMenu')}/>
       </React.Fragment>
         

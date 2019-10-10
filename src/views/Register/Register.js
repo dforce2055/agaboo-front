@@ -99,7 +99,7 @@ function Register(props) {
         } catch (error) {
             alert(error.message)
         }
-    }
+    }   
 }
 
 export default withRouter(withStyles(styles)(Register))

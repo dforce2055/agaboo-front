@@ -90,25 +90,24 @@ export default function FormDialog(props) {
 
     console.log("product : ", newProduct);
     ProductController.editProduct(newProduct);
-    alert("El producto ha sido aculizado");
     console.log('Products before: ', products);
-    
-    console.log ("Find por codigo :", products.findIndex(product => product.code === values.code));
     position = products.findIndex(product => product.code === values.code);
-    //position = products.findIndex(product => product.code === values.code);
-    console.log('Position :' , position );
+    console.log('Position--------------------------- :' , position );
+    alert("El producto ha sido aculizado");
     products[position] = newProduct;
 
 
     //products[0] = newProduct;
     console.log('Products after: ', products);
+    props.setRows([])
     updateArray(products); 
     setOpen(false);
 
   }
   
+  
   function updateArray(newArray){
-    //setProducts()
+    console.log('Llego con newArray dialog:' , newArray);
     props.getArray(newArray);
 
   }

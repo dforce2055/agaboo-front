@@ -4,9 +4,11 @@ import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import DirectionsIcon from '@material-ui/icons/Directions';
+import FormDialog from './DialogUpdateProduct';
+import ProductController from '../../controllers/Product';
+
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,6 +33,12 @@ const useStyles = makeStyles(theme => ({
 export default function SearchBox() {
   const classes = useStyles();
 
+  async function getProductBar(code){
+    const product = await ProductController.getProductByCode(code);
+
+  }
+  
+
   return (
     <Paper className={classes.root}>
       
@@ -41,7 +49,8 @@ export default function SearchBox() {
 
       />
       <IconButton className={classes.iconButton} aria-label="search">
-        <SearchIcon />
+        <SearchIcon/>
+        <FormDialog values = {getProductBar(1)}/>
       </IconButton>
       <Divider className={classes.divider} orientation="vertical" />
       
