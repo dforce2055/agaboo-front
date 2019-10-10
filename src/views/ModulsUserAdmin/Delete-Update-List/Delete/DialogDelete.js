@@ -13,6 +13,7 @@ import CustomerController from '../../../../controllers/Customer';
 export default function AlertDialog(props) {
   const [open, setOpen] = React.useState(false);
   const {cliente} = props;
+  const {updateStateArray} = props;
   //const {setUpdateList} = props;
 
   const handleClickOpen = () => {
@@ -28,6 +29,7 @@ export default function AlertDialog(props) {
     let valor=CustomerController.deleteCustomer(cliente);
     console.log("muestro que devuelve en compoente => ",valor)
     //setUpdateList(true);
+    updateStateArray();
     setOpen(false);
   };
 

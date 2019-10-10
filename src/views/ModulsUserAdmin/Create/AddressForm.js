@@ -6,18 +6,44 @@ import { Button } from '@material-ui/core';
 import CustomerController from '../../../controllers/Customer';
 import DialogAcept from './dialogAcept';
 import {ValidatorForm,TextValidator} from 'react-material-ui-form-validator'; //Validacion de campos
-/*
-const emailRegex = RegExp(
-  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/ 
-);*/
+import { withRouter } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
 
-//npm install react-material-ui-form-validator
+const useStyles = makeStyles(theme => ({
+  buttons: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  buttonCancel: {    
+    background: 'linear-gradient(45deg, #f56f5b 3%, #ff2200 97%)',
+    //background: 'linear-gradient( 45deg, #3fb5a5 30%, #05fcda 90%)', //PRUEBA DE COLOR DE BOTON DE CERRAR SESION
+    border: 0,
+    borderRadius: 3,
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    marginLeft: theme.spacing(13),
+  },
+  buttonAcept: {    
+    background: 'linear-gradient(45deg, #3fb5a5 2%, #40f03a 98%)',
+    border: 0,
+    borderRadius: 3,
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    marginLeft: theme.spacing(13),
+  },
+}));
 
-export default function AddressForm(props) {
-
-  React.useEffect(()=>{ //Agrego para validar por expresion regular
+ function AddressForm(props) {
+  const classes = useStyles();
+  React.useEffect(()=>{
     ValidatorForm.addValidationRule("isValidName", (string)=> /[a-zA-Z \u00E0-\u00FC]{1,20}/g.test(string))
   })
+
+  const {history} = props;
 
   const [values, setValues] = React.useState({
     nombre:'',
@@ -34,7 +60,6 @@ export default function AddressForm(props) {
     eliminado:false,
     mostrarDialog:false,
   });  
-  const {history} = props;
 
   const auth = () =>{
     if(values.nombre.length > 3){
@@ -187,21 +212,24 @@ export default function AddressForm(props) {
         </Grid>          
       </Grid>
 
-      <Button
+    <Button   
+    className={classes.buttonCancel}   
       variant="contained"
       color="secondary"    
-      //onClick ={ () => history.push('/pedidosListos')}  me tira error!!!
+      onClick ={ () => history.push('/mainMenu')}
       /*onClick={handleBack}*/
       >Cancelar</Button>
-      
+
       <Button
+      className={classes.buttonAcept}
       variant="contained"
       color="primary"
       type="submit"
-      //onClick={handleOnClick} ==> lo puse en validatorForm
-      disabled={auth()}
       >Guardar</Button>
+
       </ValidatorForm>
     </React.Fragment>
   );
 }
+
+export default withRouter(AddressForm);

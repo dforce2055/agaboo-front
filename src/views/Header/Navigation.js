@@ -129,7 +129,8 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
   overrides: { 
     MuiAppBar: {
       colorPrimary: {
-        backgroundColor: '#3fb5a5',
+        background: 'linear-gradient(45deg, #2c7369 20%, #3fb5a5 90%)',
+        //backgroundColor: '#3fb5a5',
       }
     },
     MuiButton: {

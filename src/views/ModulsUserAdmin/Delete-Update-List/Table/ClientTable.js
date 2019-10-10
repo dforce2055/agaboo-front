@@ -21,20 +21,39 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Orders() {
+export default function ClientTable() {
   const classes = useStyles();
+  //Coleccion de customers
   const [clientes, setClientes] = React.useState([]);
 
+  //Avisa un cambio
+  const [stateArray,setStateArray] = React.useState(false);
+
   React.useEffect(()=>{
-    if (clientes.length === 0) {
+
+    //Si se realizo un cambio
+    if(stateArray){
       CustomerController.getCustomers()
       .then(value=> {
-        setClientes(value);      
+        setClientes(value);
+        setStateArray(false); //Finalizo el cambio
     }).catch(error=>{
-      console.log("Error al traer el cliente= ",error);
+      console.log("Error al traer el cliente: ",error);
     })
-    }
-  }); 
+    }else if (clientes.length === 0) {
+        CustomerController.getCustomers()
+        .then(value=> {
+          setClientes(value);      
+      }).catch(error=>{
+        console.log("Error al traer el cliente= ",error);
+      })
+      }
+
+    }); 
+
+  function updateStateArray(){
+    setStateArray(true)
+  }
 
   return (
     <React.Fragment>
@@ -58,12 +77,14 @@ export default function Orders() {
             {/*Dialog de ELIMINAR cliente*/}
             <TableCell>   
               <AlertDialog
+                 updateStateArray={updateStateArray}
                  cliente={row}/>
             </TableCell>
 
               {/*Dialog de MODIFICAR cliente*/}
               <TableCell>
                 <FullScreenDialog 
+                  updateStateArray={updateStateArray}
                   valor={row}/>  
               </TableCell>
               
@@ -84,7 +105,7 @@ export default function Orders() {
       </Table>
       <div className={classes.seeMore}>
         <Link color="primary" href="javascript:;">
-          Ver mas ordenes
+          Ver mas clientes
         </Link>
       </div>
     </React.Fragment>

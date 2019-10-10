@@ -5,10 +5,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Orders from './Orders'
+import ClientTable from './ClientTable'
 import {Typography} from '@material-ui/core';
 import CustomizedInputBase from './buttonSearch';
-import EnhancedTable from '../UsersTable';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -128,7 +128,7 @@ export default function Dashboard() {
             <Grid item xs={12}>
             <Typography variant="h4">Clientes</Typography>
               <Paper className={classes.paper}>
-                 <Orders />
+                 <ClientTable />
               </Paper>
             </Grid>
           </Grid>
