@@ -32,11 +32,25 @@ const useStyles = makeStyles(theme => ({
 
 export default function SearchBox() {
   const classes = useStyles();
+  const [dialogOpen, setDialog] = React.useState(false);
+  const [product, setProduct] = React.useState();
+  const [search, setSearch] = React.useState("");
 
   async function getProductBar(code){
-    const product = await ProductController.getProductByCode(code);
-
+    const getProduct = await ProductController.getProductByCode(code);
+    setProduct(getProduct);
   }
+
+  function setBox(e){
+    setSearch(e.target.value);
+    console.log('setBox ', search )
+  }
+
+  function abreDialog(){
+    setDialog(!dialogOpen);
+    console.log('abreDialog: ', dialogOpen);
+  }
+
   
 
   return (
@@ -46,12 +60,18 @@ export default function SearchBox() {
         className={classes.input}
         placeholder="Codigo de producto"
         inputProps={{ 'aria-label': 'search google maps' }}
+        onChange = {setBox}
+
+        
 
       />
-      <IconButton className={classes.iconButton} aria-label="search">
-        <SearchIcon/>
-        <FormDialog values = {getProductBar(1)}/>
-      </IconButton>
+        <FormDialog values = {getProductBar(1)}
+                    setDialog = { dialogOpen }
+                    code = { search }
+                    onClick = { abreDialog }
+                    code = {search}
+                    />
+      
       <Divider className={classes.divider} orientation="vertical" />
       
     </Paper>

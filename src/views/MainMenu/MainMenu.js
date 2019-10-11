@@ -14,6 +14,7 @@ import ButtonStock from '../ButtonsMenu/ButtonStock';
 import ButtonOrder from '../ButtonsMenu/ButtonOrder';
 import firebase from '../../config/firebase';
 import { withRouter } from 'react-router-dom';
+import Dashboard from './dashboard/Dashboard';
 
 const theme = createMuiTheme({ /* Plantilla de edicion */
   overrides: { 
@@ -76,12 +77,15 @@ function MainMenu(props){
                  <Navbar/>
                  {/* <div><Chart></Chart></div> */}
         
-                <div  className = {"Button"}><ButtonClient fullWidth/></div>
+                {/*<div  className = {"Button"}><ButtonClient fullWidth/></div>
                 <div  className = {"Button"}><ButtonProduct fullWidth/></div>
                 <div  className = {"Button"}><ButtonStock fullWidth/></div>
                 <div  className = {"Button"}><ButtonOrder fullWidth/></div>
-                <div  className = {"Button"}><ButtonSimple nombre = {'Estado de cuenta'/*Utilizo los props para reutilizar el boton simple*/} fullWidth/></div>
-                <div  className = {"Button"}><ButtonSimple nombre = {'Mantenimientos a realizar'} fullWidth/></div>
+                <div  className = {"Button"}><ButtonSimple nombre = {'Estado de cuenta'/*Utilizo los props para reutilizar el boton simple*/} {/*fullWidth/></div>
+                <div  className = {"Button"}><ButtonSimple nombre = {'Mantenimientos a realizar'} fullWidth/></div>*/}
+                <Dashboard></Dashboard>
+
+
               </MuiThemeProvider>
             </div>
           )

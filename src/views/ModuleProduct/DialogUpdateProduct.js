@@ -58,11 +58,12 @@ const useStyles = makeStyles(theme => ({
 
 
 export default function FormDialog(props) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(props.setDialog);
   const [values, setValues] = useState(props.values);
+  const [code, setCode] = useState(props.code);
   //const [products, setProducts] = useState(props.products);
   //const [position, setPosition] = useState(-1);
-  let products = props.products;
+  //let products = props.products;
   let position = -1 ;
   
   const theme = useTheme();
@@ -72,8 +73,16 @@ export default function FormDialog(props) {
   
 
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  async  function  handleClickOpen (){
+
+    console.log('Handle click : ' , code);
+    setCode(props.code);
+    const product = await ProductController.getProductByCode(code);
+    if(  product != 1){
+      setOpen(true)
+    } else {
+      alert('No existe Producto');
+    }
   };
 
    function updateProduct(){
@@ -88,22 +97,18 @@ export default function FormDialog(props) {
     };
 
 
-    console.log("product : ", newProduct);
     ProductController.editProduct(newProduct);
-    console.log('Products before: ', products);
-    position = products.findIndex(product => product.code === values.code);
-    console.log('Position--------------------------- :' , position );
     alert("El producto ha sido aculizado");
-    products[position] = newProduct;
 
 
-    //products[0] = newProduct;
-    console.log('Products after: ', products);
-    props.setRows([])
-    updateArray(products); 
     setOpen(false);
 
-  }
+  };
+
+  function getCode(codeSearch){
+    setCode(codeSearch);
+  };
+
   
   
   function updateArray(newArray){
@@ -208,7 +213,7 @@ export default function FormDialog(props) {
                     SelectProps={{
                         native: true,
                         MenuProps: {
-                        className: classes.menu
+                        className: classes.menu 
                         }
                     }}
                     
@@ -226,7 +231,7 @@ export default function FormDialog(props) {
             </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={updateProduct} color="primary">
+          <Button  onClick = {updateProduct}color="primary">
             Modifica
           </Button>
           <Button onClick={handleClose} color="primary">

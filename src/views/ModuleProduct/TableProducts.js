@@ -96,7 +96,6 @@ console.log('Rows despues de getProducts: ', rows);
 
   useEffect(() => {
     getProducts();
-    setRows(rows);
   });
   
   return (
@@ -120,7 +119,8 @@ console.log('Rows despues de getProducts: ', rows);
                                   //setRows = {setRows()}
                                   products = {rows}
                                   getArray = {getArray}
-                                  setRows = {setRows}/>
+                                  setRows = {setRows}
+                                  />
                     
                       
                       

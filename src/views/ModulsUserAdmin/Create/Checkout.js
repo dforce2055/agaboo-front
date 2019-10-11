@@ -70,7 +70,6 @@ export default function Checkout() {
           <AddressForm/>              
           </React.Fragment>
         </Paper>
-        <Copyright />
       </main>
     </React.Fragment>
   );

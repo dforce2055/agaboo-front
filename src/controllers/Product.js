@@ -48,7 +48,7 @@ class ProductController extends Component {
 
     }
     getProductByCode = async (code) => {
-        if (!code) throw new Error(`Error: el Código de producto es obligatorio`);
+        if (!code) return 1 ;//throw new Error(`Error: el Código de producto es obligatorio`);
         try {
             let product = await ProductRepo.getProductByCode(code);
             if ( product ) {
