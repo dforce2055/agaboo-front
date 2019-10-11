@@ -1,18 +1,25 @@
 import React from 'react';
 import Navbar from '../../Header/Navigation'
-import ButtonSearch from './buttonSearch';
-import EnhancedTable from './UsersTable';
 import Dashboard from './Table/Dashboard';
+import firebase from '../../../config/firebase';
+import { withRouter } from 'react-router-dom';
+function DeleteUpdateUserAdmin(props) {
 
-export default function DeleteUpdateUserAdmin() {
+    if (!firebase.getCurrentUsername()) {
+        // not logged in
+        alert('Por favor inicie sesión para acceder')
+        props.history.replace('/login')
+        return null
+      }
 
     return (
         
         <div className="UsersScreen">
             <Navbar></Navbar>
-            {/*<ButtonSearch  /> Importo el componente Boton de busqueda.*/}
           <Dashboard></Dashboard>
         </div>
         
     )
 }
+
+export default withRouter(DeleteUpdateUserAdmin);

@@ -109,7 +109,7 @@ const useStyles = makeStyles(theme => ({
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
-          <TextValidator //Cambie de text field
+          <TextField //Cambie de text field
             id="nombre"
             variant="outlined"            
             label="Nombre"  
@@ -209,14 +209,14 @@ const useStyles = makeStyles(theme => ({
           />
         </Grid>      
         <Grid item xs={12}>          
-        </Grid>          
+        </Grid>
       </Grid>
 
     <Button   
     className={classes.buttonCancel}   
       variant="contained"
       color="secondary"    
-      onClick ={ () => history.push('/mainMenu')}
+      onClick ={ () => history.goBack()}
       /*onClick={handleBack}*/
       >Cancelar</Button>
 
