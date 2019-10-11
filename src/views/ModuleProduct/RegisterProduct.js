@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexWrap: "wrap",
     border: "1px" ,
-
+   
   },
   paper: {
     padding: theme.spacing(1),
@@ -68,7 +68,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(2)
   },
   menu: {
-    width: 200
+    width: 200,
   }
 }));
 
@@ -123,7 +123,7 @@ const useStyles = makeStyles(theme => ({
   
 
   return (
-      <div>
+      <div style={{marginTop:'20px'}}>
       <NavBar/>
       <Paper className={classes.paper} > 
         <Grid container spacing = {1} justify = { "center" } className = { "grid"} >

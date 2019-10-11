@@ -3,7 +3,6 @@ import Navbar from '../../Header/Navigation'
 import Dashboard from './Table/Dashboard';
 import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
-
 function DeleteUpdateUserAdmin(props) {
 
     if (!firebase.getCurrentUsername()) {
@@ -17,7 +16,6 @@ function DeleteUpdateUserAdmin(props) {
         
         <div className="UsersScreen">
             <Navbar></Navbar>
-            {/*<ButtonSearch  /> Importo el componente Boton de busqueda.*/}
           <Dashboard></Dashboard>
         </div>
         

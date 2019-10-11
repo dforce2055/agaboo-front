@@ -109,7 +109,7 @@ const useStyles = makeStyles(theme => ({
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
-          <TextValidator //Cambie de text field
+          <TextField //Cambie de text field
             id="nombre"
             variant="outlined"            
             label="Nombre"  
