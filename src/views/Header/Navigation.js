@@ -45,8 +45,7 @@ import { withRouter } from "react-router-dom";
   import BuildIcon from '@material-ui/icons/Build';
   //ICONO DE CIERRE DE SESION
   import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
-
-
+  import firebase from '../../config/firebase';
 
 
 const drawerWidth = 240;
@@ -92,7 +91,6 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -112,13 +110,25 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 0.87,
   },
+  bajarBoton:{
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    //background: 'linear-gradient( 45deg, #3fb5a5 30%, #05fcda 90%)', //PRUEBA DE COLOR DE BOTON DE CERRAR SESION
+    border: 0,
+    borderRadius: 3,
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    marginTop: theme.spacing(14),
+  },
 }));
 
 const theme2 = createMuiTheme({ /* Plantilla de edicion */
   overrides: { 
     MuiAppBar: {
       colorPrimary: {
-        backgroundColor: '#3fb5a5',
+        background: 'linear-gradient(45deg, #2c7369 20%, #3fb5a5 90%)',
+        //backgroundColor: '#3fb5a5',
       }
     },
     MuiButton: {
@@ -144,7 +154,6 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
         color:'#16984a',
       },
     },
-    
 }
 });
 
@@ -186,6 +195,15 @@ function Navbar(props) {
     setOpen(false);
   }
 
+  //Llamo metodo de src/config/firebase de logout
+  async function exit(){
+      try {
+          await firebase.logout();
+          props.history.replace('/');
+      } catch (error) {
+          alert(error.message)
+      }
+  }
   
   return (
     <MuiThemeProvider theme={theme2}>
@@ -383,13 +401,16 @@ function Navbar(props) {
       </List>
 {/* *********************************** LISTA MANTENIMIENTOS A REALIZAR ****************************************** */}
       <List>
-        <ListItem button> 
-          <ListItemIcon>      
+        <ListItem
+        button
+        className={classes.bajarBoton}
+        onClick={exit} //Llamo metodo==>exit()
+        >
+          <ListItemIcon>
           <PersonOutlineIcon/>
-          </ListItemIcon> 
-        <ListItemText primary="Cerrar sesion" />      
+          </ListItemIcon>
+        <ListItemText primary="Cerrar sesion"/>
       </ListItem>
-
       </List>
 
 

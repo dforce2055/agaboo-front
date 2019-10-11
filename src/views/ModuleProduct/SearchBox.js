@@ -32,7 +32,8 @@ export default function SearchBox() {
   const classes = useStyles();
 
   return (
-    <Paper className={classes.root}>
+    <div style={{marginTop:'20px'}}>
+      <Paper className={classes.root}>
       
       <InputBase
         className={classes.input}
@@ -46,5 +47,6 @@ export default function SearchBox() {
       <Divider className={classes.divider} orientation="vertical" />
       
     </Paper>
+    </div>
   );
 }

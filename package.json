@@ -32,6 +32,7 @@
     "react-with-firebase-auth": "^1.0.4",
     "recharts": "^1.7.1",
     "underscore": "^1.9.1",
+    "use-force-update": "^1.0.7",
     "yarn": "^1.17.3",
     "yup": "^0.27.0"
   },

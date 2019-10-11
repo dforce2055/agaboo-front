@@ -67,13 +67,17 @@ class CustomerRepo extends Component {
     searchCustomer = async (e) => {
         try {
             console.log("LLEGUE A REPO");
-            
+            let cliente = {};
+            let clienteFiltrado = {};
             // Lo busco por id de documento en la colección, el cual deberia ser el cuil/cuit
-            let encontrados = await firebase.db.collection(collection)
-            .where('dni','==',e)
+            await firebase.db.collection(collection)
+            .where('dni','==', e)
             .get()
+            .then(result =>{
+                 cliente = result.docs.map(doc => doc.data())
+            })
+            
 
-            let cliente = encontrados.docs.map(doc=>doc.data());            
             return cliente;            
         } catch (error) {
             throw new Error();

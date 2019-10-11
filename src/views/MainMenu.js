@@ -5,12 +5,12 @@ import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 //Componentes
 import './MainMenu.css';
 import Navbar from './Header/Navigation';
+import SimpleBottomNavigation from './Footer/Footer';
 import ButtonSimple from './ButtonSimple';
 import ButtonClient from './ButtonClient';
 import ButtonProduct from './ButtonProduct';
 import ButtonStock from './ButtonStock';
 import ButtonOrder from './ButtonOrder';
-import './MainMenu.css';
 //import Chart from './Statistics/Chart.js';
 
 
@@ -53,6 +53,11 @@ class MainMenu extends Component
                   <div  className = {"Button"}><ButtonOrder fullWidth/></div>
                   <div  className = {"Button"}><ButtonSimple nombre = {'Estado de cuenta'/*Utilizo los props para reutilizar el boton simple*/} fullWidth/></div>
                   <div  className = {"Button"}><ButtonSimple nombre = {'Mantenimientos a realizar'} fullWidth/></div>
+
+                  <footer>
+                    <SimpleBottomNavigation/>
+                  </footer>
+                  
 
                 </MuiThemeProvider>
 

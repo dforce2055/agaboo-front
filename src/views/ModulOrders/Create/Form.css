@@ -72,11 +72,6 @@ input.error {
 
 /*<--------AGREGADO------>*/
 
-
-.cuit{
-  width: 0%;
-  margin-bottom: 2%;
-}
 /*QUIERO QUE MUESTRE EN VERDE CUANDO YA ESTAN BIEN PUESTO*/
 input.ok {
   border: 1px solid rgb(0, 255, 0);
