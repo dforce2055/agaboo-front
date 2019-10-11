@@ -49,7 +49,7 @@ export default function ClientTable() {
       })
       }
 
-    }); 
+    });
 
   function updateStateArray(){
     setStateArray(true)
@@ -57,7 +57,6 @@ export default function ClientTable() {
 
   return (
     <React.Fragment>
-    
       <Table size="small">
         <TableHead>
           <TableRow>

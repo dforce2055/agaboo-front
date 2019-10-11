@@ -209,14 +209,14 @@ const useStyles = makeStyles(theme => ({
           />
         </Grid>      
         <Grid item xs={12}>          
-        </Grid>          
+        </Grid>
       </Grid>
 
     <Button   
     className={classes.buttonCancel}   
       variant="contained"
       color="secondary"    
-      onClick ={ () => history.push('/mainMenu')}
+      onClick ={ () => history.goBack()}
       /*onClick={handleBack}*/
       >Cancelar</Button>
 
