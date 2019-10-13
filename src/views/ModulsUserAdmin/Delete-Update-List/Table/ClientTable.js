@@ -100,13 +100,13 @@ export default function ClientTable() {
             <TableCell>Ver</TableCell>
             <TableCell>Nombre</TableCell>
             <TableCell>Apellido</TableCell>
-            <TableCell>D.N.I</TableCell>
+            <TableCell>CUIT/CUIL</TableCell>
             <TableCell align="right">Localidad</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {clientes.map(row => (
-            <TableRow key={row.dni}>
+            <TableRow key={row.id}>
 
             {/*Dialog de ELIMINAR cliente*/}
             <TableCell>   
@@ -130,7 +130,7 @@ export default function ClientTable() {
 
               <TableCell>{row.nombre}</TableCell>
               <TableCell>{row.apellido}</TableCell>
-              <TableCell>{row.dni}</TableCell>
+              <TableCell>{row.cuit}</TableCell>
               {/*<TableCell>{row.paymentMethod}</TableCell>*/}
               <TableCell align="right">{row.localidad}</TableCell>
             </TableRow>

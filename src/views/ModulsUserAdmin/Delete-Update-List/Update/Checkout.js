@@ -75,7 +75,6 @@ export default function Checkout(props) {
           handleClose={handleClose}/>              
           </React.Fragment>
         </Paper>
-        <Copyright />
       </main>
     </React.Fragment>
   );
