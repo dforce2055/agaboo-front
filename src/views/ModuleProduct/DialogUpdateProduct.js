@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -60,24 +60,40 @@ const useStyles = makeStyles(theme => ({
 export default function FormDialog(props) {
   const [open, setOpen] = useState(props.setDialog);
   const [values, setValues] = useState(props.values);
-  const [code, setCode] = useState(props.code);
-  //const [products, setProducts] = useState(props.products);
-  //const [position, setPosition] = useState(-1);
-  //let products = props.products;
+  const [code, setCode] = useState(-1);
+  const {getCode} = props;  
+  const[corte, setCorte]= useState(true);
+  const {stateSearch, setStateSearch} = props;
+
   let position = -1 ;
   
   const theme = useTheme();
 
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
+  useEffect(()=>{
+
+    if(code !== getCode && stateSearch){
+      console.log('useEffect en Dialog ' , code , getCode);
+      getCodeUse();
+      setStateSearch(false);
+    }
+  })
+
+  function getCodeUse(){
+    setCode(getCode);
+
+  }
   
 
 
-  async  function  handleClickOpen (){
-
+  async function  handleClickOpen (){
+    console.log('getCode:' , getCode)
+    setCode(getCode);
     console.log('Handle click : ' , code);
-    setCode(props.code);
     const product = await ProductController.getProductByCode(code);
+    setValues(product);
+
     if(  product != 1){
       setOpen(true)
     } else {
@@ -104,19 +120,6 @@ export default function FormDialog(props) {
     setOpen(false);
 
   };
-
-  function getCode(codeSearch){
-    setCode(codeSearch);
-  };
-
-  
-  
-  function updateArray(newArray){
-    console.log('Llego con newArray dialog:' , newArray);
-    props.getArray(newArray);
-
-  }
-
 
 
   const handleClose = () => {

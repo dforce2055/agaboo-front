@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
@@ -35,6 +35,9 @@ export default function SearchBox() {
   const [dialogOpen, setDialog] = React.useState(false);
   const [product, setProduct] = React.useState();
   const [search, setSearch] = React.useState("");
+  const [stateSearch, setStateSearch] = React.useState(false);
+  
+
 
   async function getProductBar(code){
     const getProduct = await ProductController.getProductByCode(code);
@@ -43,12 +46,18 @@ export default function SearchBox() {
 
   function setBox(e){
     setSearch(e.target.value);
-    console.log('setBox ', search )
+    setStateSearch(true);
+    console.log('setBox ', search );
   }
 
   function abreDialog(){
     setDialog(!dialogOpen);
     console.log('abreDialog: ', dialogOpen);
+  };
+
+  function getCode(){
+    console.log('Llego a getCode : ', search)
+    return search;
   }
 
   
@@ -67,9 +76,10 @@ export default function SearchBox() {
       />
         <FormDialog values = {getProductBar(1)}
                     setDialog = { dialogOpen }
-                    code = { search }
                     onClick = { abreDialog }
-                    code = {search}
+                    getCode = {getCode}
+                    stateSearch = {stateSearch}
+                    setStateSearch = {setStateSearch}
                     />
       
       <Divider className={classes.divider} orientation="vertical" />
