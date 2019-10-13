@@ -4,10 +4,9 @@ import TextField from "@material-ui/core/TextField";
 import './ModuleProduct.css';
 import Button from './Button' ;
 import Grid from '@material-ui/core/Grid'
-import NavBar from '../Header/Navigation';
 import {withRouter} from 'react-router-dom' ;
 import Paper from '@material-ui/core/Paper';
-import ProductController from '../../controllers/Product';
+import ProductController from '../../../controllers/Product';
 
 
 
@@ -24,7 +23,11 @@ const typeProduct = [
   },
   {
     value: "Boletería",
-    label: "Boletría",
+    label: "Boletería",
+  },
+  {
+    value: "Garita",
+    label: "Garita de Seguridad",
   }
   
 ];
@@ -113,11 +116,10 @@ const useStyles = makeStyles(theme => ({
   } 
 
 
-  
+
 
   return (
       <div style={{marginTop:'20px'}}>
-      <NavBar/>
       <Paper className={classes.paper} > 
         <Grid container spacing = {1} justify = { "center" } className = { "grid"} >
           
@@ -208,7 +210,7 @@ const useStyles = makeStyles(theme => ({
                 
             </form>
             <Button label ={"Registrar Producto"} onClick = { registerProduct } ></Button>
-            <Button label = {"Salir"} onClick ={ () => history.push('/mainMenu')  } ></Button>
+            <Button label = {"Cancelar"} onClick ={ () => history.goBack()  } ></Button>
 
           </Grid> 
         </Grid>

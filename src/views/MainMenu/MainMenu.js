@@ -10,7 +10,7 @@ import Navbar from '../Header/Navigation'; //barra que hay que usar
 import firebase from '../../config/firebase';
 import { withRouter } from 'react-router-dom';
 import Dashboard from './dashboard/Dashboard';
-//import SimpleBottomNavigation from '../Footer/Footer';
+import SimpleBottomNavigation from '../Footer/Footer';
 
 const theme = createMuiTheme({ /* Plantilla de edicion */
   overrides: { 
@@ -81,9 +81,9 @@ function MainMenu(props){
                 <div  className = {"Button"}><ButtonSimple nombre = {'Mantenimientos a realizar'} fullWidth/></div>*/}
                 <Dashboard></Dashboard>
                 
-                {/* <footer>
+                <footer>
                   <SimpleBottomNavigation/>
-                </footer> */}
+                </footer>
 
               </MuiThemeProvider>
             </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../../Header/Navigation';
 import Checkout from './createOrderFinal';
 import firebase from '../../../config/firebase';
+import SimpleBottomNavigation from '../../Footer/Footer';
 import { withRouter } from 'react-router-dom';
 
 function CreateOrder(props) {
@@ -18,6 +19,9 @@ function CreateOrder(props) {
         <div className="UsersScreen">
             <Navbar/>
             <Checkout/>
+            <footer>
+                <SimpleBottomNavigation/>
+            </footer>
         </div>
         
     )

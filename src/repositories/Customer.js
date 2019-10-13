@@ -120,15 +120,15 @@ class CustomerRepo extends Component {
     addCustomer = async (newCustomer) => {
         if (!newCustomer) throw new Error(`Error: no se envio un cliente para registrar`);
         let result = await firebase.db.collection(collection)
-            .doc(newCustomer.dni)
+            .doc(newCustomer.id)
             .set({
                 nombre: newCustomer.nombre,
                 apellido: newCustomer.apellido,
-                dni: newCustomer.dni,
+                cuit: newCustomer.cuit,
+                empleo:newCustomer.empleo,
+                id:newCustomer.id,
                 localidad:newCustomer.localidad,
-                celular:newCustomer.celular,                              
-                
-                fechNac:newCustomer.fechNac,
+                celular:newCustomer.celular,        
                 calle: newCustomer.calle,
                 altura: newCustomer.altura,
                 email: newCustomer.email,
@@ -138,8 +138,6 @@ class CustomerRepo extends Component {
                 /*
                 estado: newCustomer.estado,
                 role: newCustomer.role,
-                cuit: newCustomer.cuit,
-                cuil: newCustomer.cuil,
                 tipoDocumento: newCustomer.tipoDocumento,*/
             })
             .then(() => {
@@ -156,27 +154,25 @@ class CustomerRepo extends Component {
 
     setCustomer = async (setCustomer) => {
        let result = firebase.db.collection(collection)
-        .doc(setCustomer.dni)
+        .doc(setCustomer.cuit)
         .get()
         .then(() => {            
             firebase.db.collection(collection)
-            .doc(setCustomer.dni)
+            .doc(setCustomer.cuit)
             .update({    
                 nombre: setCustomer.nombre,
                 apellido: setCustomer.apellido,
                 localidad:setCustomer.localidad,
-                celular:setCustomer.celular,                              
-                
-                fechNac:setCustomer.fechNac,
+                celular:setCustomer.celular,       
                 calle: setCustomer.calle,
                 altura: setCustomer.altura,
                 email: setCustomer.email,
+                cuit: setCustomer.cuit,
+                empleo:setCustomer.empleo,
                 
-                //DELETE
-                eliminado:false,
                /* nombre: customer.nombre,
                 apellido: customer.apellido,
-                cuit: customer.cuit,
+                
                 cuil: customer.cuil,
                 tipoDocumento: customer.tipoDocumento,
                 numeroDocumento: customer.numeroDocumento,
@@ -202,12 +198,12 @@ class CustomerRepo extends Component {
     }
     
     deleteCustomer = async (deleteCustomer) => {
-       if (!deleteCustomer.dni) throw new Error(`Error: el DNI es obligatorio`);
+       if (!deleteCustomer.cuit) throw new Error(`Error: el DNI es obligatorio`);
        let result = firebase.db.collection(collection)
-        .doc(deleteCustomer.dni)
+        .doc(deleteCustomer.cuit)
         .get()
         .then(() => {
-            firebase.db.collection(collection).doc(deleteCustomer.dni)
+            firebase.db.collection(collection).doc(deleteCustomer.cuit)
             .update({
                 //DELETE
                 eliminado:true,
