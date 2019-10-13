@@ -127,7 +127,7 @@ class CustomerController extends Component {
    async deleteCustomer(customer){
         let deleteCustomer = customer;        
         try {
-            console.log("Cambiando estado al cliente: ",deleteCustomer.dni);
+            console.log("Cambiando estado al cliente: ",deleteCustomer.cuit);
             let valor = CustomerRepo.deleteCustomer(deleteCustomer);               
             return valor;
         } catch (error) {

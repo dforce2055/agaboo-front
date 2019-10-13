@@ -1,10 +1,11 @@
 import React from 'react';
-import Navbar from '../../Header/Navigation'
-import Dashboard from './Table/Dashboard';
+import NavBar from '../../Header/Navigation';
+import CustomizedTables from './TableProducts';
 import SimpleBottomNavigation from '../../Footer/Footer';
 import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
-function DeleteUpdateUserAdmin(props) {
+
+function indexUpdateProduct(props) {
 
     if (!firebase.getCurrentUsername()) {
         // not logged in
@@ -14,16 +15,14 @@ function DeleteUpdateUserAdmin(props) {
       }
 
     return (
-        
-        <div className="UsersScreen">
-            <Navbar></Navbar>
-            <Dashboard></Dashboard>
+        <div>
+            <NavBar/>
+            <CustomizedTables/>
             <footer>
-              <SimpleBottomNavigation/>
+                <SimpleBottomNavigation/>
             </footer>
         </div>
-        
     )
 }
 
-export default withRouter(DeleteUpdateUserAdmin);
+export default withRouter(indexUpdateProduct);
