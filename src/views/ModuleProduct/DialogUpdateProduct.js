@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -58,22 +58,46 @@ const useStyles = makeStyles(theme => ({
 
 
 export default function FormDialog(props) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(props.setDialog);
   const [values, setValues] = useState(props.values);
-  //const [products, setProducts] = useState(props.products);
-  //const [position, setPosition] = useState(-1);
-  let products = props.products;
+  const [code, setCode] = useState(-1);
+  const {getCode} = props;  
+  const {stateSearch, setStateSearch} = props;
+
   let position = -1 ;
   
   const theme = useTheme();
 
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
+  useEffect(()=>{
+
+    if(code !== getCode && stateSearch){
+      console.log('useEffect en Dialog ' , code , getCode);
+      getCodeUse();
+      setStateSearch(false);
+    }
+  })
+
+  function getCodeUse(){
+    setCode(getCode);
+
+  }
   
 
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  async function  handleClickOpen (){
+    console.log('getCode:' , getCode)
+    setCode(getCode);
+    console.log('Handle click : ' , code);
+    const product = await ProductController.getProductByCode(code);
+    setValues(product);
+
+    if(  product != 1){
+      setOpen(true)
+    } else {
+      alert('No existe Producto');
+    }
   };
 
    function updateProduct(){
@@ -88,31 +112,13 @@ export default function FormDialog(props) {
     };
 
 
-    console.log("product : ", newProduct);
     ProductController.editProduct(newProduct);
     alert("El producto ha sido aculizado");
-    console.log('Products before: ', products);
-    
-    console.log ("Find por codigo :", products.findIndex(product => product.code === values.code));
-    position = products.findIndex(product => product.code === values.code);
-    //position = products.findIndex(product => product.code === values.code);
-    console.log('Position :' , position );
-    products[position] = newProduct;
 
 
-    //products[0] = newProduct;
-    console.log('Products after: ', products);
-    updateArray(products); 
     setOpen(false);
 
-  }
-  
-  function updateArray(newArray){
-    //setProducts()
-    props.getArray(newArray);
-
-  }
-
+  };
 
 
   const handleClose = () => {
@@ -133,10 +139,11 @@ export default function FormDialog(props) {
       
       
       
-      <Dialog
+      <Dialog open={open} 
         onClose={handleClose} 
         aria-labelledby="form-dialog-title"
         open={open}
+        onClose={handleClose}
         fullScreen={fullScreen}
 
       >
@@ -208,7 +215,7 @@ export default function FormDialog(props) {
                     SelectProps={{
                         native: true,
                         MenuProps: {
-                        className: classes.menu
+                        className: classes.menu 
                         }
                     }}
                     
@@ -226,7 +233,7 @@ export default function FormDialog(props) {
             </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={updateProduct} color="primary">
+          <Button  onClick = {updateProduct}color="primary">
             Modifica
           </Button>
           <Button onClick={handleClose} color="primary">
