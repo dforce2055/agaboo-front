@@ -3,6 +3,7 @@ import './OrderDelete.css';
 import Navbar from '../../Header/Navigation'
 import CustomizedTables from './OrdersTable';
 import Typography from '@material-ui/core/Typography';
+import SimpleBottomNavigation from '../../Footer/Footer';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
@@ -38,6 +39,9 @@ function DeleteOrder(props) {
                 </Typography>
                 <CustomizedTables/>
             </div>
+            <footer>
+                <SimpleBottomNavigation/>
+            </footer>
             </MuiThemeProvider>
         </div>
         

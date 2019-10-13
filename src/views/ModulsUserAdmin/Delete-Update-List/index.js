@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '../../Header/Navigation'
 import Dashboard from './Table/Dashboard';
+import SimpleBottomNavigation from '../../Footer/Footer';
 import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
 function DeleteUpdateUserAdmin(props) {
@@ -16,7 +17,10 @@ function DeleteUpdateUserAdmin(props) {
         
         <div className="UsersScreen">
             <Navbar></Navbar>
-          <Dashboard></Dashboard>
+            <Dashboard></Dashboard>
+            <footer>
+              <SimpleBottomNavigation/>
+            </footer>
         </div>
         
     )

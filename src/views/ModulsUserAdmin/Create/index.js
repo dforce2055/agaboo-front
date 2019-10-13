@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '../../Header/Navigation';
 import Checkout from './Checkout';
+import SimpleBottomNavigation from '../../Footer/Footer';
 import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
 
@@ -17,8 +18,11 @@ function CreateUserAdm(props) {
         
         <div className="UsersScreen">
             <Navbar/>  
-           <Checkout></Checkout>          
-        </div>        
+            <Checkout></Checkout>
+            <footer>
+                <SimpleBottomNavigation/>
+            </footer>
+        </div>
     )
 }
 

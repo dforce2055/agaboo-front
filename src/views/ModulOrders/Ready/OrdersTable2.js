@@ -34,7 +34,19 @@ const theme = createMuiTheme({ /* Plantilla de edicion */
           },
         }
       },
-    
+    MuiTablePagination: {
+      actions:{
+        marginLeft:'0px',
+      },
+      select:{
+        paddingLeft:'0px',
+      },
+    },
+    MuiSelect:{
+      select:{
+        minWidth:'0px',
+      },
+    },
 }
 });
 

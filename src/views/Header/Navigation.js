@@ -399,7 +399,7 @@ function Navbar(props) {
       </ListItem>
 
       </List>
-{/* *********************************** LISTA MANTENIMIENTOS A REALIZAR ****************************************** */}
+{/* *********************************** CERRAR SESIÓN ****************************************** */}
       <List>
         <ListItem
         button

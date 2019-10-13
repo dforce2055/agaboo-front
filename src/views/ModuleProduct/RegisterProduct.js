@@ -28,7 +28,11 @@ const typeProduct = [
   },
   {
     value: "Boletería",
-    label: "Boletría",
+    label: "Boletería",
+  },
+  {
+    value: "Garita",
+    label: "Garita de Seguridad",
   }
   
 ];
