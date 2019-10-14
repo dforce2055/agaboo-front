@@ -5,12 +5,13 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import EditIcon from '@material-ui/icons/Edit';
+import SearchIcon from '@material-ui/icons/Search'
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles , useTheme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ProductController from '../../controllers/Product';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
 
 const useStyles = makeStyles(theme => ({
@@ -19,6 +20,10 @@ const useStyles = makeStyles(theme => ({
         marginRight: theme.spacing(1)
       },
     }));
+
+
+
+  
 
     const typeState = [
         {
@@ -50,6 +55,7 @@ const useStyles = makeStyles(theme => ({
         }
         
       ];
+
       
 
   
@@ -59,13 +65,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function FormDialog(props) {
   const [open, setOpen] = useState(props.setDialog);
+  const [openAlert, setOpenAlert] = useState(false) 
   const [values, setValues] = useState(props.values);
   const [code, setCode] = useState(-1);
   const {getCode} = props;  
-  const[corte, setCorte]= useState(true);
   const {stateSearch, setStateSearch} = props;
-
-  let position = -1 ;
+  const {dialogOpen, setDialog  } = props
   
   const theme = useTheme();
 
@@ -78,6 +83,11 @@ export default function FormDialog(props) {
       getCodeUse();
       setStateSearch(false);
     }
+    if(dialogOpen){
+      handleClickOpen();
+      setDialog(false);
+      console.log('Entramos en useEffect con abreDialog', dialogOpen)
+    } 
   })
 
   function getCodeUse(){
@@ -88,18 +98,16 @@ export default function FormDialog(props) {
 
 
   async function  handleClickOpen (){
-    console.log('getCode:' , getCode)
     setCode(getCode);
-    console.log('Handle click : ' , code);
     const product = await ProductController.getProductByCode(code);
     setValues(product);
-
-    if(  product != 1){
+    if(  product !== 1  ) {
       setOpen(true)
     } else {
-      alert('No existe Producto');
+      setOpenAlert(true);
     }
   };
+
 
    function updateProduct(){
     console.log("llegue a register Product", values);
@@ -113,7 +121,7 @@ export default function FormDialog(props) {
     };
 
 
-    ProductController.editProduct(newProduct);
+    //ProductController.editProduct(newProduct);
     alert("El producto ha sido aculizado");
 
 
@@ -124,7 +132,12 @@ export default function FormDialog(props) {
 
   const handleClose = () => {
     setOpen(false);
+
   };
+
+  const handleCloseAlert = () =>{
+    setOpenAlert(false) ;
+  }
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
   };
@@ -135,7 +148,7 @@ export default function FormDialog(props) {
   return (
     <div>
       <IconButton>
-          <EditIcon onClick={handleClickOpen}/>
+          <SearchIcon onClick={handleClickOpen}/>
       </IconButton>
       
       
@@ -148,14 +161,14 @@ export default function FormDialog(props) {
         fullScreen={fullScreen}
 
       >
-        <DialogTitle id="form-dialog-title">Modificar Producto</DialogTitle>
+        <DialogTitle id="form-dialog-title" alignItems = {"center"} >Modificar Producto</DialogTitle>
         <DialogContent>
             <Grid container spacing = {1} justify = { "center" } className = { "grid"} >
-             <Grid item xs = {6} xl = {6} alignItems = {"center"}  >
+             <Grid item xs = {6} xl = {6} alignItems = {"center"} md = {3} >
 
                 <TextField
                     id="type-product"
-                    select
+                    select  
                     label="Producto"
                     className={classes.textField}
                     value={values.typeProduct }
@@ -232,13 +245,38 @@ export default function FormDialog(props) {
                  </TextField>
                 </Grid> 
             </Grid>
-        </DialogContent>
-        <DialogActions>
+            <DialogActions calssName = {classes.bajarBoton}>
           <Button  onClick = {updateProduct}color="primary">
-            Modifica
+            Modificar
+          </Button>
+          <Button 
+          onClick = {handleClose}color="primary">
+            Eliminar
           </Button>
           <Button onClick={handleClose} color="primary">
             Cancelar
+          </Button>
+        </DialogActions>
+        </DialogContent>
+
+        
+      </Dialog>
+
+      <Dialog
+        open={openAlert}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Busqueda fallida"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            El producto no existe intente de nuevo.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseAlert} color="primary" autoFocus>
+            Aceptar
           </Button>
         </DialogActions>
       </Dialog>

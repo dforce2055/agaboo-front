@@ -19,47 +19,6 @@ class ProductRepo extends Component {
         
     }
 
-    // getCustomer = async (id) => {
-    //     try {
-    //         let cliente = await firebase.db.collection(collection).doc(id).get();
-    //         //console.log(cliente.data());
-    //         return cliente.data();
-    //         //let cliente = await firebase.db.collection(collection)
-    //                                 //.where('cuil', '==', '20-32465169-2')
-    //                                 //.select()
-    //                                 //.limit(1)
-    //                                 //.get();
-    //         //console.log(cliente.val());
-    //         //return cliente.val();
-    //         //return cliente.snapshot.doc.data();
-            
-    //     } catch (error) {
-    //         throw new Error();
-    //     }        
-    // }
-
-    // getCustomerByCUIL = async (cuil) => {
-    //     if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
-    //     let customer = {};
-    //      await db.collection(collection)
-    //         .where('cuil', '==', cuil)
-    //         .limit(1)
-    //         .get()
-    //         .then(function (querySnapshot) {
-    //             querySnapshot.forEach(function (doc) {
-    //                 // doc.data() is never undefined for query doc snapshots
-    //                 //console.log(doc.id, " => ", doc.data());
-    //                 customer = doc.data();
-    //             });
-    //         })
-    //         .catch(function (error) {
-    //             console.log("Error getting documents: ", error);
-    //             customer = null;
-    //         });
-
-    //     return customer;
-    // }
-
     getProduct = async (id) => {
         if (!id) throw new Error(`Error: el id es obligatorio`);
         try {
@@ -99,7 +58,7 @@ class ProductRepo extends Component {
 
     getProductByCode = async (code) => {
         if (!code) throw new Error(`Error: el código de producto es obligatorio`);
-        let product = {};
+        let product = null ;
         await firebase.db.collection(collection)
             .where('code', '==', code)
             .limit(1)

@@ -130,7 +130,7 @@ function SignIn(props) {
                     if ( userStatus.estado ) {
                         props.history.replace('/mainMenu');
                     } else {
-                        alert("Su usario no esta habilitado, comuniquese con el administrador");
+                        alert("Su usuario no esta habilitado, comuniquese con el administrador");
                         await firebase.logout();
                         props.history.replace('/');
                     }

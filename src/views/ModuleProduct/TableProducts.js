@@ -9,7 +9,6 @@ import Paper from '@material-ui/core/Paper';
 import Button from  './Button';
 import NavBar from '../Header/Navigation';
 import ProductController from '../../controllers/Product';
-import DeleteIcon from '@material-ui/icons/Delete';
 import FormDialog from './DialogUpdateProduct';
 import SearchBox from './SearchBox';
 
@@ -17,6 +16,7 @@ import SearchBox from './SearchBox';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
+    background: 'linear-gradient(45deg, #2c7369 20%, #3fb5a5 90%)',
     backgroundColor: '#3fb5a5',
     color: theme.palette.common.white,
   },
@@ -54,7 +54,7 @@ const useStyles = makeStyles(theme => ({
     overflowX: 'auto',
   },
   table: {
-    minWidth: 700,
+    minWidth: 300,
   },
 }));
 
@@ -115,12 +115,12 @@ console.log('Rows despues de getProducts: ', rows);
                 {rows.map(row => (
                     <StyledTableRow key={row.typeProduct}>
                     <StyledTableCell component="th" scope="row">
-                      <FormDialog values = {row} 
+                      {/* <FormDialog values = {row} 
                                   //setRows = {setRows()}
                                   products = {rows}
                                   getArray = {getArray}
                                   setRows = {setRows}
-                                  />
+                                  /> */}
                     
                       
                       
@@ -133,7 +133,6 @@ console.log('Rows despues de getProducts: ', rows);
                 </TableBody>
             </Table>
         </Paper>
-        <Button onClick = {pruebaSet} label = {'Prueba'}></Button>
         <Button label = {'Volver'} onClick={()=> history.push('/mainMenu')}/>
       </React.Fragment>
         

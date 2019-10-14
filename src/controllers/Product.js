@@ -52,9 +52,11 @@ class ProductController extends Component {
         try {
             let product = await ProductRepo.getProductByCode(code);
             if ( product ) {
+                console.log('Entro en producto != null');
                 return product
             } else {
                 console.log(`El code: ${ code } de Producto no se encuentra`);
+                return 1;
             }
         } catch(error) {
             throw new Error();

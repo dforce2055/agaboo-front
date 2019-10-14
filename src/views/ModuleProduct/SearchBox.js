@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import FormDialog from './DialogUpdateProduct';
 import ProductController from '../../controllers/Product';
@@ -15,14 +14,11 @@ const useStyles = makeStyles(theme => ({
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
-    width: 400,
+    width: 250,
   },
   input: {
     marginLeft: theme.spacing(1),
     flex: 1,
-  },
-  iconButton: {
-    padding: 10,
   },
   divider: {
     height: 28,
@@ -50,10 +46,16 @@ export default function SearchBox() {
     console.log('setBox ', search );
   }
 
-  function abreDialog(){
-    setDialog(!dialogOpen);
-    console.log('abreDialog: ', dialogOpen);
-  };
+  function pushEnter(e){
+    if(e.key === 'Enter'){
+      setDialog(true);
+    }
+  }
+
+  // function abreDialog(){
+  //   setDialog(true);
+  //   console.log('abreDialog: ', dialogOpen);
+  // };
 
   function getCode(){
     console.log('Llego a getCode : ', search)
@@ -61,6 +63,12 @@ export default function SearchBox() {
   }
 
   
+  // function add(event){
+  //       console.log('Tecla tocada : ', event.key);
+  //        if(event.key === 'Enter'){
+  //           alert('Adding....');
+  //        }
+  //    };
 
   return (
     <Paper className={classes.root}>
@@ -70,16 +78,18 @@ export default function SearchBox() {
         placeholder="Codigo de producto"
         inputProps={{ 'aria-label': 'search google maps' }}
         onChange = {setBox}
+        onKeyPress={pushEnter}
 
         
 
       />
         <FormDialog values = {getProductBar(1)}
-                    setDialog = { dialogOpen }
-                    onClick = { abreDialog }
+                    setDialog = { setDialog }
                     getCode = {getCode}
                     stateSearch = {stateSearch}
                     setStateSearch = {setStateSearch}
+                    dialogOpen = {dialogOpen}
+                   // abreDialog = {abreDialog}
                     />
       
       <Divider className={classes.divider} orientation="vertical" />
