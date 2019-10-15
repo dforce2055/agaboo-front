@@ -41,3 +41,9 @@ yarn.lock
 /.firebase/hosting.YnVpbGQ.cache
 /.firebaserc
 firebase-debug.log
+
+### Puppeteer
+/src/__tests__/puppeteer/*.png
+/src/__tests__/puppeteer/*.jpg
+/src/__tests__/puppeteer/*.jpeg
+/src/__tests__/puppeteer/*.pdf
