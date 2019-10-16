@@ -70,8 +70,10 @@ export default function FormDialog(props) {
   const [code, setCode] = useState(-1);
   const {getCode} = props;  
   const {stateSearch, setStateSearch} = props;
-  const {dialogOpen, setDialog  } = props
-  
+  const {dialogOpen, setDialog  } = props;
+  const {openDelete, setOpenDelete} = useState(true);
+
+
   const theme = useTheme();
 
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -112,22 +114,24 @@ export default function FormDialog(props) {
    function updateProduct(){
     console.log("llegue a register Product", values);
 
-
     const newProduct = {
       type : values.type,
       code : values.code,
       description : values.description,
       state : values.state,
     };
-
-
-    //ProductController.editProduct(newProduct);
+    ProductController.editProduct(newProduct);
     alert("El producto ha sido aculizado");
-
-
     setOpen(false);
 
   };
+
+  function deleteProduct() {
+
+    ProductController.deleteProduct(values.code);
+    handleClose();
+
+  }
 
 
   const handleClose = () => {
@@ -137,6 +141,15 @@ export default function FormDialog(props) {
 
   const handleCloseAlert = () =>{
     setOpenAlert(false) ;
+  }
+
+  const handleOpenDelete  = () => {
+    setOpenDelete(true);
+  }
+  
+
+  const handleCloseDelete = () => {
+    setOpenDelete(false);
   }
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
@@ -250,7 +263,7 @@ export default function FormDialog(props) {
             Modificar
           </Button>
           <Button 
-          onClick = {handleClose}color="primary">
+          onClick = {handleOpenDelete} color="primary">
             Eliminar
           </Button>
           <Button onClick={handleClose} color="primary">
@@ -261,6 +274,8 @@ export default function FormDialog(props) {
 
         
       </Dialog>
+
+{/* ------------------------------------------DIALOG PRODUCT NOT FOUND------------------------------------------------- */}
 
       <Dialog
         open={openAlert}
@@ -277,6 +292,28 @@ export default function FormDialog(props) {
         <DialogActions>
           <Button onClick={handleCloseAlert} color="primary" autoFocus>
             Aceptar
+          </Button>
+        </DialogActions>
+      </Dialog>
+{/* -------------------------------------------------------------DIALOG DESEA ELIMINAR---------------------------------------------- */}
+      <Dialog
+        open={openDelete}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Busqueda fallida"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            ¿Esta seguro que desea eliminar el producto {values.code}?.         
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={deleteProduct} color="primary" autoFocus>
+            Aceptar
+          </Button>
+          <Button onClick={handleCloseDelete} color="primary" autoFocus>
+            Cancelar
           </Button>
         </DialogActions>
       </Dialog>
