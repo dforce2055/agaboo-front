@@ -47,3 +47,7 @@ firebase-debug.log
 /src/__tests__/puppeteer/*.jpg
 /src/__tests__/puppeteer/*.jpeg
 /src/__tests__/puppeteer/*.pdf
+
+
+### Anotaciones
+.anotaciones*
