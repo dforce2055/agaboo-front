@@ -23,7 +23,7 @@ exports.createUser = functions.firestore
         if (!change.after.exists()) {
             return null;
         }*/
-
+        if (newDocument.numeroDocumento === "numeroDocumento_test") return null;
         console.log(`Un nuevo documento fue agregado a la colección`);
         // perform desired operations ...
         let _search = "";
@@ -58,6 +58,7 @@ exports.onUpdateUsers = functions.firestore
         // We'll only update if the document has changed.
         // This is crucial to prevent infinite loops.
         // Si no se cambio nada en los campos de búsqueda retorno null
+        if (data.numeroDocumento === "numeroDocumento_test") return null;
         if (_search.toString() === previousData._search.toString()) return null;
 
         console.log(`Se creo el campo _search con los siguentes datos ${_search}`);
@@ -84,7 +85,8 @@ exports.createCustomer = functions.firestore
          if (!change.after.exists()) {
              return null;
          }*/
-
+        
+        if (newDocument.numeroDocumento === "numeroDocumento_test") return null;
         console.log(`Un nuevo documento fue agregado a la colección`);
         // perform desired operations ...
         let _search = "";
@@ -117,7 +119,8 @@ exports.onUpdateCustomers = functions.firestore
 
         // We'll only update if the document has changed.
         // This is crucial to prevent infinite loops.
-        // Si no se cambio nada en los campos de búsqueda retorno null
+        // Si no se cambio nada en los campos de búsqueda retorno 
+        if (data.numeroDocumento === "numeroDocumento_test") return null;
         if (_search.toString() === previousData._search.toString()) return null;
 
 
