@@ -5,7 +5,7 @@
 
 import { Component } from 'react';
 import ProductRepo from '../repositories/Product';
-
+import { Product } from '../models/Product';
 
 class ProductController extends Component {
     constructor(props) {
@@ -76,16 +76,40 @@ class ProductController extends Component {
 
     }
 
-    addProduct = async (newProduct) => {
-        if (!newProduct) throw new Error(`Error: no se envió un Producto para registrar`);
+    getProductsByState = async (state) => {       
+        if (!state) throw new Error(`Error: no se envió el estado para buscar Productos`);
+        
+        let STATES = ['ALQUILADO', 'DISPONIBLE', 'EN MANTENIMIENTO', 'EN TRANSITO', 'ELIMINADO'];
+        let validState = STATES.includes(state.toUpperCase());
+        
+        if (!validState) throw new Error(`Error: El estado enviado ${ state } no es valido. Estados Válidos ${ STATES }`);
+
+        try {
+            let products = await ProductRepo.getProductsByState(state);
+            if ( products ) {
+                return products;
+            } else {
+                console.log("No se pudo obtener los productos");
+            }
+        } catch (error) {
+            throw new Error();
+        }
+
+    }
+
+    addProduct = async (data) => {
+        if (!data) throw new Error(`Error: no se envió un Producto para registrar`);
         
         try {
-            const result = ProductRepo.addProduct(newProduct);
+            let newProduct = new Product();
+            newProduct = Object.assign({}, data); //Utilizo Object.assign para mapear el objeto
+            const result = await ProductRepo.addProduct(newProduct);
             if (result) {
                 console.log(`Se agrego un nuevo producto ${ newProduct } `);
                 return true;
             } else {
                 console.log(`No se pudo agregar el producto ${ newProduct }`);
+                return false;
             }
         } catch (error) {
             console.log(error);
@@ -96,6 +120,7 @@ class ProductController extends Component {
         if (!product) throw new Error(`Error: no se envió un Producto para editar`);
 
         try {
+            product = Object.assign({}, product); //Utilizo Object.assign para mapear el objeto
             let productFound = await ProductRepo.getProductByCode(product.code);
             let result = ProductRepo.editProduct(product.code, product);
             if (result) {
