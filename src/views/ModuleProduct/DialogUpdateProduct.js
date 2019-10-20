@@ -139,18 +139,20 @@ export default function FormDialog(props) {
 
   };
 
+  
+
   const handleCloseAlert = () =>{
     setOpenAlert(false) ;
-  }
+  };
 
   const handleOpenDelete  = () => {
     setOpenDelete(true);
-  }
+  };
   
 
   const handleCloseDelete = () => {
     setOpenDelete(false);
-  }
+  };
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
   };
