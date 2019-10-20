@@ -20,8 +20,11 @@ class CustomerRepo extends Component {
 
     getCustomer = async (id) => {
         try {
-            let query = await firebase.db.collection(collection).doc(id).get();
-            return query.data();
+            let result = await firebase.db.collection(collection).doc(id).get();
+            let customer = new Customer();
+            //Mapeo los resultados en el customer:customer
+            customer = Object.assign({}, result);
+            return result.data();
         } catch (error) {
             throw new Error();
         }
@@ -61,6 +64,43 @@ class CustomerRepo extends Component {
             return customers;
         } catch (error) {
             throw new Error(`No se encontro el usuario con Nombre: ${ name }`);
+        }
+    }
+    getCustomerByCUILOK = async (cuil) => {
+        try {
+            let customer = {};
+            await firebase.db.collection(collection)
+                .where('cuil', '==', cuil)
+                .limit(1)
+                .get()
+                .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
+                        customer = doc.data();
+                    });
+                })
+
+            return customer;
+        } catch (error) {
+            throw new Error(`No se encontro el usuario con CUIL: ${cuil}`);
+        }
+    }
+    //Esto no funciona bien ver getCustomerByCUILOK
+    getCustomerByCUIL = async (cuil) => {
+        try {
+            let customers = [];
+            await firebase.db.collection(collection)
+                .where('cuil', '>=', cuil)
+                .orderBy('cuil')
+                .limit(1)
+                .get()
+                .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
+                        customers.push(doc.data());
+                    });
+                })
+            return customers;
+        } catch (error) {
+            throw new Error(`No se encontro el usuario con CUIL: ${ cuil }`);
         }
     }
 
@@ -116,6 +156,28 @@ class CustomerRepo extends Component {
         }
     };
 
+
+    
+    addCustomerOK = async (newCustomer) => {
+        if (!newCustomer) throw new Error(`Error: no se envió un Cliente para registrar`);
+        newCustomer = Object.assign({}, newCustomer); //Utilizo Object.assign para mapear el objeto
+
+        let result = await firebase.db.collection(collection)
+            .doc(newCustomer.cuil)
+            .set(newCustomer) //Utilizo Object.assign para mapear el objeto
+            .then(() => {
+                console.log("Cliente guardado exitosamente!!!");
+                return true;
+            })
+            .catch(function (error) {
+                console.error("Error al guardar el Cliente: ", error);
+                return false;
+            });
+        // Retorna True o False
+        return result;
+    }
+
+    // ESTO NO ANDA BIEN! Ver AddCustomerOK
     addCustomer = async (newCustomer) => {
         if (!newCustomer) throw new Error(`Error: no se envio un cliente para registrar`);
         let result = await firebase.db.collection(collection)
@@ -213,6 +275,51 @@ class CustomerRepo extends Component {
             console.error("Error al eliminar el documento: ", error);
             return false;
         });
+        return result;
+    }
+
+    deleteCustomerOK = async (cuil) => {
+        if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
+        let result = firebase.db.collection(collection)
+            .doc(cuil)
+            .update({
+                estado: false,
+            })
+            .then(() => { return true })
+            .catch(function (error) {
+                console.error("Error al eliminar el Cliente: ", error);
+                return false;
+            });
+        return result;
+    }
+
+    deleteCustomerREAL = async (cuil) => {
+        if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
+        let result = firebase.db.collection(collection)
+            .doc(cuil)
+            .delete() //BORRA REALMENTE DE LA DDBB
+            .then(() => { return true })
+            .catch(function (error) {
+                console.error("Error al eliminar el Cliente: ", error);
+                return false;
+            });
+        return result;
+    }
+
+    editCustomer = async (cuil, customer) => {
+        if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
+        if (!customer) throw new Error(`Error: el cliente es obligatorio para poder editarlo`);
+        let result = this.getCustomerByCUIL(cuil)
+            .then(() => {
+                firebase.db.collection(collection).doc(cuil)
+                    .update(Object.assign({}, customer));//Utilizo Object.assign para mapear el objeto
+
+                return true;
+            })
+            .catch(function (error) {
+                console.error("Error al editar el cliente: ", error);
+                return false;
+            });
         return result;
     }
 }

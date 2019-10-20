@@ -18,48 +18,6 @@ class ProductRepo extends Component {
         }
         
     }
-
-    // getCustomer = async (id) => {
-    //     try {
-    //         let cliente = await firebase.db.collection(collection).doc(id).get();
-    //         //console.log(cliente.data());
-    //         return cliente.data();
-    //         //let cliente = await firebase.db.collection(collection)
-    //                                 //.where('cuil', '==', '20-32465169-2')
-    //                                 //.select()
-    //                                 //.limit(1)
-    //                                 //.get();
-    //         //console.log(cliente.val());
-    //         //return cliente.val();
-    //         //return cliente.snapshot.doc.data();
-            
-    //     } catch (error) {
-    //         throw new Error();
-    //     }        
-    // }
-
-    // getCustomerByCUIL = async (cuil) => {
-    //     if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
-    //     let customer = {};
-    //      await db.collection(collection)
-    //         .where('cuil', '==', cuil)
-    //         .limit(1)
-    //         .get()
-    //         .then(function (querySnapshot) {
-    //             querySnapshot.forEach(function (doc) {
-    //                 // doc.data() is never undefined for query doc snapshots
-    //                 //console.log(doc.id, " => ", doc.data());
-    //                 customer = doc.data();
-    //             });
-    //         })
-    //         .catch(function (error) {
-    //             console.log("Error getting documents: ", error);
-    //             customer = null;
-    //         });
-
-    //     return customer;
-    // }
-
     getProduct = async (id) => {
         if (!id) throw new Error(`Error: el id es obligatorio`);
         try {
@@ -115,8 +73,29 @@ class ProductRepo extends Component {
                 console.log("Error getting documents: ", error);
                 product = null;
             });
-
+        //console.log(product);
         return product;
+    }
+
+    getProductsByState = async (state) => {
+        if (!state) throw new Error(`Error: el código de producto es obligatorio`);
+        let products = [];
+        await firebase.db.collection(collection)
+            .where('state', '==', state)
+            .get()
+            .then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    // doc.data() is never undefined for query doc snapshots
+                    //console.log(doc.id, " => ", doc.data());
+                    products.push(doc.data());
+                });
+            })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+                products = null;
+            });
+        //console.log(products);
+        return products;
     }
 
     getProducts = async (res) => {
@@ -131,15 +110,22 @@ class ProductRepo extends Component {
 
     addProduct = async (newProduct) => {
         if (!newProduct) throw new Error(`Error: no se envió un Producto para registrar`);
+        //newProduct.localization = new firebase.admin.firestore.GeoPoint(newProduct.localization._lat, newProduct.localization._long);
+        //newProduct.creationDate = new firebase.admin.firestore.Timestamp(newProduct.creationDate.seconds, newProduct.creationDate.nanoseconds);
+        newProduct = Object.assign({}, newProduct);
+        //newProduct = JSON.parse(JSON.stringify(newProduct));
+
+        
+
         let result = await firebase.db.collection(collection)
             .doc(newProduct.code)
-            .set(Object.assign({}, newProduct)) //Utilizo Object.assign para mapear el objeto
+            .set(newProduct) //Utilizo Object.assign para mapear el objeto
             .then(() => {
-                console.log("Producto guardado exitosamente!");
+                console.log("Producto guardado exitosamente!!!");
                 return true;
             })
             .catch(function (error) {
-                console.error("Error al guardar el Prodcto: ", error);
+                console.error("Error al guardar el Producto: ", error);
                 return false;
             });
         // Retorna True o False
@@ -152,7 +138,7 @@ class ProductRepo extends Component {
         let result = this.getProductByCode(code)
             .then(() => {
                 firebase.db.collection(collection).doc(code)
-                    .update(Object.assign({}, product));
+                    .update(Object.assign({}, product));//Utilizo Object.assign para mapear el objeto
                 
                     return true;
             })
