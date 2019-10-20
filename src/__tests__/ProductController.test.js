@@ -37,6 +37,30 @@ const productMock = {
     }),
 };
 
+describe('Metodo addProduct', () => {
+    // Pruebas del metodo addProduct
+    test('addProduct', async () => {
+        //Debería devolver true si pudo guardar el producto o false
+        let result = await ProductController.addProduct(productTest);
+
+        expect(typeof result).toBe('boolean');
+        expect(result).toBe(true);
+    });
+
+    test('Metodo addProduct sin PARAMETRO', async () => {
+        //No le envió ningun parametro
+        //Debería devolver un mensaje de error
+        let message = false
+        try {
+            await ProductController.addProduct();
+        } catch (e) {
+            message = e.message
+        }
+        console.log(message);
+        expect(message).toBeTruthy()
+    });
+});
+
 describe('Metodo getProductById', () => {
     // Pruebas del metodo getProductById
     test('getProductById', async () => {
@@ -132,29 +156,7 @@ describe('Metodo getProducts', () => {
     });
 });
 
-describe('Metodo addProduct', () => {
-    // Pruebas del metodo addProduct
-    test('addProduct', async () => {
-        //Debería devolver true si pudo guardar el producto o false
-        let result = await ProductController.addProduct(productTest);
 
-        expect(typeof result).toBe('boolean');
-        expect(result).toBe(true);
-    });
-
-    test('Metodo addProduct sin PARAMETRO', async () => {
-        //No le envió ningun parametro
-        //Debería devolver un mensaje de error
-        let message = false
-        try {
-            await ProductController.addProduct();
-        } catch (e) {
-            message = e.message
-        }
-        console.log(message);
-        expect(message).toBeTruthy()
-    });
-});
 
 describe('Metodo editProduct', () => {
     test('Metodo editProduct', async () => {
@@ -178,32 +180,7 @@ describe('Metodo editProduct', () => {
         expect(message).toBeTruthy()
     });
 });
-describe('Metodo deleteProduct', () => {
-    test('Metodo deleteProduct', async () => {
-        //Debería devolver true si encuentra el código de barras
-        //y logra eliminar el producto
-        //Creo un producto nuevo
-        await ProductController.addProduct(productTest);
 
-        //Lo elimino y evaluo el resultado
-        let result = await ProductController.deleteProduct(productTest.code);
-        
-        expect(typeof result).toBe('boolean');
-        expect(result).toBe(true);
-    });
-
-    test('Metodo deleteProduct sin parametros', async () => {
-        //Debería devolver un mensaje de error
-        let message = false
-        try {
-            await ProductController.deleteProduct();
-        } catch (e) {
-            message = e.message
-        }
-        //console.log(message);
-        expect(message).toBeTruthy()
-    });
-});
 
 describe('Metodo getProductsByState', () => {
     test('Metodo getProductsByState', async () => {
@@ -240,6 +217,33 @@ describe('Metodo getProductsByState', () => {
         let message = false
         try {
             await ProductController.getProductsByState();
+        } catch (e) {
+            message = e.message
+        }
+        //console.log(message);
+        expect(message).toBeTruthy()
+    });
+});
+
+describe('Metodo deleteProduct', () => {
+    test('Metodo deleteProduct', async () => {
+        //Debería devolver true si encuentra el código de barras
+        //y logra eliminar el producto
+        //Creo un producto nuevo
+        await ProductController.addProduct(productTest);
+
+        //Lo elimino y evaluo el resultado
+        let result = await ProductController.deleteProduct(productTest.code);
+        console.log("Producto eliminado " +result);
+        expect(typeof result).toBe('boolean');
+        expect(result).toBe(true);
+    });
+
+    test('Metodo deleteProduct sin parametros', async () => {
+        //Debería devolver un mensaje de error
+        let message = false
+        try {
+            await ProductController.deleteProduct();
         } catch (e) {
             message = e.message
         }

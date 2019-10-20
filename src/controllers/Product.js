@@ -79,7 +79,7 @@ class ProductController extends Component {
     getProductsByState = async (state) => {       
         if (!state) throw new Error(`Error: no se envió el estado para buscar Productos`);
         
-        let STATES = ['ALQUILADO', 'DISPONIBLE', 'EN MANTENIMIENTO', 'EN TRANSITO'];
+        let STATES = ['ALQUILADO', 'DISPONIBLE', 'EN MANTENIMIENTO', 'EN TRANSITO', 'ELIMINADO'];
         let validState = STATES.includes(state.toUpperCase());
         
         if (!validState) throw new Error(`Error: El estado enviado ${ state } no es valido. Estados Válidos ${ STATES }`);

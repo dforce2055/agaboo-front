@@ -216,6 +216,14 @@ describe('Metodo deleteProduct', () => {
         expect(result).toBe(true);
     });
 
+    test('Metodo deleteProductREAL', async () => {
+        //Finalmente elimino el producto test realmente de la BBDD
+        let result = await ProductRepo.deleteProductREAL(productTest.code);
+        console.log("Producto eliminado " + result);
+        expect(typeof result).toBe('boolean');
+        expect(result).toBe(true);
+    });
+
     test('Metodo deleteProduct sin parametros', async () => {
         //Debería devolver un mensaje de error
         let message = false

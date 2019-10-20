@@ -151,11 +151,23 @@ class ProductRepo extends Component {
 
     deleteProduct = async (code) => {
         if (!code) throw new Error(`Error: el Código de Producto es obligatorio`);
-        let result = this.getProductByCode(code)
-            .then(() => {
-                firebase.db.collection(collection).doc(code).delete();
-                return true;
-            })
+        let result = firebase.db.collection(collection)
+            .doc(code)
+            .update({ state: 'ELIMINADO' }) //Eliminado Lógico
+            .then(() => { return true })
+            .catch(function (error) {
+                console.error("Error al eliminar el producto: ", error);
+                return false;
+            });
+        return result;
+    }
+    
+    deleteProductREAL = async (code) => {
+        if (!code) throw new Error(`Error: el Código de Producto es obligatorio`);
+        let result = firebase.db.collection(collection)
+            .doc(code)
+            .delete() //BORRA REALMENTE DE LA BBDD
+            .then(() => { return true })
             .catch(function (error) {
                 console.error("Error al eliminar el producto: ", error);
                 return false;

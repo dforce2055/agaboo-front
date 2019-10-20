@@ -11,7 +11,7 @@ export class Product{
         this.codebar = codebar;
         this.qrcode = qrcode;
         this.description = description;
-        this.state = state; // ALQUILADO | DISPONIBLE | EN MANTENIMIENTO | EN TRANSITO
+        this.state = state; // ALQUILADO | DISPONIBLE | EN MANTENIMIENTO | EN TRANSITO | ELIMINADO
         this.localization = localization;// geopoint { Latitud: number, Longitud: number }
         this.price = price;
         this.creationDate = creationDate; // timestamp {seconds: number, nanoseconds: number }
