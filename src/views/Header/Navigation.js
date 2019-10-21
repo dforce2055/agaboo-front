@@ -108,7 +108,12 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(4),
   },
   title: {
-    flexGrow: 0.87,
+    left:'0',
+    right:'0',
+    position:'fixed',
+    fontFamily: 'Quicksand',
+    fontSize: '28px',
+    zIndex:-1,
   },
   bajarBoton:{
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -226,7 +231,7 @@ function Navbar(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" align="center" className={classes.title} onClick ={ () => history.push('/mainMenu')}>
-            AGABOO
+            agaboo
           </Typography>
         </Toolbar>
       </AppBar>

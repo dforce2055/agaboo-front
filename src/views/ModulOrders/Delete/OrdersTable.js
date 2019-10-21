@@ -11,6 +11,7 @@ import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import ResponsiveDialog from "./DeleteDialog";
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import "./OrderDelete.css";
 
 const theme = createMuiTheme({ /* Plantilla de edicion */
@@ -133,36 +134,38 @@ export default function CustomizedTables() {
           Buscar
         </Button>
       </div>
-    <Paper className={classes.root}>
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Accion</StyledTableCell>
-            <StyledTableCell>Nombre</StyledTableCell>
-            <StyledTableCell align="right">DNI</StyledTableCell>
-            <StyledTableCell align="right">Fecha</StyledTableCell>
-            <StyledTableCell align="right">Dirección</StyledTableCell>
-            <StyledTableCell align="right">Teléfono</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map(row => (
-            <StyledTableRow key={row.nombre}>
-              <StyledTableCell padding="checkbox">
-                <ResponsiveDialog reRender={forceUpdate}/>                {/* Dialog de confirmar */}
-              </StyledTableCell>
-              <StyledTableCell component="th" scope="row">
-                {row.nombre}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.dni}</StyledTableCell>
-              <StyledTableCell align="right">{row.fecha}</StyledTableCell>
-              <StyledTableCell align="right">{row.direccion}</StyledTableCell>
-              <StyledTableCell align="right">{row.telefono}</StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Paper>
+    <Grid container>
+      <Paper className={classes.root}>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Accion</StyledTableCell>
+              <StyledTableCell>Nombre</StyledTableCell>
+              <StyledTableCell align="right">DNI</StyledTableCell>
+              <StyledTableCell align="right">Fecha</StyledTableCell>
+              <StyledTableCell align="right">Dirección</StyledTableCell>
+              <StyledTableCell align="right">Teléfono</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map(row => (
+              <StyledTableRow key={row.nombre}>
+                <StyledTableCell padding="checkbox">
+                  <ResponsiveDialog reRender={forceUpdate}/>                {/* Dialog de confirmar */}
+                </StyledTableCell>
+                <StyledTableCell component="th" scope="row">
+                  {row.nombre}
+                </StyledTableCell>
+                <StyledTableCell align="right">{row.dni}</StyledTableCell>
+                <StyledTableCell align="right">{row.fecha}</StyledTableCell>
+                <StyledTableCell align="right">{row.direccion}</StyledTableCell>
+                <StyledTableCell align="right">{row.telefono}</StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
+    </Grid>
     </MuiThemeProvider>
   );
 }
