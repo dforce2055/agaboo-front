@@ -76,6 +76,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
     marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(3),
     overflowX: 'auto',
   },
   table: {
