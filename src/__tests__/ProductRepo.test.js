@@ -13,9 +13,10 @@ const productTest = new Product(
     "qrcode_test",
     "description_test",
     "state_test",
-    "localization_test",
+    { "_lat": -37.127842, "_long": -56.909413 }, //localization geopoint { Latitud: number, Longitud: number }
     "price_test",
-    "fechaAlta_test",
+    { "seconds": 0, "nanoseconds": 1571454000 }, //creationDate timestamp {nanoseconds: number, seconds: number }
+    "en Depósito"
 );
 
 const productMock = {
@@ -25,9 +26,15 @@ const productMock = {
     qrcode: expect.any(String),
     description: expect.any(String),
     state: expect.any(String),
-    localization: expect.any(Object),
+    localization: expect.objectContaining({
+        _lat: expect.any(Number),
+        _long: expect.any(Number),
+    }),
     price: expect.any(Number),
-    fechaAlta: expect.any(Object),
+    creationDate: expect.objectContaining({
+        seconds: expect.any(Number),
+        nanoseconds: expect.any(Number),
+    }),
 };
 
 describe('Metodo getProduct', () => {
@@ -205,6 +212,14 @@ describe('Metodo deleteProduct', () => {
         //Lo elimino y evaluo el resultado
         let result = await ProductRepo.deleteProduct(productTest.code);
         console.log("Eliminado " + result);
+        expect(typeof result).toBe('boolean');
+        expect(result).toBe(true);
+    });
+
+    test('Metodo deleteProductREAL', async () => {
+        //Finalmente elimino el producto test realmente de la BBDD
+        let result = await ProductRepo.deleteProductREAL(productTest.code);
+        console.log("Producto eliminado " + result);
         expect(typeof result).toBe('boolean');
         expect(result).toBe(true);
     });

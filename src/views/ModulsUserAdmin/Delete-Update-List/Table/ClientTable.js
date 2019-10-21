@@ -34,28 +34,41 @@ export default function ClientTable() {
   const [stateArray,setStateArray] = React.useState(false);
 
   //Buscador 
-  /*const [search,setSearch] = React.useState({
+  //{/*
+  const [search,setSearch] = React.useState({
     buscar:''
   });
+  //Valido si el campo esta vacio o no.
+  const [validador,setValidador] = React.useState(false);
+
+  //Copia de arreglo de clientes. Para no modificar el original
   const [data,setData] = React.useState([]);
+  
   const handleChange = name => event => {
+    console.log(event.target.value);
     setSearch({ ...search, [name]: event.target.value });  
   };
+
+  //Metodo de filtrado por un arreglo.
   function Filter(){  
-    console.log("veo DATA==> ",data);
-    const newData = data.filter(function(item){
-        const itemDataTitle = item.nombre.toUpperCase()
-        const itemDataDescp = item.dni.toUpperCase()
-        const campo = itemDataTitle+" "+itemDataDescp
+    console.log("veo DATA==> ",clientes); //Veo el arreglo en el cual voy a buscar
+    const newData = clientes.filter(function(item){
+        const itemDataNombre = item.nombre.toUpperCase()
+        const itemDataId = item.id.toUpperCase()
+        const itemDataLocalidad = item.localidad.toUpperCase()
+        const itemDataApellido = item.apellido.toUpperCase()
+        const itemDataEmpleo = item.empleo.toUpperCase()
+
+        //Agrego por todos los campos que quiero realizar la busqueda
+        const campo = itemDataNombre+" "+itemDataId+" "+itemDataLocalidad+""+itemDataApellido+" "+itemDataEmpleo
+
         const textData = search.buscar.toUpperCase()
         return campo.indexOf(textData) > -1
     })
-    setData(newData);
-    setSearch('')
-    console.log("VEO NEW DATA==>",newData);
-  }*/
-
-
+    setData(newData); //Guardo resultados obtenidos en el nuevo arreglo.
+    console.log("VEO NEW DATA==>",newData); //Muestro el resultado encontrado.
+  }
+//*/}
   React.useEffect(()=>{
     //Si se realizo un cambio
     if(stateArray){
@@ -75,6 +88,12 @@ export default function ClientTable() {
         console.log("Error al traer el cliente= ",error);
       })
       }
+      //Verifico que el campo de buscar este vacio
+      if (search.buscar.length != 0) {
+        setValidador(true)
+      }else if(search.buscar.length == 0){
+        setValidador(false)
+      }
 
     });
 
@@ -84,7 +103,7 @@ export default function ClientTable() {
 
   return (
     <React.Fragment>
-    {/*<Input
+    <Input
         onKeyPress={ 
           event =>{
             if(event.keyCode===13 || event.key ==='Enter'){
@@ -94,8 +113,9 @@ export default function ClientTable() {
         onChange={handleChange('buscar')} 
 
         style={{width:'300px'}}
-        placeholder="Buscar Cliente"></Input>*/}
-      <Table size="small">
+        placeholder="Buscar Cliente"></Input>
+
+        { !validador ? <Table size="small">
         <TableHead>
           <TableRow>
           <TableCell>Eliminar</TableCell>
@@ -133,13 +153,58 @@ export default function ClientTable() {
 
               <TableCell>{row.nombre}</TableCell>
               <TableCell>{row.apellido}</TableCell>
-              <TableCell>{row.cuit}</TableCell>
+              <TableCell>{row.id}</TableCell>
               {/*<TableCell>{row.paymentMethod}</TableCell>*/}
               <TableCell align="right">{row.localidad}</TableCell>
             </TableRow>
           ))}
         </TableBody>
-      </Table>
+      </Table> 
+      :
+      <Table size="small">
+        <TableHead>
+          <TableRow>
+          <TableCell>Eliminar</TableCell>
+            <TableCell>Modificar</TableCell>
+            <TableCell>Ver</TableCell>
+            <TableCell>Nombre</TableCell>
+            <TableCell>Apellido</TableCell>
+            <TableCell>CUIT/CUIL</TableCell>
+            <TableCell align="right">Localidad</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.map(row => (
+            <TableRow key={row.id}>
+
+            {/*Dialog de ELIMINAR cliente*/}
+            <TableCell>   
+              <AlertDialog
+                 updateStateArray={updateStateArray}
+                 cliente={row}/>
+            </TableCell>
+
+              {/*Dialog de MODIFICAR cliente*/}
+              <TableCell>
+                <FullScreenDialog 
+                  updateStateArray={updateStateArray}
+                  valor={row}/>  
+              </TableCell>
+              
+              {/*Dialog de VER cliente*/}
+              <TableCell>              
+                <VisibilityClient 
+                  cliente = {row}/>
+              </TableCell>
+
+              <TableCell>{row.nombre}</TableCell>
+              <TableCell>{row.apellido}</TableCell>
+              <TableCell>{row.id}</TableCell>
+              <TableCell align="right">{row.localidad}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>}
       <div className={classes.seeMore}>
         <Link color="primary" href="javascript:;">
           Ver mas clientes

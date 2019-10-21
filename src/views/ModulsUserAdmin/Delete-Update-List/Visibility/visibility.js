@@ -64,10 +64,10 @@ export default function VisibilityClient(props) {
         </AppBar>
         <List>
 
-        {/*-------------DNI--------------*/}
+        {/*-------------CUIT/CUIL--------------*/}
         <ListItem >
           <Typography variant="h6" className={classes.title}>
-            {'Num. de D.N.I: '}{cliente.cuit}
+            {'Num. de CUIT/CUIL: '}{cliente.id}
             </Typography>
         </ListItem>
         <Divider />

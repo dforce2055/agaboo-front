@@ -86,7 +86,7 @@ class CustomerController extends Component {
         }
     }
 
-
+    //Se utiliza en ModulsUserAdmin\Delete-update-list\Search\buttonSearch.js
     async searchCustomer(e) {
         let valor = e;
         try {
@@ -97,37 +97,46 @@ class CustomerController extends Component {
         }
     }
 
-
-
-
-    async setCustomer(e) {
+    //MODIFICADO Y USANDO
+    async editCustomer(e) {
         try {
             let data = e;
-            await CustomerRepo.setCustomer(data);            
+            await CustomerRepo.editCustomer(data);            
         } catch (error) {
             console.log("No se pudo obtener el cliente");
         }
     }
 
-    
+    //NO VA ACA!!
+    addCustomerOK = async (data) => {
+        if (!data) throw new Error(`Error: no se envió un Cliente para registrar`);
 
+        try {
+            let newCustomer = new Customer();
+            newCustomer = Object.assign({}, data); //Utilizo Object.assign para mapear el objeto
+            const result = await CustomerRepo.addCustomerOK(newCustomer);
+            if (result) {
+                console.log(`Se agrego un nuevo Cliente ${newCustomer} `);
+                return true;
+            } else {
+                console.log(`No se pudo agregar el Cliente ${newCustomer}`);
+                return false;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
     
-
-    
-
     async addCustomer(data) {
-
-        //Recibo y guardo los datos recibidos
-        let newCustomer = data
-
+        let newCustomer = data;
             console.log('entro a guardar cliente')
             CustomerRepo.addCustomer(newCustomer)
     }
 
-   async deleteCustomer(customer){
-        let deleteCustomer = customer;        
+   async deleteCustomer(id){
+        let deleteCustomer = id;        
         try {
-            console.log("Cambiando estado al cliente: ",deleteCustomer.cuit);
+            console.log("Cambiando estado al cliente: ",deleteCustomer);
             let valor = CustomerRepo.deleteCustomer(deleteCustomer);               
             return valor;
         } catch (error) {

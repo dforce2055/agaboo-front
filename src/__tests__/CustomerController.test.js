@@ -60,7 +60,7 @@ describe('Metodo getCustomerById', () => {
     // Pruebas del metodo getCustomerById
     test('getCustomerById', async () => {
         //Debería devolver un objeto Json del tipo Customer
-        let customer = await CustomerController.getCustomerById('4129628781');
+        let customer = await CustomerController.getCustomerById('20-32465169-2');
 
         expect(typeof customer).toBe('object');
 
@@ -85,7 +85,7 @@ describe('Metodo getCustomerByEmail', () => {
     // Pruebas del metodo getCustomerByEmail
     test('getCustomerByEmail', async () => {
         //Debería devolver un objeto Json del tipo Customer
-        let customer = await CustomerController.getCustomerByEmail('cesarsito@hotmail.com.ar');
+        let customer = await CustomerController.getCustomerByEmail('dperez2055@gmail.com');
 
         expect(typeof customer).toBe('object');
 

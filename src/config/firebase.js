@@ -16,6 +16,7 @@ import { firebaseConfig } from './firebase-config';
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firebase-firestore';
+//import 'firebase-admin';
 
 class Firebase {
     constructor() {
@@ -23,6 +24,7 @@ class Firebase {
         this.auth = app.auth();
         this.db = app.firestore();
         this.googleProvider = new app.auth.GoogleAuthProvider();
+        //this.admin = require("firebase-admin");
     }
 
     login(email, password) {
