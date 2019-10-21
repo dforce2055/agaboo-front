@@ -67,7 +67,7 @@ export default function VisibilityClient(props) {
         {/*-------------DNI--------------*/}
         <ListItem >
           <Typography variant="h6" className={classes.title}>
-            {'Num. de D.N.I: '}{cliente.dni}
+            {'Num. de D.N.I: '}{cliente.cuit}
             </Typography>
         </ListItem>
         <Divider />
@@ -99,10 +99,10 @@ export default function VisibilityClient(props) {
           </ListItem>
           <Divider />
 
-          {/*-------------FECHA DE NACIMIENTO--------------*/}
+          {/*-------------ROL--------------*/}
           <ListItem >
             <Typography variant="h6" className={classes.title}>
-            {'Fecha de nacimiento: '} {cliente.fechNac}{'  (aaaa/mm/dd)'}
+            {'Empleo: '} {cliente.empleo}
             </Typography>    
           </ListItem>
           <Divider />

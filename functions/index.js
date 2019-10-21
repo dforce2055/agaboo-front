@@ -7,31 +7,99 @@ admin.initializeApp();
 
 const db = admin.firestore();
 
+//if a new document is created in the users collection, add the field _search.
+exports.createUser = functions.firestore
+    .document('users/{userId}')
+    .onCreate((snap, context) => {
+        // Get an object representing the document
+        // e.g. {'name': 'Marie', 'age': 66}
+        const newDocument = snap.data();
+
+       /* // Only edit data when it is first created.
+        if (change.before.exists()) {
+            return null;
+        }
+        // Exit when the data is deleted.
+        if (!change.after.exists()) {
+            return null;
+        }*/
+        if (newDocument.numeroDocumento === "numeroDocumento_test") return null;
+        console.log(`Un nuevo documento fue agregado a la colección`);
+        // perform desired operations ...
+        let _search = "";
+        if (newDocument.nombre) _search = newDocument.nombre + " ";
+        if (newDocument.apellido) _search += newDocument.apellido + " ";
+        if (newDocument.numeroDocumento) _search += newDocument.numeroDocumento + " ";
+        if (newDocument.localidad) _search += newDocument.localidad + " ";
+
+        console.log(`Se creo el campo _search con los siguentes datos ${ _search }`);
+
+        // Then return a promise of a set operation to create de document
+        return snap.ref.set({
+            "_search": _search,
+            "lastUpdate": admin.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+    });
 // Listen for updates to any `user` document and add field _search.
 exports.onUpdateUsers = functions.firestore
     .document('users/{userId}')
     .onUpdate((change, context) => {
         // Retrieve the current and previous value
         const data = change.after.data();
-        const previousData = change.before.data();
-
-        // We'll only update if the document has changed.
-        // This is crucial to prevent infinite loops.
-        if (data.lastUpdate) {
-            if (data.lastUpdate === previousData.lastUpdate) return null;
-        }
-
-        //const _search = data.nombre +" " +data.apellido + " " +data.email;
+        const previousData = change.before.data();      
 
         let _search = "";
         if (data.nombre) _search = data.nombre +" ";
         if (data.apellido) _search += data.apellido +" ";
         if (data.numeroDocumento) _search += data.numeroDocumento +" ";
-        if (data.localidad) _search += data.localidad +" ";
+        if (data.localidad) _search += data.localidad;
 
-        // Then return a promise of a set operation to update the count
+
+        // We'll only update if the document has changed.
+        // This is crucial to prevent infinite loops.
+        // Si no se cambio nada en los campos de búsqueda retorno null
+        if (data.numeroDocumento === "numeroDocumento_test") return null;
+        if (_search.toString() === previousData._search.toString()) return null;
+
+        console.log(`Se creo el campo _search con los siguentes datos ${_search}`);
+
+        // Then return a promise of a set operation to update the user
         return change.after.ref.set({
             "_search":  _search ,
+            "lastUpdate": admin.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+    });
+//if a new document is created in the customers collection, add the field _search.
+exports.createCustomer = functions.firestore
+    .document('customers/{customerId}')
+    .onCreate((snap, context) => {
+        // Get an object representing the document
+        // e.g. {'name': 'Marie', 'age': 66}
+        const newDocument = snap.data();
+
+        /* // Only edit data when it is first created.
+         if (change.before.exists()) {
+             return null;
+         }
+         // Exit when the data is deleted.
+         if (!change.after.exists()) {
+             return null;
+         }*/
+        
+        if (newDocument.numeroDocumento === "numeroDocumento_test") return null;
+        console.log(`Un nuevo documento fue agregado a la colección`);
+        // perform desired operations ...
+        let _search = "";
+        if (newDocument.nombre) _search = newDocument.nombre + " ";
+        if (newDocument.apellido) _search += newDocument.apellido + " ";
+        if (newDocument.numeroDocumento) _search += newDocument.numeroDocumento + " ";
+        if (newDocument.localidad) _search += newDocument.localidad + " ";
+
+        console.log(`Se creo el campo _search con los siguentes datos ${_search}`);
+
+        // Then return a promise of a set operation to create de document
+        return snap.ref.set({
+            "_search": _search,
             "lastUpdate": admin.firestore.FieldValue.serverTimestamp()
         }, { merge: true });
     });
@@ -43,25 +111,23 @@ exports.onUpdateCustomers = functions.firestore
         const data = change.after.data();
         const previousData = change.before.data();
 
+        let _search = "";
+        if (data.nombre) _search = data.nombre + " ";
+        if (data.apellido) _search += data.apellido + " ";
+        if (data.numeroDocumento) _search += data.numeroDocumento + " ";
+        if (data.localidad) _search += data.localidad;
+
         // We'll only update if the document has changed.
         // This is crucial to prevent infinite loops.
-        if (data.lastUpdate) {
-            if (data.lastUpdate === previousData.lastUpdate) return null;
-        }
-        
+        // Si no se cambio nada en los campos de búsqueda retorno 
+        if (data.numeroDocumento === "numeroDocumento_test") return null;
+        if (_search.toString() === previousData._search.toString()) return null;
 
-        //const _search = data.nombre +" " +data.apellido + " " +data.email;
 
-        let _search = "";
-        if (data.nombre) _search = data.nombre +" ";
-        if (data.apellido) _search += data.apellido +" ";
-        if (data.numeroDocumento) _search += data.numeroDocumento +" ";
-        if (data.localidad) _search += data.localidad +" ";
-
-        // Then return a promise of a set operation to update the count
+        console.log(`Se creo el campo _search con los siguentes datos ${_search}`);
+        // Then return a promise of a set operation to update the customer
         return change.after.ref.set({
-            "_search":  _search ,
+            "_search": _search,
             "lastUpdate": admin.firestore.FieldValue.serverTimestamp()
         }, { merge: true });
     });
-

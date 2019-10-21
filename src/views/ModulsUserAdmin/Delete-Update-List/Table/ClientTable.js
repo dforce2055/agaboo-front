@@ -14,6 +14,7 @@ import CustomerController from '../../../../controllers/Customer';
 import FullScreenDialog from '../Update/UpdateUser';
 import AlertDialog from '../Delete/DialogDelete';
 import VisibilityClient from '../Visibility/visibility';
+import { Input } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   seeMore: {
@@ -29,8 +30,30 @@ export default function ClientTable() {
   //Avisa un cambio
   const [stateArray,setStateArray] = React.useState(false);
 
-  React.useEffect(()=>{
+  //Buscador 
+  /*const [search,setSearch] = React.useState({
+    buscar:''
+  });
+  const [data,setData] = React.useState([]);
+  const handleChange = name => event => {
+    setSearch({ ...search, [name]: event.target.value });  
+  };
+  function Filter(){  
+    console.log("veo DATA==> ",data);
+    const newData = data.filter(function(item){
+        const itemDataTitle = item.nombre.toUpperCase()
+        const itemDataDescp = item.dni.toUpperCase()
+        const campo = itemDataTitle+" "+itemDataDescp
+        const textData = search.buscar.toUpperCase()
+        return campo.indexOf(textData) > -1
+    })
+    setData(newData);
+    setSearch('')
+    console.log("VEO NEW DATA==>",newData);
+  }*/
 
+
+  React.useEffect(()=>{
     //Si se realizo un cambio
     if(stateArray){
       CustomerController.getCustomers()
@@ -43,13 +66,14 @@ export default function ClientTable() {
     }else if (clientes.length === 0) {
         CustomerController.getCustomers()
         .then(value=> {
+          //setData(value); //Seteo el 
           setClientes(value);      
       }).catch(error=>{
         console.log("Error al traer el cliente= ",error);
       })
       }
 
-    }); 
+    });
 
   function updateStateArray(){
     setStateArray(true)
@@ -57,7 +81,17 @@ export default function ClientTable() {
 
   return (
     <React.Fragment>
-    
+    {/*<Input
+        onKeyPress={ 
+          event =>{
+            if(event.keyCode===13 || event.key ==='Enter'){
+              Filter()
+            }
+        }} 
+        onChange={handleChange('buscar')} 
+
+        style={{width:'300px'}}
+        placeholder="Buscar Cliente"></Input>*/}
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -66,13 +100,13 @@ export default function ClientTable() {
             <TableCell>Ver</TableCell>
             <TableCell>Nombre</TableCell>
             <TableCell>Apellido</TableCell>
-            <TableCell>D.N.I</TableCell>
+            <TableCell>CUIT/CUIL</TableCell>
             <TableCell align="right">Localidad</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {clientes.map(row => (
-            <TableRow key={row.dni}>
+            <TableRow key={row.id}>
 
             {/*Dialog de ELIMINAR cliente*/}
             <TableCell>   
@@ -96,7 +130,7 @@ export default function ClientTable() {
 
               <TableCell>{row.nombre}</TableCell>
               <TableCell>{row.apellido}</TableCell>
-              <TableCell>{row.dni}</TableCell>
+              <TableCell>{row.cuit}</TableCell>
               {/*<TableCell>{row.paymentMethod}</TableCell>*/}
               <TableCell align="right">{row.localidad}</TableCell>
             </TableRow>

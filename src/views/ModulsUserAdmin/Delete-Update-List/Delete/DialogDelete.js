@@ -25,9 +25,9 @@ export default function AlertDialog(props) {
   };
 
 
-  const handleCloseAceptDelete = () => {    
+  const handleCloseAceptDelete = () => {
     let valor=CustomerController.deleteCustomer(cliente);
-    console.log("muestro que devuelve en compoente => ",valor)
+    console.log("muestro que devuelve en componente => ",valor)
     //setUpdateList(true);
     updateStateArray();
     setOpen(false);
@@ -44,10 +44,10 @@ export default function AlertDialog(props) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"¿Estas seguro de querer eliminar el cliente?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"¿Está seguro que desea eliminar el cliente seleccionado?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Se eliminira el cliente de la base de datos.
+            El cliente seleccionado será eliminado del sistema.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

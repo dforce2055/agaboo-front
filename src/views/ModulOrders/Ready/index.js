@@ -1,11 +1,10 @@
 import React from 'react';
 import './OrderReady.css';
 import Navbar from '../../Header/Navigation'
-//import CustomizedTables from './OrdersTable';
 import EnhancedTable from './OrdersTable2';
-//import Typography from '@material-ui/core/Typography';
 import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
+import SimpleBottomNavigation from '../../Footer/Footer';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
@@ -34,12 +33,11 @@ function OrderReady(props) {
                 <Navbar/>
             </header>
             <div className='contenido'>
-                {/* <Typography variant="overline" align="left">
-                    Pedidos pendientes de confirmación
-                </Typography> */}
-                {/* <CustomizedTables/> */}
                 <EnhancedTable/>
             </div>
+            <footer>
+                <SimpleBottomNavigation/>
+            </footer>
             </MuiThemeProvider>
         </div>
         

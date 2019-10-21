@@ -110,11 +110,28 @@ class CustomerController extends Component {
     }
 
     
+    addCustomerOK = async (data) => {
+        if (!data) throw new Error(`Error: no se envió un Cliente para registrar`);
 
+        try {
+            let newCustomer = new Customer();
+            newCustomer = Object.assign({}, data); //Utilizo Object.assign para mapear el objeto
+            const result = await CustomerRepo.addCustomerOK(newCustomer);
+            if (result) {
+                console.log(`Se agrego un nuevo Cliente ${newCustomer} `);
+                return true;
+            } else {
+                console.log(`No se pudo agregar el Cliente ${newCustomer}`);
+                return false;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
     
 
     
-
+    //Ver AddCustomerOK en Repo Tambien
     async addCustomer(data) {
 
         //Recibo y guardo los datos recibidos
@@ -127,7 +144,7 @@ class CustomerController extends Component {
    async deleteCustomer(customer){
         let deleteCustomer = customer;        
         try {
-            console.log("Cambiando estado al cliente: ",deleteCustomer.dni);
+            console.log("Cambiando estado al cliente: ",deleteCustomer.cuit);
             let valor = CustomerRepo.deleteCustomer(deleteCustomer);               
             return valor;
         } catch (error) {

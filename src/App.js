@@ -9,8 +9,8 @@ import SignIn from './views/Register/Register';
 import DeleteUpdateUserAdmin from "./views/ModulsUserAdmin/Delete-Update-List/index";
 import * as serviceWorker from './serviceWorker';
 import CreateUserAdm from './views/ModulsUserAdmin/Create/index'; //Componente para registrar un nuevo cliente¿
-import ProductForm from './views/ModuleProduct/RegisterProduct'
-import CustomizedTables from './views/ModuleProduct/TableProducts';
+import indexCreateProduct from './views/ModuleProduct/Create/index'
+import indexUpdateProduct from './views/ModuleProduct/Update/index';
 import CreateOrder from './views/ModulOrders/Create/index';
 import OrderReady from './views/ModulOrders/Ready/index';
 import DeleteOrder from './views/ModulOrders/Delete/index';
@@ -44,8 +44,8 @@ export default function App() {
             {/* <Route path= "/nav" component={Navbar} /> */}
             <Route path= "/bmUsers" component={DeleteUpdateUserAdmin} />
             <Route path= "/registrarCliente" component={CreateUserAdm} />
-            <Route path= "/createProduct" component={ProductForm} />
-            <Route path= "/tableProduct" component= {CustomizedTables}/>
+            <Route path= "/createProduct" component={indexCreateProduct} />
+            <Route path= "/tableProduct" component= {indexUpdateProduct}/>
             <Route path= "/registrarPedido" component={CreateOrder} />
             <Route path= "/pedidosListos" component={OrderReady} />
             <Route path= "/eliminarPedidos" component={DeleteOrder} />

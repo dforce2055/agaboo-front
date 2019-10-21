@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import FormDialog from './DialogUpdateProduct';
-import ProductController from '../../controllers/Product';
+import ProductController from '../../../controllers/Product';
 
 
 
@@ -70,7 +70,8 @@ export default function SearchBox() {
   //    };
 
   return (
-    <Paper className={classes.root}>
+    <div style={{marginTop:'20px'}}>
+      <Paper className={classes.root}>
       
       <InputBase
         className={classes.input}
@@ -91,8 +92,9 @@ export default function SearchBox() {
                    // abreDialog = {abreDialog}
                     />
       
-      <Divider className={classes.divider} orientation="vertical" />
+      <Divider className={classes.divider} orientation="vertical" />  
       
     </Paper>
+    </div>
   );
 }

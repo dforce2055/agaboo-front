@@ -1,57 +1,18 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import { Button } from '@material-ui/core';
+import { Button,ButtonGroup,Typography} from '@material-ui/core';
 import CustomerController from '../../../controllers/Customer';
 import DialogAcept from './dialogAcept';
-import {ValidatorForm,TextValidator} from 'react-material-ui-form-validator'; //Validacion de campos
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { withRouter } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
-  buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  buttonCancel: {    
-    background: 'linear-gradient(45deg, #f56f5b 3%, #ff2200 97%)',
-    //background: 'linear-gradient( 45deg, #3fb5a5 30%, #05fcda 90%)', //PRUEBA DE COLOR DE BOTON DE CERRAR SESION
-    border: 0,
-    borderRadius: 3,
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    color: 'white',
-    height: 48,
-    padding: '0 30px',
-    marginLeft: theme.spacing(13),
-  },
-  buttonAcept: {    
-    background: 'linear-gradient(45deg, #3fb5a5 2%, #40f03a 98%)',
-    border: 0,
-    borderRadius: 3,
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    color: 'white',
-    height: 48,
-    padding: '0 30px',
-    marginLeft: theme.spacing(13),
-  },
-}));
-
- function AddressForm(props) {
-  const classes = useStyles();
-  React.useEffect(()=>{
-    ValidatorForm.addValidationRule("isValidName", (string)=> /[a-zA-Z \u00E0-\u00FC]{1,20}/g.test(string))
-  })
-
+function AddressForm(props) {
   const {history} = props;
-
   const [values, setValues] = React.useState({
     nombre:'',
     apellido: '',
-    fechNac:'',
-    dni:'',
     celular: '',
-    telefono: '',
+    empleo:'',
     cuit:'',    
     email:'',
     localidad:'',
@@ -60,14 +21,6 @@ const useStyles = makeStyles(theme => ({
     eliminado:false,
     mostrarDialog:false,
   });  
-
-  const auth = () =>{
-    if(values.nombre.length > 3){
-      return false
-    }else{
-      return true
-    }
-  }
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });  
@@ -78,8 +31,8 @@ const useStyles = makeStyles(theme => ({
     let data = {
       nombre: values.nombre,
       apellido: values.apellido,
-      fechNac: values.fechNac,
-      dni: values.dni,
+      id: values.cuit,
+      empleo: values.empleo,
       cuit: values.cuit,
       calle:values.calle,
       altura: values.altura,
@@ -99,7 +52,7 @@ const useStyles = makeStyles(theme => ({
 
   return (
     <React.Fragment>
-    <ValidatorForm onSubmit={handleOnClick}> {/*Agregue*/}
+
     <DialogAcept
     mostrarDialog={mostrarDialog}
     handleCloseDialog={handleCloseDialog}
@@ -107,127 +60,157 @@ const useStyles = makeStyles(theme => ({
       <Typography variant="h6" gutterBottom>
         Rellenar los campos para registrar cliente
       </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <TextField //Cambie de text field
-            id="nombre"
-            variant="outlined"            
-            label="Nombre"  
-            type="text"          
-            onChange={handleChange('nombre')}
-            //required            
-            fullWidth
-            validators = {["required","isValidName"]}
-            errorMessages={["El campo es requerido","El formato es invalido."]}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            onChange={handleChange('apellido')}  
-            variant="outlined"
-            id="apellido"           
-            label="Apellido"
-            fullWidth
-            required
-          />
-        </Grid>
-        
-        <Grid item xs={12} sm={6}>
-          <TextField
-            id="nombre"
-            variant="outlined"            
-            label="DNI"         
-            onChange={handleChange('dni')}
-            fullWidth
-            required
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            onChange={handleChange('cuit')}
-            variant="outlined"        
-            label="CUIT"
-            fullWidth
-            required
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField       
-            onChange={handleChange('email')}
-            variant="outlined"
-            label="E-mail"
-            fullWidth
-            required
-          />
-        </Grid>              
-        <Grid item xs={12} sm={6}>
-          <TextField
-          onChange={handleChange('localidad')}
-            value={values.localidad}                   
-            required
-            label="Localidad"
-            fullWidth
-            variant="outlined"     
-            
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField      
-            onChange={handleChange('calle')}
-          label="Calle"
-          variant="outlined"
-          fullWidth 
-          required
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField   
-            onChange={handleChange('altura')}
-            variant="outlined"
-            label="Altura"
-            fullWidth
-            required
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-          onChange={handleChange('fechNac')}
-            type="date"
-            variant="outlined"            
-            helperText="Fecha De Nacimiento"
-            required
-            fullWidth            
-          />
-        </Grid>  
-        <Grid item xs={12} sm={6}>
-          <TextField            
-            onChange={handleChange('celular')}
-            label="Celular"
-            fullWidth
-            variant="outlined"  
-            required   
-          />
-        </Grid>      
-        <Grid item xs={12}>          
-        </Grid>          
-      </Grid>
 
-    <Button   
-    className={classes.buttonCancel}   
-      variant="contained"
-      color="secondary"    
-      onClick ={ () => history.push('/mainMenu')}
-      /*onClick={handleBack}*/
-      >Cancelar</Button>
+      <ValidatorForm onSubmit={handleOnClick} onError={errors =>  console.log(errors)}>    
 
-      <Button
-      className={classes.buttonAcept}
-      variant="contained"
-      color="primary"
-      type="submit"
-      >Guardar</Button>
+        <Grid container spacing={3}  justify = { "center" }>
+          <Grid item xs={12} sm={6}>
+              <TextValidator //TextValidator obligatorio
+                variant="outlined"
+                fullWidth
+                id="nombre"
+                label="Name"
+                onChange={handleChange('nombre')}
+                name="name"
+                required
+                //Validacion necesaria
+                value={values.nombre}
+                validators={['required','matchRegexp:^([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])?$']}
+                errorMessages={['Campo requerido', 'Nombre no valido']}
+              />
+            </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextValidator
+              variant="outlined"
+              id="nombre"
+              label="Apellido"
+              onChange={handleChange('apellido')}
+              name="apellido"
+              required
+              value={values.apellido}
+              validators={['required','matchRegexp:^([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])?$']}
+              errorMessages={['Campo requerido', 'Apellido no valido']}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextValidator
+              variant="outlined"
+              label="Cuit/Cuil"
+              fullWidth
+              required
+              onChange={handleChange('cuit')}
+              helperText="Introducir solo numeros!"
+              name="cuit"
+              value={values.cuit}
+              validators={['required', 'matchRegexp:(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]']}
+              errorMessages={['Campo requerido', 'CUIT no valido']}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextValidator
+              variant="outlined"
+              label="Empleo"
+              fullWidth
+              required
+              onChange={handleChange('empleo')}
+              helperText="Introducir solo numeros!"
+              name="empleo"
+              value={values.empleo}
+              validators={['required', 'matchRegexp:^([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])?$']}
+              errorMessages={['Campo requerido', 'Campo invalido']}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextValidator       
+              variant="outlined"
+              label="Email"
+              onChange={handleChange('email')}
+              name="email"
+              value={values.email}
+              fullWidth
+              validators={['matchRegexp:^[a-zA-Z0-9.!#$%&*+/=?^_{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$']}
+              errorMessages={[ 'Email no valido']}
+            />
+          </Grid>      
+          <Grid item xs={12} sm={6}>
+            <TextValidator
+              onChange={handleChange('localidad')}
+              value={values.localidad}                   
+              required
+              label="Localidad"
+              fullWidth
+              variant="outlined"     
+              value={values.localidad}
+              validators={['required','matchRegexp:^[a-zA-Z ]*$']}
+              errorMessages={['Campo requerido', 'Localidad no valida']}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextValidator      
+              onChange={handleChange('calle')}
+              label="Calle"
+              variant="outlined"
+              fullWidth 
+              required
+              value={values.calle}
+              validators={['required','matchRegexp:^[a-zA-Z ]*$']}
+              errorMessages={['Campo requerido', 'Calle no valida']}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextValidator   
+              onChange={handleChange('altura')}
+              variant="outlined"
+              label="Altura"
+              fullWidth
+              required
+              value={values.altura}
+              type='number'
+              validators={['required']}
+              errorMessages={['Campo requerido']}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextValidator            
+              variant="outlined"
+              label="Celular"
+              onChange={handleChange('celular')}
+              name="Celular"
+              fullWidth
+              required
+              value={values.celular}
+              type='number'
+              validators={['required', 'matchRegexp:^(\D)?[0-9]']}
+              errorMessages={['Campo requerido', 'Celular es invalido']}
+            />
+          </Grid> 
+          <Grid item xs={12} sm={6}>
+            <ButtonGroup 
+              variant="text"
+              size="large"
+              aria-label="large contained secondary button group"
+            >
+                <Button 
+                style={{background: 'linear-gradient(45deg, #f56f5b 10%, #ff2200 97%)'}}
+                variant="contained"
+                onClick ={ () => history.goBack()}
+                >
+                  Cancelar
+                </Button>
+                <Button 
+                style={{background: 'linear-gradient(45deg, #3fb5a5 2%, #40f03a 98%)'}}
+                variant="contained"
+                type = " submit "
+                >
+                  Guardar
+                </Button>
+              </ButtonGroup>
+          </Grid>      
+        </Grid>
 
       </ValidatorForm>
+      
     </React.Fragment>
   );
 }

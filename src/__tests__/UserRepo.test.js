@@ -32,7 +32,10 @@ const userMock = {
     cuil : expect.any(String),
     tipoDocumento : expect.any(String),
     numeroDocumento : expect.any(String),
-    fechNac : expect.any(Object),
+    fechNac: expect.objectContaining({
+        nanoseconds: expect.any(Number),
+        seconds: expect.any(Number),
+    }),
     direccion : expect.any(String),
     calle : expect.any(String),
     altura : expect.any(String),

@@ -10,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { makeStyles , useTheme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import ProductController from '../../controllers/Product';
+import ProductController from '../../../controllers/Product';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
 

@@ -6,9 +6,10 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Button from  './Button';
-import NavBar from '../Header/Navigation';
-import ProductController from '../../controllers/Product';
+import Button from  '../Create/Button';
+
+import ProductController from '../../../controllers/Product';
+import DeleteIcon from '@material-ui/icons/Delete';
 import FormDialog from './DialogUpdateProduct';
 import SearchBox from './SearchBox';
 
@@ -32,18 +33,6 @@ const StyledTableRow = withStyles(theme => ({
     },
   },
 }))(TableRow);
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -100,7 +89,6 @@ console.log('Rows despues de getProducts: ', rows);
   
   return (
       <React.Fragment>
-        <NavBar/>
         <SearchBox/>
         <Paper className={classes.root}>
             <Table className={classes.table}>
@@ -133,9 +121,8 @@ console.log('Rows despues de getProducts: ', rows);
                 </TableBody>
             </Table>
         </Paper>
-        <Button label = {'Volver'} onClick={()=> history.push('/mainMenu')}/>
-      </React.Fragment>
-        
+        {/* <Button label = {'Volver'} onClick={()=> history.push('/mainMenu')}/> */}
+      </React.Fragment>         
         
     
     

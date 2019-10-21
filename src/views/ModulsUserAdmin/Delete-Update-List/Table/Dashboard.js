@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import ClientTable from './ClientTable'
 import {Typography} from '@material-ui/core';
-import CustomizedInputBase from './buttonSearch';
+import CustomizedInputBase from '../Search/buttonSearch';
 
 const drawerWidth = 240;
 

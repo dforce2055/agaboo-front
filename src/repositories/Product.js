@@ -18,7 +18,6 @@ class ProductRepo extends Component {
         }
         
     }
-
     getProduct = async (id) => {
         if (!id) throw new Error(`Error: el id es obligatorio`);
         try {
@@ -74,8 +73,29 @@ class ProductRepo extends Component {
                 console.log("Error getting documents: ", error);
                 product = null;
             });
-
+        //console.log(product);
         return product;
+    }
+
+    getProductsByState = async (state) => {
+        if (!state) throw new Error(`Error: el código de producto es obligatorio`);
+        let products = [];
+        await firebase.db.collection(collection)
+            .where('state', '==', state)
+            .get()
+            .then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    // doc.data() is never undefined for query doc snapshots
+                    //console.log(doc.id, " => ", doc.data());
+                    products.push(doc.data());
+                });
+            })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+                products = null;
+            });
+        //console.log(products);
+        return products;
     }
 
     getProducts = async (res) => {
@@ -90,15 +110,22 @@ class ProductRepo extends Component {
 
     addProduct = async (newProduct) => {
         if (!newProduct) throw new Error(`Error: no se envió un Producto para registrar`);
+        //newProduct.localization = new firebase.admin.firestore.GeoPoint(newProduct.localization._lat, newProduct.localization._long);
+        //newProduct.creationDate = new firebase.admin.firestore.Timestamp(newProduct.creationDate.seconds, newProduct.creationDate.nanoseconds);
+        newProduct = Object.assign({}, newProduct);
+        //newProduct = JSON.parse(JSON.stringify(newProduct));
+
+        
+
         let result = await firebase.db.collection(collection)
             .doc(newProduct.code)
-            .set(Object.assign({}, newProduct)) //Utilizo Object.assign para mapear el objeto
+            .set(newProduct) //Utilizo Object.assign para mapear el objeto
             .then(() => {
-                console.log("Producto guardado exitosamente!");
+                console.log("Producto guardado exitosamente!!!");
                 return true;
             })
             .catch(function (error) {
-                console.error("Error al guardar el Prodcto: ", error);
+                console.error("Error al guardar el Producto: ", error);
                 return false;
             });
         // Retorna True o False
@@ -111,8 +138,7 @@ class ProductRepo extends Component {
         let result = this.getProductByCode(code)
             .then(() => {
                 firebase.db.collection(collection).doc(code)
-                    .update(Object.assign({}, product));
-                    console.log('Entre a updatear', product , code)
+                    .update(Object.assign({}, product));//Utilizo Object.assign para mapear el objeto
                 
                     return true;
             })
@@ -126,11 +152,23 @@ class ProductRepo extends Component {
 
     deleteProduct = async (code) => {
         if (!code) throw new Error(`Error: el Código de Producto es obligatorio`);
-        let result = this.getProductByCode(code)
-            .then(() => {
-                firebase.db.collection(collection).doc(code).delete();
-                return true;
-            })
+        let result = firebase.db.collection(collection)
+            .doc(code)
+            .update({ state: 'ELIMINADO' }) //Eliminado Lógico
+            .then(() => { return true })
+            .catch(function (error) {
+                console.error("Error al eliminar el producto: ", error);
+                return false;
+            });
+        return result;
+    }
+    
+    deleteProductREAL = async (code) => {
+        if (!code) throw new Error(`Error: el Código de Producto es obligatorio`);
+        let result = firebase.db.collection(collection)
+            .doc(code)
+            .delete() //BORRA REALMENTE DE LA BBDD
+            .then(() => { return true })
             .catch(function (error) {
                 console.error("Error al eliminar el producto: ", error);
                 return false;
