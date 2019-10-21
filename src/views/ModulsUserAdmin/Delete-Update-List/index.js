@@ -18,7 +18,7 @@ function DeleteUpdateUserAdmin(props) {
         <div className="UsersScreen">
             <Navbar></Navbar>
             <Dashboard></Dashboard>
-            <footer>
+            <footer style={{marginTop:'5px'}}>
               <SimpleBottomNavigation/>
             </footer>
         </div>
