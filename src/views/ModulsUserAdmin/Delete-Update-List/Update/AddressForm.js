@@ -63,7 +63,7 @@ function AddressForm(props) {
                 id="nombre"
                 label="Name"
                 onChange={handleChange('nombre')}
-                name="name"
+                name="nombre"
                 required
                 //Validacion necesaria
                 value={values.nombre}

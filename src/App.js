@@ -5,7 +5,6 @@ import { BrowserRouter, Route  } from "react-router-dom";
 import HomePage from "./views/HomePage/HomePage";
 import MainMenu from "./views/MainMenu/MainMenu";
 import LogIn from './views/LogIn/Login';
-import SignIn from './views/Register/Register';
 import DeleteUpdateUserAdmin from "./views/ModulsUserAdmin/Delete-Update-List/index";
 import * as serviceWorker from './serviceWorker';
 import CreateUserAdm from './views/ModulsUserAdmin/Create/index'; //Componente para registrar un nuevo cliente¿
@@ -38,7 +37,6 @@ export default function App() {
         <BrowserRouter>
           <React.Fragment>
             <Route path="/" component={HomePage} exact/>
-            <Route path="/register" component={SignIn} exact/>
             <Route path="/login" component={LogIn} exact/>
             <Route path= "/mainMenu" component={MainMenu} />
             {/* <Route path= "/nav" component={Navbar} /> */}

@@ -26,6 +26,36 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ClientTable() {
+
+  React.useEffect(()=>{
+    //Si se realizo un cambio
+    if(stateArray){
+      CustomerController.getCustomers()
+      .then(value=> {
+        setClientes(value);
+        setStateArray(false); //Finalizo el cambio
+    }).catch(error=>{
+      console.log("Error al traer el cliente: ",error);
+    })
+    }else if (clientes.length === 0) {
+        CustomerController.getCustomers()
+        .then(value=> {
+          //setData(value); //Seteo el 
+          setClientes(value);      
+      }).catch(error=>{
+        console.log("Error al traer el cliente= ",error);
+      })
+      }else if (search.buscar.length != 0) { //Verifico que el campo de buscar este vacio
+        setValidador(true)
+      }else if(search.buscar.length == 0){
+        setValidador(false)
+      }
+    });
+
+  function updateStateArray(){
+    setStateArray(true)
+  }
+  
   const classes = useStyles();
   //Coleccion de customers
   const [clientes, setClientes] = React.useState([]);
@@ -69,46 +99,17 @@ export default function ClientTable() {
     console.log("VEO NEW DATA==>",newData); //Muestro el resultado encontrado.
   }
 //*/}
-  React.useEffect(()=>{
-    //Si se realizo un cambio
-    if(stateArray){
-      CustomerController.getCustomers()
-      .then(value=> {
-        setClientes(value);
-        setStateArray(false); //Finalizo el cambio
-    }).catch(error=>{
-      console.log("Error al traer el cliente: ",error);
-    })
-    }else if (clientes.length === 0) {
-        CustomerController.getCustomers()
-        .then(value=> {
-          //setData(value); //Seteo el 
-          setClientes(value);      
-      }).catch(error=>{
-        console.log("Error al traer el cliente= ",error);
-      })
-      }
-      //Verifico que el campo de buscar este vacio
-      if (search.buscar.length != 0) {
-        setValidador(true)
-      }else if(search.buscar.length == 0){
-        setValidador(false)
-      }
-
-    });
-
-  function updateStateArray(){
-    setStateArray(true)
-  }
+  
 
   return (
     <React.Fragment>
     <Input
-        onKeyPress={ 
+        onKeyUp={ 
           event =>{
-            if(event.keyCode===13 || event.key ==='Enter'){
+            //if(event.keyCode===13 || event.key ==='Enter'){
               Filter()
-            }
+              
+           //}
         }} 
         onChange={handleChange('buscar')} 
 
