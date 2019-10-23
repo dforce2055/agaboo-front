@@ -14,7 +14,9 @@ import CustomerController from '../../../../controllers/Customer';
 import FullScreenDialog from '../Update/UpdateUser';
 import AlertDialog from '../Delete/DialogDelete';
 import VisibilityClient from '../Visibility/visibility';
-import { Input } from '@material-ui/core';
+import { IconButton,  TextField } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 const useStyles = makeStyles(theme => ({
   seeMore: {
@@ -79,42 +81,55 @@ export default function ClientTable() {
     setSearch({ ...search, [name]: event.target.value });  
   };
 
-  //Metodo de filtrado por un arreglo.
+  function GetCustomerCant10(){
+    var lastPosition = clientes[clientes.length-1];
+    var data = CustomerController.getCustomerCant10(lastPosition);
+    data.then(result=>{console.log("Lo que llego al front: ",result);
+    })
+  };
+
   function Filter(){  
-    console.log("veo DATA==> ",clientes); //Veo el arreglo en el cual voy a buscar
+    //El método filter() crea un nuevo array con todos los elementos que cumplan la condición implementada por la función dada.
     const newData = clientes.filter(function(item){
+      //A los campo por el cual voy a buscar los pongo en mayuscula(toUpperCase) y los guardo en una variable.
         const itemDataNombre = item.nombre.toUpperCase()
         const itemDataId = item.id.toUpperCase()
         const itemDataLocalidad = item.localidad.toUpperCase()
         const itemDataApellido = item.apellido.toUpperCase()
         const itemDataEmpleo = item.empleo.toUpperCase()
 
-        //Agrego por todos los campos que quiero realizar la busqueda
-        const campo = itemDataNombre+" "+itemDataId+" "+itemDataLocalidad+""+itemDataApellido+" "+itemDataEmpleo
+        //Uno todos los campos por el cual los voy a filtrar.
+        const campo = itemDataNombre+" "+itemDataId+" "+itemDataLocalidad+" "+itemDataApellido+" "+itemDataEmpleo
 
+        //Pongo en mayuscula en toUpperCase para poder comparar todos los campos.
         const textData = search.buscar.toUpperCase()
         return campo.indexOf(textData) > -1
     })
-    setData(newData); //Guardo resultados obtenidos en el nuevo arreglo.
-    console.log("VEO NEW DATA==>",newData); //Muestro el resultado encontrado.
-  }
-//*/}
-  
+    setData(newData); //Guardo resultados obtenidos en un nuevo arreglo para no modificar el arreglo clientes.
+  }  
 
   return (
     <React.Fragment>
-    <Input
+    <TextField
         onKeyUp={ 
           event =>{
-            //if(event.keyCode===13 || event.key ==='Enter'){
               Filter()
-              
-           //}
         }} 
         onChange={handleChange('buscar')} 
-
         style={{width:'300px'}}
-        placeholder="Buscar Cliente"></Input>
+        placeholder="Buscar Cliente"
+        variant="outlined"
+        InputProps={{
+          startAdornment: <InputAdornment position="start"><SearchIcon></SearchIcon></InputAdornment>,
+        }}
+        >
+          <IconButton 
+     style={{ padding: '10'}} 
+      aria-label="search">
+        <SearchIcon />
+        </IconButton>
+        
+        </TextField>
 
         { !validador ? <Table size="small">
         <TableHead>
@@ -131,27 +146,23 @@ export default function ClientTable() {
         <TableBody>
           {clientes.map(row => (
             <TableRow key={row.id}>
-
             {/*Dialog de ELIMINAR cliente*/}
             <TableCell>   
               <AlertDialog
                  updateStateArray={updateStateArray}
                  cliente={row}/>
             </TableCell>
-
               {/*Dialog de MODIFICAR cliente*/}
               <TableCell>
                 <FullScreenDialog 
                   updateStateArray={updateStateArray}
                   valor={row}/>  
               </TableCell>
-              
               {/*Dialog de VER cliente*/}
               <TableCell>              
                 <VisibilityClient 
                   cliente = {row}/>
               </TableCell>
-
               <TableCell>{row.nombre}</TableCell>
               <TableCell>{row.apellido}</TableCell>
               <TableCell>{row.id}</TableCell>
@@ -175,23 +186,21 @@ export default function ClientTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(row => (
+        
+          {data.map(row => ( //Utilizo el nuevo arreglo con los parametros encontrados.
             <TableRow key={row.id}>
-
             {/*Dialog de ELIMINAR cliente*/}
             <TableCell>   
               <AlertDialog
                  updateStateArray={updateStateArray}
                  cliente={row}/>
             </TableCell>
-
               {/*Dialog de MODIFICAR cliente*/}
               <TableCell>
                 <FullScreenDialog 
                   updateStateArray={updateStateArray}
                   valor={row}/>  
               </TableCell>
-              
               {/*Dialog de VER cliente*/}
               <TableCell>              
                 <VisibilityClient 
@@ -207,7 +216,7 @@ export default function ClientTable() {
         </TableBody>
       </Table>}
       <div className={classes.seeMore}>
-        <Link color="primary" href="javascript:;">
+        <Link color="primary" onClick={GetCustomerCant10}>
           Ver mas clientes
         </Link>
       </div>
