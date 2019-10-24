@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
 export default function CustomizedTables(props) {
   const {rows,setRows} = props;
   const {value, setValue} = props;
-  const [count, setCount] = useState(0);
+  //const [count, setCount] = useState(0);
   const {update, setUpdate} = props;
 
   const classes = useStyles();
@@ -56,26 +56,27 @@ export default function CustomizedTables(props) {
   
 
   async function getProducts(){
-    const products = await ProductController.getProductsByState(value);
-    let product;
-    for(let idx = 0 ; idx < typesProduct.length ; idx++  ){
-      //console.log("typesProducts : ", typesProduct.length )
+    if( update ){
 
-      product = typesProduct[idx] ;
-      setCount(countProducts( product, products)); // traigo la cantidad del mismo tipo
-      array.push({"product" : product, "value" : value, "count" : count}) 
-    };// Revisar Mañana
+      const products = await ProductController.getProductsByState(value);
+      let product;
+      let count ;
+
+      for(let idx = 0 ; idx < typesProduct.length ; idx++  ){
+        //console.log("typesProducts : ", typesProduct.length )
+        product = typesProduct[idx] ;
+        count = countProducts( product, products); // traigo la cantidad del mismo tipo
+        array.push({"product" : product, "value" : value, "count" : count}) 
+      };// Revisar Mañana
 
       // const product = "Baño Químico" ;
       // setCount(countProducts( product, products)); // traigo la cantidad del mismo tipo
       // array.push({"product" : product, "value" : value, "count" : count}) 
-    
-    
-
-
-    console.log("Array :" , array) 
-    if( update ){
       
+      
+
+
+      console.log("Array :" , array) 
       setRows(array);
       setUpdate(false); 
       console.log("products :" , rows);  
@@ -109,6 +110,7 @@ export default function CustomizedTables(props) {
 
 
   useEffect(() => {
+    //if()
     getProducts();
 
 
@@ -144,7 +146,6 @@ export default function CustomizedTables(props) {
                 </TableBody>
             </Table>
         </Paper>
-        {/* <Button label = {'Volver'} onClick={()=> history.push('/mainMenu')}/> */}
       </React.Fragment>         
         
     
