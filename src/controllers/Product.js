@@ -68,6 +68,7 @@ class ProductController extends Component {
         try {
             let products  = await ProductRepo.getProducts();
             if ( products ) {
+                console.log('products : ', products)
                 return products;
             } else {
                 console.log("No se pudo obtener los productos");

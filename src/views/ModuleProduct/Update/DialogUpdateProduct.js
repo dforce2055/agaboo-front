@@ -25,22 +25,26 @@ const useStyles = makeStyles(theme => ({
 
   
 
-    const typeState = [
-        {
-          value: "Disponible",
-          label: "Disponible",
-        },
-        {
-          value: "Alquilado",
-          label: "Alquilado",
-        },
-        {
-          value: "Averiado",
-          label: "Averiado",
-        }
+const typeState = [
+      {
+        value: "DISPONIBLE",
+        label: "DISPONIBLE",
+      },
+      {
+        value: "ALQUILADO",
+        label: "ALQUILADO",
+      },
+      {
+        value: "EN MANTENIMIENTO",
+        label: "EN MANTENIMIENTO",
+      },
+      {
+        value: "EN MANTENIMIENTO",
+        label: "EN MANTENIMIENTO",
+      }
         
-      ];
-      const typeProduct = [
+];
+const typeProduct = [
         {
           value: "Baño Químico",
           label: "Baño Químico"
@@ -54,7 +58,7 @@ const useStyles = makeStyles(theme => ({
           label: "Boletría",
         }
         
-      ];
+];
 
       
 
@@ -71,7 +75,7 @@ export default function FormDialog(props) {
   const {getCode} = props;  
   const {stateSearch, setStateSearch} = props;
   const {dialogOpen, setDialog  } = props;
-  const {openDelete, setOpenDelete} = useState(true);
+  const [openDelete, setOpenDelete] = useState(false);
 
 
   const theme = useTheme();
@@ -81,14 +85,12 @@ export default function FormDialog(props) {
   useEffect(()=>{
 
     if(code !== getCode && stateSearch){
-      console.log('useEffect en Dialog ' , code , getCode);
       getCodeUse();
       setStateSearch(false);
     }
     if(dialogOpen){
       handleClickOpen();
       setDialog(false);
-      console.log('Entramos en useEffect con abreDialog', dialogOpen)
     } 
   })
 
@@ -121,7 +123,7 @@ export default function FormDialog(props) {
       state : values.state,
     };
     ProductController.editProduct(newProduct);
-    alert("El producto ha sido aculizado");
+    //alert("El producto ha sido aculizado");
     setOpen(false);
 
   };
@@ -129,7 +131,8 @@ export default function FormDialog(props) {
   function deleteProduct() {
 
     ProductController.deleteProduct(values.code);
-    handleClose();
+    setOpenDelete(false);
+    setOpen(false);
 
   }
 
@@ -304,7 +307,7 @@ export default function FormDialog(props) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Busqueda fallida"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Eliminar"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             ¿Esta seguro que desea eliminar el producto {values.code}?.         

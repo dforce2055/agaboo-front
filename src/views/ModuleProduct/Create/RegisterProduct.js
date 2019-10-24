@@ -31,19 +31,27 @@ const typeProduct = [
   }
   
 ];
+//'ALQUILADO', 'DISPONIBLE', 'EN MANTENIMIENTO', 'EN TRANSITO', 'ELIMINADO'
 const typeState = [
   {
-    value: "Disponible",
-    label: "Disponible",
+    value: "DISPONIBLE",
+    label: "DISPONIBLE",
   },
   {
-    value: "Alquilado",
-    label: "Alquilado",
+    value: "ALQUILADO",
+    label: "ALQUILADO",
   },
   {
-    value: "Averiado",
-    label: "Averiado",
+    value: "EN MANTENIMIENTO",
+    label: "EN MANTENIMIENTO",
+  },
+  {
+    value: "EN MANTENIMIENTO",
+    label: "EN MANTENIMIENTO",
   }
+
+
+
   
 ];
 
@@ -82,13 +90,13 @@ const useStyles = makeStyles(theme => ({
   const [values, setValues] = React.useState({
     code: "",
     typeProduct: "Baño Químico",
-    state: "Disponible",
+    state: "DISPONIBLE",
     description:""
   });
 
   const handleChange = name => event => {
     
-    
+      
     setValues({ ...values, [name]: event.target.value });
   };
 
@@ -102,14 +110,14 @@ const useStyles = makeStyles(theme => ({
       description : values.description,
       state : values.state,
     };
-
+    
     console.log("product : ", product);
     ProductController.addProduct(product);
     alert("El producto está registrado");
     setValues({
       code: "",
       typeProduct: "Baño Químico",
-      state: "Disponible",
+      state: "DISPONIBLE",
       description:""
     })
 

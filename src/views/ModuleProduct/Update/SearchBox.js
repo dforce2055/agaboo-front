@@ -31,12 +31,16 @@ export default function SearchBox() {
   const [product, setProduct] = React.useState();
   const [search, setSearch] = React.useState("");
   const [stateSearch, setStateSearch] = React.useState(false);
-  
+  const [goSearch, setGoSearch]= React.useState(false);
 
 
   async function getProductBar(code){
-    const getProduct = await ProductController.getProductByCode(code);
-    setProduct(getProduct);
+    if(goSearch){
+      const getProduct = await ProductController.getProductByCode(code);
+      setProduct(getProduct);
+      setGoSearch(false)
+      setDialog(true);
+    }
   }
 
   function setBox(e){
@@ -47,7 +51,7 @@ export default function SearchBox() {
 
   function pushEnter(e){
     if(e.key === 'Enter'){
-      setDialog(true);
+      setGoSearch(true);
     }
   }
 
@@ -57,7 +61,6 @@ export default function SearchBox() {
   // };
 
   function getCode(){
-    console.log('Llego a getCode : ', search)
     return search;
   }
 
@@ -83,7 +86,7 @@ export default function SearchBox() {
         
 
       />
-        <FormDialog values = {getProductBar(1)}
+        <FormDialog values = {getProductBar()}
                     setDialog = { setDialog }
                     getCode = {getCode}
                     stateSearch = {stateSearch}
