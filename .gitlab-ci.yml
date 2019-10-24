@@ -1,0 +1,29 @@
+#npm install
+#npm test
+#npm run buil
+#firebase deploy 
+
+#image: "ruby:2.5"
+#image: rambabusaravanan/firebase
+image: node:latest
+
+stages:
+  - deploy
+
+cache:                  
+  paths:                
+    - node_modules/     
+  key: "$CI_BUILD_REPO" 
+
+deploy-prod:
+  stage: deploy
+  only:
+    - master
+  script:
+    - npm install
+    #- npm test
+    - npm audit fix
+    - npm install build
+    - npm run build
+    - firebase use AgabooDforce --token $FIREBASE_TOKEN
+    - firebase deploy --only hosting -m "Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
