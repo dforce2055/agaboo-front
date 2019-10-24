@@ -155,6 +155,16 @@ class CustomerController extends Component {
             
         }
     }
+
+    async getCustomerAll(){
+        try {
+            let valor = CustomerRepo.getCustomerAll();
+            return valor;     
+        } catch (error) {
+            console.error("Error en controller: ",error);
+            
+        }
+    }
 }
 
 export default new CustomerController();

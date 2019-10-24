@@ -1,16 +1,11 @@
 import React from "react";
 import "./Form.css";
 import Container from '@material-ui/core/Container';
-//import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 
-/*const emailRegex = RegExp(
-  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-); //Verificacion que gmail no contenga campos extraños
-*/
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
 
@@ -35,7 +30,7 @@ export default function Form() {
   const [telephone, setTelephone] = React.useState("");
   const [telephonefixed, setTelephoneFixed] = React.useState("");
   const [location, setLocation] = React.useState(""); */
-  const [cuit, setCuit] = React.useState("");
+  
   const [locationOfPay, setLocationOfPay] = React.useState("");
   const [responsibleForPayment, setResponsibleforPayment] = React.useState("");
   const [workContact, setWorkContact] = React.useState("");
@@ -52,7 +47,6 @@ export default function Form() {
     if (formValid()) {
       console.log(`
         --SUBMITTING--
-        cuit: ${cuit}
         direccion de cobro:${locationOfPay}
         responsable de pago: ${responsibleForPayment}
         contacto en obra: ${workContact}
@@ -100,9 +94,6 @@ export default function Form() {
   function handleProductChange(event) {
     setProduct(event.target.value);
   }
-  function handleCuitChange(event) {
-    setCuit(event.target.value);
-  }
   function handleLocationOfPayChange(event) {
     setLocationOfPay(event.target.value);
   }
@@ -132,18 +123,7 @@ export default function Form() {
     <React.Fragment>
     <Container  maxWidth="md" className='nuevo'>
         <form onSubmit={handleSubmit} noValidate>
-          <div className="firstName">   {/* Nombre del css a utilizar*/}
-            <label htmlFor="cuit">CUIT</label> 
-            <input
-              className={cuit.length > 0 ? "error" : null}
-              placeholder="33*******9"
-              type="number"
-              name="cuit"  //Nombre state a utilizar
-              noValidate
-              onChange={handleCuitChange}  // Guardo los cambios 
-            />
-          </div>
-
+          
           <div className="password">   {/* Nombre del css a utilizar*/}
             <label htmlFor="dni">Direccion de cobro</label> 
             <input
