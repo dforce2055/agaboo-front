@@ -26,7 +26,7 @@ export default function AlertDialog(props) {
 
 
   const handleCloseAceptDelete = () => {
-    let valor=CustomerController.deleteCustomer(cliente);
+    let valor=CustomerController.deleteCustomer(cliente.id);
     console.log("muestro que devuelve en componente => ",valor)
     //setUpdateList(true);
     updateStateArray();

@@ -4,7 +4,6 @@
  */
 import { Component } from 'react';
 import firebase from '../config/firebase';
-import { Customer } from '../models/Customer';
 const collection = 'customers';
 
 class CustomerRepo extends Component {
@@ -18,18 +17,34 @@ class CustomerRepo extends Component {
         
     }
 
-    getCustomer = async (id) => {
+    //Se utiliza en ModulsUserAdmin\Delete-update-list\Table\ClientTable.js
+    getCustomers = async () => {
         try {
-            let result = await firebase.db.collection(collection).doc(id).get();
-            let customer = new Customer();
-            //Mapeo los resultados en el customer:customer
-            customer = Object.assign({}, result);
-            return result.data();
+            let coleccion = await firebase.db.collection(collection).where('eliminado','==', false).limit(3).get();
+            let clientes = coleccion.docs.map(doc => doc.data());return clientes;
         } catch (error) {
             throw new Error();
         }
+    };
+
+    //Se utiliza en ModulsClient/Delete-Update-List/Table LINEA-84 y CONTROLLER LINEA-147
+    getCustomerCant10 = async (e)=>{
+        try {
+            var data = e.id; //ID del ultimo elemento de array ubicado Table
+            console.log("muestro id:",data);
+            var next = await firebase.db.collection(collection)
+                .orderBy("id")
+                .startAfter(data)
+                .limit(5) 
+                console.log("Muestro next: ",next);
+
+            return next;
+        } catch (error) {
+          console.log("Error:",error);
+        }
     }
 
+    //No se usa y se va a eliminar
     getCustomerByEmail = async (email) => {
         try {
             let customer = {};
@@ -48,6 +63,7 @@ class CustomerRepo extends Component {
         }
     }
 
+    //No se usa y se va a eliminar
     getCustomerByName = async (name) => {
         try {
             let customers = [];
@@ -66,7 +82,9 @@ class CustomerRepo extends Component {
             throw new Error(`No se encontro el usuario con Nombre: ${ name }`);
         }
     }
-    getCustomerByCUILOK = async (cuil) => {
+
+    //Se usa en editCustomer pero se va a eliminar
+    getCustomerByCUIL = async (cuil) => {
         try {
             let customer = {};
             await firebase.db.collection(collection)
@@ -84,51 +102,27 @@ class CustomerRepo extends Component {
             throw new Error(`No se encontro el usuario con CUIL: ${cuil}`);
         }
     }
-    //Esto no funciona bien ver getCustomerByCUILOK
-    getCustomerByCUIL = async (cuil) => {
-        try {
-            let customers = [];
-            await firebase.db.collection(collection)
-                .where('cuil', '>=', cuil)
-                .orderBy('cuil')
-                .limit(1)
-                .get()
-                .then(function (querySnapshot) {
-                    querySnapshot.forEach(function (doc) {
-                        customers.push(doc.data());
-                    });
-                })
-            return customers;
-        } catch (error) {
-            throw new Error(`No se encontro el usuario con CUIL: ${ cuil }`);
-        }
-    }
 
+    //Se utiliza en ModulsUserAdmin\Delete-update-list\Search\buttonSearch.js
     searchCustomer = async (e) => {
         try {
-            console.log("LLEGUE A REPO");
             let cliente = {};
-            let clienteFiltrado = {};
-            // Lo busco por id de documento en la colección, el cual deberia ser el cuil/cuit
             await firebase.db.collection(collection)
-            .where('dni','==', e)
+            .where('id','==', e)
             .get()
             .then(result =>{
                  cliente = result.docs.map(doc => doc.data())
             })
-            
-
             return cliente;            
         } catch (error) {
             throw new Error();
         }        
     }
 
-    getCustomerById = async (cuil) => {
-        
+    getCustomerById = async (id) => {
         let customer = {};
          await firebase.db.collection(collection)
-            .where('dni', '==', cuil)
+            .where('id', '==', id)
             .limit(1)
             .get()
             .then(function (querySnapshot) {
@@ -142,30 +136,16 @@ class CustomerRepo extends Component {
                 console.log("Error getting documents: ", error);
                 customer = null;
             });
-
         return customer;
     }
 
-    getCustomers = async () => {
-        try {
-            let coleccion = await firebase.db.collection(collection).where('eliminado','==', false).get();
-            let clientes = coleccion.docs.map(doc => doc.data());
-            console.log('En Repo: ', clientes);
-            return clientes;
-        } catch (error) {
-            throw new Error();
-        }
-    };
-
-
-    
-    addCustomerOK = async (newCustomer) => {
+    //Se utiliza en ModulsUserAdmin\Create\AddresForm.js
+    addCustomer = async (newCustomer) => {
         if (!newCustomer) throw new Error(`Error: no se envió un Cliente para registrar`);
-        newCustomer = Object.assign({}, newCustomer); //Utilizo Object.assign para mapear el objeto
-
+        newCustomer = Object.assign({}, newCustomer);
         let result = await firebase.db.collection(collection)
-            .doc(newCustomer.cuil)
-            .set(newCustomer) //Utilizo Object.assign para mapear el objeto
+            .doc(newCustomer.id)
+            .set(newCustomer)
             .then(() => {
                 console.log("Cliente guardado exitosamente!!!");
                 return true;
@@ -174,117 +154,16 @@ class CustomerRepo extends Component {
                 console.error("Error al guardar el Cliente: ", error);
                 return false;
             });
-        // Retorna True o False
         return result;
     }
-
-    // ESTO NO ANDA BIEN! Ver AddCustomerOK
-    addCustomer = async (newCustomer) => {
-        if (!newCustomer) throw new Error(`Error: no se envio un cliente para registrar`);
-        let result = await firebase.db.collection(collection)
-            .doc(newCustomer.id)
-            .set({
-                nombre: newCustomer.nombre,
-                apellido: newCustomer.apellido,
-                cuit: newCustomer.cuit,
-                empleo:newCustomer.empleo,
-                id:newCustomer.id,
-                localidad:newCustomer.localidad,
-                celular:newCustomer.celular,        
-                calle: newCustomer.calle,
-                altura: newCustomer.altura,
-                email: newCustomer.email,
-
-                //DELETE
-                eliminado:false,
-                /*
-                estado: newCustomer.estado,
-                role: newCustomer.role,
-                tipoDocumento: newCustomer.tipoDocumento,*/
-            })
-            .then(() => {
-                console.log("Documento guardado exitosamente!");
-                return true;
-            })
-            .catch(function (error) {
-                console.error("Error al guardar el documento: ", error);
-                return false;
-            });
-        // Retorna True o False
-        return result;
-    }
-
-    setCustomer = async (setCustomer) => {
-       let result = firebase.db.collection(collection)
-        .doc(setCustomer.cuit)
-        .get()
-        .then(() => {            
-            firebase.db.collection(collection)
-            .doc(setCustomer.cuit)
-            .update({    
-                nombre: setCustomer.nombre,
-                apellido: setCustomer.apellido,
-                localidad:setCustomer.localidad,
-                celular:setCustomer.celular,       
-                calle: setCustomer.calle,
-                altura: setCustomer.altura,
-                email: setCustomer.email,
-                cuit: setCustomer.cuit,
-                empleo:setCustomer.empleo,
-                
-               /* nombre: customer.nombre,
-                apellido: customer.apellido,
-                
-                cuil: customer.cuil,
-                tipoDocumento: customer.tipoDocumento,
-                numeroDocumento: customer.numeroDocumento,
-                fechNac: customer.fechNac,
-                direccion: customer.direccion,
-                calle: customer.calle,
-                altura: customer.altura,
-                localidad: customer.localidad,
-                celular: customer.celular,
-                telefono: customer.telefono,
-                email: customer.email,
-                estado: customer.estado,
-                role: customer.role,*/
-            })
-            .catch(error=>{console.error("Error al modificar cliente: ",error);
-            });
-        })
-        .catch(function (error) {
-            console.error("Error al buscar el cliente: ", error);
-            return false;
-        });
-        return result;
-    }
-    
-    deleteCustomer = async (deleteCustomer) => {
-       if (!deleteCustomer.cuit) throw new Error(`Error: el DNI es obligatorio`);
-       let result = firebase.db.collection(collection)
-        .doc(deleteCustomer.cuit)
-        .get()
-        .then(() => {
-            firebase.db.collection(collection).doc(deleteCustomer.cuit)
-            .update({
-                //DELETE
-                eliminado:true,
-            })
-            return true;
-        })
-        .catch(function (error) {
-            console.error("Error al eliminar el documento: ", error);
-            return false;
-        });
-        return result;
-    }
-
-    deleteCustomerOK = async (cuil) => {
-        if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
+        
+    //Se utiliza en ModulsUserAdmin\Delete-update-list\delete\DialogDelete.js
+    deleteCustomer = async (id) => {
         let result = firebase.db.collection(collection)
-            .doc(cuil)
+            .doc(id)
             .update({
-                estado: false,
+                //EL CAMPO ESTABA MAL ESCRITO Y ESTABA EN FALSO
+                eliminado: true,
             })
             .then(() => { return true })
             .catch(function (error) {
@@ -294,6 +173,7 @@ class CustomerRepo extends Component {
         return result;
     }
 
+    //No se utiliza y se va a eliminar
     deleteCustomerREAL = async (cuil) => {
         if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
         let result = firebase.db.collection(collection)
@@ -307,14 +187,14 @@ class CustomerRepo extends Component {
         return result;
     }
 
-    editCustomer = async (cuil, customer) => {
-        if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
+    //Se utiliza en ModulsUserAdmin\Delete-update-list\update\AddresForm.js
+    editCustomer = async (customer) => {
         if (!customer) throw new Error(`Error: el cliente es obligatorio para poder editarlo`);
-        let result = this.getCustomerByCUIL(cuil)
+        let ID = customer.id;
+        let result = this.getCustomerByCUIL(ID)
             .then(() => {
-                firebase.db.collection(collection).doc(cuil)
-                    .update(Object.assign({}, customer));//Utilizo Object.assign para mapear el objeto
-
+                firebase.db.collection(collection).doc(ID)
+                    .update(Object.assign({}, customer));
                 return true;
             })
             .catch(function (error) {

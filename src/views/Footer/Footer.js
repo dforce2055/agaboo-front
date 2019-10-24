@@ -5,7 +5,6 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import ArrowBackIosTwoToneIcon from '@material-ui/icons/ArrowBackIosTwoTone';
 import HomeTwoToneIcon from '@material-ui/icons/HomeTwoTone';
 import HttpsTwoToneIcon from '@material-ui/icons/HttpsTwoTone';
-import Grid from '@material-ui/core/Grid';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
 import firebase from '../../config/firebase';
@@ -25,9 +24,13 @@ const theme = createMuiTheme({ /* Plantilla de edicion */
         MuiBottomNavigationAction:{
             root:{
                 color: 'rgb(255, 255, 255)',
+                maxWidth: '1000px',
                 '&$selected':{
-                    color: '#ffffff',
+                color: '#ffffff',
                 }
+            },
+            label:{
+              fontSize: '0.875rem',
             },
         },
 
@@ -50,7 +53,6 @@ function SimpleBottomNavigation(props) {
   return (
     <div className="footer">
         <MuiThemeProvider theme={theme}>
-            <Grid>
               <BottomNavigation
               value={value}
               onChange={(event, newValue) => {
@@ -63,7 +65,6 @@ function SimpleBottomNavigation(props) {
               <BottomNavigationAction label="Menu Principal" icon={<HomeTwoToneIcon />} onClick ={ () => history.push('/mainMenu')}/>
               <BottomNavigationAction label="Cerrar Sesión" icon={<HttpsTwoToneIcon />} onClick ={logOut}/>
               </BottomNavigation>
-            </Grid>
         </MuiThemeProvider>
     </div>
   );
