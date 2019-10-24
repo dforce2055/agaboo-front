@@ -5,7 +5,6 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import ArrowBackIosTwoToneIcon from '@material-ui/icons/ArrowBackIosTwoTone';
 import HomeTwoToneIcon from '@material-ui/icons/HomeTwoTone';
 import HttpsTwoToneIcon from '@material-ui/icons/HttpsTwoTone';
-import ResponsiveDialog from './Dialog';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
 import firebase from '../../config/firebase';

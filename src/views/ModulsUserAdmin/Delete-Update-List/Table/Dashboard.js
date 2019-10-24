@@ -5,9 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import ClientTable from './ClientTable'
-import {Typography} from '@material-ui/core';
-import CustomizedInputBase from '../Search/buttonSearch';
+import ClientTable from './ClientTable';
 
 const drawerWidth = 240;
 
@@ -94,13 +92,11 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
         },
       }
     },
-    
 }
 });
 
 export default function Dashboard() {
   const classes = useStyles();
-  const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -117,16 +113,11 @@ export default function Dashboard() {
       <main className={classes.content}>
         <div className={classes.toolbar}/>
         <Container maxWidth="lg" className={classes.container}>
+        
           <Grid container spacing={3}>
-            {/*Buttom search*/}
-            <Grid item xs={12}>
-              <div >
-                 <CustomizedInputBase />
-              </div>
-            </Grid>
             {/* Recent Orders */}
             <Grid item xs={12}>
-            <Typography variant="h4">Clientes</Typography>
+            
               <Paper className={classes.paper}>
                  <ClientTable />
               </Paper>
