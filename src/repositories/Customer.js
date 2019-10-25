@@ -4,7 +4,6 @@
  */
 import { Component } from 'react';
 import firebase from '../config/firebase';
-import { Customer } from '../models/Customer';
 const collection = 'customers';
 
 class CustomerRepo extends Component {
@@ -16,6 +15,33 @@ class CustomerRepo extends Component {
 
         }
         
+    }
+
+    //Se utiliza en ModulsUserAdmin\Delete-update-list\Table\ClientTable.js
+    getCustomers = async () => {
+        try {
+            let coleccion = await firebase.db.collection(collection).where('eliminado','==', false).limit(3).get();
+            let clientes = coleccion.docs.map(doc => doc.data());return clientes;
+        } catch (error) {
+            throw new Error();
+        }
+    };
+
+    //Se utiliza en ModulsClient/Delete-Update-List/Table LINEA-84 y CONTROLLER LINEA-147
+    getCustomerCant10 = async (e)=>{
+        try {
+            var data = e.id; //ID del ultimo elemento de array ubicado Table
+            console.log("muestro id:",data);
+            var next = await firebase.db.collection(collection)
+                .orderBy("id")
+                .startAfter(data)
+                .limit(5) 
+                console.log("Muestro next: ",next);
+
+            return next;
+        } catch (error) {
+          console.log("Error:",error);
+        }
     }
 
     //No se usa y se va a eliminar
@@ -112,17 +138,6 @@ class CustomerRepo extends Component {
             });
         return customer;
     }
-
-    //Se utiliza en ModulsUserAdmin\Delete-update-list\Table\ClientTable.js
-    getCustomers = async () => {
-        try {
-            let coleccion = await firebase.db.collection(collection).where('eliminado','==', false).get();
-            let clientes = coleccion.docs.map(doc => doc.data());
-            return clientes;
-        } catch (error) {
-            throw new Error();
-        }
-    };
 
     //Se utiliza en ModulsUserAdmin\Create\AddresForm.js
     addCustomer = async (newCustomer) => {
