@@ -166,9 +166,6 @@ const useToolbarStyles = makeStyles(theme => ({
   spacer: {
     flex: '1 1 100%',
   },
-  /* actions: {
-    color: theme.palette.text.secondary,
-  }, */
   title: {
     flex: '0 0 auto',
   },
@@ -223,6 +220,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
     marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(10),
   },
   paper: {
     width: '100%',
@@ -346,7 +344,6 @@ export default function EnhancedTable() {
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
                       </TableCell>
-                      {/* return { name, surname, email, tel, CUIT}; */}
                       
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.nombre}

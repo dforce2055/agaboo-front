@@ -21,6 +21,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore'; //Icono de flecha
 import Collapse from '@material-ui/core/Collapse'; //https://material-ui.com/components/transitions/ --> Componente que permite desplegar
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
+import userController from '../../controllers/User';
 //ICONOS DE BOTONES
   //ICONOS DE CLIENTES
   import GroupAddIcon from '@material-ui/icons/GroupAdd';
@@ -167,6 +168,7 @@ function Navbar(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const {history} = props;
+  let userEmail = firebase.getCurrentEmail();
 
   const [visible, setVisible] = React.useState(false);
   const [productos, setProductos] = React.useState(false);
@@ -200,15 +202,27 @@ function Navbar(props) {
     setOpen(false);
   }
 
-  //Llamo metodo de src/config/firebase de logout
-  async function exit(){
-      try {
-          await firebase.logout();
-          props.history.replace('/');
-      } catch (error) {
-          alert(error.message)
-      }
-  }
+
+  async function checkRole() {
+    try {
+      let userEmail = firebase.getCurrentEmail();
+
+        userController.getUserStatusAndRole(userEmail)
+            .then(async (userEmail)  => {
+                if ( userEmail.role === "ADMIN" ) {
+                    return 1;
+                } else if (userEmail.role === "USER") {
+                    return 2;
+                }
+            })
+            .catch((error) => {
+                console.error("Error: ", error);
+                return false;
+            });
+    } catch (error) {
+        alert(error.message)
+    }
+}
   
   return (
     <MuiThemeProvider theme={theme2}>
@@ -252,15 +266,14 @@ function Navbar(props) {
         </div>
         <Divider />
 {/* *********************************** LISTA CLIENTES ****************************************** */}
-        <List>
-        
+    <List>
         <ListItem button onClick={handleClick}>
           <ListItemIcon>         
               <PeopleIcon />
           </ListItemIcon>
         <ListItemText primary="Clientes" />
         {visible ? <ExpandLess /> : <ExpandMore />}      
-      </ListItem> 
+        </ListItem> 
       <Collapse in={visible} timeout="auto" unmountOnExit> 
         <List component="div" disablePadding>
           <ListItem button className={classes.nested} onClick ={ () => history.push('/registrarCliente')}>
@@ -280,8 +293,7 @@ function Navbar(props) {
           </ListItem>
         </List>
       </Collapse>
-
-      </List>
+    </List>
 {/* *********************************** LISTA PRODUCTOS ****************************************** */}
       <List>
         <ListItem button onClick={handleClickProductos}>
@@ -404,24 +416,10 @@ function Navbar(props) {
       </ListItem>
 
       </List>
-{/* *********************************** CERRAR SESIÓN ****************************************** */}
-      <List>
-        <ListItem
-        button
-        className={classes.bajarBoton}
-        onClick={exit} //Llamo metodo==>exit()
-        >
-          <ListItemIcon>
-          <PersonOutlineIcon/>
-          </ListItemIcon>
-        <ListItemText primary="Cerrar sesion"/>
-      </ListItem>
-      </List>
-
 
        
       </Drawer>
-      <main /*Esta clase, permite que cada vez que abramos el componente Drawers, los componentes que esten dentro de main, se correran al costado. */
+      <main /*Esta clase, permite que cada vez que abramos el componente Drawer, los componentes que esten dentro de main, se correran al costado. */
         className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}
