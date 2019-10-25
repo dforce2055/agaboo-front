@@ -45,9 +45,9 @@ export default function ClientTable() {
       }).catch(error=>{
         console.log("Error al traer el cliente= ",error);
       })
-      }else if (search.buscar.length != 0) { //Verifico que el campo de buscar este vacio
+      }else if (search.buscar.length !== 0) { //Verifico que el campo de buscar este vacio
         setValidador(true)
-      }else if(search.buscar.length == 0){
+      }else if(search.buscar.length === 0){
         setValidador(false)
       }
     });

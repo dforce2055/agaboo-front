@@ -83,10 +83,31 @@ const useStyles = makeStyles(theme => ({
 
 const steps = ['Detalles de cliente', 'Detalles de pedido'];
 
+const propsCustomerSeleccionado = (e) =>{
+  const data = e;
+  return data;
+}
+
+const propsCustomerGet = (e) =>{
+  const data = (n)=>{
+    e.setCustomerSeleccionado(n);
+  };
+  return data;
+}
+
 function getStepContent(step) {
+  
+  //LLAMO EL METODO DE CHECKOUT
+
+  const seleccionado = propsCustomerSeleccionado;
+  const getCustomerSeleccionado = propsCustomerGet;
+
   switch (step) {
     case 0:
-      return <AddressForm />;
+      return <AddressForm 
+      seleccionado={seleccionado} 
+      getCustomerSeleccionado={getCustomerSeleccionado}
+      />;
     case 1:
       return <PaymentForm />;
     default:
@@ -98,6 +119,9 @@ function Checkout(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const {history} = props;
+  //AGREGADO PARA FUNCIONAR EL PEDIDOS
+  const {setCustomerSeleccionado} = props;
+  const {seleccionado} = props;
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -107,6 +131,13 @@ function Checkout(props) {
     setActiveStep(activeStep - 1);
   };
   
+  React.useEffect(()=>{
+    if(seleccionado != null){
+      console.log("ENTRE EN CHECKOU");
+      propsCustomerSeleccionado(seleccionado);
+      propsCustomerGet(setCustomerSeleccionado)
+    }
+  });
 
   return (
     <MuiThemeProvider theme={theme}>

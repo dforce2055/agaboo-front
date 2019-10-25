@@ -17,7 +17,7 @@ class CustomerRepo extends Component {
         
     }
 
-    //Se utiliza en ModulOrders/Create/clientList.js
+    ////Se utiliza en ModulOrders/SelectCustomer
     getCustomerAll = async () =>{
         try {
             let coleccion = await firebase.db.collection(collection).where('eliminado','==', false).get();
