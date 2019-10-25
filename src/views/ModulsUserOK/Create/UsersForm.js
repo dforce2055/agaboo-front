@@ -1,5 +1,5 @@
 import React from 'react';
-import UserController from '../../../controllers/User';
+//import UserController from '../../../controllers/User';
 import DialogAcept from './dialogAcept';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { withRouter } from "react-router-dom";
@@ -171,7 +171,6 @@ function AddressForm(props) {
     //UserController.addUser();
     console.log("Toma, voy a mandar esta data => ");
     console.log(data);
-    handleCloseDialog();
     
   }
 
@@ -186,20 +185,9 @@ function AddressForm(props) {
 
   console.log(values);
 
-  const [mostrarDialog, setMostrarDialog] = React.useState(false);  
-  const handleCloseDialog = () =>{
-    setMostrarDialog(mostrarDialog===false);
-  };
-
-  
-
   return (
     <MuiThemeProvider theme={theme}>
       <React.Fragment>
-        <DialogAcept
-          mostrarDialog={mostrarDialog}
-          handleCloseDialog={handleCloseDialog, props}
-        />
         <Typography variant="h6" gutterBottom>
           Por favor complete los siguientes campos para registrar un usuario
         </Typography>
@@ -362,27 +350,19 @@ function AddressForm(props) {
               />
             </Grid> 
             <Grid item xs={12} sm={6} container justify="center" spacing={2}>
-              <ButtonGroup 
+              <ButtonGroup
                 variant="text"
                 size="large"
                 aria-label="large contained  button group"
               >
-                  <Button 
+                  <Button
                     color="secondary"
                     variant="contained"
                     onClick ={ () => history.goBack()}
                   >
                     Cancelar
                   </Button>
-                  <Button
-                    label={"Registrar Usuario"}
-                    color="primary"
-                    variant="contained"
-                    type = " submit "
-                    onClick ={ () => history.push('/mainMenu')}
-                  >
-                    Guardar
-                  </Button>
+                  <DialogAcept/>
               </ButtonGroup>
             </Grid>      
           </Grid>
