@@ -35,7 +35,7 @@ export default function SimpleTable() {
 
   return (
     <Paper className={classes.root}>
-    
+
     <CustomizedSelects></CustomizedSelects>
 
       <Table className={classes.table} aria-label="simple table">

@@ -5,7 +5,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
+
+//AGREGADO
 import InputBase from '@material-ui/core/InputBase';
+import {AddCircleIcon} from '@material-ui/icons/AddCircle';
+import { TextField } from '@material-ui/core';
 
 const BootstrapInput = withStyles(theme => ({
   root: {
@@ -19,7 +23,7 @@ const BootstrapInput = withStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     border: '1px solid #ced4da',
     fontSize: 16,
-    padding: '10px 26px 10px 12px',
+    padding: '10px 26px 1px 1px',
     transition: theme.transitions.create(['border-color', 'box-shadow']),
     // Use the system font instead of the default Roboto font.
     fontFamily: [
@@ -52,27 +56,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const option = (e,handleChange) => {
-  //const classes = useStyles();
-  
-  return(
-    <div>
-       <FormControl /*className={classes.margin}*/>
-        {/*<InputLabel htmlFor="age-customized-native-simple">Age</InputLabel>*/}
-        <NativeSelect
-          value={e.modelo}
-          onChange={handleChange('modelo')}
-          input={<BootstrapInput name="age" id="age-customized-native-simple" />}
-        >
-          <option value="" />
-          <option value={'AG1'}>Ten</option>
-          <option value={'AG2'}>Twenty</option>
-        </NativeSelect>
-      </FormControl>
-    </div>
-  );
-}
-
 export default function CustomizedSelects() {
   const classes = useStyles();
 
@@ -87,6 +70,8 @@ export default function CustomizedSelects() {
     if (cant_prodt_select.producto === 'bañoQuimico') {
       console.log(cant_prodt_select.modelo);
         setState(true);
+    }else if(cant_prodt_select.producto !== 'bañoQuimico'){
+      setState(false);
     }
   });
 
@@ -99,17 +84,20 @@ export default function CustomizedSelects() {
 
   return (
     <form className={classes.root} autoComplete="off">
+    
       <FormControl className={classes.margin}>
-        <InputLabel htmlFor="age-customized-input">Age</InputLabel>
-        <BootstrapInput id="age-customized-input" />
+      <TextField 
+      id="time" 
+      type="number"
+      placeholder="Cantidad" />
       </FormControl>
-      <FormControl className={classes.margin}>
-        <InputLabel htmlFor="age-customized-select">Age</InputLabel>
-        
+
+      <FormControl className={classes.margin}>        
         <Select
           value={cant_prodt_select.producto}
           onChange={handleChange2('producto')}
-          input={<BootstrapInput name="age" id="age-customized-select" />}
+          input={  <TextField 
+           type="text"/>}
         >
           <MenuItem value={'bañoQuimico'}>Baño Quimico</MenuItem>
           <MenuItem value={'oficina'}>Oficina de obra</MenuItem>
@@ -117,20 +105,16 @@ export default function CustomizedSelects() {
           <MenuItem value={'boleteria'}>Boleteria</MenuItem>
         </Select>
       </FormControl>
-
-      { state ?  <FormControl /*className={classes.margin}*/>
-        {/*<InputLabel htmlFor="age-customized-native-simple">Age</InputLabel>*/}
+      { state ?  <FormControl className={classes.margin}>
         <NativeSelect
           value={cant_prodt_select.modelo}
           onChange={handleChange2('modelo')}
-          input={<BootstrapInput name="age" id="age-customized-native-simple" />}
         >
           <option value="" />
-          <option value={'AG1'}>Ten</option>
-          <option value={'AG2'}>Twenty</option>
+          <option value={'AG1'}>AG1</option>
+          <option value={'AG2'}>AG2</option>
         </NativeSelect>
       </FormControl> : '' }
-      
     </form>
   );
 }
