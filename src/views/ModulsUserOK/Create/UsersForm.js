@@ -379,6 +379,7 @@ function AddressForm(props) {
                     color="primary"
                     variant="contained"
                     type = " submit "
+                    onClick ={ () => history.push('/mainMenu')}
                   >
                     Guardar
                   </Button>
