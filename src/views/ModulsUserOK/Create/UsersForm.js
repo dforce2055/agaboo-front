@@ -1,12 +1,12 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import { Button,ButtonGroup,Typography, createMuiTheme} from '@material-ui/core';
-import CustomerController from '../../../controllers/Customer';
+import UserController from '../../../controllers/User';
 import DialogAcept from './dialogAcept';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { withRouter } from "react-router-dom";
 import { makeStyles, MuiThemeProvider } from '@material-ui/core/styles';
 import { red, blue } from '@material-ui/core/colors';
+import { Grid, TextField, InputLabel, Select, MenuItem, Button, ButtonGroup, Typography, createMuiTheme } from '@material-ui/core/';
+
 
 const theme = createMuiTheme({
   overrides: {
@@ -14,7 +14,27 @@ const theme = createMuiTheme({
       root:{
         color: blue,
       }
-    } 
+    },
+    MuiButton: {
+      containedPrimary: {
+        backgroundColor: '#3fb5a5',
+        '&:hover': {
+          backgroundColor: '#0ce8ca',
+          "@media (hover: none)": {
+            backgroundColor: "#0ce8ca"
+          },
+        },
+      },
+      containedSecondary: {
+        backgroundColor: '#b53f3f',
+        '&:hover': {
+          backgroundColor: '#f30b0b',
+          "@media (hover: none)": {
+            backgroundColor: "#f30b0b"
+          },
+        },
+      },
+    }, 
   }
 })
 
@@ -24,8 +44,60 @@ const useStyles = makeStyles(theme => ({
     color: 'blue !important',
     fontStyle: 'italic',
   },
-
+  buttons: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    textAlign: 'center',
+  },
+  button: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1),
+  },
+  
 }));
+
+const documentos = [
+  {
+    value: 'DNI',
+    label: 'DNI',
+  },
+  {
+    value: 'Pasaporte',
+    label: 'Pasaporte',
+  },
+  {
+    value: 'L.E.',
+    label: 'Libreta de Enrolamiento',
+  },
+  {
+    value: 'L.C.',
+    label: 'Libreta Cívica',
+  },
+  {
+    value: 'CUIT',
+    label: 'CUIT',
+  },
+  {
+    value: 'CUIL',
+    label: 'CUIL',
+  },
+];
+
+const roles = [
+  {
+    value: 'ADMIN',
+    label: 'Administrador',
+  },
+  {
+    value: 'USER',
+    label: 'Administrativo',
+  },
+  {
+    value: 'LOGISTICS',
+    label: 'Logistica y Mantenimiento',
+  },
+];
+
 
 function AddressForm(props) {
   const classes = useStyles();
@@ -73,6 +145,7 @@ function AddressForm(props) {
 
   const handleOnClick = () => {
     console.log('Guardando...')
+    setCuitOrCuil();
     let data = {
       nombre: values.nombre,
       apellido: values.apellido,
@@ -94,30 +167,45 @@ function AddressForm(props) {
       role:values.role,
       //eliminado:false,
     }
-    CustomerController.addCustomer(data)    
+    //CustomerController.addCustomer(data);
+    //UserController.addUser();
+    console.log("Toma, voy a mandar esta data => ");
+    console.log(data);
     handleCloseDialog();
+    
   }
+
+  function setCuitOrCuil() {
+    if ( values.tipoDocumento === 'CUIT' ) {
+      values.cuit = values.numeroDocumento;
+    }
+    if (values.tipoDocumento === 'CUIL') {
+      values.cuil = values.numeroDocumento;
+    }
+  }
+
+  console.log(values);
 
   const [mostrarDialog, setMostrarDialog] = React.useState(false);  
   const handleCloseDialog = () =>{
     setMostrarDialog(mostrarDialog===false);
   };
 
+  
+
   return (
     <MuiThemeProvider theme={theme}>
       <React.Fragment>
-
-      <DialogAcept
-      mostrarDialog={mostrarDialog}
-      handleCloseDialog={handleCloseDialog}
-      />
+        <DialogAcept
+          mostrarDialog={mostrarDialog}
+          handleCloseDialog={handleCloseDialog, props}
+        />
         <Typography variant="h6" gutterBottom>
           Por favor complete los siguientes campos para registrar un usuario
         </Typography>
 
-        <ValidatorForm onSubmit={handleOnClick} onError={errors =>  console.log(errors)}>    
-
-          <Grid container spacing={3}  justify = { "center" }>
+        <ValidatorForm onSubmit={handleOnClick} onError={errors => console.log(errors)} className={classes.formUsers}>     
+          <Grid container spacing={3} justify={"center"}>
             <Grid item xs={12} sm={6}>
                 <TextValidator //TextValidator obligatorio
                   variant="outlined"
@@ -148,48 +236,67 @@ function AddressForm(props) {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextValidator
-                variant="outlined"
-                label="Cuit/Cuil"
-                id="cuil"
+              <TextField
+                id="outlined-select-roles"
+                select
                 fullWidth
-                required
-                onChange={handleChange('cuil')}
-                className={classes.helper}  helperText ="¡Introducir solo números!"
-                name="cuil"
-                value={values.cuil}
-                validators={['required', 'matchRegexp:(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]']}
-                errorMessages={['Campo requerido', '¡¡¡CUIL invalido!!!']}
-              />
-            </Grid>
-            {/*
-            <Grid item xs={12} sm={6}>
-              <TextValidator
+                label="Tipo de Usuario"
+                className={classes.textField}
+                value={values.role}
+                onChange={handleChange("role")}
+                SelectProps={{
+                  MenuProps: {
+                    className: classes.menu,
+                  },
+                }}
                 variant="outlined"
-                label="Empleo"
+              >
+                {roles.map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="outlined-select-tipoDocumento"
+                select
                 fullWidth
-                required
-                onChange={handleChange('empleo')}
-                helperText="Introducir solo numeros!"
-                name="empleo"
-                value={values.empleo}
-                validators={['required', 'matchRegexp:^([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])?$']}
-                errorMessages={['Campo requerido', 'Campo invalido']}
-              />
-            </Grid>
-            */}
-            <Grid item xs={12} sm={6}>
-              <TextValidator
-                variant="outlined"
                 label="Tipo de Documento"
-                onChange={handleChange('Tipo de Documento')}
-                name="tipoDocumento"
+                className={classes.textField}
                 value={values.tipoDocumento}
-                fullWidth
-                validators={['matchRegexp:^[a-zA-Z0-9.!#$%&*+/=?^_{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$']}
-                errorMessages={['Tipo de Documento no valido']}
-              />
+                onChange={handleChange("tipoDocumento")}
+                SelectProps={{
+                  MenuProps: {
+                    className: classes.menu,
+                  },
+                }}
+                //helperText="Por favor seleccione un tipo de documento"
+                variant="outlined"
+              >
+                {documentos.map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid> 
+            <Grid item xs={12} sm={6}>
+              <TextValidator
+                variant="outlined"
+                label={"Número de " +values.tipoDocumento} 
+                id="numeroDocumento"
+                fullWidth
+                required
+                onChange={handleChange('numeroDocumento')}
+                className={classes.helper}  helperText ="¡Introducir solo números!"
+                name="numeroDocumento"
+                value={values.numeroDocumento}
+                validators={['required', 'matchRegexp:(\D)?[0-9]{7}']} //digitos del 0 al 9, minimo 7 números en el orden del millon
+                errorMessages={['Campo requerido', '¡¡¡Número de documento invalido!!!']}
+              />
+            </Grid>            
             <Grid item xs={12}>
               <TextValidator       
                 variant="outlined"
@@ -254,32 +361,31 @@ function AddressForm(props) {
                 errorMessages={['Campo requerido', 'Celular es invalido']}
               />
             </Grid> 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6} container justify="center" spacing={2}>
               <ButtonGroup 
                 variant="text"
                 size="large"
-                aria-label="large contained secondary button group"
+                aria-label="large contained  button group"
               >
                   <Button 
-                  style={{background: 'linear-gradient(45deg, #f56f5b 10%, #ff2200 97%)'}}
-                  variant="contained"
-                  onClick ={ () => history.goBack()}
+                    color="secondary"
+                    variant="contained"
+                    onClick ={ () => history.goBack()}
                   >
                     Cancelar
                   </Button>
-                  <Button 
-                  style={{background: 'linear-gradient(45deg, #3fb5a5 2%, #40f03a 98%)'}}
-                  variant="contained"
-                  type = " submit "
+                  <Button
+                    label={"Registrar Usuario"}
+                    color="primary"
+                    variant="contained"
+                    type = " submit "
                   >
                     Guardar
                   </Button>
-                </ButtonGroup>
+              </ButtonGroup>
             </Grid>      
           </Grid>
-
         </ValidatorForm>
-        
       </React.Fragment>
     </MuiThemeProvider>
   );

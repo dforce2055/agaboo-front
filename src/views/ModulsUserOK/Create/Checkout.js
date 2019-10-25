@@ -6,7 +6,7 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 
 //Import campos de datos
-import AddressForm from './AddressForm';
+import UsersForm from './UsersForm';
 
 function Copyright() {
   return (
@@ -37,11 +37,11 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
+    marginBottom: theme.spacing(8),
     padding: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
       marginTop: theme.spacing(6),
-      marginBottom: theme.spacing(6),
+      marginBottom: theme.spacing(8),
       padding: theme.spacing(2),
     },
   },
@@ -55,19 +55,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Checkout() {
+export default function Checkout(props) {
   const classes = useStyles();
 
   return (
     <React.Fragment>
       <CssBaseline />      
       <main className={classes.layout}>
-        <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" align="center">
+        <Paper className={classes.paper} >
+          <Typography component="h1" variant="h4" align="left">
             Formulario Registro de Usuarios
           </Typography>          
           <React.Fragment>
-            <AddressForm/>              
+            <UsersForm/>              
           </React.Fragment>
         </Paper>
       </main>
