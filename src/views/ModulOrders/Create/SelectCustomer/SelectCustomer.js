@@ -72,30 +72,11 @@ function NoOptionsMessage(props) {
   );
 }
 
-NoOptionsMessage.propTypes = {
-  /**
-   * The children to be rendered.
-   */
-  children: PropTypes.node,
-  /**
-   * Props to be passed on to the wrapper.
-   */
-  innerProps: PropTypes.object.isRequired,
-  selectProps: PropTypes.object.isRequired,
-};
+
 
 function inputComponent({ inputRef, ...props }) {
   return <div ref={inputRef} {...props} />;
 }
-
-inputComponent.propTypes = {
-  inputRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({
-      current: PropTypes.any.isRequired,
-    }),
-  ]),
-};
 
 function Control(props) {
   const {
@@ -122,26 +103,6 @@ function Control(props) {
   );
 }
 
-Control.propTypes = {
-  /**
-   * Children to render.
-   */
-  children: PropTypes.node,
-  /**
-   * The mouse down event and the innerRef to pass down to the controller element.
-   */
-  innerProps: PropTypes.shape({
-    onMouseDown: PropTypes.func.isRequired,
-  }).isRequired,
-  innerRef: PropTypes.oneOfType([
-    PropTypes.oneOf([null]),
-    PropTypes.func,
-    PropTypes.shape({
-      current: PropTypes.any.isRequired,
-    }),
-  ]).isRequired,
-  selectProps: PropTypes.object.isRequired,
-};
 
 function Option(props) {
   return (
@@ -159,42 +120,6 @@ function Option(props) {
   );
 }
 
-Option.propTypes = {
-  /**
-   * The children to be rendered.
-   */
-  children: PropTypes.node,
-  /**
-   * props passed to the wrapping element for the group.
-   */
-  innerProps: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    key: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
-    onMouseMove: PropTypes.func.isRequired,
-    onMouseOver: PropTypes.func.isRequired,
-    tabIndex: PropTypes.number.isRequired,
-  }).isRequired,
-  /**
-   * Inner ref to DOM Node
-   */
-  innerRef: PropTypes.oneOfType([
-    PropTypes.oneOf([null]),
-    PropTypes.func,
-    PropTypes.shape({
-      current: PropTypes.any.isRequired,
-    }),
-  ]).isRequired,
-  /**
-   * Whether the option is focused.
-   */
-  isFocused: PropTypes.bool.isRequired,
-  /**
-   * Whether the option is selected.
-   */
-  isSelected: PropTypes.bool.isRequired,
-};
-
 function Placeholder(props) {
   const { selectProps, innerProps = {}, children } = props;
   return (
@@ -203,18 +128,6 @@ function Placeholder(props) {
     </Typography>
   );
 }
-
-Placeholder.propTypes = {
-  /**
-   * The children to be rendered.
-   */
-  children: PropTypes.node,
-  /**
-   * props passed to the wrapping element for the group.
-   */
-  innerProps: PropTypes.object,
-  selectProps: PropTypes.object.isRequired,
-};
 
 function SingleValue(props) {
   return (
@@ -255,21 +168,10 @@ function Menu(props) {
   );
 }
 
-Menu.propTypes = {
-  /**
-   * The children to be rendered.
-   */
-  children: PropTypes.element.isRequired,
-  /**
-   * Props to be passed to the menu wrapper.
-   */
-  innerProps: PropTypes.object.isRequired,
-  selectProps: PropTypes.object.isRequired,
-};
+
 
 const components = {
   Control,
-  Menu,
   NoOptionsMessage,
   Option,
   Placeholder,
@@ -292,7 +194,7 @@ export default function IntegrationReactSelect(props) {
         setCliente(result);
       })
     }else if(estado === true ){
-      console.log("Entre");
+      console.log("SELECCIONADO");
       setSeleccionado(single);
     }
   });

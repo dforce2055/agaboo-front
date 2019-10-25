@@ -7,44 +7,9 @@ import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
 
 //AGREGADO
-import InputBase from '@material-ui/core/InputBase';
-import {AddCircleIcon} from '@material-ui/icons/AddCircle';
-import { TextField } from '@material-ui/core';
-
-const BootstrapInput = withStyles(theme => ({
-  root: {
-    'label + &': {
-      marginTop: theme.spacing(3),
-    },
-  },
-  input: {
-    borderRadius: 4,
-    position: 'relative',
-    backgroundColor: theme.palette.background.paper,
-    border: '1px solid #ced4da',
-    fontSize: 16,
-    padding: '10px 26px 1px 1px',
-    transition: theme.transitions.create(['border-color', 'box-shadow']),
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-    '&:focus': {
-      borderRadius: 4,
-      borderColor: '#80bdff',
-      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-    },
-  },
-}))(InputBase);
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import { TextField, Input } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -56,65 +21,70 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CustomizedSelects() {
+export default function CustomizedSelects(props) {
   const classes = useStyles();
 
-  const [state,setState] = React.useState(false);
-  const [cant_prodt_select, setCant_prodt_select] = React.useState({
-    producto:'',
-    modelo:'',
-    cantidad:''
-  });
+  const {handleChange} = props;
+  const {cant_prodt_select} = props;
+  const {addArrayProduct} = props;
+
+  //Si fue seleccionado el baño publico, se pondra verdadero y mostrara los demas modelos
+  const [modeloBaño,setModeloBaño] = React.useState(false);
 
   React.useEffect(()=>{
-    if (cant_prodt_select.producto === 'bañoQuimico') {
-      console.log(cant_prodt_select.modelo);
-        setState(true);
-    }else if(cant_prodt_select.producto !== 'bañoQuimico'){
-      setState(false);
+    if (cant_prodt_select.producto === 'Baño Quimico') {
+      setModeloBaño(true);
+    }else if(cant_prodt_select.producto !== 'Baño Quimico'){
+      setModeloBaño(false);
     }
   });
 
-  const handleChange2 = name => event => {    
-    setCant_prodt_select({ ...cant_prodt_select, [name]: event.target.value });  
-    console.log(event.target.value);
-  };
-
-  
 
   return (
-    <form className={classes.root} autoComplete="off">
-    
-      <FormControl className={classes.margin}>
-      <TextField 
-      id="time" 
-      type="number"
-      placeholder="Cantidad" />
-      </FormControl>
+    <form className={classes.root}>
 
-      <FormControl className={classes.margin}>        
+    <FormControl className={classes.margin}>
+    <Fab 
+      size="small" 
+      aria-label="add" 
+      className={classes.fab}
+      onClick={addArrayProduct}
+    ><AddIcon />
+      </Fab>
+    </FormControl>
+
+      <FormControl className={classes.margin}>    
         <Select
           value={cant_prodt_select.producto}
-          onChange={handleChange2('producto')}
-          input={  <TextField 
+          onChange={handleChange('producto')}
+          input={<Input 
            type="text"/>}
         >
-          <MenuItem value={'bañoQuimico'}>Baño Quimico</MenuItem>
-          <MenuItem value={'oficina'}>Oficina de obra</MenuItem>
-          <MenuItem value={'garita'}>Garita de seguridad</MenuItem>
-          <MenuItem value={'boleteria'}>Boleteria</MenuItem>
+          <MenuItem value={'Baño Quimico'}>Baño Quimico</MenuItem>
+          <MenuItem value={'Oficina'}>Oficina de obra</MenuItem>
+          <MenuItem value={'Garita'}>Garita de seguridad</MenuItem>
+          <MenuItem value={'Boleteria'}>Boleteria</MenuItem>
         </Select>
       </FormControl>
-      { state ?  <FormControl className={classes.margin}>
+      
+      { modeloBaño ?  <FormControl className={classes.margin}>
         <NativeSelect
-          value={cant_prodt_select.modelo}
-          onChange={handleChange2('modelo')}
-        >
-          <option value="" />
+          onChange={handleChange('modelo')}
+        ><option value="" />
           <option value={'AG1'}>AG1</option>
           <option value={'AG2'}>AG2</option>
         </NativeSelect>
       </FormControl> : '' }
+
+      <FormControl className={classes.margin}>
+      <TextField 
+      style={{width:'100px'}}
+      type="text"
+      placeholder="ID"
+      onChange={handleChange('id_producto')}
+      />
+      </FormControl>
+
     </form>
   );
 }

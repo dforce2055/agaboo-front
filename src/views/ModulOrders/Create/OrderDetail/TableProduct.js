@@ -18,43 +18,70 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0),
-  createData('Ice cream sandwich', 237, 9.0),
-  createData('Eclair', 262, 16.0),
-  createData('Cupcake', 305, 3.7),
-  createData('Gingerbread', 356, 16.0),
-];
-
 export default function SimpleTable() {
   const classes = useStyles();
+
+    //Objeto el cual almacenare en sessionStorage
+    const [cant_prodt_select, setCant_prodt_select] = React.useState({
+      producto:'',
+      modelo:'',
+      //cantidad:'',
+      id_producto:''
+    });
+  
+  //Arreglo donde guardare los productos guardados en el listad.
+  const [arrayProduct,setArrayProduct] = React.useState([]);
+
+
+  const handleChange = name => event => {    
+    setCant_prodt_select({ ...cant_prodt_select, [name]: event.target.value });  
+  };
+    
+  const clearObj = () => {
+    setCant_prodt_select({producto:'',modelo:'',id_producto:''});
+  }
+
+  const addArrayProduct = () =>{
+    arrayProduct.push(cant_prodt_select);
+
+    sessionStorage.setItem('arreglo_productos',JSON.stringify(arrayProduct));
+
+    var data = sessionStorage.getItem("arreglo_productos");
+    console.log("MUESTRO ARREGLO GUARDADO EN SESSIONSTORAGE:",JSON.parse(data));
+
+    var cliente = sessionStorage.getItem("cliente_pedido");
+    console.log("MUESTRO EL CLIENTE SELECCIONADO EN PEDIDOS: ",
+    JSON.stringify(cliente));
+    
+
+    clearObj();
+  } 
 
   return (
     <Paper className={classes.root}>
 
-    <CustomizedSelects></CustomizedSelects>
+    <CustomizedSelects
+      handleChange={handleChange}
+      cant_prodt_select={cant_prodt_select}
+      addArrayProduct={addArrayProduct}
+    ></CustomizedSelects>
 
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
+            <TableCell>Producto</TableCell>
+            <TableCell align="right">Modelo</TableCell>
+            <TableCell align="right">ID</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.name}>
+          {arrayProduct.map(row => (
+            <TableRow key={arrayProduct.id_producto}>
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.producto}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
+              <TableCell align="right">{row.modelo}</TableCell>
+              <TableCell align="right">{row.id_producto}</TableCell>
             </TableRow>
           ))}
         </TableBody>

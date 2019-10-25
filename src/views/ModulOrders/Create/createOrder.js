@@ -133,25 +133,24 @@ export default function Form() {
 
   React.useEffect(()=>{
     //BORRAR
-    if (sessionStorage.getItem('info_cliente_pedido') !=null) {
-      var data = JSON.stringify(sessionStorage.getItem('info_cliente_pedido'))      
+    if (sessionStorage.getItem('cliente_pedido') !=null) {
+      var data = JSON.stringify(sessionStorage.getItem('info_cliente_pedido'))  
       console.log(data);
-      
+             
     }
   });
 
   const handleChange = name => event => {    
     setValues({ ...values, [name]: event.target.value });  
   };
-  
+
+  //BORRAAR
   function handleProductChange(event) {
     setProduct(event.target.value);
   };
 
   const handleSubmit= () =>{
-    var detallePedido = sessionStorage.setItem('info_detalle_pedido',JSON.stringify(values));
-    console.log("MUESTRO DETALLE PEDIDO: ",detallePedido);
-    
+    sessionStorage.setItem('cliente_pedido',JSON.stringify(values));
   }
 
   
@@ -167,5 +166,3 @@ export default function Form() {
   </React.Fragment>
   );
 }
-
-
