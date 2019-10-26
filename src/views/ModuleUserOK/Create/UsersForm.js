@@ -1,11 +1,27 @@
 import React from 'react';
-//import UserController from '../../../controllers/User';
-import DialogAcept from './dialogAcept';
+import UserController from '../../../controllers/User';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { withRouter } from "react-router-dom";
-import { makeStyles, MuiThemeProvider } from '@material-ui/core/styles';
+import { makeStyles, MuiThemeProvider, createStyles} from '@material-ui/core/styles';
 import { red, blue } from '@material-ui/core/colors';
-import { Grid, TextField, InputLabel, Select, MenuItem, Button, ButtonGroup, Typography, createMuiTheme } from '@material-ui/core/';
+import { 
+  Grid, TextField, InputLabel, Select, MenuItem, Button, ButtonGroup, 
+  Typography, createMuiTheme, FormGroup, FormControlLabel, 
+  Switch, withStyles  } from '@material-ui/core/';
+
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+
+import {
+  Dialog, DialogActions,
+  DialogContent, DialogContentText,
+  DialogTitle
+} from '@material-ui/core/';
 
 
 const theme = createMuiTheme({
@@ -53,9 +69,74 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
+  estado: {
+    
+    marginLeft: '2vw',
+    color: 'rgba(0, 0, 0, 0.5)',
+    fontSize: '23px',
+    fontWeight: 100,
+
+  }
   
 }));
 
+const IOSSwitch = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: 48,
+      height: 33,
+      padding: 0,
+      margin: theme.spacing(1),
+      marginLeft: theme.spacing(4),
+    },
+    switchBase: {
+      padding: 1,
+      '&$checked': {
+        transform: 'translateX(16px)',
+        color: theme.palette.common.white,
+        '& + $track': {
+          backgroundColor: '#0ce8ca',
+          opacity: 1,
+          border: 'none',
+        },
+      },
+      '&$focusVisible $thumb': {
+        color: '#0ce8ca',
+        border: '6px solid #fff',
+      },
+    },
+    thumb: {
+      width: 30,
+      height: 30,
+    },
+    track: {
+      borderRadius: 32 / 2,
+      border: `1px solid ${theme.palette.grey[400]}`,
+      backgroundColor: theme.palette.grey[50],
+      opacity: 1,
+      transition: theme.transitions.create(['background-color', 'border']),
+    },
+    checked: {},
+    focusVisible: {},
+  }),
+  )(({ classes, ...props }: Props) => {
+  return (
+    <Switch
+      focusVisibleClassName={classes.focusVisible}
+      disableRipple
+      classes={{
+        root: classes.root,
+        switchBase: classes.switchBase,
+        thumb: classes.thumb,
+        track: classes.track,
+        checked: classes.checked,
+      }}
+      {...props}
+    />
+  );
+});
+
+//fetch
 const documentos = [
   {
     value: 'DNI',
@@ -83,6 +164,7 @@ const documentos = [
   },
 ];
 
+//fetch
 const roles = [
   {
     value: 'ADMIN',
@@ -99,32 +181,20 @@ const roles = [
 ];
 
 
+
+
 function AddressForm(props) {
   const classes = useStyles();
 
   const {history} = props;
   const [values, setValues] = React.useState({
-    /*nombre:'',
-    apellido: '',
-    celular: '',
-    empleo:'',
-    cuit:'',    
-    email:'',
-    localidad:'',
-    calle:'',
-    altura:'',
-    role: '',
-    eliminado:false,
-    mostrarDialog:false,*/
-
-
     nombre: '',
     apellido: '',
     cuit: '',
     cuil: '',
     tipoDocumento: '',
     numeroDocumento: '',
-    fechNac: '',
+    fechNac: new Date('1980-01-01T00:00:00'),
     direccion: '',
     calle: '',
     altura: '',
@@ -132,9 +202,8 @@ function AddressForm(props) {
     celular: '',
     telefono: '',
     email: '',
-    estado: '',
+    estado: true,
     role: '',
-    password: '',
     eliminado:false,
     mostrarDialog:false,
   });  
@@ -142,15 +211,47 @@ function AddressForm(props) {
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });  
   };
+  //Seteando estado del nuevo usuario
+  const [estado, setEstado] = React.useState(false);
+  const cambiarEstado = () => {
+    setEstado(prev => !prev);
+    values.estado = estado;
+  };
 
-  const handleOnClick = () => {
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
+
+  const handleDateChange = date => {
+    setSelectedDate(date);
+    values.fechNac = date;
+  };
+
+  function setCuitOrCuil() {
+    if (values.tipoDocumento === 'CUIT') {
+      values.cuit = values.numeroDocumento;
+    }
+    if (values.tipoDocumento === 'CUIL') {
+      values.cuil = values.numeroDocumento;
+    }
+  }
+
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpenDialog = (value) => {
+    setOpen(true);
+  };
+
+  const handleCloseDialog = (e) => {
+    setOpen(false);
+    history.push('/mainMenu');
+  };
+
+  
+  const handleOnClick = (e) => {
     console.log('Guardando...')
     setCuitOrCuil();
+    
     let data = {
       nombre: values.nombre,
       apellido: values.apellido,
-      //id: values.cuit,
-      //empleo: values.empleo,
       cuit: values.cuit,
       cuil: values.cuil,
       tipoDocumento: values.tipoDocumento,
@@ -167,23 +268,10 @@ function AddressForm(props) {
       role:values.role,
       //eliminado:false,
     }
-    //CustomerController.addCustomer(data);
-    //UserController.addUser();
-    console.log("Toma, voy a mandar esta data => ");
-    console.log(data);
     
+    UserController.addUser(data);
+    handleClickOpenDialog();    
   }
-
-  function setCuitOrCuil() {
-    if ( values.tipoDocumento === 'CUIT' ) {
-      values.cuit = values.numeroDocumento;
-    }
-    if (values.tipoDocumento === 'CUIL') {
-      values.cuil = values.numeroDocumento;
-    }
-  }
-
-  console.log(values);
 
   return (
     <MuiThemeProvider theme={theme}>
@@ -225,33 +313,11 @@ function AddressForm(props) {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                id="outlined-select-roles"
-                select
-                fullWidth
-                label="Tipo de Usuario"
-                className={classes.textField}
-                value={values.role}
-                onChange={handleChange("role")}
-                SelectProps={{
-                  MenuProps: {
-                    className: classes.menu,
-                  },
-                }}
-                variant="outlined"
-              >
-                {roles.map(option => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
                 id="outlined-select-tipoDocumento"
                 select
                 fullWidth
                 label="Tipo de Documento"
+                validators={['required']} 
                 className={classes.textField}
                 value={values.tipoDocumento}
                 onChange={handleChange("tipoDocumento")}
@@ -284,7 +350,62 @@ function AddressForm(props) {
                 validators={['required', 'matchRegexp:(\D)?[0-9]{7}']} //digitos del 0 al 9, minimo 7 números en el orden del millon
                 errorMessages={['Campo requerido', '¡¡¡Número de documento invalido!!!']}
               />
-            </Grid>            
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="outlined-select-roles"
+                select
+                fullWidth
+                label="Tipo de Usuario"
+                validators={['required']} 
+                className={classes.textField}
+                value={values.role}
+                onChange={handleChange("role")}
+                SelectProps={{
+                  MenuProps: {
+                    className: classes.menu,
+                  },
+                }}
+                variant="outlined"
+              >
+                {roles.map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <span className={classes.estado}>Estado  </span>
+              <FormControlLabel
+                control={
+                  <IOSSwitch
+                    checked={values.estado}
+                    onChange={cambiarEstado}
+                    value="estado"
+                  />
+                }
+                label="Activo"
+                labelPlacement="end"
+              />
+            </Grid>
+            <Grid item xs={6} sm={12}>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant="inline"
+                  format="dd/MM/yyyy"
+                  margin="normal"
+                  id="date-picker-inline"
+                  label="Cumpleaños"
+                  value={values.fechNac}
+                  onChange={handleDateChange}
+                  KeyboardButtonProps={{
+                    'aria-label': 'Fecha de Cumpleaños',
+                  }}
+                />
+              </MuiPickersUtilsProvider>
+            </Grid>  
             <Grid item xs={12}>
               <TextValidator       
                 variant="outlined"
@@ -293,7 +414,7 @@ function AddressForm(props) {
                 name="email"
                 value={values.email}
                 fullWidth
-                validators={['matchRegexp:^[a-zA-Z0-9.!#$%&*+/=?^_{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$']}
+                validators={['required', 'matchRegexp:^[a-zA-Z0-9.!#$%&*+/=?^_{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$']}
                 errorMessages={[ 'Email no valido']}
               />
             </Grid>      
@@ -306,7 +427,7 @@ function AddressForm(props) {
                 fullWidth
                 variant="outlined"     
                 value={values.localidad}
-                validators={['required','matchRegexp:^[a-zA-Z ]*$']}
+                validators={['matchRegexp:^[a-zA-Z ]*$']}
                 errorMessages={['Campo requerido', 'Localidad no valida']}
               />
             </Grid>
@@ -318,7 +439,7 @@ function AddressForm(props) {
                 fullWidth 
                 required
                 value={values.calle}
-                validators={['required','matchRegexp:^[a-zA-Z ]*$']}
+                validators={['matchRegexp:^[a-zA-Z ]*$']}
                 errorMessages={['Campo requerido', 'Calle no valida']}
               />
             </Grid>
@@ -331,7 +452,7 @@ function AddressForm(props) {
                 required
                 value={values.altura}
                 type='number'
-                validators={['required']}
+                validators={[]}
                 errorMessages={['Campo requerido']}
               />
             </Grid>
@@ -345,8 +466,8 @@ function AddressForm(props) {
                 required
                 value={values.celular}
                 type='number'
-                validators={['required', 'matchRegexp:^(\D)?[0-9]']}
-                errorMessages={['Campo requerido', 'Celular es invalido']}
+                validators={[ 'matchRegexp:^(\D)?[0-9]']}
+                errorMessages={['Campo requerido', 'Teléfono celular invalido']}
               />
             </Grid> 
             <Grid item xs={12} sm={6} container justify="center" spacing={2}>
@@ -362,7 +483,32 @@ function AddressForm(props) {
                   >
                     Cancelar
                   </Button>
-                  <DialogAcept/>
+                  <Button
+                    label={"Registrar Usuario"}
+                    color="primary"
+                    variant="contained"
+                    type=" submit "
+                  >
+                    Guardar
+                  </Button>
+                <Dialog
+                  open={open}
+                  onClose={handleCloseDialog}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogTitle id="alert-dialog-title">{"Usuario guardado"}</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                      Se agregó un usuario a la base de datos.
+          </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleCloseDialog} color="primary">
+                      ACEPTAR
+          </Button>
+                  </DialogActions>
+                </Dialog>
               </ButtonGroup>
             </Grid>      
           </Grid>

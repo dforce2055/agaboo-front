@@ -50,7 +50,7 @@ export default function Checkout() {
       <main className={classes.layout}>
         <Paper className={classes.paper} >
           <Typography component="h1" variant="h4" align="left">
-            Formulario Registro de Usuarios
+            Registro de Usuarios
           </Typography>          
           <React.Fragment>
             <UsersForm/>              

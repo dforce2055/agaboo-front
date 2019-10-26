@@ -97,30 +97,13 @@ class UserRepo extends Component {
         if (!newUser) throw new Error(`Error: no se envio un cliente para registrar`);
         let result = await firebase.db.collection(collection)
             .doc(newUser.email)
-            .set({
-                nombre: newUser.nombre,
-                apellido: newUser.apellido,
-                cuit: newUser.cuit,
-                cuil: newUser.cuil,
-                tipoDocumento: newUser.tipoDocumento,
-                numeroDocumento: newUser.numeroDocumento,
-                fechNac: newUser.fechNac,
-                direccion: newUser.direccion,
-                calle: newUser.calle,
-                altura: newUser.altura,
-                localidad: newUser.localidad,
-                celular: newUser.celular,
-                telefono: newUser.telefono,
-                email: newUser.email,
-                estado: newUser.estado,
-                role: newUser.role,
-            })
+            .set(newUser)
             .then(() => {
-                console.log("Documento guardado exitosamente!");
+                console.log("Usuario guardado exitosamente!!!");
                 return true;
             })
             .catch(function (error) {
-                console.error("Error al guardar el documento: ", error);
+                console.error("Error al guardar el Usuario: ", error);
                 return false;
             });
         // Retorna True o False

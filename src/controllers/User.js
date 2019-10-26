@@ -1,9 +1,10 @@
 /**
  * @Controller
- * User Controller Class
+ * User **Controller** Class
  */
 import { Component } from 'react';
 import UserRepo from '../repositories/User';
+import {User} from '../models/User';
 
 
 class UserController extends Component {
@@ -15,6 +16,33 @@ class UserController extends Component {
 
         };
     };
+
+
+    addUser = async (data) => {
+        if (!data.email) throw new Error(`Error: el email es obligatorio para registrar un cliente`);
+        if (!data.numeroDocumento) throw new Error(`Error: el Número de Documento es obligatorio para registrar un cliente`);
+        if (!data.tipoDocumento) throw new Error(`Error: el tipo de Documento es obligatorio para registrar un cliente`);
+
+        try {
+            let newUser = new User();
+            newUser = Object.assign({}, data); //Utilizo Object.assign para mapear el objeto
+            const result = await UserRepo.addUser(newUser);
+
+            if (result) {
+                console.log(`Se agrego un nuevo Usuario ${newUser} `);
+                return true;
+            } else {
+                console.log(`No se pudo agregar el Usuario ${newUser}`);
+                return false;
+            }
+        } catch (error) {
+            console.log(error);
+        }   
+    }
+
+    getUsers = async () => {
+        
+    }
 
     getUserStatusAndRole = async (email) => {
         if (!email) throw new Error(`Error: el email es obligatorio`);
