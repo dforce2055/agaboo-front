@@ -5,7 +5,6 @@ import { emphasize, makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import NoSsr from '@material-ui/core/NoSsr';
 import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import CustomerController from '../../../../controllers/Customer';
 
@@ -160,15 +159,6 @@ ValueContainer.propTypes = {
   children: PropTypes.node,
   selectProps: PropTypes.object.isRequired,
 };
-function Menu(props) {
-  return (
-    <Paper square className={props.selectProps.classes.paper} {...props.innerProps}>
-      {props.children}
-    </Paper>
-  );
-}
-
-
 
 const components = {
   Control,
@@ -194,7 +184,6 @@ export default function IntegrationReactSelect(props) {
         setCliente(result);
       })
     }else if(estado === true ){
-      console.log("SELECCIONADO");
       setSeleccionado(single);
     }
   });

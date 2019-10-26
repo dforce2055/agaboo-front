@@ -9,7 +9,6 @@ import Paper from '@material-ui/core/Paper';
 import Button from  '../Create/Button';
 
 import ProductController from '../../../controllers/Product';
-import DeleteIcon from '@material-ui/icons/Delete';
 import FormDialog from './DialogUpdateProduct';
 import SearchBox from './SearchBox';
 

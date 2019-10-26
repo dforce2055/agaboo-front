@@ -1,6 +1,5 @@
 import React from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
+import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
@@ -22,6 +21,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function CustomizedSelects(props) {
+  React.useEffect(()=>{
+    if (cant_prodt_select.producto === 'Baño Quimico') {
+      setModeloBaño(true);
+    }else if(cant_prodt_select.producto !== 'Baño Quimico'){
+      setModeloBaño(false);
+    }
+  });
+
   const classes = useStyles();
 
   const {handleChange} = props;
@@ -31,17 +38,8 @@ export default function CustomizedSelects(props) {
   //Si fue seleccionado el baño publico, se pondra verdadero y mostrara los demas modelos
   const [modeloBaño,setModeloBaño] = React.useState(false);
 
-  React.useEffect(()=>{
-    if (cant_prodt_select.producto === 'Baño Quimico') {
-      setModeloBaño(true);
-    }else if(cant_prodt_select.producto !== 'Baño Quimico'){
-      setModeloBaño(false);
-    }
-  });
-
-
   return (
-    <form className={classes.root}>
+    <div className={classes.root}>
 
     <FormControl className={classes.margin}>
     <Fab 
@@ -70,7 +68,7 @@ export default function CustomizedSelects(props) {
       { modeloBaño ?  <FormControl className={classes.margin}>
         <NativeSelect
           onChange={handleChange('modelo')}
-        ><option value="" />
+        ><option value="--" />
           <option value={'AG1'}>AG1</option>
           <option value={'AG2'}>AG2</option>
         </NativeSelect>
@@ -79,12 +77,12 @@ export default function CustomizedSelects(props) {
       <FormControl className={classes.margin}>
       <TextField 
       style={{width:'100px'}}
-      type="text"
-      placeholder="ID"
-      onChange={handleChange('id_producto')}
+      type="number"
+      placeholder="Cant."
+      onChange={handleChange('cantidad')}
       />
       </FormControl>
 
-    </form>
+    </div>
   );
 }

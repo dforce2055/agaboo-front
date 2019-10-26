@@ -104,10 +104,8 @@ export default function ClientForm(props) {
    console.log(customer);
   */
 
-    function setCustomerSeleccionado(e) {
+  function setCustomerSeleccionado(e) {
     sessionStorage.setItem('info_cliente_pedido',JSON.stringify(seleccionado));
-    
-    var data = sessionStorage.getItem('info_cliente_pedido')
     
     setSeleccionado(e);
   }

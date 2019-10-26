@@ -25,20 +25,25 @@ export default function SimpleTable() {
     const [cant_prodt_select, setCant_prodt_select] = React.useState({
       producto:'',
       modelo:'',
-      //cantidad:'',
+      cantidad:'',
       id_producto:''
     });
   
   //Arreglo donde guardare los productos guardados en el listad.
   const [arrayProduct,setArrayProduct] = React.useState([]);
+/*
+ Para evitar el error ==> index.js:1375 Warning: validateDOMNesting(...): <form> cannot appear as a descendant of <form>.
 
+ SOLUCION ==> const arrayProduct = [];
 
+ PROBLEMA==> No guarda mas de un valor al momento de agregar un producto
+*/
   const handleChange = name => event => {    
     setCant_prodt_select({ ...cant_prodt_select, [name]: event.target.value });  
   };
     
   const clearObj = () => {
-    setCant_prodt_select({producto:'',modelo:'',id_producto:''});
+    setCant_prodt_select({producto:' ',modelo:' ',cantidad:' ',id_producto:' '});
   }
 
   const addArrayProduct = () =>{
@@ -49,11 +54,14 @@ export default function SimpleTable() {
     var data = sessionStorage.getItem("arreglo_productos");
     console.log("MUESTRO ARREGLO GUARDADO EN SESSIONSTORAGE:",JSON.parse(data));
 
-    var cliente = sessionStorage.getItem("cliente_pedido");
+    var cliente = JSON.parse(sessionStorage.getItem("info_cliente_pedido"));
     console.log("MUESTRO EL CLIENTE SELECCIONADO EN PEDIDOS: ",
-    JSON.stringify(cliente));
-    
+    cliente);
 
+    var infoDetalle = sessionStorage.getItem('info_detalle_pedido');
+    
+    console.log(JSON.parse(infoDetalle));
+    
     clearObj();
   } 
 
@@ -71,7 +79,7 @@ export default function SimpleTable() {
           <TableRow>
             <TableCell>Producto</TableCell>
             <TableCell align="right">Modelo</TableCell>
-            <TableCell align="right">ID</TableCell>
+            <TableCell align="right">Cantidad</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -81,7 +89,7 @@ export default function SimpleTable() {
                 {row.producto}
               </TableCell>
               <TableCell align="right">{row.modelo}</TableCell>
-              <TableCell align="right">{row.id_producto}</TableCell>
+              <TableCell align="right">{row.cantidad}</TableCell>
             </TableRow>
           ))}
         </TableBody>

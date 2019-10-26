@@ -6,7 +6,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import SimpleTable from './OrderDetail/TableProduct';
+
 function formulario(handleChange){
+  
   return(
     <form>
       <div className="password">
@@ -39,7 +41,7 @@ function formulario(handleChange){
             />              
           </div>
 
-          <div className="firstName">
+          <div className="password">
             <label htmlFor="lastName">Forma de pago</label> 
             <input
               placeholder="Cheque, Efectivo..."
@@ -49,6 +51,8 @@ function formulario(handleChange){
             />              
           </div>
 
+
+
           <div className="lastName">
             <label htmlFor="lastName">Fecha de entrega</label> 
             <input
@@ -57,6 +61,17 @@ function formulario(handleChange){
               name="dateOfDelivery"
               noValidate
               onChange={handleChange('dateOfDelivery')}
+            />
+          </div>
+
+          <div className="lastName">
+            <label htmlFor="lastName">Fecha de finalizacion</label> 
+            <input
+              placeholder="DD/MM/AAAA"
+              type="date"
+              name="dateOfDeliveryFIN"
+              noValidate
+              onChange={handleChange('dateOfDeliveryFIN')}
             />
           </div>
 
@@ -74,6 +89,12 @@ function formulario(handleChange){
 }
 
 function detallePedido(product,handleProductChange,handleChange){
+  /*//VA EN FORM
+  const [product, setProduct] = React.useState('false');
+  function handleProductChange(event) {
+    setProduct(event.target.value);
+  };*/
+
   return(
     <React.Fragment>
       <div className="password">
@@ -125,32 +146,27 @@ export default function Form() {
     workContact:'',
     formOfPay:'',
     dateOfDelivery:'',
-    locationOfDelivery:'',
-    units:'',
-    totalPrice:''
+    dateOfDeliveryFIN:'',
+    locationOfDelivery:''
+    //units:'',
+    //totalPrice:''
     });  
-  const [product, setProduct] = React.useState('false');
-
-  React.useEffect(()=>{
-    //BORRAR
-    if (sessionStorage.getItem('cliente_pedido') !=null) {
-      var data = JSON.stringify(sessionStorage.getItem('info_cliente_pedido'))  
-      console.log(data);
-             
-    }
-  });
 
   const handleChange = name => event => {    
-    setValues({ ...values, [name]: event.target.value });  
+    setValues({ ...values, [name]: event.target.value }); 
+    
+    sessionStorage.setItem('info_detalle_pedido',JSON.stringify(values)); 
   };
 
-  //BORRAAR
-  function handleProductChange(event) {
-    setProduct(event.target.value);
-  };
 
   const handleSubmit= () =>{
-    sessionStorage.setItem('cliente_pedido',JSON.stringify(values));
+
+    //Agrego detalle pedido a SESSION STORAGE
+    
+    
+    console.log("Agrego info_detalle_pedido a SESSION STORAGE");
+
+    //sessionStorage.setItem("detalle_pedido",JSON.stringify());
   }
 
   
