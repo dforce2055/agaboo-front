@@ -17,7 +17,7 @@ function formulario(handleChange){
               placeholder="Direccion de cobro"
               type="text"
               noValidate
-              onChange={handleChange('locationOfPay')}
+              onChange={handleChange('lugarDePago')}
             />
           </div>
           
@@ -27,7 +27,7 @@ function formulario(handleChange){
               placeholder="Nombre y Apellido"
               type="text"
               noValidate
-              onChange={handleChange('responsibleForPayment')}
+              onChange={handleChange('responsableDelPago')}
             />
           </div>
 
@@ -37,7 +37,7 @@ function formulario(handleChange){
               placeholder="Nombre y Apellido"
               type="text"
               noValidate
-              onChange={handleChange('workContact')}
+              onChange={handleChange('ContactoEnTrabajo')}
             />              
           </div>
 
@@ -47,7 +47,7 @@ function formulario(handleChange){
               placeholder="Cheque, Efectivo..."
               type="text"
               noValidate
-              onChange={handleChange("formOfPay")}
+              onChange={handleChange("formaDePago")}
             />              
           </div>
 
@@ -58,9 +58,9 @@ function formulario(handleChange){
             <input
               placeholder="DD/MM/AAAA"
               type="date"
-              name="dateOfDelivery"
+              name="fechaDeCreacionPedido"
               noValidate
-              onChange={handleChange('dateOfDelivery')}
+              onChange={handleChange('fechaDeCreacionPedido')}
             />
           </div>
 
@@ -69,9 +69,9 @@ function formulario(handleChange){
             <input
               placeholder="DD/MM/AAAA"
               type="date"
-              name="dateOfDeliveryFIN"
+              name="fechaDeEntregaPedido"
               noValidate
-              onChange={handleChange('dateOfDeliveryFIN')}
+              onChange={handleChange('fechaDeEntregaPedido')}
             />
           </div>
 
@@ -81,7 +81,7 @@ function formulario(handleChange){
               placeholder="Direccion de entrega"
               type="text"
               noValidate
-              onChange={handleChange('locationOfDelivery')} 
+              onChange={handleChange('ubicacionDeEntrega')} 
             />              
           </div>
     </form>
@@ -141,20 +141,17 @@ function detallePedido(product,handleProductChange,handleChange){
 export default function Form() {
 
   const [values,setValues] = React.useState({
-    locationOfPay:'',
-    responsibleForPayment:'',
-    workContact:'',
-    formOfPay:'',
-    dateOfDelivery:'',
-    dateOfDeliveryFIN:'',
-    locationOfDelivery:''
-    //units:'',
-    //totalPrice:''
+    lugarDePago:'',
+    responsableDelPago:'',
+    ContactoEnTrabajo:'',
+    formaDePago:'',
+    fechaDeCreacionPedido:'',
+    fechaDeEntregaPedido:'',
+    ubicacionDeEntrega:''
     });  
 
   const handleChange = name => event => {    
     setValues({ ...values, [name]: event.target.value }); 
-    
     sessionStorage.setItem('info_detalle_pedido',JSON.stringify(values)); 
   };
 

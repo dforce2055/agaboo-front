@@ -54,45 +54,6 @@ class CustomerRepo extends Component {
         }
     }
 
-    //No se usa y se va a eliminar
-    getCustomerByEmail = async (email) => {
-        try {
-            let customer = {};
-            await firebase.db.collection(collection)
-                .where('email', '==', email)
-                .limit(1)
-                .get()
-                .then(function (querySnapshot) {
-                    querySnapshot.forEach(function (doc) {
-                        customer = doc.data();
-                    });
-                })
-            return customer;
-        } catch (error) {
-            throw new Error(`No se encontro el usuario con Email: ${ email }`);
-        }
-    }
-
-    //No se usa y se va a eliminar
-    getCustomerByName = async (name) => {
-        try {
-            let customers = [];
-            await firebase.db.collection(collection)
-                .where('nombre', '>=', name)
-                .orderBy('nombre')
-                //.limit(1)
-                .get()
-                .then(function (querySnapshot) {
-                    querySnapshot.forEach(function (doc) {
-                        customers.push(doc.data());
-                    });
-                })
-            return customers;
-        } catch (error) {
-            throw new Error(`No se encontro el usuario con Nombre: ${ name }`);
-        }
-    }
-
     //Se usa en editCustomer pero se va a eliminar
     getCustomerByCUIL = async (cuil) => {
         try {
@@ -129,6 +90,7 @@ class CustomerRepo extends Component {
         }        
     }
 
+    //SE USA?
     getCustomerById = async (id) => {
         let customer = {};
          await firebase.db.collection(collection)
@@ -175,20 +137,6 @@ class CustomerRepo extends Component {
                 //EL CAMPO ESTABA MAL ESCRITO Y ESTABA EN FALSO
                 eliminado: true,
             })
-            .then(() => { return true })
-            .catch(function (error) {
-                console.error("Error al eliminar el Cliente: ", error);
-                return false;
-            });
-        return result;
-    }
-
-    //No se utiliza y se va a eliminar
-    deleteCustomerREAL = async (cuil) => {
-        if (!cuil) throw new Error(`Error: el CUIL es obligatorio`);
-        let result = firebase.db.collection(collection)
-            .doc(cuil)
-            .delete() //BORRA REALMENTE DE LA DDBB
             .then(() => { return true })
             .catch(function (error) {
                 console.error("Error al eliminar el Cliente: ", error);

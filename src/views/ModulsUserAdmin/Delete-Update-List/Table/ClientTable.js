@@ -50,7 +50,7 @@ export default function ClientTable() {
       }else if(search.buscar.length === 0){
         setValidador(false)
       }
-    },[]);
+    });
 
   function updateStateArray(){
     setStateArray(true)

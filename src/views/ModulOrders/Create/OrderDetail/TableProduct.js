@@ -55,12 +55,12 @@ export default function SimpleTable() {
     console.log("MUESTRO ARREGLO GUARDADO EN SESSIONSTORAGE:",JSON.parse(data));
 
     var cliente = JSON.parse(sessionStorage.getItem("info_cliente_pedido"));
-    console.log("MUESTRO EL CLIENTE SELECCIONADO EN PEDIDOS: ",
+    console.log("MUESTRO EL CLIENTE GUARDADO EN SESSION STORAGE: ",
     cliente);
 
     var infoDetalle = sessionStorage.getItem('info_detalle_pedido');
     
-    console.log(JSON.parse(infoDetalle));
+    console.log("MUESTRO INFORMACION DE DETALLE GUARDADA EN SESSION STORAGE:",JSON.parse(infoDetalle));
     
     clearObj();
   } 
