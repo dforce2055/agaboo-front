@@ -1,121 +1,125 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 //import TextField from '@material-ui/core/TextField';
-import IntegrationAutosuggest from './clientsList';
 
-export default function ClientForm() {
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [telephone, setTelephone] = React.useState("");
-  const [telephonefixed, setTelephoneFixed] = React.useState("");
-  const [location, setLocation] = React.useState("");
+import IntegrationReactSelect from './SelectCustomer/SelectCustomer';
 
-  function handleFirstNameChange(event) {
-    setFirstName(event.target.value);
+function clientExist(seleccionado2) {
+  const seleccionado = seleccionado2;
+
+  return <form noValidate>
+  <div className="firstName">
+    <label htmlFor="firstName">Nombre</label>
+    <input
+      value={seleccionado.nombre}
+    />
+  </div>
+  <div className="lastName">
+    <label htmlFor="lastName">Apellido</label>
+    <input
+      value={seleccionado.apellido}
+    />
+  </div>
+  <div className="firstName"> 
+      <label htmlFor="cuit">CUIT/CUIL</label> 
+      <input
+       value={seleccionado.id}
+      />
+    </div>
+  <div className="email">
+    <label htmlFor="email">Email</label>
+    <input
+      value={seleccionado.email}
+    />
+  </div>
+  <div className="firstName">   
+    <label htmlFor="firstName">Celular</label> 
+    <input
+     value={seleccionado.celular}
+    />
+  </div>
+  <div className="password">
+    <label htmlFor="location">localidad</label>
+    <input
+      value = {seleccionado.localidad}
+    />
+  </div>
+</form>
+
+}
+
+function clientNotExist() {
+    return <form noValidate>
+    <div className="firstName">
+      <label htmlFor="firstName">Nombre</label>
+      <input
+        value={''}
+      />
+    </div>
+    <div className="lastName">
+      <label htmlFor="lastName">Apellido</label>
+      <input
+        value={''}
+      />
+    </div>
+    <div className="firstName"> 
+        <label htmlFor="cuit">CUIT/CUIL</label> 
+        <input
+          value={''}
+        />
+      </div>
+    <div className="email">
+      <label htmlFor="email">Email</label>
+      <input
+        value={''}
+      />
+    </div>
+    <div className="firstName">   
+      <label htmlFor="firstName">Celular</label> 
+      <input
+        value={''}
+      />
+    </div>
+    <div className="password">
+      <label htmlFor="location">Dirección</label>
+      <input
+        value={' '}
+      />
+    </div>
+  </form>
+}
+
+export default function ClientForm(props) {
+
+  const [seleccionado,setSeleccionado] = React.useState([]);
+
+  /*var customer = {
+    nombre:seleccionado.nombre,
+    apellido:seleccionado.apellido,
+    id:seleccionado.id,
+    email:seleccionado.email,
+    celular:seleccionado.celular,
+    localidad: seleccionado.localidad
   }
-  function handleLastNameChange(event) {
-    setLastName(event.target.value);
+   console.log(customer);
+  */
+
+  function setCustomerSeleccionado(e) {
+    sessionStorage.setItem('info_cliente_pedido',JSON.stringify(seleccionado));
+    
+    setSeleccionado(e);
   }
-  function handleEmailChange(event) {
-    setEmail(event.target.value);
-  }
-  function handleTelephoneChange(event) {
-    setTelephone(event.target.value);
-  }
-  function handleTelephoneFixedChange(event) {
-    setTelephoneFixed(event.target.value);
-  }
-  function handleLocationChange(event) {
-    setLocation(event.target.value);
-  }
+
 
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Detalles de cliente
       </Typography>
-      <IntegrationAutosuggest/>
-
-      <form noValidate>
-        <div className="firstName">
-          <label htmlFor="firstName">Nombre</label>
-          <input
-            className={firstName.length > 0 ? "error" : null}
-            placeholder="Nombre"
-            type="text"
-            name="firstName"
-            noValidate
-            onChange={handleFirstNameChange}
-            readOnly
-          />
-        </div>
-
-        <div className="lastName">
-          <label htmlFor="lastName">Apellido</label>
-          <input
-            className={lastName.length > 0 ? "error" : null}
-            placeholder="Apellido"
-            type="text"
-            name="lastName"
-            noValidate
-            onChange={handleLastNameChange}
-            readOnly
-          />
-        </div>
-
-        <div className="email">
-          <label htmlFor="email">Email</label>
-          <input
-            className={email.length > 0 ? "error" : null}
-            placeholder="Email@correo.com"
-            type="email"
-            name="email"
-            noValidate
-            onChange={handleEmailChange}
-            readOnly
-          />
-        </div>
-
-        <div className="firstName">   {/* Nombre del css a utilizar*/}
-          <label htmlFor="firstName">Teléfono</label> 
-          <input
-            className={telephone.length > 0 ? "error" : null}
-            placeholder="22546654**"
-            type="tel"
-            name="telephonefixed"  //Nombre state a utilizar
-            noValidate
-            onChange={handleTelephoneChange}  // Guardo los cambios 
-            readOnly
-          />
-        </div>
-
-        <div className="lastName">   {/* Nombre del css a utilizar*/}
-          <label htmlFor="lastName">Tel. de Contacto</label> 
-          <input
-            className={telephonefixed.length > 0 ? "error" : null}
-            placeholder="22674210**"
-            type="tel"
-            name="telephonefixed"  //Nombre state a utilizar
-            noValidate
-            onChange={handleTelephoneFixedChange}  // Guardo los cambios 
-            readOnly
-          />             
-        </div>
-
-        <div className="password">
-          <label htmlFor="location">Dirección</label>
-          <input
-            className={location.length > 0 ? "error" : null}
-            placeholder="Direccion"
-            type="text"
-            name="location"
-            noValidate
-            onChange={handleLocationChange}
-            readOnly
-          />
-        </div>
-      </form>
+      <IntegrationReactSelect
+        setSeleccionado = {setCustomerSeleccionado}
+      />
+      {seleccionado == null ? clientNotExist() : clientExist(seleccionado)}
 
     </React.Fragment>
   );
