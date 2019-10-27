@@ -22,9 +22,6 @@ const useStyles = makeStyles(theme => ({
     }));
 
 
-
-  
-
 const typeState = [
       {
         value: "DISPONIBLE",
@@ -59,10 +56,6 @@ const typeProduct = [
         }
         
 ];
-
-      
-
-  
 
 
 

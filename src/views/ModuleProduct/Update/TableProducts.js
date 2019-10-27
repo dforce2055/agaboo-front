@@ -46,12 +46,11 @@ const useStyles = makeStyles(theme => ({
 export default function CustomizedTables(props) {
   const {rows,setRows} = props;
   const {value, setValue} = props;
-  //const [count, setCount] = useState(0);
   const {update, setUpdate} = props;
 
   const classes = useStyles();
   const array =[] 
-  const typesProduct = ["Baño Químico", "Oficina", "Boletería", "Garita"]
+  const typesProduct = ["Baño Químico", "Oficina", "Boletería", "Garita"] // Hardcode de los tipos de productos
   
   
 
@@ -63,29 +62,18 @@ export default function CustomizedTables(props) {
       let count ;
 
       for(let idx = 0 ; idx < typesProduct.length ; idx++  ){
-        //console.log("typesProducts : ", typesProduct.length )
         product = typesProduct[idx] ;
         count = countProducts( product, products); // traigo la cantidad del mismo tipo
         array.push({"product" : product, "value" : value, "count" : count}) 
-      };// Revisar Mañana
-
-      // const product = "Baño Químico" ;
-      // setCount(countProducts( product, products)); // traigo la cantidad del mismo tipo
-      // array.push({"product" : product, "value" : value, "count" : count}) 
+      };
       
-      
-
-
-      console.log("Array :" , array) 
       setRows(array);
       setUpdate(false); 
-      console.log("products :" , rows);  
     }
 
   };
-  console.log('Rows despues de getProducts: ', rows);
 
-  function countProducts(product, array){
+  function countProducts(product, array){ // Funcion para contar Productos
 
     let count = 0;
     let i = 0;
@@ -95,30 +83,13 @@ export default function CustomizedTables(props) {
       }
       i++;
     }
-    console.log("Count dentro de countProduct() : " , count);
 
     return count;
   }
 
-  // function getArray(newArray){
-  //   console.log('getArray :',  newArray);
-  //   setRows(newArray);
-  //   console.log('Rows en table products: ' , rows);
-  //   getProducts();
-  // };
-  
-
 
   useEffect(() => {
-    //if()
     getProducts();
-
-
-    if( array !== rows){
-     // setRows(array);
-      
-    }
-
   });
   
   return (
