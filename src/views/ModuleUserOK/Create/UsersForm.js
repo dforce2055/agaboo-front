@@ -215,22 +215,23 @@ function AddressForm(props) {
   const [estado, setEstado] = React.useState(false);
   const cambiarEstado = () => {
     setEstado(prev => !prev);
-    values.estado = estado;
+    setValues({ ...values, estado: estado });
   };
-
+  
   const [selectedDate, setSelectedDate] = React.useState(new Date());
 
   const handleDateChange = date => {
     setSelectedDate(date);
-    values.fechNac = date;
+    setValues({ ...values, fechNac: date });
   };
 
   function setCuitOrCuil() {
     if (values.tipoDocumento === 'CUIT') {
-      values.cuit = values.numeroDocumento;
+      setValues({ ...values, cuit: 'CUIT' });
+      //values.cuit = values.numeroDocumento;
     }
     if (values.tipoDocumento === 'CUIL') {
-      values.cuil = values.numeroDocumento;
+      setValues({ ...values, cuil: 'CUIL' });
     }
   }
 
@@ -272,7 +273,7 @@ function AddressForm(props) {
     UserController.addUser(data);
     handleClickOpenDialog();    
   }
-
+  console.log(values);
   return (
     <MuiThemeProvider theme={theme}>
       <React.Fragment>
