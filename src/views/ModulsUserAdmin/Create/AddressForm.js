@@ -13,7 +13,7 @@ function AddressForm(props) {
     apellido: '',
     celular: '',
     empleo:'',
-    cuit:'',    
+    id:'',    
     email:'',
     localidad:'',
     calle:'',
@@ -31,14 +31,14 @@ function AddressForm(props) {
     let data = {
       nombre: values.nombre,
       apellido: values.apellido,
-      id: values.cuit,
+      id: values.id,
       empleo: values.empleo,
-      cuit: values.cuit,
       calle:values.calle,
       altura: values.altura,
       localidad:values.localidad,
       celular:values.celular,
       email:values.email,
+      label:values.nombre+' '+values.apellido+' ('+values.id+') ',
       eliminado:false,
     }
     CustomerController.addCustomer(data)    
@@ -99,10 +99,10 @@ function AddressForm(props) {
               label="Cuit/Cuil"
               fullWidth
               required
-              onChange={handleChange('cuit')}
+              onChange={handleChange('id')}
               helperText="Introducir solo numeros!"
-              name="cuit"
-              value={values.cuit}
+              name="id"
+              value={values.id}
               validators={['required', 'matchRegexp:(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]']}
               errorMessages={['Campo requerido', 'CUIT no valido']}
             />
@@ -114,7 +114,6 @@ function AddressForm(props) {
               fullWidth
               required
               onChange={handleChange('empleo')}
-              helperText="Introducir solo numeros!"
               name="empleo"
               value={values.empleo}
               validators={['required', 'matchRegexp:^([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])?$']}

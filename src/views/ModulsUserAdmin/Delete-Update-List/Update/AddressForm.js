@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Button,Typography,ButtonGroup } from '@material-ui/core';
@@ -19,20 +20,18 @@ function AddressForm(props) {
   };
 
   const handleOnClick = () => {
-    console.log('Guardando...')
     let data = {
       nombre: values.nombre,
       apellido: values.apellido,
-      fechNac: values.fechNac,
-      cuit: values.cuit,
+      id: values.id,
+      empleo: values.empleo,
       calle:values.calle,
       altura: values.altura,
       localidad:values.localidad,
       celular:values.celular,
       email:values.email,
-      empleo:values.empleo,
     }
-    CustomerController.setCustomer(data)    //BORRA LOS CAMPOS QUE NO ESTEN EN EL DATA
+    CustomerController.editCustomer(data)
     updateStateArray();
     handleCloseDialog();
   }
@@ -65,7 +64,7 @@ function AddressForm(props) {
                 id="nombre"
                 label="Name"
                 onChange={handleChange('nombre')}
-                name="name"
+                name="nombre"
                 required
                 //Validacion necesaria
                 value={values.nombre}
@@ -94,10 +93,10 @@ function AddressForm(props) {
               fullWidth
               required
               helperText="No se puede editar este campo."
-              name="cuit"
-              value={values.cuit}
+              name="id"
+              value={values.id}
               validators={['required', 'matchRegexp:(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]']}
-              errorMessages={['Campo requerido', 'CUIT no valido']}
+              errorMessages={['Campo requerido', 'CUIT/CUIL no valido']}
             />
           </Grid>
           <Grid item xs={12} sm={6}>

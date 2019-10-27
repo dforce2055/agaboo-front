@@ -86,7 +86,7 @@ class CustomerController extends Component {
         }
     }
 
-
+    //Se utiliza en ModulsUserAdmin\Delete-update-list\Search\buttonSearch.js
     async searchCustomer(e) {
         let valor = e;
         try {
@@ -97,19 +97,17 @@ class CustomerController extends Component {
         }
     }
 
-
-
-
-    async setCustomer(e) {
+    //MODIFICADO Y USANDO
+    async editCustomer(e) {
         try {
             let data = e;
-            await CustomerRepo.setCustomer(data);            
+            await CustomerRepo.editCustomer(data);            
         } catch (error) {
             console.log("No se pudo obtener el cliente");
         }
     }
 
-    
+    //NO VA ACA!!
     addCustomerOK = async (data) => {
         if (!data) throw new Error(`Error: no se envió un Cliente para registrar`);
 
@@ -129,22 +127,16 @@ class CustomerController extends Component {
         }
     }
     
-
-    
-    //Ver AddCustomerOK en Repo Tambien
     async addCustomer(data) {
-
-        //Recibo y guardo los datos recibidos
-        let newCustomer = data
-
+        let newCustomer = data;
             console.log('entro a guardar cliente')
             CustomerRepo.addCustomer(newCustomer)
     }
 
-   async deleteCustomer(customer){
-        let deleteCustomer = customer;        
+   async deleteCustomer(id){
+        let deleteCustomer = id;        
         try {
-            console.log("Cambiando estado al cliente: ",deleteCustomer.cuit);
+            console.log("Cambiando estado al cliente: ",deleteCustomer);
             let valor = CustomerRepo.deleteCustomer(deleteCustomer);               
             return valor;
         } catch (error) {
@@ -152,7 +144,28 @@ class CustomerController extends Component {
         }        
     }
 
+    async getCustomerCant10(e){
+        try {
+            let valor = CustomerRepo.getCustomerCant10(e);
+            console.log("Muestro valor en controllers:",valor);
+            
+            //return valor;            
+        } catch (error) {
+            console.error("Error en controller: ",error);
+            
+        }
+    }
 
+    //Se utiliza en ModulOrders/SelectCustomer
+    async getCustomerAll(){
+        try {
+            let valor = CustomerRepo.getCustomerAll();
+            return valor;     
+        } catch (error) {
+            console.error("Error en controller: ",error);
+            
+        }
+    }
 }
 
 export default new CustomerController();
