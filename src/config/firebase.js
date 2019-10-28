@@ -64,6 +64,10 @@ class Firebase {
         return this.auth.currentUser && this.auth.currentUser.displayName
     }
 
+    getCurrentEmail() {
+        return this.auth.currentUser.email;
+    }
+
     getCurrentUserPhoto() {
         return this.auth.currentUser && this.auth.currentUser.photoURL
     }

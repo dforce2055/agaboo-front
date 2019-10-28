@@ -66,7 +66,7 @@ export default function FormDialog(props) {
   const [values, setValues] = useState(props.values);
   const [code, setCode] = useState(-1);
   const {getCode} = props;  
-  const {stateSearch, setStateSearch} = props;
+  const {stateSearch, setStateSearch, setSearch} = props;
   const {dialogOpen, setDialog  } = props;
   const [openDelete, setOpenDelete] = useState(false);
 
@@ -118,6 +118,7 @@ export default function FormDialog(props) {
     ProductController.editProduct(newProduct);
     //alert("El producto ha sido aculizado");
     setOpen(false);
+    setSearch("");
 
   };
 
@@ -126,18 +127,21 @@ export default function FormDialog(props) {
     ProductController.deleteProduct(values.code);
     setOpenDelete(false);
     setOpen(false);
+    setSearch("");
 
   }
 
 
   const handleClose = () => {
     setOpen(false);
+    setSearch("");
 
   };
 
   
 
   const handleCloseAlert = () =>{
+    setSearch("");
     setOpenAlert(false) ;
   };
 
@@ -147,6 +151,7 @@ export default function FormDialog(props) {
   
 
   const handleCloseDelete = () => {
+    setSearch("");
     setOpenDelete(false);
   };
   const handleChange = name => event => {
@@ -293,7 +298,7 @@ export default function FormDialog(props) {
           </Button>
         </DialogActions>
       </Dialog>
-{/* -------------------------------------------------------------DIALOG DESEA ELIMINAR---------------------------------------------- */}
+{/* -------------------------------------------------------------DIALOG DO YOU WANT DELETE---------------------------------------------- */}
       <Dialog
         open={openDelete}
         onClose={handleClose}

@@ -15,9 +15,11 @@ import indexUpdateProduct from './views/ModuleProduct/Update/index';
 import CreateOrder from './views/ModulOrders/Create/index';
 import OrderReady from './views/ModulOrders/Ready/index';
 import DeleteOrder from './views/ModulOrders/Delete/index';
+import Stock from './views/ModuleProduct/Stock/index';  
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { CssBaseline, CircularProgress } from '@material-ui/core'
+import { MagicSpinner } from "react-spinners-kit";
 
 import firebase from '../src/config/firebase';
 
@@ -53,9 +55,10 @@ export default function App() {
             <Route path= "/registrarPedido" component={CreateOrder} />
             <Route path= "/pedidosListos" component={OrderReady} />
             <Route path= "/eliminarPedidos" component={DeleteOrder} />
+            <Route path= "/stock" component={Stock} />
           </React.Fragment>
         </BrowserRouter>
     </MuiThemeProvider>
-    ) : <div id="loader"><CircularProgress /></div>
+    ) : <div id="loader"><MagicSpinner color={'#303f9f'}/></div>
 }
 serviceWorker.unregister();
