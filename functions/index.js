@@ -46,26 +46,28 @@ exports.onUpdateUsers = functions.firestore
     .onUpdate((change, context) => {
         // Retrieve the current and previous value
         const data = change.after.data();
-        const previousData = change.before.data();      
+        const previousData = change.before.data();
 
         let _search = "";
-        if (data.nombre) _search = data.nombre +" ";
-        if (data.apellido) _search += data.apellido +" ";
-        if (data.numeroDocumento) _search += data.numeroDocumento +" ";
+        if (data.nombre) _search = data.nombre + " ";
+        if (data.apellido) _search += data.apellido + " ";
+        if (data.numeroDocumento) _search += data.numeroDocumento + " ";
         if (data.localidad) _search += data.localidad;
-
 
         // We'll only update if the document has changed.
         // This is crucial to prevent infinite loops.
-        // Si no se cambio nada en los campos de búsqueda retorno null
+        // Si no se cambio nada en los campos de búsqueda retorno 
         if (data.numeroDocumento === "numeroDocumento_test") return null;
-        if (_search.toString() === previousData._search.toString()) return null;
+        if (previousData._search){
+            if (_search.toString() === previousData._search.toString()) return null;
+        }
+        
+
 
         console.log(`Se creo el campo _search con los siguentes datos ${_search}`);
-
-        // Then return a promise of a set operation to update the user
+        // Then return a promise of a set operation to update the customer
         return change.after.ref.set({
-            "_search":  _search ,
+            "_search": _search,
             "lastUpdate": admin.firestore.FieldValue.serverTimestamp()
         }, { merge: true });
     });
@@ -121,7 +123,9 @@ exports.onUpdateCustomers = functions.firestore
         // This is crucial to prevent infinite loops.
         // Si no se cambio nada en los campos de búsqueda retorno 
         if (data.numeroDocumento === "numeroDocumento_test") return null;
-        if (_search.toString() === previousData._search.toString()) return null;
+        if (previousData._search) {
+            if (_search.toString() === previousData._search.toString()) return null;
+        }
 
 
         console.log(`Se creo el campo _search con los siguentes datos ${_search}`);
