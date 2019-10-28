@@ -39,7 +39,9 @@ export default function SearchBox() {
       const getProduct = await ProductController.getProductByCode(code);
       setProduct(getProduct);
       setGoSearch(false)
+      //setSearch("") 
       setDialog(true);
+
     }
   }
 
@@ -52,6 +54,7 @@ export default function SearchBox() {
   function pushEnter(e){
     if(e.key === 'Enter'){
       setGoSearch(true);
+      
     }
   }
 
@@ -65,12 +68,6 @@ export default function SearchBox() {
   }
 
   
-  // function add(event){
-  //       console.log('Tecla tocada : ', event.key);
-  //        if(event.key === 'Enter'){
-  //           alert('Adding....');
-  //        }
-  //    };
 
   return (
     <div style={{marginTop:'20px'}}>
@@ -82,6 +79,8 @@ export default function SearchBox() {
         inputProps={{ 'aria-label': 'search google maps' }}
         onChange = {setBox}
         onKeyPress={pushEnter}
+        type = "number"
+        value = {search}
 
         
 
@@ -92,6 +91,7 @@ export default function SearchBox() {
                     stateSearch = {stateSearch}
                     setStateSearch = {setStateSearch}
                     dialogOpen = {dialogOpen}
+                    setSearch = {setSearch}
                    // abreDialog = {abreDialog}
                     />
       

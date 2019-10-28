@@ -293,6 +293,15 @@ function Navbar(props) {
       </ListItem> 
 
       <Collapse in={productos} timeout="auto" unmountOnExit> 
+        
+      <List component="div" disablePadding>
+          <ListItem button className={classes.nested} onClick ={ () => history.push('/stock')}>
+            <ListItemIcon >
+              <AssignmentIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Stock"  />
+          </ListItem>
+        </List>
         <List component="div" disablePadding> 
           <ListItem button className={classes.nested} onClick ={ () => history.push('/createProduct')}> 
             <ListItemIcon>
@@ -310,11 +319,14 @@ function Navbar(props) {
             <ListItemText primary="Modificar/Eliminar Productos"  />
           </ListItem>
         </List>
+        
+        
+
       </Collapse>
 
       </List>
 {/* *********************************** LISTA STOCK ****************************************** */}
-      <List>
+      {/* <List>
         <ListItem button onClick={handleClickStock}> 
           <ListItemIcon>      
           <AssignmentIcon/>
@@ -343,7 +355,8 @@ function Navbar(props) {
         </List>
       </Collapse>
 
-      </List> 
+      </List>  Es posible que quede afuera
+    */} 
 {/* *********************************** LISTA PEDIDOS ****************************************** */}
       <List>
         <ListItem button onClick={handleClickPedidos}> 
