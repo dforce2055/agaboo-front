@@ -1,25 +1,23 @@
-import React from 'react';
+import React , {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
+import FormDialog from './DialogUpdateProduct';
+import ProductController from '../../../controllers/Product';
+
+
 
 const useStyles = makeStyles(theme => ({
   root: {
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
-    width: 320,
-    marginLeft:'5px',
+    width: 200,
   },
   input: {
     marginLeft: theme.spacing(1),
     flex: 1,
-  },
-  iconButton: {
-    padding: 10,
   },
   divider: {
     height: 28,
@@ -29,6 +27,50 @@ const useStyles = makeStyles(theme => ({
 
 export default function SearchBox() {
   const classes = useStyles();
+  const [dialogOpen, setDialog] = React.useState(false);
+  const [product, setProduct] = React.useState();
+  const [search, setSearch] = React.useState("");
+  const [stateSearch, setStateSearch] = React.useState(false);
+  const [goSearch, setGoSearch]= React.useState(false);
+
+
+  async function getProductBar(code){
+    if(goSearch){
+      const getProduct = await ProductController.getProductByCode(code);
+      setProduct(getProduct);
+      setGoSearch(false)
+      setDialog(true);
+    }
+  }
+
+  function setBox(e){
+    setSearch(e.target.value);
+    setStateSearch(true);
+    console.log('setBox ', search );
+  }
+
+  function pushEnter(e){
+    if(e.key === 'Enter'){
+      setGoSearch(true);
+    }
+  }
+
+  // function abreDialog(){
+  //   setDialog(true);
+  //   console.log('abreDialog: ', dialogOpen);
+  // };
+
+  function getCode(){
+    return search;
+  }
+
+  
+  // function add(event){
+  //       console.log('Tecla tocada : ', event.key);
+  //        if(event.key === 'Enter'){
+  //           alert('Adding....');
+  //        }
+  //    };
 
   return (
     <div style={{marginTop:'20px'}}>
@@ -38,12 +80,22 @@ export default function SearchBox() {
         className={classes.input}
         placeholder="Codigo de producto"
         inputProps={{ 'aria-label': 'search google maps' }}
+        onChange = {setBox}
+        onKeyPress={pushEnter}
+
+        
 
       />
-      <IconButton className={classes.iconButton} aria-label="search">
-        <SearchIcon />
-      </IconButton>
-      <Divider className={classes.divider} orientation="vertical" />
+        <FormDialog values = {getProductBar()}
+                    setDialog = { setDialog }
+                    getCode = {getCode}
+                    stateSearch = {stateSearch}
+                    setStateSearch = {setStateSearch}
+                    dialogOpen = {dialogOpen}
+                   // abreDialog = {abreDialog}
+                    />
+      
+      <Divider className={classes.divider} orientation="vertical" />  
       
     </Paper>
     </div>

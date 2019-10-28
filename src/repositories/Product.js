@@ -57,7 +57,7 @@ class ProductRepo extends Component {
 
     getProductByCode = async (code) => {
         if (!code) throw new Error(`Error: el código de producto es obligatorio`);
-        let product = {};
+        let product = null ;
         await firebase.db.collection(collection)
             .where('code', '==', code)
             .limit(1)
@@ -146,6 +146,7 @@ class ProductRepo extends Component {
                 console.error("Error al editar el producto: ", error);
                 return false;
             });
+            console.log('Entro por defecto')
         return result;
     }
 
@@ -173,6 +174,22 @@ class ProductRepo extends Component {
                 return false;
             });
         return result;
+    }
+
+    editProductoCESAR = async (e) => {
+        firebase.db.collection(collection)
+        .doc(e.code)
+        .get()
+        .then(()=>{
+            firebase.db.collection(collection)
+            .doc(e.code)
+            .update({
+                state : e.state,
+                description : e.description
+            })
+            .then(console.log("UPDATEE")
+            )
+        })
     }
 }
 export default new ProductRepo();

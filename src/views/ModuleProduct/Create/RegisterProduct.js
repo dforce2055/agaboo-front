@@ -9,11 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import ProductController from '../../../controllers/Product';
 
 
-const usuario={
-  usuario: "Ivan",
-  rol: "Esclavo"
 
-}
 
 
 const typeProduct = [
@@ -35,19 +31,27 @@ const typeProduct = [
   }
   
 ];
+//'ALQUILADO', 'DISPONIBLE', 'EN MANTENIMIENTO', 'EN TRANSITO', 'ELIMINADO'
 const typeState = [
   {
-    value: "Disponible",
-    label: "Disponible",
+    value: "DISPONIBLE",
+    label: "DISPONIBLE",
   },
   {
-    value: "Alquilado",
-    label: "Alquilado",
+    value: "ALQUILADO",
+    label: "ALQUILADO",
   },
   {
-    value: "Averiado",
-    label: "Averiado",
+    value: "EN MANTENIMIENTO",
+    label: "EN MANTENIMIENTO",
+  },
+  {
+    value: "EN MANTENIMIENTO",
+    label: "EN MANTENIMIENTO",
   }
+
+
+
   
 ];
 
@@ -77,15 +81,8 @@ const useStyles = makeStyles(theme => ({
 
 
  function ProductForm(props) {
-  const {history} = props;
 
-  useEffect(() => {
-    if(usuario.rol !== "Esclavo"){
-      history.push('/')
-      console.log('useEffect')
-    }
-    
-  });
+  const {history} = props;
 
 
 
@@ -93,13 +90,13 @@ const useStyles = makeStyles(theme => ({
   const [values, setValues] = React.useState({
     code: "",
     typeProduct: "Baño Químico",
-    state: "Disponible",
+    state: "DISPONIBLE",
     description:""
   });
 
   const handleChange = name => event => {
     
-    
+      
     setValues({ ...values, [name]: event.target.value });
   };
 
@@ -108,7 +105,7 @@ const useStyles = makeStyles(theme => ({
 
 
     const product = {
-      typeProduct : values.typeProduct,
+      type : values.typeProduct,
       code : values.code,
       description : values.description,
       state : values.state,
@@ -116,9 +113,13 @@ const useStyles = makeStyles(theme => ({
     
     console.log("product : ", product);
     ProductController.addProduct(product);
-
-
-
+    alert("El producto está registrado");
+    setValues({
+      code: "",
+      typeProduct: "Baño Químico",
+      state: "DISPONIBLE",
+      description:""
+    })
 
   } 
 
@@ -192,6 +193,7 @@ const useStyles = makeStyles(theme => ({
                   label="Estado"
                   className={classes.textField}
                   value={values.state }
+                  
                   
                   onChange={handleChange("state")}
                   SelectProps={{

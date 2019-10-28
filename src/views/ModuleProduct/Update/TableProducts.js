@@ -1,4 +1,4 @@
-import React , { useEffect }from "react";
+import React , { useEffect , useState}from "react";
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -6,17 +6,14 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Button from  '../Create/Button';
 
 import ProductController from '../../../controllers/Product';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FormDialog from './DialogUpdateProduct';
-import SearchBox from './SearchBox';
 
 
 
 const StyledTableCell = withStyles(theme => ({
   head: {
+    background: 'linear-gradient(45deg, #2c7369 20%, #3fb5a5 90%)',
     backgroundColor: '#3fb5a5',
     color: theme.palette.common.white,
   },
@@ -35,26 +32,6 @@ const StyledTableRow = withStyles(theme => ({
 
 
 
-
-
-
-
-
-
-
-
-
-
-function createData(type, code, state, description ) {
-  return { type, code, state, description};
-}
-
-
-
-
-
-
-
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -63,70 +40,85 @@ const useStyles = makeStyles(theme => ({
     overflowX: 'auto',
   },
   table: {
-    minWidth: 700,
+    minWidth: 300,
   },
 }));
 
 export default function CustomizedTables(props) {
-    const [rows,setRows] = React.useState([
-    ]);
+  const {rows,setRows} = props;
+  const {value, setValue} = props;
+  const {update, setUpdate} = props;
 
   const classes = useStyles();
-  const {history}  = props;
+  const array =[] 
+  const typesProduct = ["Baño Químico", "Oficina", "Boletería", "Garita"] // Hardcode de los tipos de productos
+  
   
 
-console.log('Rows despues de getProducts: ', rows);
-
-
-  
   async function getProducts(){
-    const products = await ProductController.getProducts();
-    console.log("Cantidad de productos :", products.length);
-    if(rows.length !== products.length){
-      setRows(products); 
-      console.log("products :" , rows);    
+    if( update ){
+
+      const products = await ProductController.getProductsByState(value);
+      let product;
+      let count ;
+
+      for(let idx = 0 ; idx < typesProduct.length ; idx++  ){
+        product = typesProduct[idx] ;
+        count = countProducts( product, products); // traigo la cantidad del mismo tipo
+        array.push({"product" : product, "value" : value, "count" : count}) 
+      };
+      
+      setRows(array);
+      setUpdate(false); 
     }
-    
+
   };
+
+  function countProducts(product, array){ // Funcion para contar Productos
+
+    let count = 0;
+    let i = 0;
+    while(i < array.length) {
+      if(product === array[i].type){
+        count++ ;
+      }
+      i++;
+    }
+
+    return count;
+  }
+
 
   useEffect(() => {
     getProducts();
-    
   });
   
   return (
       <React.Fragment>
-        <SearchBox/>
         <Paper className={classes.root}>
             <Table className={classes.table}>
                 <TableHead>
                 <TableRow>
                     <StyledTableCell align= "justyfy">Producto</StyledTableCell>
-                    <StyledTableCell align="justyfy">Codigo</StyledTableCell>
                     <StyledTableCell align="justyfy">Estado</StyledTableCell>
+                    <StyledTableCell align="justyfy">Cantidad</StyledTableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>
                 {rows.map(row => (
                     <StyledTableRow key={row.typeProduct}>
                     <StyledTableCell component="th" scope="row">
-                      <FormDialog values = {row}/>
-                    
                       
-                      
-                      {row.type}
+                      {row.product}
                     </StyledTableCell>
-                    <StyledTableCell align="justyfy">{row.code}</StyledTableCell>
-                    <StyledTableCell align="justyfy">{row.state}</StyledTableCell>
+                    <StyledTableCell align="justyfy">{row.value}</StyledTableCell>
+                    <StyledTableCell align="justyfy">{row.count}</StyledTableCell>
                     </StyledTableRow>
                 ))}
                 </TableBody>
             </Table>
         </Paper>
-
-        <Button label = {'Volver'} onClick={()=> history.push('/mainMenu')}/>
-      </React.Fragment>
-        
+      </React.Fragment>         
         
     
     

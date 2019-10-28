@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Typography, Paper, Avatar, Button, FormControl, Input, InputLabel } from '@material-ui/core';
+import { Typography, Paper, Avatar, Button } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { withRouter } from 'react-router-dom';
@@ -130,7 +130,7 @@ function SignIn(props) {
                     if ( userStatus.estado ) {
                         props.history.replace('/mainMenu');
                     } else {
-                        alert("Su usario no esta habilitado, comuniquese con el administrador");
+                        alert("Su usuario no esta habilitado, comuniquese con el administrador");
                         await firebase.logout();
                         props.history.replace('/');
                     }

@@ -10,7 +10,9 @@ import AddressForm from './clientForm';
 import PaymentForm from './orderForm';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
-
+//AGREGADO 
+import Review from './Review.js';
+import OrderController from '../../../controllers/Order.js';
 
 const theme = createMuiTheme({ /* Plantilla de edicion */
     overrides: {
@@ -81,14 +83,17 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const steps = ['Detalles de cliente', 'Detalles de pedido'];
+const steps = ['Detalles de cliente', 'Detalles de pedido','Pedido completo'];
 
-function getStepContent(step) {
+function getStepContent(step) { 
+  //LLAMO COMPONENTES
   switch (step) {
     case 0:
       return <AddressForm />;
     case 1:
       return <PaymentForm />;
+    case 2:
+      return <Review/>;
     default:
       throw new Error('Unknown step');
   }
@@ -101,12 +106,29 @@ function Checkout(props) {
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
+
   };
+
+  const handleNexAndSaveOrder = () =>{
+    //Avanzo al final del pedido.
+    setActiveStep(activeStep + 1);
+
+    var cliente = JSON.parse(sessionStorage.getItem('info_cliente_pedido'));
+    var listado_producto= JSON.parse(sessionStorage.getItem('arreglo_productos'));
+    var detalle_pedido; 
+    detalle_pedido=JSON.parse(sessionStorage.getItem('info_detalle_pedido'));
+
+    //Almaceno todos los datos guardados en sessionStorage en el mismo archivo. 
+    var data ={cliente,listado_producto,detalle_pedido};
+
+    //Paso data que es toda la informacion del pedido.
+    OrderController.addOrder(data);
+
+  }
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-  
 
   return (
     <MuiThemeProvider theme={theme}>
@@ -147,7 +169,7 @@ function Checkout(props) {
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={handleNext}
+                      onClick={handleNexAndSaveOrder}
                       className={classes.button}
                     >
                         Registrar pedido

@@ -1,6 +1,5 @@
 import React from 'react';
-import clsx from 'clsx';
-import { makeStyles,useTheme,MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { makeStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -97,7 +96,8 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
 
 export default function Dashboard() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+
+  /*const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -105,6 +105,7 @@ export default function Dashboard() {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  */
 
   return (
     <MuiThemeProvider theme={theme2}>

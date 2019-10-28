@@ -1,11 +1,16 @@
-import React from 'react';
+import React, {useState , useEffect} from 'react';
 import NavBar from '../../Header/Navigation';
 import CustomizedTables from './TableProducts';
 import SimpleBottomNavigation from '../../Footer/Footer';
 import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
+import SearchBox from './SearchBox';
+import FilterProduct from './FilterProduct';
 
-function indexUpdateProduct(props) {
+function useIndexUpdateProduct(props) {
+    const [value , setValue] = useState("DISPONIBLE");
+    const [rows,  setRows] = useState([]);
+    const [update, setUpdate] = useState(true);
 
     if (!firebase.getCurrentUsername()) {
         // not logged in
@@ -13,11 +18,26 @@ function indexUpdateProduct(props) {
         props.history.replace('/login')
         return null
       }
-
+    
+      
     return (
         <div>
+
             <NavBar/>
-            <CustomizedTables/>
+            <SearchBox/>
+            <FilterProduct 
+                value = {value}
+                setValue = {setValue}
+                setUpdate = {setUpdate}
+            />
+            <CustomizedTables
+                setUpdate = {setUpdate}
+                update = {update}
+                rows = {rows}
+                setRows = {setRows}
+                value = {value}
+                setValue = {setValue}
+                />
             <footer>
                 <SimpleBottomNavigation/>
             </footer>
@@ -25,4 +45,4 @@ function indexUpdateProduct(props) {
     )
 }
 
-export default withRouter(indexUpdateProduct);
+export default withRouter(useIndexUpdateProduct);

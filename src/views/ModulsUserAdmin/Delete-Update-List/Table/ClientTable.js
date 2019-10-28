@@ -1,5 +1,3 @@
-/* eslint-disable no-script-url */
-
 import React from 'react';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
@@ -47,9 +45,9 @@ export default function ClientTable() {
       }).catch(error=>{
         console.log("Error al traer el cliente= ",error);
       })
-      }else if (search.buscar.length != 0) { //Verifico que el campo de buscar este vacio
+      }else if (search.buscar.length !== 0) { //Verifico que el campo de buscar este vacio
         setValidador(true)
-      }else if(search.buscar.length == 0){
+      }else if(search.buscar.length === 0){
         setValidador(false)
       }
     });
@@ -77,7 +75,6 @@ export default function ClientTable() {
   const [data,setData] = React.useState([]);
   
   const handleChange = name => event => {
-    console.log(event.target.value);
     setSearch({ ...search, [name]: event.target.value });  
   };
 

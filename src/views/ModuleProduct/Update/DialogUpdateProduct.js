@@ -1,15 +1,18 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import EditIcon from '@material-ui/icons/Edit';
+import SearchIcon from '@material-ui/icons/Search'
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles , useTheme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import ProductController from '../../../controllers/Product';
+import DialogContentText from '@material-ui/core/DialogContentText';
+
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -18,22 +21,27 @@ const useStyles = makeStyles(theme => ({
       },
     }));
 
-    const typeState = [
-        {
-          value: "Disponible",
-          label: "Disponible",
-        },
-        {
-          value: "Alquilado",
-          label: "Alquilado",
-        },
-        {
-          value: "Averiado",
-          label: "Averiado",
-        }
+
+const typeState = [
+      {
+        value: "DISPONIBLE",
+        label: "DISPONIBLE",
+      },
+      {
+        value: "ALQUILADO",
+        label: "ALQUILADO",
+      },
+      {
+        value: "EN MANTENIMIENTO",
+        label: "EN MANTENIMIENTO",
+      },
+      {
+        value: "EN MANTENIMIENTO",
+        label: "EN MANTENIMIENTO",
+      }
         
-      ];
-      const typeProduct = [
+];
+const typeProduct = [
         {
           value: "Baño Químico",
           label: "Baño Químico"
@@ -47,28 +55,99 @@ const useStyles = makeStyles(theme => ({
           label: "Boletría",
         }
         
-      ];
-      
-
-  
+];
 
 
 
 
 export default function FormDialog(props) {
-  const [open, setOpen] = React.useState(false);
-  const [values, setValues] = React.useState(props.values)
+  const [open, setOpen] = useState(props.setDialog);
+  const [openAlert, setOpenAlert] = useState(false) 
+  const [values, setValues] = useState(props.values);
+  const [code, setCode] = useState(-1);
+  const {getCode} = props;  
+  const {stateSearch, setStateSearch} = props;
+  const {dialogOpen, setDialog  } = props;
+  const [openDelete, setOpenDelete] = useState(false);
+
+
   const theme = useTheme();
 
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
+  useEffect(()=>{
 
-  const handleClickOpen = () => {
-    setOpen(true);
+    if(code !== getCode && stateSearch){
+      getCodeUse();
+      setStateSearch(false);
+    }
+    if(dialogOpen){
+      handleClickOpen();
+      setDialog(false);
+    } 
+  })
+
+  function getCodeUse(){
+    setCode(getCode);
+
+  }
+  
+
+
+  async function  handleClickOpen (){
+    setCode(getCode);
+    const product = await ProductController.getProductByCode(code);
+    setValues(product);
+    if(  product !== 1  ) {
+      setOpen(true)
+    } else {
+      setOpenAlert(true);
+    }
   };
+
+
+   function updateProduct(){
+    console.log("llegue a register Product", values);
+
+    const newProduct = {
+      type : values.type,
+      code : values.code,
+      description : values.description,
+      state : values.state,
+    };
+    ProductController.editProduct(newProduct);
+    //alert("El producto ha sido aculizado");
+    setOpen(false);
+
+  };
+
+  function deleteProduct() {
+
+    ProductController.deleteProduct(values.code);
+    setOpenDelete(false);
+    setOpen(false);
+
+  }
+
 
   const handleClose = () => {
     setOpen(false);
+
+  };
+
+  
+
+  const handleCloseAlert = () =>{
+    setOpenAlert(false) ;
+  };
+
+  const handleOpenDelete  = () => {
+    setOpenDelete(true);
+  };
+  
+
+  const handleCloseDelete = () => {
+    setOpenDelete(false);
   };
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
@@ -80,31 +159,33 @@ export default function FormDialog(props) {
   return (
     <div>
       <IconButton>
-          <EditIcon onClick={handleClickOpen}/>
+          <SearchIcon onClick={handleClickOpen}/>
       </IconButton>
       
       
       
-      <Dialog
+      <Dialog open={open} 
         onClose={handleClose} 
         aria-labelledby="form-dialog-title"
         open={open}
+        onClose={handleClose}
         fullScreen={fullScreen}
 
       >
-        <DialogTitle id="form-dialog-title">Modificar Producto</DialogTitle>
+        <DialogTitle id="form-dialog-title" alignItems = {"center"} >Modificar Producto</DialogTitle>
         <DialogContent>
             <Grid container spacing = {1} justify = { "center" } className = { "grid"} >
-             <Grid item xs = {12} xl = {9} alignItems = {"center"}  >
+             <Grid item xs = {6} xl = {6} alignItems = {"center"} md = {3} >
 
                 <TextField
                     id="type-product"
-                    select
+                    select  
                     label="Producto"
                     className={classes.textField}
-                    value={values.typeProduct   }
+                    value={values.typeProduct }
+                    disabled = "true"
                     
-                    onChange={handleChange("typeProduct")}
+                    onChange={handleChange("type")}
                     SelectProps={{
                       native: true,
                       MenuProps: {
@@ -134,6 +215,8 @@ export default function FormDialog(props) {
                     onChange={handleChange("code")}
                     margin="normal"
                     variant="outlined"
+                    disabled = "true"
+
                   />              
                 
 
@@ -157,7 +240,7 @@ export default function FormDialog(props) {
                     SelectProps={{
                         native: true,
                         MenuProps: {
-                        className: classes.menu
+                        className: classes.menu 
                         }
                     }}
                     
@@ -173,12 +256,61 @@ export default function FormDialog(props) {
                  </TextField>
                 </Grid> 
             </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Modifica
+            <DialogActions calssName = {classes.bajarBoton}>
+          <Button  onClick = {updateProduct}color="primary">
+            Modificar
+          </Button>
+          <Button 
+          onClick = {handleOpenDelete} color="primary">
+            Eliminar
           </Button>
           <Button onClick={handleClose} color="primary">
+            Cancelar
+          </Button>
+        </DialogActions>
+        </DialogContent>
+
+        
+      </Dialog>
+
+{/* ------------------------------------------DIALOG PRODUCT NOT FOUND------------------------------------------------- */}
+
+      <Dialog
+        open={openAlert}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Busqueda fallida"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            El producto no existe intente de nuevo.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseAlert} color="primary" autoFocus>
+            Aceptar
+          </Button>
+        </DialogActions>
+      </Dialog>
+{/* -------------------------------------------------------------DIALOG DESEA ELIMINAR---------------------------------------------- */}
+      <Dialog
+        open={openDelete}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Eliminar"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            ¿Esta seguro que desea eliminar el producto {values.code}?.         
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={deleteProduct} color="primary" autoFocus>
+            Aceptar
+          </Button>
+          <Button onClick={handleCloseDelete} color="primary" autoFocus>
             Cancelar
           </Button>
         </DialogActions>
