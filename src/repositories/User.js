@@ -83,7 +83,7 @@ class UserRepo extends Component {
         return user;
     }
 
-    getUsers = async (res) => {
+    getAllUsers = async (res) => {
         try {
             let coleccion = await firebase.db.collection(collection).get();
             let usuarios = coleccion.docs.map(doc => doc.data());
@@ -93,72 +93,62 @@ class UserRepo extends Component {
         }
     };
 
+    getActiveUsers = async (res) => {
+        try {
+            let coleccion = await firebase.db.collection(collection).where("eliminado", "==", false).get();
+            let usuarios = coleccion.docs.map(doc => doc.data());
+            return usuarios;
+        } catch (error) {
+            throw new Error();
+        }
+    };
+
     addUser = async (newUser) => {
-        if (!newUser) throw new Error(`Error: no se envio un cliente para registrar`);
+        if (!newUser) throw new Error(`Error: no se envio un usuario para registrar`);
         let result = await firebase.db.collection(collection)
             .doc(newUser.email)
-            .set({
-                nombre: newUser.nombre,
-                apellido: newUser.apellido,
-                cuit: newUser.cuit,
-                cuil: newUser.cuil,
-                tipoDocumento: newUser.tipoDocumento,
-                numeroDocumento: newUser.numeroDocumento,
-                fechNac: newUser.fechNac,
-                direccion: newUser.direccion,
-                calle: newUser.calle,
-                altura: newUser.altura,
-                localidad: newUser.localidad,
-                celular: newUser.celular,
-                telefono: newUser.telefono,
-                email: newUser.email,
-                estado: newUser.estado,
-                role: newUser.role,
-            })
+            .set(newUser)
             .then(() => {
-                console.log("Documento guardado exitosamente!");
+                console.log("Usuario guardado exitosamente!!!");
                 return true;
             })
             .catch(function (error) {
-                console.error("Error al guardar el documento: ", error);
+                console.error("Error al guardar el Usuario: ", error);
                 return false;
             });
         // Retorna True o False
         return result;
     }
 
-    editUser = async (email, user) => {
-        if (!email) throw new Error(`Error: el EMAIL es obligatorio`);
-        let result = this.getUserByEMAIL(email)
-            .then(() => {
-                firebase.db.collection(collection).doc(email).update({
-                    nombre: user.nombre,
-                    apellido: user.apellido,
-                    cuit: user.cuit,
-                    cuil: user.cuil,
-                    tipoDocumento: user.tipoDocumento,
-                    numeroDocumento: user.numeroDocumento,
-                    fechNac: user.fechNac,
-                    direccion: user.direccion,
-                    calle: user.calle,
-                    altura: user.altura,
-                    localidad: user.localidad,
-                    celular: user.celular,
-                    telefono: user.telefono,
-                    email: user.email,
-                    estado: user.estado,
-                    role: user.role,
+    editUser = async (user) => {
+        if (!user) throw new Error(`Error: no se envio un usuario para registrar`);
+        let result = await firebase.db.collection(collection)
+                .doc(user.email)
+                .set(user, { merge: true } )
+                .then(() => {
+                    return true;
+                })
+                .catch(function (error) {
+                    return false;
                 });
+        return result;
+    }
+
+    deleteUser = async (email) => {
+        if (!email) throw new Error(`Error: no se envio el email del usuario para ELIMINAR`);
+        let result = await firebase.db.collection(collection)
+            .doc(email)
+            .set({eliminado: true }, { merge: true })
+            .then(() => {
                 return true;
             })
             .catch(function (error) {
-                console.error("Error al guardar el documento: ", error);
                 return false;
             });
         return result;
     }
 
-    deleteUser = async (email) => {
+    deleteUserTRUE = async (email) => {
         if (!email) throw new Error(`Error: el EMAIL es obligatorio`);
         let result = this.getUserByEMAIL(email)
             .then(() => {

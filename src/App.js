@@ -8,6 +8,8 @@ import LogIn from './views/LogIn/Login';
 import DeleteUpdateUserAdmin from "./views/ModulsUserAdmin/Delete-Update-List/index";
 import * as serviceWorker from './serviceWorker';
 import CreateUserAdm from './views/ModulsUserAdmin/Create/index'; //Componente para registrar un nuevo cliente¿
+import CreateUserAdmOK from './views/ModuleUserOK/Create/index';
+import ListUsers from './views/ModuleUserOK/ListUsers/index';
 import indexCreateProduct from './views/ModuleProduct/Create/index'
 import indexUpdateProduct from './views/ModuleProduct/Update/index';
 import CreateOrder from './views/ModulOrders/Create/index';
@@ -40,6 +42,10 @@ export default function App() {
             <Route path="/login" component={LogIn} exact/>
             <Route path= "/mainMenu" component={MainMenu} />
             {/* <Route path= "/nav" component={Navbar} /> */}
+            <Route path="/registrar-usuario" component={CreateUserAdmOK} />
+            <Route path="/usuarios" component={ListUsers} />
+
+
             <Route path= "/bmUsers" component={DeleteUpdateUserAdmin} />
             <Route path= "/registrarCliente" component={CreateUserAdm} />
             <Route path= "/createProduct" component={indexCreateProduct} />
