@@ -48,13 +48,15 @@ class ProductController extends Component {
 
     }
     getProductByCode = async (code) => {
-        if (!code) throw new Error(`Error: el Código de producto es obligatorio`);
+        if (!code) return 1 ;//throw new Error(`Error: el Código de producto es obligatorio`);
         try {
             let product = await ProductRepo.getProductByCode(code);
             if ( product ) {
+                console.log('Entro en producto != null');
                 return product
             } else {
                 console.log(`El code: ${ code } de Producto no se encuentra`);
+                return 1;
             }
         } catch(error) {
             throw new Error();
@@ -66,6 +68,7 @@ class ProductController extends Component {
         try {
             let products  = await ProductRepo.getProducts();
             if ( products ) {
+                console.log('products : ', products)
                 return products;
             } else {
                 console.log("No se pudo obtener los productos");
@@ -122,9 +125,9 @@ class ProductController extends Component {
         try {
             product = Object.assign({}, product); //Utilizo Object.assign para mapear el objeto
             let productFound = await ProductRepo.getProductByCode(product.code);
-            let result = ProductRepo.editProduct(product.code, productFound);
+            let result = ProductRepo.editProduct(product.code, product);
             if (result) {
-                console.log(`Se editó correctamente el producto ${ product } `);
+                console.log(`Se editó correctamente el producto`, product);
                 return true;
             } else {
                 console.log(`No se pudó editar el producto ${ product } `);
