@@ -32,7 +32,7 @@ export default function FullScreenDialog(props) {
   const [open, setOpen] = React.useState(false);
   
   const{updateStateArray} = props;
-  const {valor} = props;
+  const {usuario} = props;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -56,13 +56,12 @@ export default function FullScreenDialog(props) {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Modificar datos de cliente: ' {valor.nombre}{' '}{valor.apellido} '
+              Modificando datos del usuario: ' {usuario.nombre}{' '}{usuario.apellido} '
             </Typography>
             
           </Toolbar>
         </AppBar>
-        
-        <Checkout updateStateArray={updateStateArray} cliente={valor} handleClose={handleClose}/>
+        <Checkout updateStateArray={updateStateArray} usuario={usuario} handleClose={handleClose}/>
       </Dialog>
     </div>
   );

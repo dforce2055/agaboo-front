@@ -8,11 +8,13 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 //Imports agregados
 import {IconButton, Button } from '@material-ui/core';
-import CustomerController from '../../../../controllers/Customer';
+import UserController from '../../../../controllers/User';
+import { withRouter } from "react-router-dom";
 
-export default function AlertDialog(props) {
+function AlertDialog(props) {
   const [open, setOpen] = React.useState(false);
-  const {cliente} = props;
+  const {history} = props;
+  const {usuario} = props;
   const {updateStateArray} = props;
   //const {setUpdateList} = props;
 
@@ -26,11 +28,10 @@ export default function AlertDialog(props) {
 
 
   const handleCloseAceptDelete = () => {
-    let valor=CustomerController.deleteCustomer(cliente);
-    console.log("muestro que devuelve en componente => ",valor)
-    //setUpdateList(true);
+    UserController.deleteUser(usuario);
     updateStateArray();
     setOpen(false);
+    history.push('/usuarios')
   };
 
   return (
@@ -44,10 +45,10 @@ export default function AlertDialog(props) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"¿Está seguro que desea eliminar el cliente seleccionado?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"¿Está seguro que desea eliminar el usuario seleccionado?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            El cliente seleccionado será eliminado del sistema.
+            El usuario seleccionado será eliminado del sistema.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -62,3 +63,4 @@ export default function AlertDialog(props) {
     </div>
   );
 }
+export default withRouter(AlertDialog);

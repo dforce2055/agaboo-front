@@ -5,7 +5,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import ClientTable from './ClientTable'
+import UsersTable from './UsersTable'
+//import UsersTable2 from './UsersTable2'
 import {Typography} from '@material-ui/core';
 import CustomizedInputBase from '../Search/buttonSearch';
 
@@ -72,6 +73,20 @@ const useStyles = makeStyles(theme => ({
   fixedHeight: {
     height: 240,
   },
+  GridContenedor: {
+    flexGrow: 1,
+    textAlign: 'center',
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+    backgroundColor: 'rgba(255, 255, 255 , .8)',
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(4),
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(4),
+    borderRadius: '.4em',
+    boxShadow: '#cecece 2px 2px',
+  }
 }));
 
 const theme2 = createMuiTheme({ /* Plantilla de edicion */
@@ -98,9 +113,10 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
 }
 });
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const classes = useStyles();
   const theme = useTheme();
+  const { history } = props;
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -126,10 +142,11 @@ export default function Dashboard() {
             </Grid>
             {/* Recent Orders */}
             <Grid item xs={12}>
-            <Typography variant="h4">Clientes</Typography>
-              <Paper className={classes.paper}>
-                 <ClientTable />
-              </Paper>
+            <Typography variant="h4">Usuarios</Typography>
+                <Grid className={classes.GridContenedor} container spacing={3}>
+                  {/*<UsersTable2 />*/}
+                  <UsersTable />
+                </Grid>
             </Grid>
           </Grid>
         </Container>

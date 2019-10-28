@@ -5,7 +5,7 @@ import SimpleBottomNavigation from '../../Footer/Footer';
 import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
 function DeleteUpdateUserAdmin(props) {
-
+    const { history } = props;
     if (!firebase.getCurrentUsername()) {
         // not logged in
         alert('Por favor inicie sesión para acceder')
@@ -16,8 +16,8 @@ function DeleteUpdateUserAdmin(props) {
     return (
         
         <div className="UsersScreen">
-            <Navbar></Navbar>
-            <Dashboard></Dashboard>
+            <Navbar/>
+            <Dashboard/>
             <footer>
               <SimpleBottomNavigation/>
             </footer>

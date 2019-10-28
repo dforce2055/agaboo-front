@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 //Import campos de datos
-import UsersForm from './UsersForm';
+import UsersForm from './UserForm';
 
 const useStyles = makeStyles(theme => ({
   appBar: {

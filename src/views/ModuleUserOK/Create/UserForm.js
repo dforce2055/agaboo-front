@@ -185,7 +185,8 @@ const roles = [
 
 function AddressForm(props) {
   const classes = useStyles();
-
+  const {handleClose} = props;
+  const {usuario} = props; //Si esta prop llega, es porque etstoy editando un usuario
   const {history} = props;
   const [values, setValues] = React.useState({
     nombre: '',
@@ -194,7 +195,7 @@ function AddressForm(props) {
     cuil: '',
     tipoDocumento: '',
     numeroDocumento: '',
-    fechNac: new Date('1980-01-01T00:00:00'),
+    fechNac: new Date(),
     direccion: '',
     calle: '',
     altura: '',
@@ -206,7 +207,13 @@ function AddressForm(props) {
     role: '',
     eliminado:false,
     mostrarDialog:false,
-  });  
+  });
+
+  React.useEffect(() => {
+    if (usuario) { //Seteo los campos con los datos del usuario
+      setValues(usuario);
+    }
+  }, []);  
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });  
@@ -225,16 +232,6 @@ function AddressForm(props) {
     setValues({ ...values, fechNac: date });
   };
 
-  function setCuitOrCuil() {
-    if (values.tipoDocumento === 'CUIT') {
-      setValues({ ...values, cuit: 'CUIT' });
-      //values.cuit = values.numeroDocumento;
-    }
-    if (values.tipoDocumento === 'CUIL') {
-      setValues({ ...values, cuil: 'CUIL' });
-    }
-  }
-
   const [open, setOpen] = React.useState(false);
   const handleClickOpenDialog = (value) => {
     setOpen(true);
@@ -242,38 +239,66 @@ function AddressForm(props) {
 
   const handleCloseDialog = (e) => {
     setOpen(false);
-    history.push('/mainMenu');
+    handleCloseDialog();
+    history.push('/usuarios');
   };
+
+  const handleBtnClose = () => {
+    if (handleClose) handleClose();
+    else history.push('/usuarios');
+  }
+
+  function setCuitOrCuil() {
+    if (values.tipoDocumento === 'CUIT') {
+      setValues({ ...values, tipoDocumento: 'CUIT' });
+      setValues({ ...values, cuit: values.numeroDocumento });
+    }
+    if (values.tipoDocumento === 'CUIL') {
+      setValues({ ...values, tipoDocumento: 'CUIL' });
+      setValues({ ...values, cuil: values.numeroDocumento });
+    }
+  }
 
   
   const handleOnClick = (e) => {
     console.log('Guardando...')
+    
     setCuitOrCuil();
     
     let data = {
-      nombre: values.nombre,
-      apellido: values.apellido,
-      cuit: values.cuit,
-      cuil: values.cuil,
-      tipoDocumento: values.tipoDocumento,
-      numeroDocumento: values.numeroDocumento,
-      fechNac: values.fechNac,
+      nombre: (values.nombre) ? values.nombre : '',
+      apellido: (values.apellido) ? values.apellido : '',
+      cuit: (values.cuit) ? values.cuit : '',
+      cuil: (values.cuil) ? values.cuil : '',
+      tipoDocumento: (values.tipoDocumento) ? values.tipoDocumento : '',
+      numeroDocumento: (values.numeroDocumento) ? values.numeroDocumento : '',
+      fechNac: (values.fechNac) ? values.fechNac : '',
       //direccion: values.direccion,
-      calle:values.calle,
-      altura: values.altura,
-      localidad:values.localidad,
-      celular:values.celular,
-      telefono:values.telefono,
-      email:values.email,
-      estado:values.estado,
-      role:values.role,
-      //eliminado:false,
+      calle:(values.calle) ? values.calle : '',
+      altura: (values.altura) ? values.altura : '',
+      localidad:(values.localidad) ? values.localidad : '',
+      celular:(values.celular) ? values.celular : '',
+      telefono:(values.telefono) ? values.telefono : '',
+      email:(values.email) ? values.email : '',
+      estado:(values.estado) ? values.estado : '',
+      role:(values.role) ? values.role : '',
+      eliminado:false,
     }
     
-    UserController.addUser(data);
-    handleClickOpenDialog();    
+    //Si estoy editando un usuario llamo al método editar
+    if (usuario) {
+      //UserController.editUser(data);
+      UserController.editUser(data);
+      console.log("Lo estoy editando");
+    } else { //sino, llamo al método agregar
+      UserController.addUser(data);
+      handleClickOpenDialog();    
+    }
+    
   }
-  console.log(values);
+
+
+  
   return (
     <MuiThemeProvider theme={theme}>
       <React.Fragment>
@@ -294,8 +319,8 @@ function AddressForm(props) {
                   required
                   //Validacion necesaria
                   value={values.nombre}
-                  validators={['required','matchRegexp:^([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])?$']}
-                  errorMessages={['Campo requerido', 'Nombre no valido']}
+                  validators={['required','matchRegexp:^([A-Za-zÁÉÍÓÚñáéíóúÑ_ ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ_ \'])+([A-Za-zÁÉÍÓÚñáéíóúÑ_ ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ_ \'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ_ ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ_ \'])?$']}
+                  errorMessages={['Campo requerido', '¡¡¡Nombre invalido!!!']}
                 />
               </Grid>
             <Grid item xs={12} sm={6}>
@@ -307,8 +332,8 @@ function AddressForm(props) {
                 name="apellido"
                 required
                 value={values.apellido}
-                validators={['required','matchRegexp:^([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])?$']}
-                errorMessages={['Campo requerido', 'Apellido no valido']}
+                validators={['required', 'matchRegexp:^([A-Za-zÁÉÍÓÚñáéíóúÑ_ ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ_ \'])+([A-Za-zÁÉÍÓÚñáéíóúÑ_ ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ_ \'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ_ ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ_ \'])?$']}
+                errorMessages={['Campo requerido', '¡¡¡Apellido invalido!!!']}
                 fullWidth
               />
             </Grid>
@@ -480,7 +505,7 @@ function AddressForm(props) {
                   <Button
                     color="secondary"
                     variant="contained"
-                    onClick ={ () => history.goBack()}
+                    onClick={handleBtnClose}
                   >
                     Cancelar
                   </Button>
@@ -502,12 +527,12 @@ function AddressForm(props) {
                   <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                       Se agregó un usuario a la base de datos.
-          </DialogContentText>
+                    </DialogContentText>
                   </DialogContent>
                   <DialogActions>
                     <Button onClick={handleCloseDialog} color="primary">
                       ACEPTAR
-          </Button>
+                    </Button>
                   </DialogActions>
                 </Dialog>
               </ButtonGroup>

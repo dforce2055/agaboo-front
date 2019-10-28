@@ -32,7 +32,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function VisibilityClient(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const {cliente} = props;
+  const {usuario} = props;
   
   const handleClickOpen = () => {
     setOpen(true);
@@ -55,7 +55,7 @@ export default function VisibilityClient(props) {
               <CloseIcon />
             </IconButton>
             <Typography variant="h4" className={classes.title}>
-            {cliente.nombre}{' '}{cliente.apellido}
+            {usuario.nombre}{' '}{usuario.apellido}
             </Typography>
             <Button color="inherit" onClick={handleClose}>
               VISTO
@@ -67,7 +67,7 @@ export default function VisibilityClient(props) {
         {/*-------------DNI--------------*/}
         <ListItem >
           <Typography variant="h6" className={classes.title}>
-            {'Num. de D.N.I: '}{cliente.cuit}
+            {'Num. de D.N.I: '}{usuario.cuit}
             </Typography>
         </ListItem>
         <Divider />
@@ -75,7 +75,7 @@ export default function VisibilityClient(props) {
         {/*-------------CELULAR--------------*/}
         <ListItem>
         <Typography variant="h6" className={classes.title}>
-            {'Celular: '}{cliente.celular}
+            {'Celular: '}{usuario.celular}
             </Typography>
         </ListItem>
         <Divider />
@@ -83,10 +83,10 @@ export default function VisibilityClient(props) {
           {/*-------------UBICACION--------------*/}
           <ListItem >
           <Typography variant="h6" className={classes.title}>
-            {'En la localida de: '} {cliente.localidad}
+            {'En la localida de: '} {usuario.localidad}
             </Typography>
             <Typography variant="h6" className={classes.title}>
-            {'Calle: '}{cliente.calle}{' al '}{cliente.altura}
+            {'Calle: '}{usuario.calle}{' al '}{usuario.altura}
             </Typography>                        
           </ListItem>
           <Divider />
@@ -94,7 +94,7 @@ export default function VisibilityClient(props) {
           {/*-------------EMAIL--------------*/}
           <ListItem >
             <Typography variant="h6" className={classes.title}>
-            {'E-mail: '} {cliente.email}
+            {'E-mail: '} {usuario.email}
             </Typography>    
           </ListItem>
           <Divider />
@@ -102,7 +102,7 @@ export default function VisibilityClient(props) {
           {/*-------------ROL--------------*/}
           <ListItem >
             <Typography variant="h6" className={classes.title}>
-            {'Empleo: '} {cliente.empleo}
+            {'Empleo: '} {usuario.empleo}
             </Typography>    
           </ListItem>
           <Divider />

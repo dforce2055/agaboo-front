@@ -79,8 +79,103 @@ describe('Metodo addUser', () => {
     });
 });
 
+describe('Metodo getAllUsers', () => {
+    // Pruebas del metodo getAllUsers
+    test('getAllUsers', async () => {
+        //Debería devolver un array de objetos del tipo User en Json
+        let users = await UserController.getAllUsers();
+
+        expect(typeof users).toBe('object');
+
+        //Comparo el objeto con un objeto del tipo User
+        expect(users).toMatchObject(Users);
+
+        // Verifico que me llegue un array de objetos del tipo User
+        // que al menos un Objeto contenga un campo role: 'ADMIN'
+
+        expect(users).toEqual(          
+            expect.arrayContaining([      
+                expect.objectContaining({   
+                    role: 'ADMIN'              
+                })
+            ])
+        )
+    });
+});
+
+describe('Metodo getActiveUsers', () => {
+    // Pruebas del metodo getActiveUsers
+    test('getActiveUsers', async () => {
+        //Debería devolver un array de objetos del tipo User en Json
+        let users = await UserController.getActiveUsers();
+
+        expect(typeof users).toBe('object');
+
+        //Comparo el objeto con un objeto del tipo User
+        expect(users).toMatchObject(Users);
+
+        // Verifico que me llegue un array de objetos del tipo User
+        // que al menos un Objeto contenga un campo role: 'ADMIN'
+
+        expect(users).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    eliminado: false
+                })
+            ])
+        )
+    });
+});
 
 
+describe('Metodo editUser', () => {
+    // Pruebas del metodo getUser
+    test('editUser', async () => {
+        //Debería devolver un objeto Json del tipo User
+        let result = await UserController.editUser(userTest);
+
+        expect(typeof result).toBe('boolean');
+        expect(result).toBe(true);
+    });
+
+    test('Metodo editUser sin PARAMETRO', async () => {
+        //No le envió ningun parametro
+        //Debería devolver un mensaje de error
+        let message = false
+        try {
+            await UserController.editUser();
+        } catch (e) {
+            message = e.message
+        }
+        console.log(message);
+        expect(message).toBeTruthy()
+    });
+});
+
+
+describe('Metodo deleteUser', () => {
+    // Pruebas del metodo getUser
+    test('deleteUser', async () => {
+        //Debería devolver un objeto Json del tipo User
+        let result = await UserController.deleteUser(userTest);
+
+        expect(typeof result).toBe('boolean');
+        expect(result).toBe(true);
+    });
+
+    test('Metodo deleteUser sin PARAMETRO', async () => {
+        //No le envió ningun parametro
+        //Debería devolver un mensaje de error
+        let message = false
+        try {
+            await UserController.deleteUser();
+        } catch (e) {
+            message = e.message
+        }
+        console.log(message);
+        expect(message).toBeTruthy()
+    });
+});
 
 describe('Metodo getUserStatusAndRole', () => {
     // Pruebas del metodo getUserStatus

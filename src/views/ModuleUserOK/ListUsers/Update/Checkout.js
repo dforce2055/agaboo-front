@@ -6,20 +6,7 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 
 //Import campos de datos
-import AddressForm from './AddressForm';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import UserForm from '../../Create/UserForm';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -57,7 +44,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Checkout(props) {
   const classes = useStyles();
-  const {cliente} = props;
+  const {usuario} = props;
   const {handleClose} = props;
   const {updateStateArray} =props;
   return (
@@ -68,11 +55,11 @@ export default function Checkout(props) {
           <Typography component="h1" variant="h4" align="center">
             Formulario
           </Typography>          
-          <React.Fragment>          
-          <AddressForm 
-          updateStateArray={updateStateArray}
-          cliente={cliente} 
-          handleClose={handleClose}/>              
+          <React.Fragment>
+            <UserForm 
+              updateStateArray={updateStateArray}
+              usuario={usuario}
+              handleClose={handleClose} />
           </React.Fragment>
         </Paper>
       </main>
