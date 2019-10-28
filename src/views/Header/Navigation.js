@@ -22,6 +22,10 @@ import Collapse from '@material-ui/core/Collapse'; //https://material-ui.com/com
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
 //ICONOS DE BOTONES
+//ICONOS DE USUARIOS
+  import UsersIcon from '@material-ui/icons/SupervisedUserCircle';
+
+
   //ICONOS DE CLIENTES
   import GroupAddIcon from '@material-ui/icons/GroupAdd';
   import ContactsIcon from '@material-ui/icons/Contacts';
@@ -251,6 +255,17 @@ function Navbar(props) {
           </IconButton>
         </div>
         <Divider />
+{/* *********************************** LISTA USUARIOS ****************************************** */}
+
+          <List>
+            <ListItem button onClick={() => history.push('/usuarios')}>
+              <ListItemIcon>
+                <UsersIcon />
+              </ListItemIcon>
+              <ListItemText primary="Usuarios" />
+            </ListItem>
+          </List>
+
 {/* *********************************** LISTA CLIENTES ****************************************** */}
         <List>
         
