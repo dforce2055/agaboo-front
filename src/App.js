@@ -16,6 +16,7 @@ import DeleteOrder from './views/ModulOrders/Delete/index';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { CssBaseline, CircularProgress } from '@material-ui/core'
+import { MagicSpinner } from "react-spinners-kit";
 
 import firebase from '../src/config/firebase';
 
@@ -50,6 +51,6 @@ export default function App() {
           </React.Fragment>
         </BrowserRouter>
     </MuiThemeProvider>
-    ) : <div id="loader"><CircularProgress /></div>
+    ) : <div id="loader"><MagicSpinner color={'#303f9f'}/></div>
 }
 serviceWorker.unregister();

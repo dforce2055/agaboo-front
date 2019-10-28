@@ -6,6 +6,7 @@ import DialogAcept from './dialogAcept';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { withRouter } from "react-router-dom";
 
+
 function AddressForm(props) {
   const {history} = props;
   const [values, setValues] = React.useState({
@@ -51,7 +52,6 @@ function AddressForm(props) {
 
   return (
     <React.Fragment>
-
     <DialogAcept
     mostrarDialog={mostrarDialog}
     handleCloseDialog={handleCloseDialog}
@@ -145,11 +145,11 @@ function AddressForm(props) {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextValidator      
+            <TextValidator
               onChange={handleChange('calle')}
               label="Calle"
               variant="outlined"
-              fullWidth 
+              fullWidth
               required
               value={values.calle}
               validators={['required','matchRegexp:^[a-zA-Z ]*$']}
@@ -157,7 +157,7 @@ function AddressForm(props) {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextValidator   
+            <TextValidator
               onChange={handleChange('altura')}
               variant="outlined"
               label="Altura"

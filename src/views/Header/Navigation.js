@@ -44,8 +44,6 @@ import userController from '../../controllers/User';
   import LocalAtmIcon from '@material-ui/icons/LocalAtm';
   //ICONOS DE MANTENIMIENTO
   import BuildIcon from '@material-ui/icons/Build';
-  //ICONO DE CIERRE DE SESION
-  import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
   import firebase from '../../config/firebase';
 
 
