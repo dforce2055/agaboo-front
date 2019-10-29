@@ -19,15 +19,9 @@ import OrderReady from './views/ModulOrders/Ready/index';
 import DeleteOrder from './views/ModulOrders/Delete/index';
 import Stock from './views/ModuleProduct/Stock/index'; 
 
-<<<<<<< HEAD
-
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles' ;
-import { CssBaseline, CircularProgress } from '@material-ui/core';
-=======
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { CssBaseline, CircularProgress } from '@material-ui/core'
 import { MagicSpinner } from "react-spinners-kit";
->>>>>>> f6c1a2494212b5fa65f6ee7cc9bb73931606d7eb
 
 import firebase from '../src/config/firebase';
 

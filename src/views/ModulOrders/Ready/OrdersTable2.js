@@ -52,8 +52,8 @@ const theme = createMuiTheme({ /* Plantilla de edicion */
 }
 });
 
-const rows = JSON.parse(sessionStorage.getItem('list_order'));
-
+let rows = [];//JSON.parse(sessionStorage.getItem('list_order'));
+console.log(JSON.parse(sessionStorage.getItem('list_order')))
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -239,19 +239,20 @@ const useStyles = makeStyles(theme => ({
 export default function EnhancedTable() {
   
   React.useEffect(()=>{
-    if (listOrders.length === 0) {      
+    if (JSON.parse(sessionStorage.getItem('list_order')).length !== listOrders.length ) {      
       OrderController.getOrders()
         .then(value =>{
           setListOrders(value);
           sessionStorage.setItem('list_order',JSON.stringify(value))
           let data = JSON.parse(sessionStorage.getItem('list_order'));
+          rows = data;
           console.log("GUARDO EN SESSION STORAGE:",data);
         }); 
     }
   });
    
   const[listOrders,setListOrders] = React.useState([]);
-
+  const [a,setA] = React.useState([]);
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');

@@ -46,11 +46,11 @@ function useIndexUpdateProduct(props) {
     )
 }
 
-const mapsStateToProps = (state) => {
-    store;
-}
+// const mapsStateToProps = (state) => {
+//     store;
+// }
 
 
-connect(mapStateToProps); 
+// connect(mapStateToProps); 
 
-export default connect({withRouter(useIndexUpdateProduct)}) ;
+export default withRouter(useIndexUpdateProduct) ;

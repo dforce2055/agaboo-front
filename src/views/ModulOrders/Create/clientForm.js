@@ -12,6 +12,8 @@ function clientExist(seleccionado2) {
     <label htmlFor="firstName">Nombre</label>
     <input
       value={seleccionado.nombre}
+      readOnly
+      required
     />
   </div>
   <div className="lastName">
