@@ -17,14 +17,26 @@ class OrderRepo extends Component {
       .then(()=>{
         console.log("Pedido registrado en la base de datos.");
         return true;
-      })
-      .catch(error => {
-        console.error("Error al guardar: ",error);
-      });      
+      })  
     } catch (error) {
       console.log("Error al agregar PEDIDO a DATABASE: ", error);
     }
   }
+
+  async getOrders(){
+    try {
+      let list = {};
+      await db.get()
+      .then(result =>{
+        list = result.docs.map(doc => doc.data())
+   })
+      return list;
+    } catch (error) {
+      console.error("Error en base de datos: ",error);
+      
+    }
+  }
+
 
 }
 export default new OrderRepo();
