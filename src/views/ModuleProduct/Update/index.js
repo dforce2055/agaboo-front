@@ -6,6 +6,7 @@ import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
 import SearchBox from './SearchBox';
 import FilterProduct from './FilterProduct';
+import {connect } from 'react-redux'
 
 function useIndexUpdateProduct(props) {
     const [value , setValue] = useState("DISPONIBLE");
@@ -45,4 +46,11 @@ function useIndexUpdateProduct(props) {
     )
 }
 
-export default withRouter(useIndexUpdateProduct);
+const mapsStateToProps = (state) => {
+    store;
+}
+
+
+connect(mapStateToProps); 
+
+export default connect({withRouter(useIndexUpdateProduct)}) ;
