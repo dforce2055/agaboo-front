@@ -40,10 +40,9 @@ export default function ClientTable() {
     }else if (clientes.length === 0) {
         CustomerController.getCustomers()
         .then(value=> {
-          //setData(value); //Seteo el 
           setClientes(value);      
       }).catch(error=>{
-        console.log("Error al traer el cliente= ",error);
+        console.log("Error al traer el cliente: ",error);
       })
       }else if (search.buscar.length !== 0) { //Verifico que el campo de buscar este vacio
         setValidador(true)

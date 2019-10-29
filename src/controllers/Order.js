@@ -12,6 +12,15 @@ class OrderController extends Component {
     }
   }
 
+  getOrders = async () => {
+    try {
+      let list = await OrderRepo.getOrders();
+      return list;
+    } catch (error) {
+      console.error("Error al traer todos los pedidos.");
+    }
+  }
+
 }
 
 export default new OrderController();

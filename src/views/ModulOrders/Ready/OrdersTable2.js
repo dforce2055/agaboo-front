@@ -16,8 +16,10 @@ import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import ResponsiveDialog from './ConfirmDialog';
+
 //Import clases de db
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import OrderController from '../../../controllers/Order';
 
 const theme = createMuiTheme({ /* Plantilla de edicion */
   overrides: { 
@@ -50,18 +52,7 @@ const theme = createMuiTheme({ /* Plantilla de edicion */
 }
 });
 
-function createData(nombre, dni, fecha, direccion, telefono) {
-  return { nombre, dni, fecha, direccion, telefono};
-}
-
-const rows = [
-    createData('Cesar Vega', 159, '24/05/2019', 24, 4.0),
-    createData('Ivan Cuadrado', 237, '27/09/2018', 37, 4.3),
-    createData('Diego Perez', 262, '17/10/2018', 24, 6.0),
-    createData("Francisco D'Anunzio", 4167323, '30/09/2019', 67, 4.3),
-    createData('Ionatan Tarragona', 356, '16/03/2019', 49, 3.9),
-  
-];
+const rows = JSON.parse(sessionStorage.getItem('list_order'));
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -74,7 +65,7 @@ function desc(a, b, orderBy) {
 }
 
 function stableSort(array, cmp) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
+  const stabilizedThis = rows.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = cmp(a[0], b[0]);
     if (order !== 0) return order;
@@ -88,11 +79,12 @@ function getSorting(order, orderBy) {
 }
 
 const headCells = [
-  { id: 'Nombre', numeric: false, disablePadding: true, label: 'Nombre' },
-  { id: 'dni', numeric: true, disablePadding: false, label: 'DNI' },
-  { id: 'fecha', numeric: true, disablePadding: false, label: 'Fecha' },  
-  { id: 'direccion', numeric: true, disablePadding: false, label: 'Dirección' },
-  { id: 'telefono', numeric: true, disablePadding: false, label: 'Teléfono' },
+  { id: 'nombre', numeric: false, disablePadding: true, label: 'Nombre' },
+  { id: 'id_cliente', numeric: true, disablePadding: false, label: 'CUIT/CUIL' },
+  { id: 'fechaEntrega', numeric: true, disablePadding: false, label: 'Fecha de entrega' },  
+  { id: 'ciudad', numeric: false, disablePadding: false, label: 'Ciudad' },
+  { id: 'direccion', numeric: false, disablePadding: false, label: 'Dirección' },
+  /*{ id: 'celular', numeric: true, disablePadding: false, label: 'Teléfono' },*/
 ];
 
 function EnhancedTableHead(props) {
@@ -247,6 +239,21 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 export default function EnhancedTable() {
+  
+  React.useEffect(()=>{
+    if (listOrders.length === 0) {      
+      OrderController.getOrders()
+        .then(value =>{
+          setListOrders(value);
+          sessionStorage.setItem('list_order',JSON.stringify(value))
+          let data = JSON.parse(sessionStorage.getItem('list_order'));
+          console.log("GUARDO EN SESSION STORAGE:",data);
+        }); 
+    }
+  });
+   
+  const[listOrders,setListOrders] = React.useState([]);
+
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -263,12 +270,13 @@ export default function EnhancedTable() {
 
   function handleSelectAllClick(event) {
     if (event.target.checked) {
-      const newSelecteds = rows.map(n => n.nombre);
+      const newSelecteds = rows.map(n => n.id_cliente);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   }
+
 
   function handleClick(event, nombre) {
     const selectedIndex = selected.indexOf(nombre);
@@ -333,11 +341,10 @@ export default function EnhancedTable() {
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.nombre)}
+                      onClick={event => handleClick(event, row.cliente.id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
-                      
-                      key={row.nombre}
+                      key={row.id}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -351,14 +358,11 @@ export default function EnhancedTable() {
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.nombre}
                       </TableCell>
-                      <TableCell align="right">{row.dni}</TableCell>
-                      <TableCell align="right">{row.fecha}</TableCell>
+                      <TableCell align="right">{row.id_cliente}</TableCell>
+                      <TableCell align="right">{row.fechaEntrega}</TableCell>
+                      <TableCell align="right">{row.ciudad}</TableCell>
                       <TableCell align="right">{row.direccion}</TableCell>
-                      <TableCell align="right">{row.telefono}</TableCell>
-                      
-                      
-            
-
+                      {/*<TableCell align="right">{row.celular}</TableCell>*/}
                     </TableRow>
                   );
                 })}

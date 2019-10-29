@@ -21,6 +21,7 @@ function formulario(handleChange){
             />
           </div>
           
+          
           <div className="password"> 
             <label htmlFor="firstName">Responsable de pago</label> 
             <input
@@ -73,6 +74,16 @@ function formulario(handleChange){
               noValidate
               onChange={handleChange('fechaDeEntregaPedido')}
             />
+          </div>
+
+          <div className="password"> 
+            <label htmlFor="lastName">Ciudad</label> 
+            <input
+              placeholder="Ciudad"
+              type="text"
+              noValidate
+              onChange={handleChange('ciudad')} 
+            />              
           </div>
 
           <div className="password"> 
@@ -147,7 +158,8 @@ export default function Form() {
     formaDePago:'',
     fechaDeCreacionPedido:'',
     fechaDeEntregaPedido:'',
-    ubicacionDeEntrega:''
+    ubicacionDeEntrega:'',
+    ciudad:''
     });  
 
   const handleChange = name => event => {    
