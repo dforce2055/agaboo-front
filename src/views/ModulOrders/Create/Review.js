@@ -54,7 +54,7 @@ export default function Review() {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Order summary
+        Resumen de pedido
       </Typography>
       <List disablePadding>
         {listado_producto.map(product => (
@@ -66,7 +66,7 @@ export default function Review() {
         <ListItem className={classes.listItem}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" className={classes.total}>
-            $MOSTRAR UN VALOR APROXIMADO
+            $ MOSTRAR UN VALOR APROXIMADO
           </Typography>
         </ListItem>
       </List>

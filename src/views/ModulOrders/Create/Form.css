@@ -51,12 +51,13 @@ input.error {
   margin-right: 1%;
 }
 
-.lastName {
+.lastName2 {
   margin-left: 1%;
 }
 
 .firstName,
 .lastName,
+.lastName2,
 .email,
 .password {
   display: flex;
@@ -65,7 +66,8 @@ input.error {
 }
 
 .firstName,
-.lastName {
+.lastName,
+.lastName2 {
   width: 49%;
 }
 

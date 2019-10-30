@@ -14,7 +14,6 @@ import ProductController from '../../../controllers/Product';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
-    background: 'linear-gradient(45deg, #2c7369 20%, #3fb5a5 90%)',
     backgroundColor: '#3fb5a5',
     color: theme.palette.common.white,
   },
@@ -51,7 +50,7 @@ const useStyles = makeStyles(theme => ({
   const {update, setUpdate} = props;
 
   const classes = useStyles();
-  const array =[] 
+  const array = [] 
   const typesProduct = ["Baño Químico", "Oficina", "Boletería", "Garita"] // Hardcode de los tipos de productos
   
   

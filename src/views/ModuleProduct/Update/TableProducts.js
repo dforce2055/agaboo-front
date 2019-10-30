@@ -13,7 +13,6 @@ import ProductController from '../../../controllers/Product';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
-    background: 'linear-gradient(45deg, #2c7369 20%, #3fb5a5 90%)',
     backgroundColor: '#3fb5a5',
     color: theme.palette.common.white,
   },

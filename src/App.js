@@ -23,6 +23,7 @@ import { CssBaseline } from '@material-ui/core'
 import { MagicSpinner } from "react-spinners-kit";
 
 import firebase from '../src/config/firebase';
+import LoaderScreen from './views/LoaderScreen/LoaderScreen';
 
 
 import CustomizedTables from './views/ModulOrders/Ready/CompleteOrder/ProductListOrder';
@@ -63,6 +64,6 @@ export default function App() {
           </Provider> 
         </ BrowserRouter>
     </MuiThemeProvider>
-    ) : <div id="loader"><MagicSpinner color={'#303f9f'}/></div>
+    ) : <LoaderScreen/>
 }
 serviceWorker.unregister();

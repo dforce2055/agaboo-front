@@ -5,9 +5,49 @@ import CustomerController from '../../../controllers/Customer';
 import DialogAcept from './dialogAcept';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { withRouter } from "react-router-dom";
+import {MuiThemeProvider, createMuiTheme, makeStyles} from '@material-ui/core/styles';
 
+
+const theme = createMuiTheme({
+  overrides: {
+    MuiButton: {
+      containedPrimary: {
+        backgroundColor: '#3fb5a5',
+        '&:hover': {
+          backgroundColor: '#0ce8ca',
+          "@media (hover: none)": {
+            backgroundColor: "#0ce8ca"
+          },
+        },
+      },
+      containedSecondary: {
+        backgroundColor: '#b53f3f',
+        '&:hover': {
+          backgroundColor: '#f30b0b',
+          "@media (hover: none)": {
+            backgroundColor: "#f30b0b"
+          },
+        },
+      },
+    }, 
+  }
+})
+
+const useStyles = makeStyles(theme => ({
+  buttonLeft: {
+    marginRight:'2px',
+    marginLeft:'13px',
+    marginTop: theme.spacing(3),
+  },
+  buttonRight: {
+    marginLeft:'20px',
+    marginTop: theme.spacing(3),
+  },
+  
+}));
 
 function AddressForm(props) {
+  const classes = useStyles();
   const {history} = props;
   const [values, setValues] = React.useState({
     nombre:'',
@@ -52,6 +92,7 @@ function AddressForm(props) {
   };
 
   return (
+    <MuiThemeProvider theme={theme}>
     <React.Fragment>
     <DialogAcept
     mostrarDialog={mostrarDialog}
@@ -196,6 +237,7 @@ function AddressForm(props) {
                 >
                   Cancelar
                 </Button>
+
                 <Button 
                 style={{background: 'linear-gradient(45deg, #3fb5a5 2%, #3fb5a5 98%)'}}
                 variant="contained"
@@ -209,6 +251,7 @@ function AddressForm(props) {
       </ValidatorForm>
       
     </React.Fragment>
+    </MuiThemeProvider>
   );
 }
 
