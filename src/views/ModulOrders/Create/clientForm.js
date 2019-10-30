@@ -13,6 +13,7 @@ function clientExist(seleccionado2) {
     <input
       value={seleccionado.nombre}
       readOnly
+      required
     />
   </div>
   <div className="lastName">

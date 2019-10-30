@@ -119,7 +119,17 @@ function Checkout(props) {
     detalle_pedido=JSON.parse(sessionStorage.getItem('info_detalle_pedido'));
 
     //Almaceno todos los datos guardados en sessionStorage en el mismo archivo. 
-    var data ={cliente,listado_producto,detalle_pedido};
+    var data ={
+      cliente,
+      listado_producto,
+      detalle_pedido,
+      fechaEntrega:detalle_pedido.fechaDeEntregaPedido,
+      nombre:cliente.nombre+' '+cliente.apellido,
+      id_cliente:cliente.id,
+      ciudad:detalle_pedido.ciudad,
+      direccion:detalle_pedido.ubicacionDeEntrega,
+      celular:cliente.celular,
+    };   
 
     //Paso data que es toda la informacion del pedido.
     OrderController.addOrder(data);

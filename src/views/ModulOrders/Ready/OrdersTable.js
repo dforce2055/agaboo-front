@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import { IconButton } from '@material-ui/core';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import OrderController from '../../../controllers/Order';
 
 const theme = createMuiTheme({ /* Plantilla de edicion */
   overrides: { 
@@ -66,6 +67,19 @@ const useStyles = makeStyles(theme => ({
 export default function CustomizedTables() {
   const classes = useStyles();
 
+  React.useEffect(()=>{
+    if (listOrders.length === 0) {      
+      OrderController.getOrders()
+        .then(value =>{
+          setListOrders(value);
+        });            
+    }
+  });
+   
+  const[listOrders,setListOrders] = React.useState([]);
+  
+  console.log("Muestro LISTADO de PEDIDOS:",listOrders);
+  
   return (
     <MuiThemeProvider theme={theme}>
     <Paper className={classes.root}>
@@ -81,7 +95,7 @@ export default function CustomizedTables() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
+          {listOrders.map(row => (
             <StyledTableRow key={row.nombre}>
               <StyledTableCell padding="checkbox">
                 <IconButton>
@@ -91,7 +105,7 @@ export default function CustomizedTables() {
               <StyledTableCell component="th" scope="row">
                 {row.nombre}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.dni}</StyledTableCell>
+              <StyledTableCell align="right">{row.cliente.nombre}</StyledTableCell>
               <StyledTableCell align="right">{row.fecha}</StyledTableCell>
               <StyledTableCell align="right">{row.direccion}</StyledTableCell>
               <StyledTableCell align="right">{row.telefono}</StyledTableCell>
