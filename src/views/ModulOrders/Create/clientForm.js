@@ -12,36 +12,42 @@ function clientExist(seleccionado2) {
     <label htmlFor="firstName">Nombre</label>
     <input
       value={seleccionado.nombre}
+      readOnly
     />
   </div>
   <div className="lastName">
     <label htmlFor="lastName">Apellido</label>
     <input
       value={seleccionado.apellido}
+      readOnly
     />
   </div>
   <div className="firstName"> 
       <label htmlFor="cuit">CUIT/CUIL</label> 
       <input
        value={seleccionado.id}
+       readOnly
       />
     </div>
   <div className="email">
     <label htmlFor="email">Email</label>
     <input
       value={seleccionado.email}
+      readOnly
     />
   </div>
   <div className="firstName">   
     <label htmlFor="firstName">Celular</label> 
     <input
      value={seleccionado.celular}
+     readOnly
     />
   </div>
   <div className="password">
-    <label htmlFor="location">localidad</label>
+    <label htmlFor="location">Localidad</label>
     <input
       value = {seleccionado.localidad}
+      readOnly
     />
   </div>
 </form>
@@ -81,7 +87,7 @@ function clientNotExist() {
       />
     </div>
     <div className="password">
-      <label htmlFor="location">Dirección</label>
+      <label htmlFor="location">Localidad</label>
       <input
         value={' '}
       />

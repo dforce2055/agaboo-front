@@ -64,7 +64,7 @@ function formulario(handleChange){
             />
           </div>
 
-          <div className="lastName">
+          <div className="lastName2">
             <label htmlFor="lastName">Fecha de finalizacion</label> 
             <input
               placeholder="DD/MM/AAAA"

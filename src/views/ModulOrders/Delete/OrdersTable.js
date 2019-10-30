@@ -115,9 +115,6 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       width: 200,
     },
-    static: {
-      position: "absolute",
-    },
   },
 }));
 

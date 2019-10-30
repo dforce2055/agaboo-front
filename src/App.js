@@ -18,10 +18,10 @@ import DeleteOrder from './views/ModulOrders/Delete/index';
 import Stock from './views/ModuleProduct/Stock/index';  
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-import { CssBaseline, CircularProgress } from '@material-ui/core'
-import { MagicSpinner } from "react-spinners-kit";
+import { CssBaseline } from '@material-ui/core'
 
 import firebase from '../src/config/firebase';
+import LoaderScreen from './views/LoaderScreen/LoaderScreen';
 
 const theme = createMuiTheme();
 
@@ -59,6 +59,6 @@ export default function App() {
           </React.Fragment>
         </BrowserRouter>
     </MuiThemeProvider>
-    ) : <div id="loader"><MagicSpinner color={'#303f9f'}/></div>
+    ) : <LoaderScreen/>
 }
 serviceWorker.unregister();
