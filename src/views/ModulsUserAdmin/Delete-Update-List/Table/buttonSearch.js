@@ -43,8 +43,6 @@ export default function CustomizedInputBase(props) {
     CustomerController.searchCustomer(e)
      .then(result=>{
        setHandleFounDb(result);
-       console.log(handleFounDb);
-       
       });
   }
 

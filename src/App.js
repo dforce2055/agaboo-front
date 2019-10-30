@@ -18,12 +18,14 @@ import CreateOrder from './views/ModulOrders/Create/index';
 import OrderReady from './views/ModulOrders/Ready/index';
 import DeleteOrder from './views/ModulOrders/Delete/index';
 import Stock from './views/ModuleProduct/Stock/index'; 
-
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-import { CssBaseline, CircularProgress } from '@material-ui/core'
+import { CssBaseline } from '@material-ui/core'
 import { MagicSpinner } from "react-spinners-kit";
 
 import firebase from '../src/config/firebase';
+
+
+import CustomizedTables from './views/ModulOrders/Ready/CompleteOrder/ProductListOrder';
 
 const theme = createMuiTheme();
 
@@ -56,6 +58,7 @@ export default function App() {
                 <Route path= "/pedidosListos" component={OrderReady} />
                 <Route path= "/eliminarPedidos" component={DeleteOrder} />
                 <Route path= "/stock" component={Stock} />
+                <Route path = "/rellenarPedido" component={CustomizedTables}/>
             </React.Fragment>
           </Provider> 
         </ BrowserRouter>

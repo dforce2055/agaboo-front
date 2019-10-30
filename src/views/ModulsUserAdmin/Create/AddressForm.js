@@ -184,28 +184,26 @@ function AddressForm(props) {
               errorMessages={['Campo requerido', 'Celular es invalido']}
             />
           </Grid> 
-          <Grid item xs={12} sm={6}>
             <ButtonGroup 
               variant="text"
               size="large"
               aria-label="large contained secondary button group"
             >
                 <Button 
-                style={{background: 'linear-gradient(45deg, #f56f5b 10%, #ff2200 97%)'}}
+                style={{background: 'linear-gradient(45deg, #f56f5b 10%, #f30b0b 97%)'}}
                 variant="contained"
                 onClick ={ () => history.goBack()}
                 >
                   Cancelar
                 </Button>
                 <Button 
-                style={{background: 'linear-gradient(45deg, #3fb5a5 2%, #40f03a 98%)'}}
+                style={{background: 'linear-gradient(45deg, #3fb5a5 2%, #3fb5a5 98%)'}}
                 variant="contained"
                 type = " submit "
                 >
                   Guardar
                 </Button>
               </ButtonGroup>
-          </Grid>      
         </Grid>
 
       </ValidatorForm>
