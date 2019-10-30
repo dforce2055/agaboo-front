@@ -52,7 +52,7 @@ function SimpleMenu(props) {
         <MenuItem onClick ={ () => {
           sessionStorage.setItem('listado_producto',JSON.stringify(listado_producto))
           console.log("ENVIO LISTADO_PRODUCTO A SESSION StoRAGE")
-          history.push('/rellenarPedido') }}>Seleccionar productos</MenuItem>
+          history.push('/rellenarPedido') }}>Completar pedido</MenuItem>
         <MenuItem onClick={handleCompleteOrder}>Editar pedido</MenuItem>
         <MenuItem onClick={handleDeleteOrder}>Eliminar pedido</MenuItem>
       </Menu>

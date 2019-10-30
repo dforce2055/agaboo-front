@@ -12,7 +12,8 @@ import { withRouter } from 'react-router-dom';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import firebase from '../../../../config/firebase';
 
-import Chip from './ChipTest';
+import Chip from './Chip';
+
 const theme = createMuiTheme({ /* Plantilla de edicion */
   overrides: { 
     MuiSvgIcon:{
