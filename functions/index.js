@@ -134,3 +134,23 @@ exports.onUpdateCustomers = functions.firestore
             "lastUpdate": admin.firestore.FieldValue.serverTimestamp()
         }, { merge: true });
     });
+
+
+//if a new document is created in the orders collection, add the field id_pedido & fecha_creacion.
+exports.createOrder = functions.firestore
+    .document('orders/{orderId}')
+    .onCreate((snap, context) => {
+        // Get an object representing the document
+        // e.g. {'name': 'Marie', 'age': 66}
+        //const newDocument = snap.data();
+        const orderId = context.params.orderId;
+        
+
+        console.log(`Se creo un nuevo pedido id:  ${orderId}`);
+
+        // Then return a promise of a set operation to create de document
+        return snap.ref.set({
+            "id_pedido": orderId,
+            "fecha_creacion": admin.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+    });
