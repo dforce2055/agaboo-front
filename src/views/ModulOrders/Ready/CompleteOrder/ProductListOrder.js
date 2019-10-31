@@ -73,19 +73,51 @@ const useStyles = makeStyles(theme => ({
   const [actualizar,setActualizar] = React.useState(true);
   const[listOrders,setListOrders] = React.useState([]);
 
-  const [list_cant,setList_cant] = React.useState([]);
+  const [list_cant,setList_cant] = React.useState({});
 
-  const verificarDisponibilidadProducto = (e) =>{
+  const saveOrder = () =>{
 
   };
 
-  const handleChange= (e) =>{
-    verificarDisponibilidadProducto(e)
-    setList_cant(e);    
-    //array.push(e); //Guardo Chip detectado
-    };
-    
-    console.log(list_cant)    
+  const handleChange2 = (name,obj) => {    
+    /*//ERROOORR==>> Al momento de guardar el baño quimico, me guarda "baño quimico" en vez de "Baño_Quimico_AG1" y lo mismo pasa con el AG2. Entra al case y al if, pero me lo guarda de la misma manera.
+    switch (name) { 
+      case 'Oficina':
+        setList_cant({...list_cant, [name]: obj});
+      case 'Baño Quimico':
+        if (obj.modelo === 'AG1') {
+          console.log("entro a ag1");
+          setList_cant({...list_cant, ['Baño_Quimico_AG1']: obj});
+        }else if(obj.modelo === 'AG2'){
+          console.log("entro a ag2");
+          setList_cant({...list_cant, ['Baño_Quimico_AG2']: obj});
+        }else if(obj.modelo === 'discapacitado'){
+          setList_cant({...list_cant, ['Baño_Quimico_Discapacitado']: obj});
+        }
+      case 'Boleteria':
+        setList_cant({...list_cant, [name]: obj});
+      case 'Oficina':
+        setList_cant({...list_cant, [name]: obj});
+      default:        
+    }*/
+
+    //Si no es un baño quimico que se guarde
+    if (name !== 'Baño Quimico') {
+      setList_cant({...list_cant, [name]: obj});
+    } else if(name === 'Baño Quimico'){//Si lo es
+      //Se guarda con el nombre del modelo que sea
+      if (obj.modelo === 'AG1') { 
+        setList_cant({...list_cant, ['Baño_Quimico_AG1']: obj});
+      }else if(obj.modelo === 'AG2'){
+        setList_cant({...list_cant, ['Baño_Quimico_AG2']: obj});
+      }else if(obj.modelo === 'AG2'){
+        setList_cant({...list_cant, ['Baño_Quimico_AG2']: obj});
+      }
+    }
+  };
+
+  //MUESTRO QUE HAY EN EL LSITADO DE LOS PRODUCTO CON ID'S
+  console.log(list_cant)    
 
   if (!firebase.getCurrentUsername()) {
     // not logged in
@@ -109,7 +141,7 @@ const useStyles = makeStyles(theme => ({
         </TableHead>
         <TableBody>
           {listOrders.map(row => (
-            <StyledTableRow key={row.nombre}>
+            <StyledTableRow key={row.id_producto}>
               <StyledTableCell component="th" scope="row">
                 {row.producto}
               </StyledTableCell>
@@ -117,7 +149,12 @@ const useStyles = makeStyles(theme => ({
               <StyledTableCell >{row.cantidad}</StyledTableCell>
 
               <StyledTableCell align="right">
-                <Chip handleChange={handleChange}></Chip>
+                <Chip 
+                //Metodo para agregar la cantidad
+                handleChange={handleChange2}
+                //Metodo para agregar el objeto
+                obj={row}
+                ></Chip>
               </StyledTableCell>
 
             </StyledTableRow>
@@ -137,7 +174,9 @@ const useStyles = makeStyles(theme => ({
           <Button 
           //array = []; //Lo vacio cuando me voy
           variant='contained'  
-          color='primary'>guardar</Button>
+          color='primary'
+          onClick={saveOrder} //Metodo para guardar los id's con el pedido seleccionado
+          >guardar</Button>
         </ButtonGroup>
     
     </Container>
