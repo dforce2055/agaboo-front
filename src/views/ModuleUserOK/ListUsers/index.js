@@ -4,6 +4,8 @@ import Dashboard from './Table/Dashboard';
 import SimpleBottomNavigation from '../../Footer/Footer';
 import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
+
+
 function DeleteUpdateUserAdmin(props) {
     const { history } = props;
     if (!firebase.getCurrentUsername()) {

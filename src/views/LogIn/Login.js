@@ -42,8 +42,8 @@ const styles = theme => ({
 function SignIn(props) {
     const { classes } = props;
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    // const [email, setEmail] = useState('');
+    // const [password, setPassword] = useState('');
 
 
     return (
@@ -102,21 +102,22 @@ function SignIn(props) {
         </main>
     )
 
-    async function login() {
-        try {
-            let result = await firebase.login(email, password);
-            if ( result ) {
-                props.history.replace('/mainMenu');
-            } else {
-                alert("Su usario no esta habilitado, comuniquese con el administrador");
-                await firebase.logout();
-                props.history.replace('/');
-            }
+    // async function login() {
+    //     try {
+    //         let result = await firebase.login(email, password);
+    //         if ( result ) {
+    //             props.history.replace('/mainMenu');
+    //         } else {
+    //             alert("Su usario no esta habilitado, comuniquese con el administrador");
+    //             await firebase.logout();
+    //             props.history.replace('/');
+    //         }
             
-        } catch (error) {
-            alert(error.message)
-        }
-    }
+    //     } catch (error) {
+    //         alert(error.message)
+    //     }
+    // }
+
     async function googleLogin() {
         try {
             let userGoogleEmail = await firebase.signInWithGoogle();

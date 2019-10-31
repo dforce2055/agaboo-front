@@ -20,6 +20,7 @@ import ResponsiveDialog from './ConfirmDialog';
 //Import clases de db
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import OrderController from '../../../controllers/Order';
+import SimpleMenu from './ButtonOption.js';
 
 const theme = createMuiTheme({ /* Plantilla de edicion */
   overrides: { 
@@ -52,8 +53,8 @@ const theme = createMuiTheme({ /* Plantilla de edicion */
 }
 });
 
-let rows = [];//JSON.parse(sessionStorage.getItem('list_order'));
-console.log(JSON.parse(sessionStorage.getItem('list_order')))
+let rows = [];
+
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -79,12 +80,13 @@ function getSorting(order, orderBy) {
 }
 
 const headCells = [
+  { id: '', numeric: false, disablePadding: false, label: 'Opciones' },
   { id: 'nombre', numeric: false, disablePadding: true, label: 'Nombre' },
   { id: 'id_cliente', numeric: true, disablePadding: false, label: 'CUIT/CUIL' },
   { id: 'fechaEntrega', numeric: true, disablePadding: false, label: 'Fecha de entrega' },  
   { id: 'ciudad', numeric: false, disablePadding: false, label: 'Ciudad' },
   { id: 'direccion', numeric: false, disablePadding: false, label: 'Dirección' },
-  /*{ id: 'celular', numeric: true, disablePadding: false, label: 'Teléfono' },*/
+  /**/
 ];
 
 function EnhancedTableHead(props) {
@@ -239,20 +241,21 @@ const useStyles = makeStyles(theme => ({
 export default function EnhancedTable() {
   
   React.useEffect(()=>{
-    if (JSON.parse(sessionStorage.getItem('list_order')).length !== listOrders.length ) {      
+    if (a) {      
       OrderController.getOrders()
         .then(value =>{
-          setListOrders(value);
           sessionStorage.setItem('list_order',JSON.stringify(value))
           let data = JSON.parse(sessionStorage.getItem('list_order'));
           rows = data;
-          console.log("GUARDO EN SESSION STORAGE:",data);
+          setA(false);
+          console.log(JSON.parse(sessionStorage.getItem('list_order')))
+
         }); 
     }
   });
    
-  const[listOrders,setListOrders] = React.useState([]);
-  const [a,setA] = React.useState([]);
+  const [a,setA] = React.useState(true);
+
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -340,7 +343,6 @@ export default function EnhancedTable() {
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.cliente.id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       key={row.id}
@@ -348,11 +350,17 @@ export default function EnhancedTable() {
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
+                          onClick={event => handleClick(event, row.cliente.id)}
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
                       </TableCell>
-                      
+
+                      <TableCell>
+                      {/*Paso listado_productos por props, asi lo puede recivir la clase ButtonOption*/}
+                      <SimpleMenu listado_producto = {row.listado_producto}/>      
+                      </TableCell>
+
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.nombre}
                       </TableCell>

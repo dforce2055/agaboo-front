@@ -45,13 +45,6 @@ const typeState = [
     value: "EN MANTENIMIENTO",
     label: "EN MANTENIMIENTO",
   },
-  {
-    value: "EN MANTENIMIENTO",
-    label: "EN MANTENIMIENTO",
-  }
-
-
-
   
 ];
 
@@ -64,6 +57,7 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     padding: theme.spacing(1),
+    marginBottom: theme.spacing(9),
     margin: 'auto',
     maxWidth: 500,
   },
@@ -76,7 +70,7 @@ const useStyles = makeStyles(theme => ({
   },
   menu: {
     width: 200,
-  }
+  },
 }));
 
 
@@ -163,8 +157,7 @@ const useStyles = makeStyles(theme => ({
                   </TextField>  
                   
                   <TextField
-                    
-                  
+                    required
                     id="Code"
                     label="Codigo"
                     className={classes.textField}
@@ -217,9 +210,8 @@ const useStyles = makeStyles(theme => ({
                 
                 
             </form>
-            <Button label ={"Registrar Producto"} onClick = { registerProduct } ></Button>
-            <Button label = {"Cancelar"} onClick ={ () => history.goBack()  } ></Button>
-
+              <Button type="submit" label ={"Registrar Producto"} onClick = { registerProduct } ></Button>
+              <Button label = {"Cancelar"} onClick ={ () => history.goBack()  } ></Button>
           </Grid> 
         </Grid>
      

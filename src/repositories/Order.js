@@ -37,6 +37,19 @@ class OrderRepo extends Component {
     }
   }
 
+  async authAlqProduct(fec_ini,fec_fin){
+    try {
+      let ini = fec_ini;
+      let fin = fec_fin;
+      let id = ''; //Poner el id del pedido.
+      if (ini <= fin) { //Menor o igual, porque puede ser en el mismo dia
+        db.get(id)
+          .then()
+      }      
+    } catch (error) {
+      console.log("Error en base de datos: ",error);
+    }
+  }
 
 }
 export default new OrderRepo();
