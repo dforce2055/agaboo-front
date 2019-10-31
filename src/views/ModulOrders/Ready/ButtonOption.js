@@ -29,7 +29,6 @@ function SimpleMenu(props) {
   const handleCompleteOrder = () =>{
     console.log("MUESTRO COMPLETAR PEDIDO");
     setAnchorEl(null);
-    return <CustomizedTables></CustomizedTables>
   }
 
   const handleDeleteOrder = () =>{

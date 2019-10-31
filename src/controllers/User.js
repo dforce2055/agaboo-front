@@ -80,7 +80,9 @@ class UserController extends Component {
     }
 
     editUser = async (data) => {
-        if (!data || !data.email || !data.numeroDocumento || !data.tipoDocumento) throw new Error(`Error: el email, tipo y número de documento son obligatorios para Editar/Registar un cliente`);
+        console.log(data);
+        
+        if (!data || !data.email || !data.numeroDocumento) throw new Error(`Error: el email, tipo y número de documento son obligatorios para Editar/Registar un cliente`);
         try {
             let user = new User();
             user = Object.assign({}, data); //Utilizo Object.assign para mapear el objeto
