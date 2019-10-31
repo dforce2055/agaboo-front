@@ -10,9 +10,14 @@ import { Button, Container } from '@material-ui/core';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import firebase from '../../../../config/firebase';
 
+//ARCHIVOS IMPORTANTES FIRESTORE Y BACKEND
+import firebase from '../../../../config/firebase';
+import OrderController from '../../../../controllers/Order';
+
+//Componentes propios
 import Chip from './Chip';
+import AlertDialog from './AlertDialog';
 
 const theme = createMuiTheme({ /* Plantilla de edicion */
   overrides: { 
@@ -65,19 +70,34 @@ const useStyles = makeStyles(theme => ({
         //Utilizo storage para traer la informacion de la cantidad de productos que tiene un pedido.
         //Por que? ==> Porque no tenia manera de relacionarlo mediante las props.
         setListOrders(JSON.parse(sessionStorage.getItem('listado_producto')));
+        //Traigo el pedido completo guardado en la storage
+        setOrderId(JSON.parse(sessionStorage.getItem('pedido')));
         setActualizar(false);
     } 
   });
 
   const {history} = props;
-  const [actualizar,setActualizar] = React.useState(true);
-  const[listOrders,setListOrders] = React.useState([]);
+  const [actualizar,setActualizar] = React.useState(true); //Para utilizar en el useEffect
+  const[listOrders,setListOrders] = React.useState([]); //State para almacenar el listado de productos del pedido. 
+  const [orderId,setOrderId] = React.useState([]); //State para almacenar el id del pedido
+  const [list_cant,setList_cant] = React.useState({}); //State para almacenar los id's
+  const [open, setOpen] = React.useState(false); //State para el dialog
 
-  const [list_cant,setList_cant] = React.useState({});
-
-  const saveOrder = () =>{
-
+  const handleClickOpen = () => {
+    setOpen(true);
   };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  //Metodo para guardar list_cant en el pedido.
+  const saveOrder = () =>{
+    //Llamo metodo para guardar listado con id's
+    OrderController.saveOrderProductIds(orderId,list_cant);
+    handleClose(); //Cierro el dialog
+  };
+  
 
   const handleChange2 = (name,obj) => {    
     /*//ERROOORR==>> Al momento de guardar el baño quimico, me guarda "baño quimico" en vez de "Baño_Quimico_AG1" y lo mismo pasa con el AG2. Entra al case y al if, pero me lo guarda de la misma manera.
@@ -115,9 +135,6 @@ const useStyles = makeStyles(theme => ({
       }
     }
   };
-
-  //MUESTRO QUE HAY EN EL LSITADO DE LOS PRODUCTO CON ID'S
-  console.log(list_cant)    
 
   if (!firebase.getCurrentUsername()) {
     // not logged in
@@ -163,21 +180,17 @@ const useStyles = makeStyles(theme => ({
       </Table>
     </Paper>
 
-<ButtonGroup fullWidth aria-label="full width outlined button group">
-          <Button 
-          variant='contained' 
-          color='secondary'
-          onClick ={ () => {
-          //array = []; //Lo vacio cuando me voy
-          history.push('/pedidosListos')}}>volver</Button>
+    <AlertDialog
+      open={open}
+      handleClose={handleClose}
+      saveOrder={saveOrder}
+    />
 
-          <Button 
-          //array = []; //Lo vacio cuando me voy
-          variant='contained'  
-          color='primary'
-          onClick={saveOrder} //Metodo para guardar los id's con el pedido seleccionado
-          >guardar</Button>
-        </ButtonGroup>
+    <ButtonGroup fullWidth aria-label="full width outlined button group">
+      <Button variant='contained' color='secondary'onClick ={ () => {history.push('/pedidosListos')}}>volver</Button>
+      <Button variant='contained'  color='primary' onClick={handleClickOpen} //Metodo para guardar los id's con el pedido seleccionado
+      >guardar</Button>
+    </ButtonGroup>
     
     </Container>
     </MuiThemeProvider>

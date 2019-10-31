@@ -9,8 +9,10 @@ function SimpleMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const {history} = props;
   const {listado_producto} = props;
-  const {obj_pedido} = props;
-  console.log(obj_pedido);
+
+  //Pedido entero, asi lo puedo mapear en ProductListOrder.js. El cual es la pantalla para mostrar todos los productos y su cantidad, asi el empleado puede agregar un id's.
+  const {id_pedido} = props;
+  console.log(id_pedido);
   
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -19,11 +21,6 @@ function SimpleMenu(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const handleEditOrder = () =>{
-    setAnchorEl(null);
-    return 
-  }
 
   const handleCompleteOrder = () =>{
     console.log("MUESTRO COMPLETAR PEDIDO");
@@ -48,6 +45,7 @@ function SimpleMenu(props) {
         onClose={handleClose}
       >
         <MenuItem onClick ={ () => {
+          sessionStorage.setItem('pedido',JSON.stringify(id_pedido));
           sessionStorage.setItem('listado_producto',JSON.stringify(listado_producto))
           history.push('/rellenarPedido') }}>Completar pedido</MenuItem>
         <MenuItem onClick={handleCompleteOrder}>Editar pedido</MenuItem>

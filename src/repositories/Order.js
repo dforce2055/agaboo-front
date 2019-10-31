@@ -52,13 +52,15 @@ class OrderRepo extends Component {
     }
   }
 
-  async saveIdsOrder(obj){
-    if (!obj) throw new Error(`Error: No llego el listado correctamente.`);
+  async saveIdsOrder(id_order,lista_productos_con_ids){
+    if (!id_order) throw new Error(`Error: No llego el id del pedido correctamente.`);
     try {
-      db.doc()
+      let list_products_ids = { lista_productos_con_ids };
+       
+      db.doc(id_order)
+        .update(list_products_ids);
     } catch (error) {
       console.log("Error en base de datos: ",error);
-      
     }
   }
 

@@ -355,7 +355,10 @@ export default function EnhancedTable() {
 
                       <TableCell>
                       {/*Paso listado_productos por props, asi lo puede recivir la clase ButtonOption*/}
-                      <SimpleMenu listado_producto = {row.listado_producto} obj_pedido={row}/>      
+                      <SimpleMenu 
+                      listado_producto = {row.listado_producto} //Listado producto entero
+                      id_pedido={row.id_pedido} //Pedido entero
+                      />      
                       </TableCell>
 
                       <TableCell component="th" id={labelId} scope="row" padding="none">
