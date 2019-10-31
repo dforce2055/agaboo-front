@@ -8,7 +8,5 @@ const countProducts = idState => {
 
 };
 
-
-
 export default countProducts;
 

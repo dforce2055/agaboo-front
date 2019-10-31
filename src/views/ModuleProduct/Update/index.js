@@ -6,12 +6,18 @@ import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
 import SearchBox from './SearchBox';
 import FilterProduct from './FilterProduct';
-import {connect } from 'react-redux'
+import {connect } from 'react-redux';
+import countProduct from '../../../redux/actions/countProducts';    
+
 
 function useIndexUpdateProduct(props) {
     const [value , setValue] = useState("DISPONIBLE");
     const [rows,  setRows] = useState([]);
     const [update, setUpdate] = useState(true);
+    const { products  } = props ;
+    //const { countProduct } = props ;
+    console.log('Products en index de redux: ', products);
+    //console.log('countProduct : ' , countProduct('DISPONIBLE'));
 
     if (!firebase.getCurrentUsername()) {
         // not logged in
@@ -46,11 +52,15 @@ function useIndexUpdateProduct(props) {
     )
 }
 
-// const mapsStateToProps = (state) => {
-//     store;
-// }
+ const mapsStateToProps = (state) => {
+     return {
+         products : state.products , 
+     };
+ };
+
+const wrapper = connect(mapsStateToProps); 
+const component = wrapper(useIndexUpdateProduct); 
 
 
-// connect(mapStateToProps); 
 
-export default withRouter(useIndexUpdateProduct) ;
+export default withRouter(component) ;

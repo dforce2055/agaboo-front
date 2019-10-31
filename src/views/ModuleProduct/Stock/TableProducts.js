@@ -101,7 +101,7 @@ const useStyles = makeStyles(theme => ({
                 <TableHead>
                 <TableRow>
                     <StyledTableCell align= "justyfy">Producto</StyledTableCell>
-                    <StyledTableCell align="justyfy">Estado</StyledTableCell>
+                    {/* <StyledTableCell align="justyfy">Estado</StyledTableCell> */}
                     <StyledTableCell align="justyfy">Cantidad</StyledTableCell>
                 </TableRow>
                 </TableHead>
@@ -112,7 +112,7 @@ const useStyles = makeStyles(theme => ({
                       
                       {row.product}
                     </StyledTableCell>
-                    <StyledTableCell align="justyfy">{row.value}</StyledTableCell>
+                    {/* <StyledTableCell align="justyfy">{row.value}</StyledTableCell> */}
                     <StyledTableCell align="justyfy">{row.count}</StyledTableCell>
                     </StyledTableRow>
                 ))}
