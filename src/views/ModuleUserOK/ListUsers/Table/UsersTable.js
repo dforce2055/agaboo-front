@@ -94,7 +94,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function USersTable(props) {
+function UsersTable(props) {
   const classes = useStyles();
   const { history } = props;
   //Coleccion de customers
@@ -155,7 +155,7 @@ function USersTable(props) {
         <Grid item xs={12} md={12}>
           <List className={classes.root}>
             {usuarios.map(usuario => (
-                <ListItem key={usuario.id}>
+                <ListItem key={usuario.email}>
                   <ListItemAvatar>
                     <Avatar>
                       <WorkIcon />
@@ -204,24 +204,19 @@ function USersTable(props) {
             }}
           >
             <Typography className={classes.typography}>
-              <IconButton>
                 <ViewUser
                   updateStateArray={updateStateArray}
                   usuario={usuarioSeleccionado}
                   />
-              </IconButton>
-              <IconButton>
                 <UpdateUser
                   updateStateArray={updateStateArray}
                   usuario={usuarioSeleccionado}
-                />
-              </IconButton>
-              <IconButton>
+                  />
                 <DeleteUser
                   updateStateArray={updateStateArray}
                   usuario={usuarioSeleccionado}
-                  />
-              </IconButton>
+              />
+              
             </Typography>
           </Popover>
         </div>
@@ -230,4 +225,4 @@ function USersTable(props) {
   );
 }
 
-export default withRouter(USersTable);
+export default withRouter(UsersTable);
