@@ -140,8 +140,6 @@ exports.onUpdateCustomers = functions.firestore
 exports.createOrder = functions.firestore
     .document('orders/{orderId}')
     .onCreate((snap, context) => {
-        // Get an object representing the document
-        // e.g. {'name': 'Marie', 'age': 66}
         const newDocument = snap.data();
         const orderId = context.params.orderId;
 
@@ -151,6 +149,8 @@ exports.createOrder = functions.firestore
         console.log("id de cliente:" + snap.data().cliente.id);
 
         let idCliente = newDocument.cliente.id;
+
+        //Agrego pedido al cliente
         if ( idCliente ) {
             // Búsca pedidos del cliente
             db.collection("customers").doc(idCliente).get()
@@ -185,6 +185,7 @@ exports.createOrder = functions.firestore
                 }
                 //Si NO es nada de eso, entonces Agrego el ultimo pedido y retorno el array
                 pedidosDeCliente.push(orderId);
+
                 return pedidosDeCliente; 
             }) //Entonces, guarda
             .then((pedidosDeCliente) => {                               
@@ -204,7 +205,7 @@ exports.createOrder = functions.firestore
 
         console.log(`Se creo un nuevo pedido id:  ${orderId} asociado al cliente ${ idCliente }`);        
 
-        // Then return a promise of a set operation to create de document
+        // Agrego detalles al pedido
         return snap.ref.set({
             "id_pedido": orderId,
             "fecha_creacion": admin.firestore.FieldValue.serverTimestamp()
