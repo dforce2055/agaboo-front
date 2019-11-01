@@ -156,32 +156,45 @@ exports.createOrder = functions.firestore
             db.collection("customers").doc(idCliente).get()
             .then(querySnapshot => {
                 let cliente = querySnapshot.data();
-                console.log("Trayendo pedidos del cliente:" +cliente.pedidosDeCliente);
-                
-                if (Array.isArray(cliente.pedidosDeCliente)) {
-                    return cliente.pedidosDeCliente;
-                } else if (typeof(cliente.pedidosDeCliente) == 'object') {
-                    let pedidosCliente = [];
-                    cliente.pedidosDeCliente.forEach((pedido) => {
-                        pedidosCliente.push(pedido);
-                    })
-                    return pedidosCliente;
-                } else {
-                    let pedidosDeCliente = [];
+                console.log("Trayendo pedidos del cliente:" +cliente.nombre);
+                let pedidosDeCliente = [];
+
+                //Si NO existen pedidos en el cliente
+                if (cliente.pedidosDeCliente === null) {
                     pedidosDeCliente.push(cliente.pedidosDeCliente);
-                    
+                    pedidosDeCliente.push(orderId);
+
                     return pedidosDeCliente;
                 }
-            }) //Entonces, guarda
-            .then((pedidosDeCliente) => {
-                //Agrego el ultimo pedido
+
+                //Si existe chequeo que sea un array
+                if (Array.isArray(cliente.pedidosDeCliente)) {
+                    cliente.pedidosDeCliente.push(orderId);
+
+                    return cliente.pedidosDeCliente;
+                }
+
+                //O quizá hay un objeto
+                if (typeof(cliente.pedidosDeCliente) == 'object') {
+                    cliente.pedidosDeCliente.forEach((pedido) => {
+                        pedidosDeCliente.push(pedido);
+                    })
+
+                    pedidosDeCliente.push(orderId);
+                    return pedidosDeCliente;
+                }
+                //Si NO es nada de eso, entonces Agrego el ultimo pedido y retorno el array
                 pedidosDeCliente.push(orderId);
-                console.log("Éxito al leer los pedidos del cliente!!!" + pedidosDeCliente);
+                return pedidosDeCliente; 
+            }) //Entonces, guarda
+            .then((pedidosDeCliente) => {                               
                 db.collection("customers").doc(idCliente)
                     .set({
                         "pedidosDeCliente": pedidosDeCliente,
                         "_nuevo_pedido": true
                     }, { merge: true })
+                
+                console.log("Éxito al guardar los pedidos del cliente => " + pedidosDeCliente);
                 return true;
             })
             .catch((error)=> {
