@@ -142,11 +142,54 @@ exports.createOrder = functions.firestore
     .onCreate((snap, context) => {
         // Get an object representing the document
         // e.g. {'name': 'Marie', 'age': 66}
-        //const newDocument = snap.data();
+        const newDocument = snap.data();
         const orderId = context.params.orderId;
-        
 
-        console.log(`Se creo un nuevo pedido id:  ${orderId}`);
+        console.log("Parametros: "); console.log(context.params);
+        console.log("Data:"); console.log(snap.data());
+
+        console.log("id de cliente:" + snap.data().cliente.id);
+
+        let idCliente = newDocument.cliente.id;
+        if ( idCliente ) {
+            // Búsca pedidos del cliente
+            db.collection("customers").doc(idCliente).get()
+            .then(querySnapshot => {
+                let cliente = querySnapshot.data();
+                console.log("Trayendo pedidos del cliente:" +cliente.pedidosDeCliente);
+                
+                if (Array.isArray(cliente.pedidosDeCliente)) {
+                    return cliente.pedidosDeCliente;
+                } else if (typeof(cliente.pedidosDeCliente) == 'object') {
+                    let pedidosCliente = [];
+                    cliente.pedidosDeCliente.forEach((pedido) => {
+                        pedidosCliente.push(pedido);
+                    })
+                    return pedidosCliente;
+                } else {
+                    let pedidosDeCliente = [];
+                    pedidosDeCliente.push(cliente.pedidosDeCliente);
+                    
+                    return pedidosDeCliente;
+                }
+            }) //Entonces, guarda
+            .then((pedidosDeCliente) => {
+                //Agrego el ultimo pedido
+                pedidosDeCliente.push(orderId);
+                console.log("Éxito al leer los pedidos del cliente!!!" + pedidosDeCliente);
+                db.collection("customers").doc(idCliente)
+                    .set({
+                        "pedidosDeCliente": pedidosDeCliente,
+                        "_nuevo_pedido": true
+                    }, { merge: true })
+                return true;
+            })
+            .catch((error)=> {
+                console.log("Error al leer datos del cliente:" ,error);
+            })
+        }
+
+        console.log(`Se creo un nuevo pedido id:  ${orderId} asociado al cliente ${ idCliente }`);        
 
         // Then return a promise of a set operation to create de document
         return snap.ref.set({
