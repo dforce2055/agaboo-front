@@ -134,3 +134,80 @@ exports.onUpdateCustomers = functions.firestore
             "lastUpdate": admin.firestore.FieldValue.serverTimestamp()
         }, { merge: true });
     });
+
+
+//if a new document is created in the orders collection, add the field id_pedido & fecha_creacion.
+exports.createOrder = functions.firestore
+    .document('orders/{orderId}')
+    .onCreate((snap, context) => {
+        const newDocument = snap.data();
+        const orderId = context.params.orderId;
+
+        console.log("Parametros: "); console.log(context.params);
+        console.log("Data:"); console.log(snap.data());
+
+        console.log("id de cliente:" + snap.data().cliente.id);
+
+        let idCliente = newDocument.cliente.id;
+
+        //Agrego pedido al cliente
+        if ( idCliente ) {
+            // Búsca pedidos del cliente
+            db.collection("customers").doc(idCliente).get()
+            .then(querySnapshot => {
+                let cliente = querySnapshot.data();
+                console.log("Trayendo pedidos del cliente:" +cliente.nombre);
+                let pedidosDeCliente = [];
+
+                //Si NO existen pedidos en el cliente
+                if (cliente.pedidosDeCliente === null) {
+                    pedidosDeCliente.push(cliente.pedidosDeCliente);
+                    pedidosDeCliente.push(orderId);
+
+                    return pedidosDeCliente;
+                }
+
+                //Si existe chequeo que sea un array
+                if (Array.isArray(cliente.pedidosDeCliente)) {
+                    cliente.pedidosDeCliente.push(orderId);
+
+                    return cliente.pedidosDeCliente;
+                }
+
+                //O quizá hay un objeto
+                if (typeof(cliente.pedidosDeCliente) == 'object') {
+                    cliente.pedidosDeCliente.forEach((pedido) => {
+                        pedidosDeCliente.push(pedido);
+                    })
+
+                    pedidosDeCliente.push(orderId);
+                    return pedidosDeCliente;
+                }
+                //Si NO es nada de eso, entonces Agrego el ultimo pedido y retorno el array
+                pedidosDeCliente.push(orderId);
+
+                return pedidosDeCliente; 
+            }) //Entonces, guarda
+            .then((pedidosDeCliente) => {                               
+                db.collection("customers").doc(idCliente)
+                    .set({
+                        "pedidosDeCliente": pedidosDeCliente,
+                        "_nuevo_pedido": true
+                    }, { merge: true })
+                
+                console.log("Éxito al guardar los pedidos del cliente => " + pedidosDeCliente);
+                return true;
+            })
+            .catch((error)=> {
+                console.log("Error al leer datos del cliente:" ,error);
+            })
+        }
+
+        console.log(`Se creo un nuevo pedido id:  ${orderId} asociado al cliente ${ idCliente }`);        
+
+        // Agrego detalles al pedido
+        return snap.ref.set({
+            "id_pedido": orderId,
+            "fecha_creacion": admin.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+    });

@@ -10,6 +10,7 @@ class OrderRepo extends Component {
   //Se utiliza en voews/ModulOrders/Create/createOrderFinal.js 
   //En:'handleNexAndSaveOrder'
   async addOrder(order){
+    if (!order) throw new Error(`Error: No llego un pedido completo`);
     try {
       let newOrder = Object.assign({},order);
       db.doc()
@@ -46,6 +47,18 @@ class OrderRepo extends Component {
         db.get(id)
           .then()
       }      
+    } catch (error) {
+      console.log("Error en base de datos: ",error);
+    }
+  }
+
+  async saveIdsOrder(id_order,lista_productos_con_ids){
+    if (!id_order) throw new Error(`Error: No llego el id del pedido correctamente.`);
+    try {
+      let list_products_ids = { lista_productos_con_ids };
+       
+      db.doc(id_order)
+        .update(list_products_ids);
     } catch (error) {
       console.log("Error en base de datos: ",error);
     }

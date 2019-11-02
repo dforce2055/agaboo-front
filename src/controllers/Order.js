@@ -21,6 +21,16 @@ class OrderController extends Component {
     }
   }
 
+  saveOrderProductIds(id,list){
+    try {
+      //Paso el id y listado a repositories.
+      OrderRepo.saveIdsOrder(id,list);
+    } catch (error) {
+      console.error("Error al traer el id con su listado.");
+      
+    }
+  }
+
 }
 
 export default new OrderController();

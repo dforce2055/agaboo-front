@@ -242,14 +242,11 @@ export default function EnhancedTable() {
   
   React.useEffect(()=>{
     if (a) {      
+      //Guardo la informacion traida de la base de datos en ROWS para poder mapear el array
       OrderController.getOrders()
         .then(value =>{
-          sessionStorage.setItem('list_order',JSON.stringify(value))
-          let data = JSON.parse(sessionStorage.getItem('list_order'));
-          rows = data;
+          rows = value;
           setA(false);
-          console.log(JSON.parse(sessionStorage.getItem('list_order')))
-
         }); 
     }
   });
@@ -358,7 +355,10 @@ export default function EnhancedTable() {
 
                       <TableCell>
                       {/*Paso listado_productos por props, asi lo puede recivir la clase ButtonOption*/}
-                      <SimpleMenu listado_producto = {row.listado_producto}/>      
+                      <SimpleMenu 
+                      listado_producto = {row.listado_producto} //Listado producto entero
+                      id_pedido={row.id_pedido} //Pedido entero
+                      />      
                       </TableCell>
 
                       <TableCell component="th" id={labelId} scope="row" padding="none">
