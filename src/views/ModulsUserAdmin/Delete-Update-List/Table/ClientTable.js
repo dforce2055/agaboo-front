@@ -92,10 +92,10 @@ export default function ClientTable() {
         const itemDataId = item.id.toUpperCase()
         const itemDataLocalidad = item.localidad.toUpperCase()
         const itemDataApellido = item.apellido.toUpperCase()
-        const itemDataEmpleo = item.empleo.toUpperCase()
+        const itemDataRubro = item.rubro.toUpperCase()
 
         //Uno todos los campos por el cual los voy a filtrar.
-        const campo = itemDataNombre+" "+itemDataId+" "+itemDataLocalidad+" "+itemDataApellido+" "+itemDataEmpleo
+        const campo = itemDataNombre+" "+itemDataId+" "+itemDataLocalidad+" "+itemDataApellido+" "+itemDataRubro
 
         //Pongo en mayuscula en toUpperCase para poder comparar todos los campos.
         const textData = search.buscar.toUpperCase()

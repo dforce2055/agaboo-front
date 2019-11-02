@@ -18,6 +18,14 @@ class ProductController extends Component {
         }
     }
 
+    getExistsProduct (code){
+        try {
+            return ProductRepo.getExistsProduct(code);
+        } catch (error) {
+            console.log("Error el producto ingresado no es reconocido.");
+            
+        }
+    }
 
     getProductById = async (id) => {
         if (!id) throw new Error(`Error: el id es obligatorio`);
@@ -52,7 +60,6 @@ class ProductController extends Component {
         try {
             let product = await ProductRepo.getProductByCode(code);
             if ( product ) {
-                console.log('Entro en producto != null');
                 return product
             } else {
                 console.log(`El code: ${ code } de Producto no se encuentra`);

@@ -83,10 +83,12 @@ const useStyles = makeStyles(theme => ({
   const [list_cant,setList_cant] = React.useState({}); //State para almacenar los id's
   const [open, setOpen] = React.useState(false); //State para el dialog
 
+  //Metodo para abrir el dialog
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+  //Metodo para cerrar DIALOG
   const handleClose = () => {
     setOpen(false);
   };
@@ -96,6 +98,8 @@ const useStyles = makeStyles(theme => ({
     //Llamo metodo para guardar listado con id's
     OrderController.saveOrderProductIds(orderId,list_cant);
     handleClose(); //Cierro el dialog
+    
+    history.push('/pedidosListos');
   };
   
 

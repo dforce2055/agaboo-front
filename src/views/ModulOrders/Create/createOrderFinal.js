@@ -113,12 +113,13 @@ function Checkout(props) {
     //Avanzo al final del pedido.
     setActiveStep(activeStep + 1);
 
+    //Traigo todos los datos del pedido guardado en sessionStorage
     var cliente = JSON.parse(sessionStorage.getItem('info_cliente_pedido'));
     var listado_producto= JSON.parse(sessionStorage.getItem('arreglo_productos'));
     var detalle_pedido; 
     detalle_pedido=JSON.parse(sessionStorage.getItem('info_detalle_pedido'));
 
-    //Almaceno todos los datos guardados en sessionStorage en el mismo archivo. 
+    //Almaceno todos los datos guardados en sessionStorage en un mismo archivo para guardarlo en firestore. 
     var data ={
       cliente,
       listado_producto,
@@ -131,7 +132,7 @@ function Checkout(props) {
       celular:cliente.celular,
     };   
 
-    //Paso data que es toda la informacion del pedido.
+    //Guardo la informacion del pedido en firestore.
     OrderController.addOrder(data);
 
   }
