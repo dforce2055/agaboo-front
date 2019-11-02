@@ -7,12 +7,8 @@ let defaultState = [] ;
 const arrayStock = [] ; 
 const typesProduct = ["Baño Químico", "Oficina", "Boletería", "Garita"] 
 
-async function getProducts(){
-    defaultState = await ProductController.getProducts(); 
-}
-
-async function mostrar(){
-    console.log('Reducer defaultState :' , await defaultState);
+async function getProducts(algo){
+    algo = await ProductController.getProducts(); 
 }
 
 function countProducts(product, array){ // Funcion para contar Productos por tipo.
@@ -41,6 +37,9 @@ function countProducts(product, array){ // Funcion para contar Productos por tip
 //     return arrayStock; 
 // }
  getProducts(defaultState);
+ 
+ console.log('Reducer defaultState :' ,  defaultState);
+
 
  
 

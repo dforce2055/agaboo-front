@@ -74,7 +74,7 @@ function clientNotExist() {
         <input
           value={''}
         />
-      </div>
+      </div>  
     <div className="email">
       <label htmlFor="email">Email</label>
       <input
