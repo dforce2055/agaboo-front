@@ -152,11 +152,84 @@ exports.createOrder = functions.firestore
 
         //Agrego pedido al cliente
         if ( idCliente ) {
-            // Búsca pedidos del cliente
-            db.collection("customers").doc(idCliente).get()
+            console.log("AGREGO EL PEDIDO A LA LISTA DE PEDIDOS");
+            addPedidosDeCliente(idCliente, orderId, "customers");
+        }
+
+        console.log(`Se creo un nuevo pedido id:  ${orderId} asociado al cliente ${ idCliente }`);        
+
+        // Agrego detalles al pedido
+        return snap.ref.set({
+            "id_pedido": orderId,
+            "fecha_creacion": admin.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+    });
+
+
+// Escucha cambios en la colleccion de pedidos, si el pedido es eliminado
+// tambiés se elimina de la colección de pedidos del cliente
+exports.onDeleteOrder = functions.firestore
+    .document('orders/{orderId}')
+    .onUpdate((change, context) => {
+        const data = change.after.data();
+        const previousData = change.before.data();
+
+        //Si NO viene el campo eliminado retorno
+        if (typeof (data.eliminado) === "undefined") {
+            console.log("No esta seteada la variable de eliminar pedido.");
+            return null;
+        }
+
+        const orderId = context.params.orderId;
+        const idCliente = previousData.cliente.id;
+
+        console.log("Se esta editando el pedido id: " + orderId);
+        console.log("El cliente del pedido es: " + idCliente);
+
+        
+        // Si no hay cambios en el estado de la pedido retorno 
+        if (data.id_cliente === "cliente_test") return null;
+        
+
+        console.log("El estado de eliminado antes era: " +previousData.eliminado +" ahora paso a :" +data.eliminado);
+        // Si no cambio el estado de eliminado retorno
+        if (data.eliminado === previousData.eliminado) return null;
+
+        if (idCliente) {
+            if (data.eliminado === true) {
+                console.log("ELIMINANDO EL PEDIDO DE LA LISTA DE PEDIDOS");
+                deletePedidosDeCliente(idCliente, orderId, "customers");
+            }
+    
+            if (data.eliminado === false) {
+                console.log("AGREGO NUEVAMENTE EL PEDIDO A LA LISTA DE PEDIDOS");
+                addPedidosDeCliente(idCliente, orderId, "customers");
+            }
+
+        }
+
+        console.log(`Se EDITO el pedido ${orderId}`);
+        return change.after.ref.set({
+            "lastUpdate": admin.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+    });
+
+
+
+/** 
+ * =============
+ * * FUNCIONES *
+ * =============
+ * */
+addPedidosDeCliente = async (idCliente, orderId, coleccion) => {
+    if (!idCliente || !orderId || !coleccion) throw new Error(`Error: el id de cliente, de pedido y la colección son obligatorios`);
+    
+    try {
+        // Búsca pedidos del cliente
+        db.collection(coleccion).doc(idCliente).get()
             .then(querySnapshot => {
                 let cliente = querySnapshot.data();
-                console.log("Trayendo pedidos del cliente:" +cliente.nombre);
+                console.log("Trayendo pedidos del cliente:" + cliente.nombre);
                 let pedidosDeCliente = [];
 
                 //Si NO existen pedidos en el cliente
@@ -172,10 +245,8 @@ exports.createOrder = functions.firestore
                     cliente.pedidosDeCliente.push(orderId);
 
                     return cliente.pedidosDeCliente;
-                }
-
-                //O quizá hay un objeto
-                if (typeof(cliente.pedidosDeCliente) == 'object') {
+                    //O quizá hay un objeto
+                } else if (typeof (cliente.pedidosDeCliente) == 'object') {
                     cliente.pedidosDeCliente.forEach((pedido) => {
                         pedidosDeCliente.push(pedido);
                     })
@@ -186,28 +257,79 @@ exports.createOrder = functions.firestore
                 //Si NO es nada de eso, entonces Agrego el ultimo pedido y retorno el array
                 pedidosDeCliente.push(orderId);
 
-                return pedidosDeCliente; 
+                return pedidosDeCliente;
             }) //Entonces, guarda
-            .then((pedidosDeCliente) => {                               
-                db.collection("customers").doc(idCliente)
+            .then((pedidosDeCliente) => {
+                db.collection(coleccion).doc(idCliente)
                     .set({
                         "pedidosDeCliente": pedidosDeCliente,
                         "_nuevo_pedido": true
                     }, { merge: true })
-                
+
                 console.log("Éxito al guardar los pedidos del cliente => " + pedidosDeCliente);
                 return true;
             })
-            .catch((error)=> {
-                console.log("Error al leer datos del cliente:" ,error);
+            .catch((error) => {
+                console.log("Error al leer datos del cliente:", error);
+                return false;
             })
-        }
+    } catch (error) {
+        throw new Error(error);
+    }
+}
 
-        console.log(`Se creo un nuevo pedido id:  ${orderId} asociado al cliente ${ idCliente }`);        
+deletePedidosDeCliente = async (idCliente, orderId, coleccion) => {
+    if (!idCliente || !orderId || !coleccion) throw new Error(`Error: el id de cliente, de pedido y la colección son obligatorios`);
 
-        // Agrego detalles al pedido
-        return snap.ref.set({
-            "id_pedido": orderId,
-            "fecha_creacion": admin.firestore.FieldValue.serverTimestamp()
-        }, { merge: true });
-    });
+    try {
+        // Búsca pedidos del cliente
+        db.collection("customers").doc(idCliente).get()
+            .then(querySnapshot => {
+                let cliente = querySnapshot.data();
+                console.log("Trayendo pedidos del cliente:" + cliente.nombre);
+                let pedidosDeCliente = [];
+                let pedidoAEliminar = orderId;
+
+                //Si NO existen pedidos en el cliente retorno array vacío
+                if (cliente.pedidosDeCliente === null) {
+                    console.log("NULL pedidos antes de enviar a guardar: " + pedidosDeCliente);
+                    return pedidosDeCliente;
+                }
+
+                //Si existen pedidos chequeo que sea un array y elimino el pedido
+                if (Array.isArray(cliente.pedidosDeCliente)) {
+                    pedidosDeCliente = cliente.pedidosDeCliente.filter((pedido) => {
+                        return pedido !== pedidoAEliminar;
+                    });
+                    console.log(" ARRAY pedidos antes de enviar a guardar: " + pedidosDeCliente);
+                    return pedidosDeCliente;
+
+                } else if (typeof (cliente.pedidosDeCliente) == 'object') {
+                    cliente.pedidosDeCliente.forEach((pedido) => {
+                        if (pedido !== pedidoAEliminar) pedidosDeCliente.push(pedido);
+                    })
+                    console.log("OBJETO pedidos antes de enviar a guardar: " + pedidosDeCliente);
+                    return pedidosDeCliente;
+                }
+                console.log("ULTIMO RETURN pedidos antes de enviar a guardar: " + pedidosDeCliente);
+                return pedidosDeCliente;
+            }) //Entonces, guarda
+            .then((pedidosDeCliente) => {
+                console.log("Me llegaron estos pedidos para guardar: " + pedidosDeCliente);
+                db.collection("customers").doc(idCliente)
+                    .set({
+                        "pedidosDeCliente": pedidosDeCliente,
+                        "_pedido_eliminado": true,
+                        "lastUpdate": admin.firestore.FieldValue.serverTimestamp()
+                    }, { merge: true })
+
+                console.log("Éxito al ELIMINAR el pedido: " + orderId + " del cliente: " + idCliente + " => " + pedidosDeCliente);
+                return true;
+            })
+            .catch((error) => {
+                console.log("Error al leer datos del cliente:", error);
+            })
+    } catch (error) {
+        throw new Error(error);
+    }
+}
