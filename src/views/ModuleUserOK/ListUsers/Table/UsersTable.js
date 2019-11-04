@@ -103,10 +103,12 @@ function UsersTable(props) {
 
   //Avisa un cambio
   const [stateArray,setStateArray] = React.useState(false);
+  
+  const [moreUsers,setMoreUsers] = React.useState(false);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = usuario => event => {
+  const selectUser = usuario => event => {
     setAnchorEl(event.currentTarget);
     setUsuarioSeleccionado(usuario);
   };
@@ -116,30 +118,50 @@ function UsersTable(props) {
     
   };
 
+  const getMoreUsers = (event) => {
+    setMoreUsers(true);
+    setStateArray(true);
+  };
+
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
 
-  React.useEffect(()=>{
-    //Si se realizo un cambio
-    if(stateArray){
-      UserController.getActiveUsers()
-      .then(value=> {
-        setUsuarios(value);
-        setStateArray(false); //Finalizo el cambio
-    }).catch(error=>{
-      console.log("Error al traer el usuario: ",error);
-    })
-    }else if (usuarios.length === 0) {
-      UserController.getActiveUsers()
-        .then(value=> {
-          //setData(value); //Seteo el 
-          setUsuarios(value);      
-      }).catch(error=>{
-        console.log("Error al traer el usuario= ",error);
-      })
-      }
+  React.useEffect(()=>{    
 
+    if(stateArray){
+      let usersBack = usuarios;
+      let lastUser = usersBack[usersBack.length - 1];
+
+      UserController.getUsersActivePagination(lastUser.email, 5)
+        .then(moreUsers => {
+          if (moreUsers == false) {
+            console.log("No hay más usuarios");
+            return;
+          }
+          
+          moreUsers.forEach((user) => {
+            usersBack.push(user);
+          });
+
+          console.log("Estos son los usuarios agregados", usersBack);
+          setUsuarios(usersBack);
+          
+          setMoreUsers(false);
+          setStateArray(false); //Finalizo el cambio
+        }).catch(error => {
+          console.log("Error al traer el usuarios: ", error);
+        })
+        
+    } else if (usuarios.length === 0) {
+      UserController.getActiveUsers(5)
+          .then(value => {
+            setUsuarios(value);
+          })
+          .catch(error => {
+            console.log("Error al traer los usuarios => ", error);
+          })
+      }
     });
 
   function updateStateArray(){
@@ -148,7 +170,7 @@ function UsersTable(props) {
   
   return (
     <MuiThemeProvider theme={theme}>
-      <React.Fragment>
+      <React.Fragment >
         <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrar-usuario')} >
           <AddIcon />
         </Fab>      
@@ -173,7 +195,7 @@ function UsersTable(props) {
                         color="primary"
                         aria-describedby={id}
                         variant="contained"
-                        onClick={handleClick(usuario)}
+                        onClick={selectUser(usuario)}
                       >
                         <MoreVertIcon />
                       </IconButton>
@@ -184,7 +206,8 @@ function UsersTable(props) {
           </List>
         </Grid>
         <div className={classes.seeMore}>
-          <Link color="primary" href="javascript:;">
+          
+          <Link color="primary" href="javascript:;" onClick={getMoreUsers}>
             Ver más usuarios
           </Link>
         </div>

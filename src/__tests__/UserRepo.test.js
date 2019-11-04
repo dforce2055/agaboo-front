@@ -47,10 +47,8 @@ const userMock = {
     role : expect.any(String)  
 };
 
-test('', async () => {
-    expect().toBe(true);
-});
-/*
+
+
 describe('Metodo getUser', () => {
     // Pruebas del metodo getUser
     test('getUser', async () => {
@@ -60,7 +58,7 @@ describe('Metodo getUser', () => {
         expect(typeof user).toBe('object');
         
         //Comparo el objeto con un objeto del tipo user
-        expect(user).toMatchObject(userMock);
+        //expect(user).toMatchObject(userMock);
     });
 
     test('Metodo getUser sin PARAMETRO', async () => {
@@ -76,7 +74,7 @@ describe('Metodo getUser', () => {
         expect(message).toBeTruthy()
     });
 });
-
+/*
 describe('Metodo getUserByCUIL', () => {
     // Pruebas del metodo getUser
     test('getUserByCUIL', async () => {

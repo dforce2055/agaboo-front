@@ -83,9 +83,9 @@ class UserRepo extends Component {
         return user;
     }
 
-    getAllUsers = async (res) => {
+    getAllUsers = async (cant) => {
         try {
-            let coleccion = await firebase.db.collection(collection).get();
+            let coleccion = await firebase.db.collection(collection).limit(cant).get();
             let usuarios = coleccion.docs.map(doc => doc.data());
             return usuarios;
         } catch (error) {
@@ -93,15 +93,93 @@ class UserRepo extends Component {
         }
     };
 
-    getActiveUsers = async (res) => {
+    getFirstActiveUser = async () => {
+        let user = {};
+        await firebase.db.collection(collection)
+            .where('eliminado', '==', false)
+            .orderBy("email")
+            .limit(1)
+            .get()
+            .then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    // doc.data() is never undefined for query doc snapshots
+                    //console.log(doc.id, " => ", doc.data());
+                    user = doc.data();
+                });
+            })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+                user = null;
+            });
+
+        return user;
+    };
+
+    getActiveUsers = async (cant) => {
         try {
-            let coleccion = await firebase.db.collection(collection).where("eliminado", "==", false).get();
+            let coleccion = await firebase.db.collection(collection)
+                .where("eliminado", "==", false)
+                .orderBy("email")
+                .limit(cant)
+                .get();
             let usuarios = coleccion.docs.map(doc => doc.data());
             return usuarios;
         } catch (error) {
             throw new Error();
         }
     };
+
+    getUsersPagination = async (lastId, cant) => {
+        try {
+            let users = [];
+            await firebase.db.collection(collection)
+                .orderBy("email")
+                .startAfter(lastId)
+                .limit(cant)
+                .get()
+                .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
+                        //console.log(doc.id, " => ", doc.data());
+                        users.push(doc.data());
+                        
+                    });
+                })
+                .catch(function (error) {
+                    console.log("Error al paginar usuarios: ", error);
+                    users = null;
+                });
+            if (users.length > 0) return users;
+            else return null;
+        } catch (error) {
+            console.log("Error:", error);
+        }
+    }
+
+
+    getActiveUsersPagination = async (lastId, cant) => {
+        try {
+            let users = [];
+            await firebase.db.collection(collection)
+                .where("eliminado", "==", false)    
+                .orderBy("email")
+                .startAfter(lastId)
+                .limit(cant)
+                .get()
+                .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
+                        //console.log(doc.id, " => ", doc.data());
+                        users.push(doc.data());
+                    });
+                })
+                .catch(function (error) {
+                    console.log("Error al paginar usuarios: ", error);
+                    users = null;
+                });
+            return users;
+        } catch (error) {
+            console.log("Error:", error);
+        }
+    }
 
     addUser = async (newUser) => {
         if (!newUser) throw new Error(`Error: no se envio un usuario para registrar`);
