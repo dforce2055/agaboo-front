@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import firebase from '../config/firebase';
+import ProductController from '../controllers/Product';
 
 const collection = '/orders';
 
@@ -9,14 +10,13 @@ class OrderRepo extends Component {
 
   //Se utiliza en voews/ModulOrders/Create/createOrderFinal.js 
   //En:'handleNexAndSaveOrder'
-  async addOrder(order){
+  async addOrder(order){    
     if (!order) throw new Error(`Error: No llego un pedido completo`);
     try {
       let newOrder = Object.assign({},order);
       db.doc()
       .set(newOrder)
       .then(()=>{
-        console.log("Pedido registrado en la base de datos.");
         return true;
       })  
     } catch (error) {
@@ -24,6 +24,7 @@ class OrderRepo extends Component {
     }
   }
 
+  //Devuelvo todos los pedidos
   async getOrders(){
     try {
       let list = {};
@@ -34,16 +35,16 @@ class OrderRepo extends Component {
       return list;
     } catch (error) {
       console.error("Error en base de datos: ",error);
-      
     }
   }
 
+  //Metodo que verifica si tiene la cantidad disponible entre esas fechas
   async authAlqProduct(fec_ini,fec_fin){
     try {
       let ini = fec_ini;
       let fin = fec_fin;
       let id = ''; //Poner el id del pedido.
-      if (ini <= fin) { //Menor o igual, porque puede ser en el mismo dia
+      if (ini <= fin) {
         db.get(id)
           .then()
       }      
@@ -52,6 +53,8 @@ class OrderRepo extends Component {
     }
   }
 
+  //Metodo para agregar los id's de los productos.
+  //Se utiliza en ModulsOrders/addIdOrder/ProduictListOrder
   async saveIdsOrder(id_order,lista_productos_con_ids){
     if (!id_order) throw new Error(`Error: No llego el id del pedido correctamente.`);
     try {
@@ -62,6 +65,17 @@ class OrderRepo extends Component {
     } catch (error) {
       console.log("Error en base de datos: ",error);
     }
+  }
+
+  //Verifica que los productos agregados al pedido existan
+  async verifyProductExistence(id_producto){
+    try { 
+      return ProductController.getExistsProduct(id_producto.toString())
+
+    } catch (error) {
+      console.error("Error en la database: ",error);
+    }
+
   }
 
 }

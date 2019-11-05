@@ -42,18 +42,23 @@ export default function SimpleTable() {
     setCant_prodt_select({ ...cant_prodt_select, [name]: event.target.value });  
   };
     
+  //Vacia el campo, luego de completar las 3 etapoas de un pedido.
   const clearObj = () => {
     setCant_prodt_select({producto:' ',modelo:' ',cantidad:' ',id_producto:' '});
   }
 
   const addArrayProduct = () =>{
+    //Guardo en un arreglo los producto con su respectiva cantidad
     arrayProduct.push(cant_prodt_select);
 
+    //Guardo en session storage el arreglo de productos con cantidad.
     sessionStorage.setItem('arreglo_productos',JSON.stringify(arrayProduct));
 
+    //MUESTRO EL ARRAY DE PRODUCTOS Y CNATIDAD.
     var data = sessionStorage.getItem("arreglo_productos");
     console.log("MUESTRO ARREGLO GUARDADO EN SESSIONSTORAGE:",JSON.parse(data));
 
+    //MUESTRO EL CLIENTE SELCCIONADO
     var cliente = JSON.parse(sessionStorage.getItem("info_cliente_pedido"));
     console.log("MUESTRO EL CLIENTE GUARDADO EN SESSION STORAGE: ",
     cliente);

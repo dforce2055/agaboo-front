@@ -53,7 +53,7 @@ function AddressForm(props) {
     nombre:'',
     apellido: '',
     celular: '',
-    empleo:'',
+    rubro:'',
     id:'',    
     email:'',
     localidad:'',
@@ -73,7 +73,7 @@ function AddressForm(props) {
       nombre: values.nombre,
       apellido: values.apellido,
       id: values.id,
-      empleo: values.empleo,
+      rubro: values.rubro,
       calle:values.calle,
       altura: values.altura,
       localidad:values.localidad,
@@ -151,12 +151,12 @@ function AddressForm(props) {
           <Grid item xs={12} sm={6}>
             <TextValidator
               variant="outlined"
-              label="Empleo"
+              label="Rubro"
               fullWidth
               required
-              onChange={handleChange('empleo')}
-              name="empleo"
-              value={values.empleo}
+              onChange={handleChange('rubro')}
+              name="rubro"
+              value={values.rubro}
               validators={['required', 'matchRegexp:^([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])?$']}
               errorMessages={['Campo requerido', 'Campo invalido']}
             />
