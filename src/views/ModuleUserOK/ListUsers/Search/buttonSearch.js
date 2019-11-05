@@ -60,7 +60,7 @@ export default function CustomizedInputBase(props) {
                     }
                   }}  
 
-        placeholder="Buscar Cliente"
+        placeholder="Buscar Usuario"
         inputProps={{ 'aria-label': 'Buscar en la base de datos' }}
       />
       <IconButton 
