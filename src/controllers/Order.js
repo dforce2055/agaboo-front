@@ -31,6 +31,7 @@ class OrderController extends Component {
     }
   }
 
+  //Se utiliza en la verificacion de id's e el file Chip.js
   verifyProductExistence(id_producto){
     try {
       var value = false;
@@ -47,7 +48,6 @@ class OrderController extends Component {
       
     }
   }
-
 }
 
 export default new OrderController();
