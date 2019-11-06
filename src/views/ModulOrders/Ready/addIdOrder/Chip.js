@@ -18,11 +18,10 @@ export default function Chip(props){
     
     let auth = chip[chip.length-1] //Selecciono el ultimo dato introducido
 
-    let d =OrderController.verifyProductExistence(auth);
-console.log(d);
-
-
-    //handleChange(obj.producto,data); //Metodo para guardar el id en el listado del pedido id's
+    OrderController.verifyProductExistence(auth)
+    .then(result => console.log(result))
+    
+    handleChange(obj.producto,data); //Metodo para guardar el id en el listado del pedido id's
   }
 
  return (
