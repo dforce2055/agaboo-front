@@ -39,10 +39,10 @@ class UserController extends Component {
 
     
 
-    getAllUsers = async () => {
-
+    getAllUsers = async (cant) => {
+        if (!cant) cant = 10; 
         try {
-            let users = await UserRepo.getAllUsers();
+            let users = await UserRepo.getAllUsers(cant);
 
             if (users) {
                 //const UserDTO = { estado: user.estado, role: user.role };
@@ -59,10 +59,30 @@ class UserController extends Component {
         }
     }
 
-    getActiveUsers = async () => {
+    getFirstActiveUser = async () => {
 
         try {
-            let users = await UserRepo.getActiveUsers();
+            let user = await UserRepo.getFirstActiveUser();
+
+            if (user) {
+                //const UserDTO = { estado: user.estado, role: user.role };
+                // console.log(UserDTO);
+                // no puedo devolver usuario, tengo que devolver estado y rol a la vista
+                return user;
+            } else {
+                console.log("No se pudo obtener el primer usuario activo");
+                return false;
+            }
+
+        } catch (error) {
+            throw new Error();
+        }
+    }
+
+    getActiveUsers = async (cant) => {
+        if (!cant) cant = 10;
+        try {
+            let users = await UserRepo.getActiveUsers(cant);
 
             if (users) {
                 //const UserDTO = { estado: user.estado, role: user.role };
@@ -79,9 +99,49 @@ class UserController extends Component {
         }
     }
 
-    editUser = async (data) => {
-        console.log(data);
-        
+    getUsersPagination = async (lastId, cant) => {        
+        if (!lastId) throw new Error(`Error: el email es obligatorio para poder buscar a los siguientes clientes`);
+        //Si NO llega cant, devuelvo los 10 siguientes
+        if (!cant) cant = 10; 
+
+        try {
+            let users = await UserRepo.getUsersPagination(lastId, cant);
+            console.log(`########### PAGINACIÓN -${cant}- #################`);
+            
+            if (users) {
+                return users;
+            } else {
+                console.log("No se pudo obtener el listado de usuarios paginados");
+                return false;
+            }
+            
+        } catch (error) {
+            console.log("Error:", error);
+        }
+    }
+
+    getUsersActivePagination = async (lastId, cant) => {
+        if (!lastId) throw new Error(`Error: el email es obligatorio para poder buscar a los siguientes clientes`);
+        //Si NO llega cant, devuelvo los 10 siguientes
+        if (!cant) cant = 10;
+
+        try {
+            let users = await UserRepo.getActiveUsersPagination(lastId, cant);
+            console.log(`########### PAGINACIÓN -${cant}- #################`);
+            
+            if (users) {
+                return users;
+            } else {
+                console.log("No se pudo obtener el listado de usuarios paginados");
+                return false;
+            }
+
+        } catch (error) {
+            console.log("Error:", error);
+        }
+    }
+
+    editUser = async (data) => {       
         if (!data || !data.email || !data.numeroDocumento) throw new Error(`Error: el email, tipo y número de documento son obligatorios para Editar/Registar un cliente`);
         try {
             let user = new User();

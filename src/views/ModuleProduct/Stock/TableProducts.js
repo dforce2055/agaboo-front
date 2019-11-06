@@ -1,6 +1,5 @@
 import React , { useEffect , useState}from "react";
 import { withStyles, makeStyles } from '@material-ui/core/styles';
-import {connect} from 'react-redux' ;
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -126,10 +125,6 @@ const useStyles = makeStyles(theme => ({
 }
 
 
-const mapStatesToProps = (state) => {
-  return {
-    products : state.products , 
-  }
-};
 
-export default connect (mapStatesToProps)(CustomizedTables);
+
+export default CustomizedTables;

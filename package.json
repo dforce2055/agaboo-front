@@ -23,7 +23,6 @@
     "material-ui-chip-input": "^2.0.0-beta.1",
     "mdbreact": "^4.21.1",
     "npm-check-updates": "^3.1.25",
-    "puppeteer": "^1.20.0",
     "react": "^16.11.0",
     "react-autosuggest": "^9.4.3",
     "react-dom": "^16.11.0",
@@ -69,7 +68,9 @@
   },
   "devDependencies": {
     "@testing-library/react": "^9.3.0",
+    "jest-puppeteer": "^4.3.0",
     "material-table": "^1.53.0",
+    "puppeteer": "^1.20.0",
     "react-test-utils": "0.0.1"
   }
 }

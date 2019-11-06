@@ -1,8 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import './App.css';
 import { BrowserRouter, Route  } from "react-router-dom";
-import {Provider} from 'react-redux'; // Librería de react para poder utilizar redux
-import store from  './redux/store' ;
 //import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import HomePage from "./views/HomePage/HomePage";
 import MainMenu from "./views/MainMenu/MainMenu";
@@ -44,7 +42,6 @@ export default function App() {
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
         <BrowserRouter>
-        <Provider store = {store}>
             <React.Fragment>
                 <Route path="/" component={HomePage} exact/>
                 <Route path="/login" component={LogIn} exact/>
@@ -61,7 +58,6 @@ export default function App() {
                 <Route path= "/stock" component={Stock} />
                 <Route path = "/rellenarPedido" component={CustomizedTables}/>
             </React.Fragment>
-          </Provider> 
         </ BrowserRouter>
     </MuiThemeProvider>
     ) : <LoaderScreen/>

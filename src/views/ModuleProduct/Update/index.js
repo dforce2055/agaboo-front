@@ -6,8 +6,6 @@ import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
 import SearchBox from './SearchBox';
 import FilterProduct from './FilterProduct';
-import {connect } from 'react-redux';
-import countProduct from '../../../redux/actions/countProducts';    
 
 
 function useIndexUpdateProduct(props) {
@@ -52,15 +50,7 @@ function useIndexUpdateProduct(props) {
     )
 }
 
- const mapsStateToProps = (state) => {
-     return {
-         products : state.products , 
-     };
- };
-
-const wrapper = connect(mapsStateToProps); 
-const component = wrapper(useIndexUpdateProduct); 
 
 
 
-export default withRouter(component) ;
+export default withRouter(useIndexUpdateProduct) ;
