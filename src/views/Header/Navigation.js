@@ -21,7 +21,8 @@ import ExpandMore from '@material-ui/icons/ExpandMore'; //Icono de flecha
 import Collapse from '@material-ui/core/Collapse'; //https://material-ui.com/components/transitions/ --> Componente que permite desplegar
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
-import userController from '../../controllers/User';
+import ListAdmin from './ListAdmin';
+import ListUser from './ListUser';
 //ICONOS DE BOTONES
 //ICONOS DE USUARIOS
   import UsersIcon from '@material-ui/icons/SupervisedUserCircle';
@@ -37,9 +38,9 @@ import userController from '../../controllers/User';
   import BallotIcon from '@material-ui/icons/Ballot';
   //ICONOS DE STOCK
   import LocalShippingIcon from '@material-ui/icons/LocalShipping';
-  import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+  // import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
   import AssignmentIcon from '@material-ui/icons/Assignment';
-  import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
+  // import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
   //ICONOS PEDIDOS
   import DoneOtulineIcon from '@material-ui/icons/DoneOutline';
   import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
@@ -48,7 +49,6 @@ import userController from '../../controllers/User';
   import LocalAtmIcon from '@material-ui/icons/LocalAtm';
   //ICONOS DE MANTENIMIENTO
   import BuildIcon from '@material-ui/icons/Build';
-  import firebase from '../../config/firebase';
 
 
 const drawerWidth = 240;
@@ -170,11 +170,12 @@ function Navbar(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const {history} = props;
-  let userEmail = firebase.getCurrentEmail();
-
+  let userRole = checkRoleAdmin();
+  
+  
   const [visible, setVisible] = React.useState(false);
   const [productos, setProductos] = React.useState(false);
-  const [stock, setStock] = React.useState(false);
+  // const [stock, setStock] = React.useState(false);
   const [pedidos, setPedidos] = React.useState(false);
   /*Hook que permite en clases Function utilizar 
     state y cambiar su estado. Es decir el visible es el estado y 
@@ -188,9 +189,9 @@ function Navbar(props) {
     setProductos(!productos);
   }
 
-  function handleClickStock() { 
-    setStock(!stock);
-  }
+  // function handleClickStock() { 
+  //   setStock(!stock);
+  // }
 
   function handleClickPedidos() { 
     setPedidos(!pedidos);
@@ -204,27 +205,17 @@ function Navbar(props) {
     setOpen(false);
   }
 
+  function checkRoleAdmin(){
+    let role = sessionStorage.userRole; //me guardo el rol del usuario
+    console.log("rol de usuario: ",role);
 
-  async function checkRole() {
-    try {
-      let userEmail = firebase.getCurrentEmail();
-
-        userController.getUserStatusAndRole(userEmail)
-            .then(async (userEmail)  => {
-                if ( userEmail.role === "ADMIN" ) {
-                    return 1;
-                } else if (userEmail.role === "USER") {
-                    return 2;
-                }
-            })
-            .catch((error) => {
-                console.error("Error: ", error);
-                return false;
-            });
-    } catch (error) {
-        alert(error.message)
+    if(role==="ADMIN"){
+      return true;
+    }else if(role==="USER"){
+      return false;
     }
-}
+  }
+
   
   return (
     <MuiThemeProvider theme={theme2}>
@@ -267,8 +258,9 @@ function Navbar(props) {
           </IconButton>
         </div>
         <Divider />
+         {userRole ? <ListAdmin/>: <ListUser/>}
+      
 {/* *********************************** LISTA USUARIOS ****************************************** */}
-
           <List>
             <ListItem button onClick={() => history.push('/usuarios')}>
               <ListItemIcon>

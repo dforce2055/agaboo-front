@@ -9,6 +9,8 @@ import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
 import firebase from '../../config/firebase';
 
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@material-ui/core/';
+
 const useStyles = makeStyles({
   root: {
     background: 'linear-gradient(45deg, #2c7369 20%, #3fb5a5 90%)',
@@ -35,6 +37,17 @@ const theme = createMuiTheme({ /* Plantilla de edicion */
               fontSize: '0.875rem',
             },
         },
+        MuiButton:{
+          containedSecondary:{
+            backgroundColor:'#ff0000d6',
+            '&:hover': {
+              backgroundColor: '#ff0000',
+              "@media (hover: none)": {
+                backgroundColor: "#ff0000"
+              },
+            },
+          },
+        },
 
   }});
 
@@ -42,6 +55,15 @@ function SimpleBottomNavigation(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const {history} = props;
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   async function logOut(){
     try {
@@ -65,7 +87,29 @@ function SimpleBottomNavigation(props) {
               >
               <BottomNavigationAction label="Volver" icon={<ArrowBackIosTwoToneIcon />} onClick ={ () => history.goBack()}/>
               <BottomNavigationAction label="Menu Principal" icon={<HomeTwoToneIcon />} onClick ={ () => history.push('/mainMenu')}/>
-              <BottomNavigationAction label="Cerrar Sesión" icon={<HttpsTwoToneIcon />} onClick ={logOut}/>
+              <BottomNavigationAction label="Cerrar Sesión" icon={<HttpsTwoToneIcon />} onClick ={handleClickOpen}/>
+             
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="responsive-dialog-title"
+                maxWidth="xl"
+              >
+                <DialogTitle id="responsive-dialog-title">{"Confirmar cierre de sesión"}</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Está seguro que desea cerrar sesión?.
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose} color="primary">
+                    Cancelar
+                  </Button>
+                  <Button variant='contained' onClick={logOut} color="secondary" autoFocus startIcon={<HttpsTwoToneIcon />}>
+                    Cerrar Sesion
+                  </Button>
+                </DialogActions>
+              </Dialog>
               </BottomNavigation>
         </MuiThemeProvider>
     </div>
