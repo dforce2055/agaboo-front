@@ -12,7 +12,6 @@ function SimpleMenu(props) {
 
   //Pedido entero, asi lo puedo mapear en ProductListOrder.js. El cual es la pantalla para mostrar todos los productos y su cantidad, asi el empleado puede agregar un id's.
   const {id_pedido} = props;
-  console.log(id_pedido);
   
   const handleClick = event => {
     setAnchorEl(event.currentTarget);

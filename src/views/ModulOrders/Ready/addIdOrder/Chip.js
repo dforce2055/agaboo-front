@@ -1,12 +1,12 @@
 import React from 'react'
 import ChipInput from 'material-ui-chip-input'
 import { Container } from '@material-ui/core';
- 
+import OrderController from '../../../../controllers/Order';
+
 export default function Chip(props){
   const {handleChange} = props;
   const {obj} = props;
-
-  const [a,setA] = React.useState([]);
+  
   //Metodo para guardar el objeto en el arreglo.
   const guardarObj = (chip) =>{
     let data = {
@@ -15,11 +15,14 @@ export default function Chip(props){
       id_producto:chip
     }
     console.log(data);
-    handleChange(obj.producto,data);
-  }
+    
+    let auth = chip[chip.length-1] //Selecciono el ultimo dato introducido
 
-  const handleSave = (chip ) =>{
-    setA(chip);
+    let d =OrderController.verifyProductExistence(auth);
+console.log(d);
+
+
+    //handleChange(obj.producto,data); //Metodo para guardar el id en el listado del pedido id's
   }
 
  return (

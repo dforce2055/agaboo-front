@@ -18,13 +18,12 @@ import DeleteOrder from './views/ModulOrders/Delete/index';
 import Stock from './views/ModuleProduct/Stock/index'; 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { CssBaseline } from '@material-ui/core'
-import { MagicSpinner } from "react-spinners-kit";
 
 import firebase from '../src/config/firebase';
 import LoaderScreen from './views/LoaderScreen/LoaderScreen';
 
 
-import CustomizedTables from './views/ModulOrders/Ready/CompleteOrder/ProductListOrder';
+import CustomizedTables from './views/ModulOrders/Ready/addIdOrder/ProductListOrder';
 
 const theme = createMuiTheme();
 

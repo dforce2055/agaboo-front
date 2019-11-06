@@ -207,7 +207,7 @@ function UsersTable(props) {
         </Grid>
         <div className={classes.seeMore}>
           
-          <Link color="primary" href="javascript:;" onClick={getMoreUsers}>
+          <Link color="primary" onClick={getMoreUsers}>
             Ver más usuarios
           </Link>
         </div>

@@ -31,6 +31,23 @@ class OrderController extends Component {
     }
   }
 
+  verifyProductExistence(id_producto){
+    try {
+      var value = false;
+      OrderRepo.verifyProductExistence(id_producto).then(v=> {
+        console.log(v);
+       value = v
+       console.log(value);       
+      })
+      console.log(value);
+      
+      return value
+    } catch (error) {
+      console.error("Error con el id del producto.");
+      
+    }
+  }
+
 }
 
 export default new OrderController();
