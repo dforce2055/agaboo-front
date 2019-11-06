@@ -40,22 +40,11 @@ class OrderController extends Component {
     }
   }
 
-  verifyProductExistence = async (id_producto) =>{
+  verifyProductExistence(id_producto){
     try {
-      var value = false;
-      OrderRepo.verifyProductExistence(id_producto)
-        .then(r=>{
-          console.log("Lo que recibi de repositorie es:",r);
-          value = r;
-          console.log("Cambie el valor local a: ",value);
-          
-        })
-        console.log("Retorno la variable pisada:",value);
-        
-        return value;
+     return OrderRepo.verifyProductExistence(id_producto)
     } catch (error) {
       console.error("Error con el id del producto.");
-      
     }
   }
 }

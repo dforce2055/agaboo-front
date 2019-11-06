@@ -1,7 +1,7 @@
 import React from 'react'
 import ChipInput from 'material-ui-chip-input'
 import { Container } from '@material-ui/core';
-//import OrderController from '../../../../controllers/Order';
+import OrderController from '../../../../controllers/Order';
 
 export default function Chip(props){
   const {handleChange} = props;
@@ -20,7 +20,7 @@ export default function Chip(props){
    let auth = chip[chip.length-1] //Selecciono el ultimo dato introducido
 
     OrderController.verifyProductExistence(auth)
-    .then(result => console.log(result))
+    .then(result => console.log("estoy fron;:",result))
     
     handleChange(obj.producto,data); //Metodo para guardar el id en el listado del pedido id's
   }
