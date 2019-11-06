@@ -24,11 +24,22 @@ class OrderRepo extends Component {
     }
   }
 
+  //Se utiliza en views/ModulOrders/Ready/ButtonOption.js
+  deleteOrder(id_pedido){
+    try {
+      db.doc(id_pedido)
+      .update({eliminado:true})
+      .then(()=>{ return true })
+    } catch (error) {
+      console.log("Error en la base de datos.",error);
+    }
+  }
+
   //Devuelvo todos los pedidos
   async getOrders(){
     try {
       let list = {};
-      await db.get()
+      await db.where("eliminado","==",false).get()
       .then(result =>{
         list = result.docs.map(doc => doc.data())
    })

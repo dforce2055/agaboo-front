@@ -5,7 +5,7 @@
 import { Component } from 'react';
 import firebase from '../config/firebase';
 const collection = 'customers';
-
+const cant_customer = 5;
 class CustomerRepo extends Component {
     constructor(props) {
         super(props);
@@ -30,7 +30,9 @@ class CustomerRepo extends Component {
     //Se utiliza en ModulsUserAdmin\Delete-update-list\Table\ClientTable.js
     getCustomers = async () => {
         try {
-            let coleccion = await firebase.db.collection(collection).where('eliminado','==', false).limit(3).get();
+            let coleccion = await firebase.db.collection(collection).where('eliminado','==', false)
+            .limit(cant_customer)
+            .get();
             let clientes = coleccion.docs.map(doc => doc.data());return clientes;
         } catch (error) {
             throw new Error();
@@ -160,6 +162,30 @@ class CustomerRepo extends Component {
                 return false;
             });
         return result;
+    }
+
+    getCustomerPagination = async (lastId) => {
+        try {
+            let customer = [];
+            await firebase.db.collection(collection)
+                .where("eliminado","==",false)
+                .orderBy("id")
+                .startAfter(lastId)
+                .limit(cant_customer)
+                .get()
+                .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
+                        customer.push(doc.data());
+                    });
+                })
+                .catch(function (error) {
+                    console.log("Error al paginar clientes: ", error);
+                    customer = null;
+                });
+            return customer;
+        } catch (error) {
+            console.log("Error en la base de datos:", error);
+        }
     }
 }
 export default new CustomerRepo();

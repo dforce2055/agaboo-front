@@ -246,7 +246,7 @@ export default function EnhancedTable() {
       OrderController.getOrders()
         .then(value =>{
           rows = value;
-          setA(false);
+        setA(false);
         }); 
     }
   });
@@ -354,10 +354,12 @@ export default function EnhancedTable() {
                       </TableCell>
 
                       <TableCell>
-                      {/*Paso listado_productos por props, asi lo puede recivir la clase ButtonOption*/}
+                      {/*Paso listado_productos por props, asi lo puede recibir la clase ButtonOption*/}
                       <SimpleMenu 
+                      //Paso observer
+                      setA={setA}
                       listado_producto = {row.listado_producto} //Listado producto entero
-                      id_pedido={row.id_pedido} //Pedido entero
+                      id_pedido={row.id_pedido} //Id del pedido seleccionado de la tabla mapeada
                       />      
                       </TableCell>
 

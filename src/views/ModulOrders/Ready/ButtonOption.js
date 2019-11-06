@@ -4,6 +4,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { withRouter } from 'react-router-dom';
+import OrderController from '../../../controllers/Order';
 
 function SimpleMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -12,6 +13,9 @@ function SimpleMenu(props) {
 
   //Pedido entero, asi lo puedo mapear en ProductListOrder.js. El cual es la pantalla para mostrar todos los productos y su cantidad, asi el empleado puede agregar un id's.
   const {id_pedido} = props;
+
+  //Guardo state para actualizar el listado en OrdersTable. Es decir, actualizar la tabla cada vez que se elimine un usuario.
+  const {setA} = props;
   
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -27,7 +31,9 @@ function SimpleMenu(props) {
   }
 
   const handleDeleteOrder = () =>{
-    console.log("MUESTRO PANTALLA DE ELIMINAR PEDIDO");
+    OrderController.deleteOrder(id_pedido)
+    //Cambio estado para actualizar el listado de los pedidos. Cuando uno sea eliminado.
+    setA(true);
     setAnchorEl(null);
   }
 
