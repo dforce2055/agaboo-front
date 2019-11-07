@@ -307,81 +307,19 @@ function Navbar(props) {
         </List>
       </Collapse>
     </List>
-{/* *********************************** LISTA PRODUCTOS ****************************************** */}
+{/* ***********************************  PRODUCTOS ****************************************** */}
       <List>
         <ListItem button onClick={handleClickProductos}>
           <ListItemIcon>         
-          <StoreIcon/> 
+            <StoreIcon/> 
           </ListItemIcon>
-        <ListItemText primary="Productos" /> 
-        {productos ? <ExpandLess /> : <ExpandMore />}     
-      </ListItem> 
+        <ListItemText primary="Productos" onClick ={ () => history.push('/tableProduct')} /> 
+        </ListItem> 
 
-      <Collapse in={productos} timeout="auto" unmountOnExit> 
-        
-      <List component="div" disablePadding>
-          <ListItem button className={classes.nested} onClick ={ () => history.push('/stock')}>
-            <ListItemIcon >
-              <AssignmentIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Stock"  />
-          </ListItem>
-        </List>
-        <List component="div" disablePadding> 
-          <ListItem button className={classes.nested} onClick ={ () => history.push('/createProduct')}> 
-            <ListItemIcon>
-              <AddCircleOutlineIcon />
-            </ListItemIcon>
-            <ListItemText primary="Crear Productos"/>
-          </ListItem>
-        </List>
-
-        <List component="div" disablePadding>
-          <ListItem button className={classes.nested} onClick ={ () => history.push('/tableProduct')}>
-            <ListItemIcon >
-              <BallotIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Modificar/Eliminar Productos"  />
-          </ListItem>
-        </List>
-        
-        
-
-      </Collapse>
+      
 
       </List>
-{/* *********************************** LISTA STOCK ****************************************** */}
-      {/* <List>
-        <ListItem button onClick={handleClickStock}> 
-          <ListItemIcon>      
-          <AssignmentIcon/>
-          </ListItemIcon> 
-        <ListItemText primary="Stock" />  
-        {stock ? <ExpandLess /> : <ExpandMore />}      
-      </ListItem> 
-
-      <Collapse in={stock} timeout="auto" unmountOnExit> 
-        <List component="div" disablePadding> 
-          <ListItem button className={classes.nested}> 
-            <ListItemIcon>
-              <AssignmentTurnedInIcon />
-            </ListItemIcon>
-            <ListItemText primary="Disponibles"/>
-          </ListItem>
-        </List>
-
-        <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon>
-              <AssignmentLateIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Alquilados" />
-          </ListItem>
-        </List>
-      </Collapse>
-
-      </List>  Es posible que quede afuera
-    */} 
+     
 {/* *********************************** LISTA PEDIDOS ****************************************** */}
       <List>
         <ListItem button onClick={handleClickPedidos}> 

@@ -15,7 +15,6 @@ import indexUpdateProduct from './views/ModuleProduct/Update/index';
 import CreateOrder from './views/ModulOrders/Create/index';
 import OrderReady from './views/ModulOrders/Ready/index';
 import DeleteOrder from './views/ModulOrders/Delete/index';
-import Stock from './views/ModuleProduct/Stock/index'; 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { CssBaseline } from '@material-ui/core'
 
@@ -54,7 +53,6 @@ export default function App() {
                 <Route path= "/registrarPedido" component={CreateOrder} />
                 <Route path= "/pedidosListos" component={OrderReady} />
                 <Route path= "/eliminarPedidos" component={DeleteOrder} />
-                <Route path= "/stock" component={Stock} />
                 <Route path = "/rellenarPedido" component={CustomizedTables}/>
             </React.Fragment>
         </ BrowserRouter>

@@ -210,6 +210,20 @@ const useStyles = makeStyles(theme => ({
                 
                 
             </form>
+            <Button
+                label={"Guardar"}
+                color="primary"
+                variant="contained"
+                type=" submit "
+            ></Button>
+              
+            <Button
+                label={"Cancelar"}
+                color="secondary"
+                variant="contained"
+                type=" submit "
+            ></Button>
+
               <Button type="submit" label ={"Registrar Producto"} onClick = { registerProduct } ></Button>
               <Button label = {"Cancelar"} onClick ={ () => history.goBack()  } ></Button>
           </Grid> 

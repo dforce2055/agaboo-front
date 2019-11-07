@@ -2,7 +2,7 @@
 
 import React from 'react';
 import UserController from '../../../../controllers/User';
-import { withRouter } from "react-router-dom";
+  import { withRouter } from "react-router-dom";
 import Link from '@material-ui/core/Link';
 
 //Agrego imports
@@ -171,9 +171,9 @@ function UsersTable(props) {
   return (
     <MuiThemeProvider theme={theme}>
       <React.Fragment >
-        <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrar-usuario')} >
-          <AddIcon />
-        </Fab>      
+          <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrar-usuario')} >
+            <AddIcon />
+          </Fab>      
         <Grid item xs={12} md={12}>
           <List className={classes.root}>
             {usuarios.map(usuario => (

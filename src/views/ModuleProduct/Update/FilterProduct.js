@@ -56,17 +56,32 @@ const useStyles = makeStyles(theme => ({
     paper: {
       padding: theme.spacing(1),
       margin: 'auto',
-      maxWidth: 500,
+      maxWidth: 500 ,
     },
     textField: {
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1)
+      //TAMAÑO DEL TEXT FIELD
+      
     },
     dense: {
       marginTop: theme.spacing(2)
     },
     menu: {
       width: 200,
+    },
+    fab: {
+      position: 'fixed',
+      bottom: theme.spacing(12),
+      right: theme.spacing(7),
+      zIndex: 99,
+      backgroundColor: '#3fb5a5',
+      '&:hover': {
+        backgroundColor: '#0ce8ca',
+        "@media (hover: none)": {
+          backgroundColor: "#0ce8ca"
+        },
+      },
     }
   }));
 
@@ -90,32 +105,35 @@ const useStyles = makeStyles(theme => ({
 
 
     return(
-    <TextField
-        id="type-product"
-        select
-        label="Estado"
-        className={classes.textField}
-        value={value }
-        
-        
-        onChange={handleChange}
-        SelectProps={{
-          native: true,
-          MenuProps: {
-            className: classes.menu
-          }
-        }}
-        
-        margin="normal"
-        variant="outlined"
-    >
-        {typeState.map(option => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-        
-    </TextField>
+      <div>
+          <TextField classname = {classes.fab}
+          id="type-product"
+          select
+          
+          className={classes.textField}
+          value={value }
+          
+          
+          onChange={handleChange}
+          SelectProps={{
+            native: true,
+            MenuProps: {
+              className: classes.menu
+            }
+          }}
+          
+          margin="normal"
+          variant="outlined"
+      >
+          {typeState.map(option => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+          
+      </TextField>
+    </div>
+    
 )
     
 
