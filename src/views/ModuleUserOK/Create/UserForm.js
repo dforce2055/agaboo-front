@@ -212,7 +212,7 @@ function AddressForm(props) {
       console.log("Lo estoy editando");
     } else { //sino, llamo al método agregar
       UserController.addUser(data);
-      handleClickOpenDialog();    
+      handleClickOpenDialog();
     }
     
   }

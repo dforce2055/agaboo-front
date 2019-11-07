@@ -16,8 +16,7 @@ function useIndexUpdateProduct(props) {
         alert('Por favor inicie sesión para acceder')
         props.history.replace('/login')
         return null
-      }
-    
+    }
       
     return (
         <div>
