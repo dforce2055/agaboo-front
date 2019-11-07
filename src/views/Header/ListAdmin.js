@@ -99,7 +99,7 @@ function ListAdmin(props){
     </Collapse>
   </List>
   {/* //******************************LISTA PRODUCTOS********************************** */}
-  <List>
+  {/* <List>
   <ListItem button onClick={handleClickProductos}>
     <ListItemIcon>         
     <StoreIcon/> 
@@ -140,7 +140,17 @@ function ListAdmin(props){
 
 </Collapse>
 
-</List>
+</List> */}
+
+{/* PRUEBA DE IVAN */}
+  <List>
+    <ListItem button onClick={handleClickProductos}>
+      <ListItemIcon>         
+        <StoreIcon/> 
+      </ListItemIcon>
+    <ListItemText primary="Productos" onClick ={ () => history.push('/tableProduct')} /> 
+    </ListItem> 
+  </List>
 {/* //******************************LISTA PEDIDOS********************************** */}
 <List>
     <ListItem button onClick={handleClickPedidos}> 

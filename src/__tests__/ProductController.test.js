@@ -86,6 +86,7 @@ describe('Metodo getProductById', () => {
         expect(message).toBeTruthy()
     });
 });
+
 describe('Metodo getProductByCodebar', () => {
     // Pruebas del metodo getProductByCodeBar
     test('getProductByCodebar', async () => {

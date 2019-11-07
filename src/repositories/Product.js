@@ -18,6 +18,28 @@ class ProductRepo extends Component {
         }
         
     }
+    getExistsProduct = async (code) =>{
+        let product = null ;
+        
+        await firebase.db.collection(collection)
+            .where('code', '==', code)
+            .limit(1)
+            .get()
+            .then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    product = doc.data();
+                });
+            })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+                product = null;
+            });
+        if (product === null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
     getProduct = async (id) => {
         if (!id) throw new Error(`Error: el id es obligatorio`);
         try {
@@ -191,5 +213,7 @@ class ProductRepo extends Component {
             )
         })
     }
+
+    //Se usan en repositories/Order.js
 }
 export default new ProductRepo();

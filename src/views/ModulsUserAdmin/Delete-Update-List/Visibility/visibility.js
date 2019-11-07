@@ -102,7 +102,7 @@ export default function VisibilityClient(props) {
           {/*-------------ROL--------------*/}
           <ListItem >
             <Typography variant="h6" className={classes.title}>
-            {'Empleo: '} {cliente.empleo}
+            {'Rubro: '} {cliente.rubro}
             </Typography>    
           </ListItem>
           <Divider />

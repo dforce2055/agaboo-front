@@ -103,6 +103,30 @@ describe('Metodo getAllUsers', () => {
     });
 });
 
+describe('Metodo getFirstActiveUser', () => {
+    // Pruebas del metodo getFirstActiveUser
+    test('getFirstActiveUser', async () => {
+        //Debería devolver un array de objetos del tipo User en Json
+        let user = await UserController.getFirstActiveUser();
+
+        expect(typeof user).toBe('object');
+
+        console.log("Primer usuario activo => " + user.email);
+
+        //Comparo el objeto con un objeto del tipo User
+        //expect(user).toMatchObject(User);
+
+        // Verifico que me llegue un array de objetos del tipo User
+        // que al menos un Objeto contenga un campo role: 'ADMIN'
+
+        expect(user).toEqual(
+            expect.objectContaining({
+                eliminado: false
+            })
+        )
+    });
+});
+
 describe('Metodo getActiveUsers', () => {
     // Pruebas del metodo getActiveUsers
     test('getActiveUsers', async () => {
@@ -121,6 +145,55 @@ describe('Metodo getActiveUsers', () => {
             expect.arrayContaining([
                 expect.objectContaining({
                     eliminado: false
+                })
+            ])
+        )
+    });
+});
+
+describe('Metodo getUsersPagination', () => {
+    // Pruebas del metodo getUsersPagination
+    test('getUsersPagination', async () => {
+        //Debería devolver un array de objetos del tipo User en Json
+        let users = await UserController.getUsersPagination("aprez2055@gmail.com", 5);
+        console.log("################# ULTIMOS USUARIOS PAGINADOS #######################")
+        console.log(users);
+        expect(typeof users).toBe('object');
+
+        //Comparo el objeto con un objeto del tipo User
+        expect(users).toMatchObject(Users);
+
+        // Verifico que me llegue un array de objetos del tipo User
+        // que al menos un Objeto contenga un campo role: 'ADMIN'
+
+        expect(users).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    role: 'ADMIN'
+                })
+            ])
+        )
+    });
+});
+
+describe('Metodo getUsersActivePagination', () => {
+    // Pruebas del metodo getUsersActivePagination
+    test('getUsersActivePagination', async () => {
+        //Debería devolver un array de objetos del tipo User en Json
+        let users = await UserController.getUsersActivePagination("bigoton@mail.com", 2);
+
+        expect(typeof users).toBe('object');
+
+        //Comparo el objeto con un objeto del tipo User
+        expect(users).toMatchObject(Users);
+
+        // Verifico que me llegue un array de objetos del tipo User
+        // que al menos un Objeto contenga un campo role: 'ADMIN'
+
+        expect(users).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    role: 'ADMIN'
                 })
             ])
         )

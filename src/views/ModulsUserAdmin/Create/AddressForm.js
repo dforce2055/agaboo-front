@@ -53,7 +53,7 @@ function AddressForm(props) {
     nombre:'',
     apellido: '',
     celular: '',
-    empleo:'',
+    rubro:'',
     id:'',    
     email:'',
     localidad:'',
@@ -73,7 +73,7 @@ function AddressForm(props) {
       nombre: values.nombre,
       apellido: values.apellido,
       id: values.id,
-      empleo: values.empleo,
+      rubro: values.rubro,
       calle:values.calle,
       altura: values.altura,
       localidad:values.localidad,
@@ -151,12 +151,12 @@ function AddressForm(props) {
           <Grid item xs={12} sm={6}>
             <TextValidator
               variant="outlined"
-              label="Empleo"
+              label="Rubro"
               fullWidth
               required
-              onChange={handleChange('empleo')}
-              name="empleo"
-              value={values.empleo}
+              onChange={handleChange('rubro')}
+              name="rubro"
+              value={values.rubro}
               validators={['required', 'matchRegexp:^([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])?$']}
               errorMessages={['Campo requerido', 'Campo invalido']}
             />
@@ -225,15 +225,13 @@ function AddressForm(props) {
               errorMessages={['Campo requerido', 'Celular es invalido']}
             />
           </Grid> 
-          <Grid item xs={12} sm={6}>
-            <ButtonGroup
+            <ButtonGroup 
               variant="text"
               size="large"
               aria-label="large contained secondary button group"
             >
-                <Button
-                className={classes.buttonLeft}
-                color="secondary"
+                <Button 
+                style={{background: 'linear-gradient(45deg, #f56f5b 10%, #f30b0b 97%)'}}
                 variant="contained"
                 onClick ={ () => history.goBack()}
                 >
@@ -241,15 +239,13 @@ function AddressForm(props) {
                 </Button>
 
                 <Button 
-                className={classes.buttonRight}
-                color="primary"
+                style={{background: 'linear-gradient(45deg, #3fb5a5 2%, #3fb5a5 98%)'}}
                 variant="contained"
                 type = " submit "
                 >
                   Guardar
                 </Button>
               </ButtonGroup>
-          </Grid>      
         </Grid>
 
       </ValidatorForm>

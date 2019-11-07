@@ -6,6 +6,13 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Fab from '@material-ui/core/Fab';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import AddIcon from '@material-ui/icons/Add';
+import { withRouter } from "react-router-dom";
+
+
+
 
 import ProductController from '../../../controllers/Product';
 
@@ -41,15 +48,33 @@ const useStyles = makeStyles(theme => ({
   table: {
     minWidth: 300,
   },
+
+  fab: {
+    position: 'fixed',
+    bottom: theme.spacing(12),
+    right: theme.spacing(7),
+    zIndex: 99,
+    backgroundColor: '#3fb5a5',
+    '&:hover': {
+      backgroundColor: '#0ce8ca',
+      "@media (hover: none)": {
+        backgroundColor: "#0ce8ca"
+      },
+    },
+  },
+  
+  
+
 }));
 
-export default function CustomizedTables(props) {
+ function CustomizedTables(props) {
   const {rows,setRows} = props;
   const {value, setValue} = props;
   const {update, setUpdate} = props;
+  const {history} = props ;
 
   const classes = useStyles();
-  const array =[] 
+  const array = [] 
   const typesProduct = ["Baño Químico", "Oficina", "Boletería", "Garita"] // Hardcode de los tipos de productos
   
   
@@ -99,7 +124,7 @@ export default function CustomizedTables(props) {
                 <TableHead>
                 <TableRow>
                     <StyledTableCell align= "justyfy">Producto</StyledTableCell>
-                    <StyledTableCell align="justyfy">Estado</StyledTableCell>
+                    {/* <StyledTableCell align="justyfy">Estado</StyledTableCell> */}
                     <StyledTableCell align="justyfy">Cantidad</StyledTableCell>
                 </TableRow>
                 </TableHead>
@@ -110,12 +135,15 @@ export default function CustomizedTables(props) {
                       
                       {row.product}
                     </StyledTableCell>
-                    <StyledTableCell align="justyfy">{row.value}</StyledTableCell>
+                    {/* <StyledTableCell align="justyfy">{row.value}</StyledTableCell> */}
                     <StyledTableCell align="justyfy">{row.count}</StyledTableCell>
                     </StyledTableRow>
                 ))}
                 </TableBody>
             </Table>
+            <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/createProduct')} >
+          <AddIcon />
+        </Fab>  
         </Paper>
       </React.Fragment>         
         
@@ -123,3 +151,8 @@ export default function CustomizedTables(props) {
     
   );
 }
+
+
+
+
+export default withRouter(CustomizedTables);

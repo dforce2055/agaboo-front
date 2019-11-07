@@ -37,7 +37,8 @@ export default function ClientTable() {
     }).catch(error=>{
       console.log("Error al traer el cliente: ",error);
     })
-    }else if (clientes.length === 0) {
+    }
+    if (clientes.length === 0) {
         CustomerController.getCustomers()
         .then(value=> {
           setClientes(value);      
@@ -49,6 +50,25 @@ export default function ClientTable() {
       }else if(search.buscar.length === 0){
         setValidador(false)
       }
+
+      //Paginado de la tabla clientes.
+      if(pagination === true){ 
+        var lastPosition = clientes[clientes.length-1];
+        var customerPag = clientes;        
+        CustomerController.getCustomerPagination(lastPosition.id)
+        .then(result=>{
+          if (result==false) {
+            console.log("No hay mas usuario");
+            return;
+          }
+
+          result.forEach((result) => customerPag.push(result));
+        console.log("Estos son los clientes actuales;",clientes);
+        console.log("Estos son los usuarios agregados.",result);
+        setClientes(customerPag)
+        setPagination(false);
+      });
+      }      
     });
 
   function updateStateArray(){
@@ -63,12 +83,15 @@ export default function ClientTable() {
   const [stateArray,setStateArray] = React.useState(false);
 
   //Buscador 
-  //{/*
   const [search,setSearch] = React.useState({
     buscar:''
   });
   //Valido si el campo esta vacio o no.
   const [validador,setValidador] = React.useState(false);
+
+
+  //Paginado
+  const [pagination,setPagination] = React.useState(false);
 
   //Copia de arreglo de clientes. Para no modificar el original
   const [data,setData] = React.useState([]);
@@ -77,11 +100,8 @@ export default function ClientTable() {
     setSearch({ ...search, [name]: event.target.value });  
   };
 
-  function GetCustomerCant10(){
-    var lastPosition = clientes[clientes.length-1];
-    var data = CustomerController.getCustomerCant10(lastPosition);
-    data.then(result=>{console.log("Lo que llego al front: ",result);
-    })
+  function getPagination(){ 
+    setPagination(true);
   };
 
   function Filter(){  
@@ -92,10 +112,10 @@ export default function ClientTable() {
         const itemDataId = item.id.toUpperCase()
         const itemDataLocalidad = item.localidad.toUpperCase()
         const itemDataApellido = item.apellido.toUpperCase()
-        const itemDataEmpleo = item.empleo.toUpperCase()
+        const itemDataRubro = item.rubro.toUpperCase()
 
         //Uno todos los campos por el cual los voy a filtrar.
-        const campo = itemDataNombre+" "+itemDataId+" "+itemDataLocalidad+" "+itemDataApellido+" "+itemDataEmpleo
+        const campo = itemDataNombre+" "+itemDataId+" "+itemDataLocalidad+" "+itemDataApellido+" "+itemDataRubro
 
         //Pongo en mayuscula en toUpperCase para poder comparar todos los campos.
         const textData = search.buscar.toUpperCase()
@@ -212,7 +232,7 @@ export default function ClientTable() {
         </TableBody>
       </Table>}
       <div className={classes.seeMore}>
-        <Link color="primary" onClick={GetCustomerCant10}>
+        <Link color="primary" onClick={getPagination}>
           Ver mas clientes
         </Link>
       </div>

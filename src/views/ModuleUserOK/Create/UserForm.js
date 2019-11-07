@@ -1,12 +1,22 @@
 import React from 'react';
 import UserController from '../../../controllers/User';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { withRouter } from "react-router-dom";
-import { makeStyles, MuiThemeProvider, createStyles} from '@material-ui/core/styles';
-import { 
-  Grid, TextField, MenuItem, Button, ButtonGroup, 
-  Typography, createMuiTheme, FormControlLabel, 
-  Switch, withStyles  } from '@material-ui/core/';
+import { makeStyles, MuiThemeProvider, createStyles } from '@material-ui/core/styles';
+import { red, blue } from '@material-ui/core/colors';
+import {
+  Grid, TextField, InputLabel, Select, MenuItem, Button, ButtonGroup,
+  Typography, createMuiTheme, FormGroup, FormControlLabel,
+  Switch, withStyles
+} from '@material-ui/core/';
+
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 import {
   Dialog, DialogActions,
@@ -17,6 +27,11 @@ import {
 
 const theme = createMuiTheme({
   overrides: {
+    MuiFormHelperText: {
+      root: {
+        color: blue,
+      }
+    },
     MuiButton: {
       containedPrimary: {
         backgroundColor: '#3fb5a5',
@@ -36,32 +51,38 @@ const theme = createMuiTheme({
           },
         },
       },
-    }, 
+    },
   }
 })
 
 const useStyles = makeStyles(theme => ({
+  //& p
+  'helper': {
+    color: 'blue !important',
+    fontStyle: 'italic',
+  },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    textAlign: 'center',
+  },
+  button: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1),
+  },
   estado: {
+
+    marginLeft: '2vw',
     color: 'rgba(0, 0, 0, 0.5)',
     fontSize: '23px',
     fontWeight: 100,
+    
 
-  },
-  buttonLeft: {
-    marginRight:'2px',
-    marginLeft:'13px',
-    marginTop: theme.spacing(2.5),
-  },
-  buttonRight: {
-    marginLeft:'20px',
-    marginTop: theme.spacing(2.5),
-  },
-  formUsers:{
-    marginTop:'30px',
-  },
+  }
+
 }));
 
-const IOSSwitch = withStyles((theme) =>
+const IOSSwitch = withStyles((theme: Theme) =>
   createStyles({
     root: {
       width: 48,
@@ -100,7 +121,7 @@ const IOSSwitch = withStyles((theme) =>
     checked: {},
     focusVisible: {},
   }),
-  )(({ classes, ...props }) => {
+)(({ classes, ...props }: Props) => {
   return (
     <Switch
       focusVisibleClassName={classes.focusVisible}
@@ -116,6 +137,34 @@ const IOSSwitch = withStyles((theme) =>
     />
   );
 });
+
+//fetch
+const documentos = [
+  {
+    value: 'DNI',
+    label: 'DNI',
+  },
+  {
+    value: 'Pasaporte',
+    label: 'Pasaporte',
+  },
+  {
+    value: 'L.E.',
+    label: 'Libreta de Enrolamiento',
+  },
+  {
+    value: 'L.C.',
+    label: 'Libreta Cívica',
+  },
+  {
+    value: 'CUIT',
+    label: 'CUIT',
+  },
+  {
+    value: 'CUIL',
+    label: 'CUIL',
+  },
+];
 
 //fetch
 const roles = [
@@ -134,39 +183,51 @@ const roles = [
 
 function AddressForm(props) {
   const classes = useStyles();
-  const {handleClose} = props;
-  const {usuario} = props; //Si esta prop llega, es porque etstoy editando un usuario
-  const {history} = props;
+  const { handleClose } = props;
+  const { usuario } = props; //Si esta prop llega, es porque etstoy editando un usuario
+  const { history } = props;
   const [values, setValues] = React.useState({
     nombre: '',
     apellido: '',
+    cuit: '',
+    cuil: '',
+    tipoDocumento: 'DNI',
     numeroDocumento: '',
+    fechNac: new Date('1980-01-01'),
     direccion: '',
     calle: '',
     altura: '',
     localidad: '',
     celular: '',
+    telefono: '',
     email: '',
     estado: true,
     role: '',
-    eliminado:false,
-    mostrarDialog:false,
+    eliminado: false,
+    mostrarDialog: false,
   });
 
   React.useEffect(() => {
     if (usuario) { //Seteo los campos con los datos del usuario
       setValues(usuario);
     }
-  }, []);  
+  }, []);
 
   const handleChange = name => event => {
-    setValues({ ...values, [name]: event.target.value });  
+    setValues({ ...values, [name]: event.target.value });
   };
   //Seteando estado del nuevo usuario
   const [estado, setEstado] = React.useState(false);
   const cambiarEstado = () => {
     setEstado(prev => !prev);
     setValues({ ...values, estado: estado });
+  };
+
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
+
+  const handleDateChange = date => {
+    setSelectedDate(date);
+    setValues({ ...values, fechNac: date });
   };
 
   const [open, setOpen] = React.useState(false);
@@ -176,7 +237,7 @@ function AddressForm(props) {
 
   const handleCloseDialog = (e) => {
     setOpen(false);
-    handleCloseDialog();
+    //handleCloseDialog();
     history.push('/usuarios');
   };
 
@@ -185,26 +246,43 @@ function AddressForm(props) {
     else history.push('/usuarios');
   }
 
+  function setCuitOrCuil() {
+    if (values.tipoDocumento === 'CUIT') {
+      setValues({ ...values, tipoDocumento: 'CUIT' });
+      setValues({ ...values, cuit: values.numeroDocumento });
+    }
+    if (values.tipoDocumento === 'CUIL') {
+      setValues({ ...values, tipoDocumento: 'CUIL' });
+      setValues({ ...values, cuil: values.numeroDocumento });
+    }
+  }
 
-  
+
   const handleOnClick = (e) => {
     console.log('Guardando...')
-    
-    
+
+    setCuitOrCuil();
+
     let data = {
       nombre: (values.nombre) ? values.nombre : '',
       apellido: (values.apellido) ? values.apellido : '',
+      cuit: (values.cuit) ? values.cuit : '',
+      cuil: (values.cuil) ? values.cuil : '',
+      tipoDocumento: (values.tipoDocumento) ? values.tipoDocumento : '',
       numeroDocumento: (values.numeroDocumento) ? values.numeroDocumento : '',
-      calle:(values.calle) ? values.calle : '',
+      fechNac: (values.fechNac) ? values.fechNac : '',
+      //direccion: values.direccion,
+      calle: (values.calle) ? values.calle : '',
       altura: (values.altura) ? values.altura : '',
-      localidad:(values.localidad) ? values.localidad : '',
-      celular:(values.celular) ? values.celular : '',
-      email:(values.email) ? values.email : '',
-      estado:(values.estado) ? values.estado : '',
-      role:(values.role) ? values.role : '',
-      eliminado:false,
+      localidad: (values.localidad) ? values.localidad : '',
+      celular: (values.celular) ? values.celular : '',
+      telefono: (values.telefono) ? values.telefono : '',
+      email: (values.email) ? values.email : '',
+      estado: (values.estado) ? values.estado : '',
+      role: (values.role) ? values.role : '',
+      eliminado: false,
     }
-    
+
     //Si estoy editando un usuario llamo al método editar
     if (usuario) {
       //UserController.editUser(data);
@@ -214,11 +292,11 @@ function AddressForm(props) {
       UserController.addUser(data);
       handleClickOpenDialog();
     }
-    
+
   }
 
 
-  
+
   return (
     <MuiThemeProvider theme={theme}>
       <React.Fragment>
@@ -226,23 +304,23 @@ function AddressForm(props) {
           Por favor complete los siguientes campos para registrar un usuario
         </Typography>
 
-        <ValidatorForm onSubmit={handleOnClick} onError={errors => console.log(errors)} className={classes.formUsers}>  
+        <ValidatorForm onSubmit={handleOnClick} onError={errors => console.log(errors)} className={classes.formUsers}>
           <Grid container spacing={3} justify={"center"}>
             <Grid item xs={12} sm={6}>
-                <TextValidator //TextValidator obligatorio
-                  variant="outlined"
-                  fullWidth
-                  id="nombre"
-                  label="Nombre"
-                  onChange={handleChange('nombre')}
-                  name="name"
-                  required
-                  //Validacion necesaria
-                  value={values.nombre}
-                  validators={['required','matchRegexp:^([A-Za-zÁÉÍÓÚñáéíóúÑ_ ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ_ \'])+([A-Za-zÁÉÍÓÚñáéíóúÑ_ ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ_ \'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ_ ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ_ \'])?$']}
-                  errorMessages={['Campo requerido', '¡¡¡Nombre invalido!!!']}
-                />
-              </Grid>
+              <TextValidator //TextValidator obligatorio
+                variant="outlined"
+                fullWidth
+                id="nombre"
+                label="Nombre"
+                onChange={handleChange('nombre')}
+                name="name"
+                required
+                //Validacion necesaria
+                value={values.nombre}
+                validators={['required', 'matchRegexp:^([A-Za-zÁÉÍÓÚñáéíóúÑ_ ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ_ \'])+([A-Za-zÁÉÍÓÚñáéíóúÑ_ ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ_ \'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ_ ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ_ \'])?$']}
+                errorMessages={['Campo requerido', '¡¡¡Nombre invalido!!!']}
+              />
+            </Grid>
             <Grid item xs={12} sm={6}>
               <TextValidator
                 variant="outlined"
@@ -258,16 +336,43 @@ function AddressForm(props) {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
+              <TextField
+                id="outlined-select-tipoDocumento"
+                select
+                fullWidth
+                label="Tipo de Documento"
+                validators={['required']}
+                className={classes.textField}
+                value={values.tipoDocumento}
+                onChange={handleChange("tipoDocumento")}
+                SelectProps={{
+                  MenuProps: {
+                    className: classes.menu,
+                  },
+                }}
+                //helperText="Por favor seleccione un tipo de documento"
+                variant="outlined"
+              >
+                {documentos.map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item xs={12} sm={6}>
               <TextValidator
                 variant="outlined"
-                label={"Número de DNI"} 
+                label={"Número de " + values.tipoDocumento}
                 id="numeroDocumento"
                 fullWidth
                 required
-                type="number"
                 onChange={handleChange('numeroDocumento')}
+                className={classes.helper} helperText="¡Introducir solo números!"
                 name="numeroDocumento"
                 value={values.numeroDocumento}
+                validators={['required', 'matchRegexp:(\D)?[0-9]{7}']} //digitos del 0 al 9, minimo 7 números en el orden del millon
+                errorMessages={['Campo requerido', '¡¡¡Número de documento invalido!!!']}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -276,7 +381,7 @@ function AddressForm(props) {
                 select
                 fullWidth
                 label="Tipo de Usuario"
-                validators={['required']} 
+                validators={['required']}
                 className={classes.textField}
                 value={values.role}
                 onChange={handleChange("role")}
@@ -294,9 +399,41 @@ function AddressForm(props) {
                 ))}
               </TextField>
             </Grid>
+            <Grid item xs={9} sm={6}>
+              <span className={classes.estado}>Estado  </span>
+              <FormControlLabel
+                control={
+                  <IOSSwitch
+                    checked={values.estado}
+                    onChange={cambiarEstado}
+                    value="estado"
+                  />
+                }
+                label="Activo"
+                labelPlacement="end"
+              />
+            </Grid>
+            {/*
+            <Grid item xs={6} sm={12}>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant="inline"
+                  format="dd/MM/yyyy"
+                  margin="normal"
+                  id="date-picker-inline"
+                  label="Cumpleaños"
+                  value={values.fechNac}
+                  onChange={handleDateChange}
+                  KeyboardButtonProps={{
+                    'aria-label': 'Fecha de Cumpleaños',
+                  }}
+                />
+              </MuiPickersUtilsProvider>
+            </Grid>
+             */}
             <Grid item xs={12}>
               <TextValidator
-               required   
                 variant="outlined"
                 label="Email"
                 onChange={handleChange('email')}
@@ -304,28 +441,28 @@ function AddressForm(props) {
                 value={values.email}
                 fullWidth
                 validators={['required', 'matchRegexp:^[a-zA-Z0-9.!#$%&*+/=?^_{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$']}
-                errorMessages={[ 'Email no valido']}
+                errorMessages={['Email no valido']}
               />
-            </Grid>      
+            </Grid>
             <Grid item xs={12} sm={6}>
               <TextValidator
                 onChange={handleChange('localidad')}
-                value={values.localidad}                   
+                value={values.localidad}
                 required
                 label="Localidad"
                 fullWidth
-                variant="outlined"     
+                variant="outlined"
                 value={values.localidad}
                 validators={['matchRegexp:^[a-zA-Z ]*$']}
                 errorMessages={['Campo requerido', 'Localidad no valida']}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextValidator      
+              <TextValidator
                 onChange={handleChange('calle')}
                 label="Calle"
                 variant="outlined"
-                fullWidth 
+                fullWidth
                 required
                 value={values.calle}
                 validators={['matchRegexp:^[a-zA-Z ]*$']}
@@ -333,7 +470,7 @@ function AddressForm(props) {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextValidator   
+              <TextValidator
                 onChange={handleChange('altura')}
                 variant="outlined"
                 label="Altura"
@@ -346,7 +483,7 @@ function AddressForm(props) {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextValidator            
+              <TextValidator
                 variant="outlined"
                 label="Celular"
                 onChange={handleChange('celular')}
@@ -355,46 +492,30 @@ function AddressForm(props) {
                 required
                 value={values.celular}
                 type='number'
-                validators={[ 'matchRegexp:^(\D)?[0-9]']}
+                validators={['matchRegexp:^(\D)?[0-9]']}
                 errorMessages={['Campo requerido', 'Teléfono celular invalido']}
               />
             </Grid>
-            <Grid item xs={6} sm={6}>
-              <span className={classes.estado}>Estado</span>
-              <FormControlLabel
-                control={
-                  <IOSSwitch
-                    checked={values.estado}
-                    onChange={cambiarEstado}
-                    value="estado"
-                  />
-                }
-                label="Activo"
-                labelPlacement="end"
-              />
-          </Grid>
             <Grid item xs={12} sm={6} container justify="center" spacing={2}>
               <ButtonGroup
                 variant="text"
                 size="large"
                 aria-label="large contained  button group"
               >
-                  <Button
-                    className={classes.buttonLeft}
-                    color="secondary"
-                    variant="contained"
-                    onClick={handleBtnClose}
-                  >
-                    Cancelar
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  onClick={handleBtnClose}
+                >
+                  Cancelar
                   </Button>
-                  <Button
-                    className={classes.buttonRight}
-                    label={"Registrar Usuario"}
-                    color="primary"
-                    variant="contained"
-                    type=" submit "
-                  >
-                    Guardar
+                <Button
+                  label={"Registrar Usuario"}
+                  color="primary"
+                  variant="contained"
+                  type=" submit "
+                >
+                  Guardar
                   </Button>
                 <Dialog
                   open={open}

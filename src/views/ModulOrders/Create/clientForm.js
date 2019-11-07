@@ -74,7 +74,7 @@ function clientNotExist() {
         <input
           value={''}
         />
-      </div>
+      </div>  
     <div className="email">
       <label htmlFor="email">Email</label>
       <input
@@ -100,19 +100,22 @@ export default function ClientForm(props) {
 
   const [seleccionado,setSeleccionado] = React.useState([]);
 
-  /*var customer = {
-    nombre:seleccionado.nombre,
-    apellido:seleccionado.apellido,
-    id:seleccionado.id,
-    email:seleccionado.email,
-    celular:seleccionado.celular,
-    localidad: seleccionado.localidad
-  }
-   console.log(customer);
-  */
-
   function setCustomerSeleccionado(e) {
-    sessionStorage.setItem('info_cliente_pedido',JSON.stringify(seleccionado));
+
+    var customer = {
+      id:seleccionado.id,
+      nombre:seleccionado.nombre,
+      apellido:seleccionado.apellido,
+      email:seleccionado.email,
+      celular:seleccionado.celular,
+      localidad: seleccionado.localidad,
+      calle:seleccionado.calle,
+      altura_calle:seleccionado.alturam,
+      rubro:seleccionado.rubro
+    }
+
+    //Almaceno informacion de cliente
+    sessionStorage.setItem('info_cliente_pedido',JSON.stringify(customer));
     
     setSeleccionado(e);
   }
