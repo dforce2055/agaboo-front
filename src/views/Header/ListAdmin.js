@@ -149,7 +149,7 @@ function ListAdmin(props){
       </ListItemIcon> 
     <ListItemText primary="Pedidos" />  
     {pedidos ? <ExpandLess /> : <ExpandMore />}      
-  </ListItem> 
+  </ListItem>
 
   <Collapse in={pedidos} timeout="auto" unmountOnExit> 
     <List component="div" disablePadding> 

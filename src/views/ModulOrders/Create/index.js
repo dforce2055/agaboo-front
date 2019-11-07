@@ -14,13 +14,13 @@ function CreateOrder(props) {
         return null
     }
 
+
     if (sessionStorage.userRole==="LOGISTICS"){ //si tiene rol de usuario de logistica
         alert('No tenes permiso para acceder a esta ventana')
         props.history.goBack();
     }
 
     return (
-        
         <div className="UsersScreen">
             <Navbar/>
             <Checkout/>

@@ -70,7 +70,7 @@ function ListLogistics(props){
         </List>
   {/* ******************************LISTA PEDIDOS********************************** */}
         <List component="div" disablePadding>
-        <ListItem button className={classes.nested} onClick ={ () => history.push('/pedidosListos')}>
+        <ListItem button onClick ={ () => history.push('/pedidosListos')}>
             <ListItemIcon>
             <DoneOtulineIcon/>
             </ListItemIcon>
