@@ -126,6 +126,24 @@ class CustomerController extends Component {
             console.log(error);
         }
     }
+
+    async getCustomerPagination(last_id){
+        if (!last_id) throw new Error(`Error: el ultimo id es obligatorio para poder paginar los clientes.`);
+        //Si NO llega cant, devuelvo los 10 siguientes
+        try {
+            let customer = await CustomerRepo.getCustomerPagination(last_id);            
+            console.log(`########### PAGINACIÓN -${last_id}- #################`);
+            if (customer) {
+                return customer;
+            } else {
+                console.log("No se pudo obtener e llistado de usuarios paginados");
+                
+                return false;
+            }
+        } catch (error) {
+            console.log("Error:", error);
+        }
+    }
     
     async addCustomer(data) {
         let newCustomer = data;
@@ -144,18 +162,6 @@ class CustomerController extends Component {
         }        
     }
 
-    async getCustomerCant10(e){
-        try {
-            let valor = CustomerRepo.getCustomerCant10(e);
-            console.log("Muestro valor en controllers:",valor);
-            
-            //return valor;            
-        } catch (error) {
-            console.error("Error en controller: ",error);
-            
-        }
-    }
-
     //Se utiliza en ModulOrders/SelectCustomer
     async getCustomerAll(){
         try {
@@ -163,7 +169,6 @@ class CustomerController extends Component {
             return valor;     
         } catch (error) {
             console.error("Error en controller: ",error);
-            
         }
     }
 }

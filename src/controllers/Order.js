@@ -21,6 +21,15 @@ class OrderController extends Component {
     }
   }
 
+  //Se utiliza en views/ModulOrders/Ready/ButtonOption.js
+  deleteOrder(id_pedido){
+    try {
+      OrderRepo.deleteOrder(id_pedido);
+    } catch (error) {
+      console.error("Error al eliminar un pedido.",error);
+    }
+  }
+
   saveOrderProductIds(id,list){
     try {
       //Paso el id y listado a repositories.
@@ -33,21 +42,11 @@ class OrderController extends Component {
 
   verifyProductExistence(id_producto){
     try {
-      var value = false;
-      OrderRepo.verifyProductExistence(id_producto).then(v=> {
-        console.log(v);
-       value = v
-       console.log(value);       
-      })
-      console.log(value);
-      
-      return value
+     return OrderRepo.verifyProductExistence(id_producto)
     } catch (error) {
       console.error("Error con el id del producto.");
-      
     }
   }
-
 }
 
 export default new OrderController();

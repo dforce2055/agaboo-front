@@ -107,7 +107,6 @@ class UserController extends Component {
         try {
             let users = await UserRepo.getUsersPagination(lastId, cant);
             console.log(`########### PAGINACIÓN -${cant}- #################`);
-            
             if (users) {
                 return users;
             } else {
