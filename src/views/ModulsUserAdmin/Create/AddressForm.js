@@ -231,15 +231,17 @@ function AddressForm(props) {
               aria-label="large contained secondary button group"
             >
                 <Button 
-                style={{background: 'linear-gradient(45deg, #f56f5b 10%, #f30b0b 97%)'}}
+                className={classes.buttonLeft}
+                color="secondary"
                 variant="contained"
                 onClick ={ () => history.goBack()}
                 >
                   Cancelar
                 </Button>
 
-                <Button 
-                style={{background: 'linear-gradient(45deg, #3fb5a5 2%, #3fb5a5 98%)'}}
+                <Button
+                className={classes.buttonRight} 
+                color="primary"
                 variant="contained"
                 type = " submit "
                 >

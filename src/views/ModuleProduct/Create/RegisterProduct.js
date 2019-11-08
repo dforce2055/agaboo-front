@@ -2,15 +2,39 @@ import React , { useEffect }from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import './ModuleProduct.css';
-import Button from './Button' ;
+// import Button from './Button' ;
+import { Button, ButtonGroup } from '@material-ui/core/';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid'
 import {withRouter} from 'react-router-dom' ;
 import Paper from '@material-ui/core/Paper';
 import ProductController from '../../../controllers/Product';
 
 
-
-
+const theme = createMuiTheme({
+  overrides: {
+    MuiButton: {
+      containedPrimary: {
+        backgroundColor: '#3fb5a5',
+        '&:hover': {
+          backgroundColor: '#0ce8ca',
+          "@media (hover: none)": {
+            backgroundColor: "#0ce8ca"
+          },
+        },
+      },
+      containedSecondary: {
+        backgroundColor: '#b53f3f',
+        '&:hover': {
+          backgroundColor: '#f30b0b',
+          "@media (hover: none)": {
+            backgroundColor: "#f30b0b"
+          },
+        },
+      },
+    },
+  }
+})
 
 const typeProduct = [
   {
@@ -53,7 +77,6 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexWrap: "wrap",
     border: "1px" ,
-   
   },
   paper: {
     padding: theme.spacing(1),
@@ -71,15 +94,20 @@ const useStyles = makeStyles(theme => ({
   menu: {
     width: 200,
   },
+  buttonLeft: {
+    marginRight:'2px',
+    marginLeft:'13px',
+    marginTop: theme.spacing(3),
+  },
+  buttonRight: {
+    marginLeft:'20px',
+    marginTop: theme.spacing(3),
+  },
 }));
 
 
  function ProductForm(props) {
-
   const {history} = props;
-
-
-
   const classes = useStyles();
   const [values, setValues] = React.useState({
     code: "",
@@ -122,10 +150,11 @@ const useStyles = makeStyles(theme => ({
 
   return (
       <div style={{marginTop:'20px'}}>
+      <MuiThemeProvider theme={theme}>
       <Paper className={classes.paper} > 
         <Grid container spacing = {1} justify = { "center" } className = { "grid"} >
           
-          <Grid item xs = {6} lg = {9}>
+          <Grid item xs = {12} sm = {6}>
               <h1 >Registro de productos</h1>
               <form className={classes.container} noValidate autoComplete="off" >
                 <Grid item xs = {12} alignItems = {"center"}  >
@@ -135,7 +164,7 @@ const useStyles = makeStyles(theme => ({
                     select
                     label="Producto"
                     className={classes.textField}
-                    value={values.typeProduct   }
+                    value={values.typeProduct}
                     
                     onChange={handleChange("typeProduct")}
                     SelectProps={{
@@ -210,13 +239,37 @@ const useStyles = makeStyles(theme => ({
                 
                 
             </form>
-              <Button type="submit" label ={"Registrar Producto"} onClick = { registerProduct } ></Button>
-              <Button label = {"Cancelar"} onClick ={ () => history.goBack()  } ></Button>
-          </Grid> 
+            <ButtonGroup
+                variant="text"
+                size="large"
+                aria-label="large contained  button group"
+            >
+               <Button
+                  className={classes.buttonLeft}
+                  color="secondary"
+                  variant="contained"
+                  onClick={ () => history.goBack()  }
+                >
+                  Cancelar
+                  </Button>
+                <Button
+                  className={classes.buttonRight}
+                  label={"Registrar Usuario"}
+                  color="primary"
+                  variant="contained"
+                  type=" submit "
+                  onClick = { registerProduct }
+                >
+                  Guardar
+                </Button>
+            </ButtonGroup>
+              {/* <Button type="submit" label ={"Registrar Producto"} onClick = { registerProduct } ></Button>
+              <Button label = {"Cancelar"} onClick ={ () => history.goBack()  } ></Button> */}
+          </Grid>
         </Grid>
      
       </Paper>
-        
+      </MuiThemeProvider>
       </div>
       
 
