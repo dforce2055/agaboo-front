@@ -7,7 +7,7 @@ import SimpleBottomNavigation from '../../Footer/Footer';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
-import StickyFooter from './StickyFooter';
+
 const theme = createMuiTheme({
     overrides:{
         MuiTypography:{
@@ -40,7 +40,7 @@ function DeleteOrder(props) {
                 <CustomizedTables/>
             </div>
             <footer>
-                <StickyFooter></StickyFooter>
+                <SimpleBottomNavigation></SimpleBottomNavigation>
             </footer>
             </MuiThemeProvider>
         </div>

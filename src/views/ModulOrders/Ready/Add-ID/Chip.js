@@ -2,8 +2,11 @@ import React from 'react'
 import ChipInput from 'material-ui-chip-input'
 import { Container } from '@material-ui/core';
 import OrderController from '../../../../controllers/Order';
+import SnackbarsSuccess from './SnackbarSuccess.js';
+import SnackbarsError from './SnackbarError.js';
 
 export default function Chip(props){
+  const[existProduct,setExistProduct] = React.useState(false);
   const {handleChange} = props;
   const {obj} = props;
   
@@ -20,17 +23,29 @@ export default function Chip(props){
    let auth = chip[chip.length-1] //Selecciono el ultimo dato introducido
 
     OrderController.verifyProductExistence(auth)
-    .then(result => console.log("estoy fron;:",result))
-    
+    .then(result => {setExistProduct(result) 
+      console.log(result);})
+    console.log("exist=",existProduct);
+
     handleChange(obj.producto,data); //Metodo para guardar el id en el listado del pedido id's
+  }
+
+  const handleExistProduct = () =>{
+    setExistProduct(false)
   }
 
  return (
   <div>
+  
+  <SnackbarsError
+    existProduct={existProduct}
+    handleExistProduct={handleExistProduct}
+  />
+  <SnackbarsSuccess
+  existProduct={existProduct}
+  handleExistProduct={handleExistProduct}/>
   <Container >
-
    <ChipInput
-    color='primary'
     variant="outlined"
     onChange = { ( chips ) => guardarObj ( chips ) } 
   />

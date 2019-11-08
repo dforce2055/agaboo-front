@@ -3,26 +3,47 @@ Su implementacion es para saber donde esta y para que sirve cada instancia del m
 
 sessionStorage:
   - arreglo_productos = {
+
       Ubicacion: views/ModulOrders/Create/OrderDetail/TableProduct
+
       Descripcion: Arreglo de productos con la cantidad de productos. Se utilizara para guardar en el pedido completo.
+
+      Instanciado en:
   }
 
   - info_cliente_pedido = {
+
     Ubicacion : views/ModulOrders/Create/OrderDetail/clientForm.js
+
     Descripcion: Almacena la informacion del cliente que se realizo el pedido. Se utilizara al momento de guardar la informacion del cliente en la base de datos, con la informacion del cliente.
+
+    Instanciado en: 
+
   }
 
   - info_detalle_pedido = {
+
     Ubicacion : views/ModulOrders/Create/OrderDetail/createOrder.js
+
     Descripcion: Almacena la informacion de detalle del pedido. Se utilizara al momento de guardar la informacion del pedido detalle en la base de datos, asociado al pedido.
+
+    Instanciado en: 
+
   }
 
   - pedido = {
     Ubicacion: views/ModulOrders/Ready/ButtonOption.js
+
     Descripcion: Informacion que le brinda el componente " OrdersTable2.js ". Es el id del pedido que fue seleccionado en la tabla. Instanciado en el componente " ProductListOrder.js ".
+
+    Instanciado en: 
   }
 
   - listado_producto = {
+    
     Ubicacion: views/ModulOrders/Ready/ButtonOption.js
+
     Descripcion: Se utiliza para traer la informacion de la cantidad de productos que tiene un pedido y poder mapearlo en el componente "ProductListOrder.js".
+
+    Instanciado en: 
   }

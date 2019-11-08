@@ -37,13 +37,7 @@ import userController from '../../controllers/User';
   import BallotIcon from '@material-ui/icons/Ballot';
   //ICONOS DE STOCK
   import LocalShippingIcon from '@material-ui/icons/LocalShipping';
-  import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
   import AssignmentIcon from '@material-ui/icons/Assignment';
-  import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
-  //ICONOS PEDIDOS
-  import DoneOtulineIcon from '@material-ui/icons/DoneOutline';
-  import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-  import ArchiveIcon from '@material-ui/icons/Archive';
   //ICONOS DE ESTADOS DE CUENTA
   import LocalAtmIcon from '@material-ui/icons/LocalAtm';
   //ICONOS DE MANTENIMIENTO
@@ -170,12 +164,9 @@ function Navbar(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const {history} = props;
-  let userEmail = firebase.getCurrentEmail();
 
   const [visible, setVisible] = React.useState(false);
   const [productos, setProductos] = React.useState(false);
-  const [stock, setStock] = React.useState(false);
-  const [pedidos, setPedidos] = React.useState(false);
   /*Hook que permite en clases Function utilizar 
     state y cambiar su estado. Es decir el visible es el estado y 
     el setVisible es sinonimo de this.setState*/
@@ -187,15 +178,6 @@ function Navbar(props) {
   function handleClickProductos() { 
     setProductos(!productos);
   }
-
-  function handleClickStock() { 
-    setStock(!stock);
-  }
-
-  function handleClickPedidos() { 
-    setPedidos(!pedidos);
-  }
-
   function handleDrawerOpen() {
     setOpen(true);
   }
@@ -382,46 +364,24 @@ function Navbar(props) {
 
       </List>  Es posible que quede afuera
     */} 
-{/* *********************************** LISTA PEDIDOS ****************************************** */}
-      <List>
-        <ListItem button onClick={handleClickPedidos}> 
-          <ListItemIcon>      
-          <LocalShippingIcon/>
-          </ListItemIcon> 
-        <ListItemText primary="Pedidos" />  
-        {pedidos ? <ExpandLess /> : <ExpandMore />}      
-      </ListItem> 
+{/* ***********************************PEDIDOS ****************************************** */}
+        <List>
+            <ListItem button onClick={() => history.push('/pedidosListos')}>
+              <ListItemIcon>
+                <LocalShippingIcon />
+              </ListItemIcon>
+              <ListItemText primary="Pedidos" />
+            </ListItem>
+          </List>
 
-      <Collapse in={pedidos} timeout="auto" unmountOnExit> 
-        <List component="div" disablePadding> 
-          <ListItem button className={classes.nested} onClick ={ () => history.push('/registrarPedido')}> 
-            <ListItemIcon>
-              <ArchiveIcon />
-            </ListItemIcon>
-            <ListItemText primary="Registrar pedido"/>
-          </ListItem>
-        </List>
-
-        <List component="div" disablePadding>
+          {/*<List component="div" disablePadding>
           <ListItem button className={classes.nested} onClick ={ () => history.push('/eliminarPedidos')}>
             <ListItemIcon>
-              <DeleteOutlineIcon/>
             </ListItemIcon>
             <ListItemText primary="Eliminar pedido" />
           </ListItem>
-        </List>
+        </List>*/}
 
-        <List component="div" disablePadding>
-          <ListItem button className={classes.nested} onClick ={ () => history.push('/pedidosListos')}>
-            <ListItemIcon>
-              <DoneOtulineIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Pedidos listos" />
-          </ListItem>
-        </List>
-      </Collapse>
-
-      </List>
 {/* *********************************** LISTA ESTADO DE CUENTA ****************************************** */}
       <List>
         <ListItem button> 

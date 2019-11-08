@@ -1,7 +1,7 @@
 import React from 'react';
 import './OrderReady.css';
 import Navbar from '../../Header/Navigation'
-import EnhancedTable from './OrdersTable2';
+import EnhancedTable from './OrdersTable';
 import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
 import SimpleBottomNavigation from '../../Footer/Footer';

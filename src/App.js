@@ -25,7 +25,7 @@ import firebase from '../src/config/firebase';
 import LoaderScreen from './views/LoaderScreen/LoaderScreen';
 
 
-import CustomizedTables from './views/ModulOrders/Ready/addIdOrder/ProductListOrder';
+import CustomizedTables from './views/ModulOrders/Ready/Add-ID/ProductListOrder';
 
 const theme = createMuiTheme();
 
