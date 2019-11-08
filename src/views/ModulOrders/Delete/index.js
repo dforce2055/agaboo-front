@@ -27,7 +27,7 @@ function DeleteOrder(props) {
         return null
     }
 
-    if (sessionStorage.userRole==="LOGISTICS"){ //si tiene rol de usuario de logistica
+    if (localStorage.userRole==="LOGISTICS"){ //si tiene rol de usuario de logistica
         alert('No tenes permiso para acceder a esta ventana')
         props.history.goBack();
     }

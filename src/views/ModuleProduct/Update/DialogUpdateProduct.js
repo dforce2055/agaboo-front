@@ -15,10 +15,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 
 
 const useStyles = makeStyles(theme => ({
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1)
-      },
+    
     }));
 
 

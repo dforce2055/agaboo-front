@@ -62,9 +62,6 @@ const useStyles = makeStyles(theme => ({
       },
     },
   },
-  
-  
-
 }));
 
  function CustomizedTables(props) {
@@ -123,9 +120,9 @@ const useStyles = makeStyles(theme => ({
             <Table className={classes.table}>
                 <TableHead>
                 <TableRow>
-                    <StyledTableCell align= "justyfy">Producto</StyledTableCell>
+                    <StyledTableCell align= "justify">Producto</StyledTableCell>
                     {/* <StyledTableCell align="justyfy">Estado</StyledTableCell> */}
-                    <StyledTableCell align="justyfy">Cantidad</StyledTableCell>
+                    <StyledTableCell align="justify">Cantidad</StyledTableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>
@@ -136,7 +133,7 @@ const useStyles = makeStyles(theme => ({
                       {row.product}
                     </StyledTableCell>
                     {/* <StyledTableCell align="justyfy">{row.value}</StyledTableCell> */}
-                    <StyledTableCell align="justyfy">{row.count}</StyledTableCell>
+                    <StyledTableCell align="justify">{row.count}</StyledTableCell>
                     </StyledTableRow>
                 ))}
                 </TableBody>

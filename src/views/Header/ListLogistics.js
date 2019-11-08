@@ -36,39 +36,16 @@ function ListLogistics(props){
     return(
         <>
         {console.log("lista logistics")}
-        {/* ******************************LISTA PRODUCTOS********************************** */}
-        <List>
+    {/* ******************************LISTA PRODUCTOS********************************** */}
+    <List>
         <ListItem button onClick={handleClickProductos}>
-            <ListItemIcon>
-            <StoreIcon/>
-            </ListItemIcon>
-        <ListItemText primary="Productos" /> 
-        {productos ? <ExpandLess /> : <ExpandMore />}     
-        </ListItem> 
-
-        <Collapse in={productos} timeout="auto" unmountOnExit> 
-        
-        <List component="div" disablePadding>
-            <ListItem button className={classes.nested} onClick ={ () => history.push('/stock')}>
-            <ListItemIcon >
-                <AssignmentIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Stock" />
-            </ListItem>
-        </List>
-        <List component="div" disablePadding>
-            <ListItem button className={classes.nested} onClick ={ () => history.push('/tableProduct')}>
-            <ListItemIcon >
-                <BallotIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Modificar/Eliminar Productos"  />
-            </ListItem>
-        </List>
-
-        </Collapse>
-
-        </List>
-  {/* ******************************LISTA PEDIDOS********************************** */}
+        <ListItemIcon>         
+            <StoreIcon/> 
+        </ListItemIcon>
+        <ListItemText primary="Productos" onClick ={ () => history.push('/tableProduct')} /> 
+        </ListItem>
+    </List>
+    {/* ******************************LISTA PEDIDOS********************************** */}
         <List component="div" disablePadding>
         <ListItem button onClick ={ () => history.push('/pedidosListos')}>
             <ListItemIcon>
@@ -79,7 +56,7 @@ function ListLogistics(props){
         </List>
     {/* ******************************LISTA MANTENIMIENTOS A REALIZAR********************************** */}
     <List>
-    <ListItem button> 
+    <ListItem button>
         <ListItemIcon>      
         <BuildIcon/>
         </ListItemIcon> 

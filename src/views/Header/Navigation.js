@@ -147,7 +147,7 @@ function Navbar(props) {
   }
 
   function checkRoleAdmin(){
-    let role = sessionStorage.userRole; //me guardo el rol del usuario
+    let role = localStorage.userRole; //me guardo el rol del usuario
     console.log("rol de usuario: ",role);
 
     if(role==="ADMIN"){

@@ -68,7 +68,7 @@ function SimpleBottomNavigation(props) {
   async function logOut(){
     try {
         await firebase.logout();
-        sessionStorage.removeItem('userRole')
+        localStorage.removeItem('userRole')
         props.history.replace('/');
     } catch (error) {
         alert(error.message)

@@ -82,7 +82,6 @@ function useIndexUpdateProduct(props) {
                                 setValue = {setValue}
                             />
                     </Paper>
-                        
                 </Grid>
             </Grid>
             <footer>
