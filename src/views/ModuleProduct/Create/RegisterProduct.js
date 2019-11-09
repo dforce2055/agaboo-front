@@ -86,7 +86,9 @@ const useStyles = makeStyles(theme => ({
   },
   textField: {
     marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    width : 194 
+    
   },
   dense: {
     marginTop: theme.spacing(2)
@@ -103,6 +105,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft:'20px',
     marginTop: theme.spacing(3),
   },
+
 }));
 
 
