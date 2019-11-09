@@ -8,7 +8,7 @@ sessionStorage:
 
       Descripcion: Arreglo de productos con la cantidad de productos. Se utilizara para guardar en el pedido completo.
 
-      Instanciado en:
+      Llamado en: views/ModulOrders/Create/createOrderFinal.js
   }
 
   - info_cliente_pedido = {
@@ -17,7 +17,7 @@ sessionStorage:
 
     Descripcion: Almacena la informacion del cliente que se realizo el pedido. Se utilizara al momento de guardar la informacion del cliente en la base de datos, con la informacion del cliente.
 
-    Instanciado en: 
+    Llamado en: views/ModulOrders/Create/createOrderFinal.js
 
   }
 
@@ -27,7 +27,7 @@ sessionStorage:
 
     Descripcion: Almacena la informacion de detalle del pedido. Se utilizara al momento de guardar la informacion del pedido detalle en la base de datos, asociado al pedido.
 
-    Instanciado en: 
+    Llamado en: views/ModulOrders/Create/createOrderFinal.js
 
   }
 
@@ -36,7 +36,7 @@ sessionStorage:
 
     Descripcion: Informacion que le brinda el componente " OrdersTable2.js ". Es el id del pedido que fue seleccionado en la tabla. Instanciado en el componente " ProductListOrder.js ".
 
-    Instanciado en: 
+    Llamado en: 
   }
 
   - listado_producto = {
@@ -45,5 +45,13 @@ sessionStorage:
 
     Descripcion: Se utiliza para traer la informacion de la cantidad de productos que tiene un pedido y poder mapearlo en el componente "ProductListOrder.js".
 
-    Instanciado en: 
+    Llamado en: views/ModulOrders/Create/createOrderFinal.js
+  }
+
+  - monto_calculado = {
+    Ubicacion: views/ModulOrders/Create/FinalPartOrdered/Review
+
+    Descripcion: Es el monto calculado, al momento de agregar produtos por cantidad. Es un valor aproximado de lo que podria valer la factura.
+
+    Llamado en: views/ModulOrders/Create/createOrderFinal.js
   }

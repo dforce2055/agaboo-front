@@ -46,7 +46,7 @@ export default function App() {
                 <Route path= "/mainMenu" component={MainMenu} />
                 <Route path="/registrar-usuario" component={CreateUserAdmOK} />
                 <Route path="/usuarios" component={ListUsers} />
-                <Route path= "/bmUsers" component={DeleteUpdateUserAdmin} />
+                <Route path= "/tablaClientes" component={DeleteUpdateUserAdmin} />
                 <Route path= "/registrarCliente" component={CreateUserAdm} />
                 <Route path= "/createProduct" component={indexCreateProduct} />
                 <Route path= "/tableProduct" component= {indexUpdateProduct}/>

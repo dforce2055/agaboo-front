@@ -69,35 +69,16 @@ function ListAdmin(props){
           <ListItemText primary="Usuarios" />
         </ListItem>
       </List>
+
       {/* //******************************LISTA CLIENTES********************************** */}
       <List>
-      <ListItem button onClick={handleClick}>
-        <ListItemIcon>         
+        <ListItem button onClick={() => history.push('/tablaClientes')}>
+          <ListItemIcon>
             <PeopleIcon />
-        </ListItemIcon>
-      <ListItemText primary="Clientes" />
-      {visible ? <ExpandLess /> : <ExpandMore />}      
-      </ListItem> 
-    <Collapse in={visible} timeout="auto" unmountOnExit> 
-      <List component="div" disablePadding>
-        <ListItem button className={classes.nested} onClick ={ () => history.push('/registrarCliente')}>
-          <ListItemIcon>
-            <GroupAddIcon />
           </ListItemIcon>
-          <ListItemText primary="Crear Cliente"/>
+          <ListItemText primary="Clientes" />
         </ListItem>
       </List>
-      
-      <List component="div" disablePadding>
-        <ListItem button className={classes.nested} onClick ={ () => history.push('/bmUsers')}>
-          <ListItemIcon>
-            <ContactsIcon/>
-          </ListItemIcon>
-          <ListItemText primary="Modificar/Eliminar Clientes" />
-        </ListItem>
-      </List>
-    </Collapse>
-  </List>
   {/* //******************************LISTA PRODUCTOS********************************** */}
   {/* <List>
   <ListItem button onClick={handleClickProductos}>

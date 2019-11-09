@@ -35,11 +35,23 @@ export default function Review() {
     { name: 'Ubicacion de entrega: ', detail: detalle_pedido.ubicacionDeEntrega },
   ];
 
+  const [valueTotal,setValueTotal] = React.useState();
   React.useEffect(()=>{
     if(cliente !== null){
       console.log("MUESTRO cliente: ",cliente);
       console.log("MUESTRO detalle_pedido: ",detalle_pedido);
       console.log("MUESTRO listado_producto: ",listado_producto);
+      let cantidad = 0;
+      let valor = 0;
+      let total = 0;
+
+      listado_producto.forEach(element => {
+        cantidad = element.cantidad;
+        valor = element.precio_X_unidad;
+        total += (cantidad*valor);
+      });
+      setValueTotal(total)
+      sessionStorage.setItem('monto_calculado',valueTotal) //Guardo el valor calculado, para poder guardarlo en el pedido.
     }
     /*if (cliente !== null || detalle_pedido == null || listado_producto === null) {
       payments = [
@@ -60,13 +72,16 @@ export default function Review() {
         {listado_producto.map(product => (
           <ListItem className={classes.listItem} key={product.id_producto}>
             <ListItemText primary={product.producto} secondary={product.modelo} />
-            <Typography variant="body2">{product.cantidad}</Typography>
+            <Typography 
+            variant="body2">
+              {"Precio/u= $"+product.precio_X_unidad+".  "+"        Unidades="+product.cantidad}
+            </Typography>
           </ListItem>
         ))}
         <ListItem className={classes.listItem}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" className={classes.total}>
-            $ MOSTRAR UN VALOR APROXIMADO
+          ${valueTotal} {/*Muestro valor calculado*/} 
           </Typography>
         </ListItem>
       </List>
