@@ -133,6 +133,7 @@ function Checkout(props) {
       ciudad:detalle_pedido.ciudad,
       direccion:detalle_pedido.ubicacionDeEntrega,
       celular:cliente.celular,
+      eliminado:false
     };   
 
     //Guardo la informacion del pedido en firestore.
