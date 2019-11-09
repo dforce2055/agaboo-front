@@ -28,6 +28,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import AsynchronousSearch from '../Search/Autocomplete';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const theme = createMuiTheme({
   overrides: {
@@ -73,16 +75,31 @@ const theme = createMuiTheme({
 
 
 const useStyles = makeStyles(theme => ({
+  titulo: {
+    margin: theme.spacing(3),
+    color: 'rgba(0, 0, 0, .6)',
+  },
   seeMore: {
-    marginTop: theme.spacing(3),
+    margin: '0 auto',
+    marginBottom: '10vw',
+  },
+  loading: {
+    bottom: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'aquamarine'
   },
   typography: {
     padding: theme.spacing(2),
   },
   fab: {
     position: 'fixed',
-    bottom: theme.spacing(12),
-    right: theme.spacing(7),
+    bottom: theme.spacing(9),
+    right: theme.spacing(4),
     zIndex: 99,
     backgroundColor: '#3fb5a5',
     '&:hover': {
@@ -103,7 +120,7 @@ function UsersTable(props) {
 
   //Avisa un cambio
   const [stateArray,setStateArray] = React.useState(false);
-  
+  const [loading,setLoading] = React.useState(true);
   const [moreUsers,setMoreUsers] = React.useState(false);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -132,11 +149,13 @@ function UsersTable(props) {
     if(stateArray){
       let usersBack = usuarios;
       let lastUser = usersBack[usersBack.length - 1];
+      setLoading(true);
 
       UserController.getUsersActivePagination(lastUser.email, 5)
         .then(moreUsers => {
           if (moreUsers == false) {
             console.log("No hay más usuarios");
+            setLoading(false);
             return;
           }
           
@@ -149,6 +168,7 @@ function UsersTable(props) {
           
           setMoreUsers(false);
           setStateArray(false); //Finalizo el cambio
+          setLoading(false);
         }).catch(error => {
           console.log("Error al traer el usuarios: ", error);
         })
@@ -157,6 +177,7 @@ function UsersTable(props) {
       UserController.getActiveUsers(5)
           .then(value => {
             setUsuarios(value);
+            setLoading(false);
           })
           .catch(error => {
             console.log("Error al traer los usuarios => ", error);
@@ -170,48 +191,56 @@ function UsersTable(props) {
   
   return (
     <MuiThemeProvider theme={theme}>
-      <React.Fragment >
-          <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrar-usuario')} >
-            <AddIcon />
-          </Fab>      
-        <Grid item xs={12} md={12}>
-          <List className={classes.root}>
-            {usuarios.map(usuario => (
-                <ListItem key={usuario.email}>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <WorkIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <Grid item xs zeroMinWidth>
-                    <ListItemText primary={usuario.nombre +' ' +usuario.apellido} secondary={usuario.email} />
-                    <Typography noWrap></Typography>
-                  </Grid>
-                  <Grid>
-                    <Tooltip title="Editar" placement="top">
-                      <IconButton
-                        edge="start"
-                        size="small"
-                        color="primary"
-                        aria-describedby={id}
-                        variant="contained"
-                        onClick={selectUser(usuario)}
-                      >
-                        <MoreVertIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </Grid>
-                </ListItem>
-            ))}
-          </List>
-        </Grid>
-        <div className={classes.seeMore}>
-          
-          <Link color="primary" onClick={getMoreUsers}>
-            Ver más usuarios
-          </Link>
-        </div>
-        <div>
+      <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrar-usuario')} >
+        <AddIcon />
+      </Fab>
+      <Grid item xs={12} md={9} lg={9}>
+        <Typography variant="h4" className={classes.titulo}>Usuarios</Typography>
+      </Grid>
+      <Grid item xs={12} md={9} lg={9}>
+        <AsynchronousSearch usuarios={usuarios} setUsuarios={setUsuarios} updateStateArray={updateStateArray}/>
+      </Grid>
+      <Grid item xs={12} md={9} lg={9}>
+        <List className={classes.root}>
+          {usuarios.map(usuario => (
+              <ListItem key={usuario.email}>
+                <ListItemAvatar>
+                  <Avatar>
+                    <WorkIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <Grid item xs zeroMinWidth>
+                  <ListItemText primary={usuario.nombre +' ' +usuario.apellido} secondary={usuario.email} />
+                  <Typography noWrap></Typography>
+                </Grid>
+                <Grid>
+                  <Tooltip title="Editar" placement="top">
+                    <IconButton
+                      edge="start"
+                      size="small"
+                      color="primary"
+                      aria-describedby={id}
+                      variant="contained"
+                      onClick={selectUser(usuario)}
+                    >
+                      <MoreVertIcon />
+                    </IconButton>
+                  </Tooltip>
+                </Grid>
+              </ListItem>
+          ))}
+          <Grid item xs={12} md={12} lg={12} className={classes.loading}>
+            {loading ? (
+              <CircularProgress color="inherit" size={40} />
+            ) : null}
+          </Grid>
+          <ListItem>
+            <Link color="primary" onClick={getMoreUsers} className={classes.seeMore}>
+              Ver más usuarios
+            </Link>
+          </ListItem>
+        </List>
+        <Grid item xs={12} md={9} lg={9}>
           <Popover
             id={id}
             open={open}
@@ -226,24 +255,21 @@ function UsersTable(props) {
               horizontal: 'left',
             }}
           >
-            <Typography className={classes.typography}>
-                <ViewUser
-                  updateStateArray={updateStateArray}
-                  usuario={usuarioSeleccionado}
-                  />
-                <UpdateUser
-                  updateStateArray={updateStateArray}
-                  usuario={usuarioSeleccionado}
-                  />
-                <DeleteUser
-                  updateStateArray={updateStateArray}
-                  usuario={usuarioSeleccionado}
+            <ViewUser
+              updateStateArray={updateStateArray}
+              usuario={usuarioSeleccionado}
               />
-              
-            </Typography>
-          </Popover>
-        </div>
-      </React.Fragment>
+            <UpdateUser
+              updateStateArray={updateStateArray}
+              usuario={usuarioSeleccionado}
+              />
+            <DeleteUser
+              updateStateArray={updateStateArray}
+              usuario={usuarioSeleccionado}
+          />
+        </Popover>
+        </Grid>
+    </Grid>
     </MuiThemeProvider>
   );
 }

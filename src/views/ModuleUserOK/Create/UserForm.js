@@ -157,14 +157,14 @@ const documentos = [
     value: 'Pasaporte',
     label: 'Pasaporte',
   },
-  {
+  /*{
     value: 'L.E.',
     label: 'Libreta de Enrolamiento',
   },
   {
     value: 'L.C.',
     label: 'Libreta Cívica',
-  },
+  },*/
   {
     value: 'CUIT',
     label: 'CUIT',

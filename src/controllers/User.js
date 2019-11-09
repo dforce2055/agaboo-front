@@ -19,7 +19,7 @@ class UserController extends Component {
 
 
     addUser = async (data) => {
-        if (!data || !data.email || !data.numeroDocumento || !data.tipoDocumento) throw new Error(`Error: el email, tipo y número de documento son obligatorios para registrar un cliente`);
+        if (!data || !data.email || !data.numeroDocumento || !data.tipoDocumento) throw new Error(`Error: el email, tipo y número de documento son obligatorios para registrar un usuario`);
         try {
             let newUser = new User();
             newUser = Object.assign({}, data); //Utilizo Object.assign para mapear el objeto
@@ -100,7 +100,7 @@ class UserController extends Component {
     }
 
     getUsersPagination = async (lastId, cant) => {        
-        if (!lastId) throw new Error(`Error: el email es obligatorio para poder buscar a los siguientes clientes`);
+        if (!lastId) throw new Error(`Error: el email es obligatorio para poder buscar a los siguientes usuarios`);
         //Si NO llega cant, devuelvo los 10 siguientes
         if (!cant) cant = 10; 
 
@@ -120,7 +120,7 @@ class UserController extends Component {
     }
 
     getUsersActivePagination = async (lastId, cant) => {
-        if (!lastId) throw new Error(`Error: el email es obligatorio para poder buscar a los siguientes clientes`);
+        if (!lastId) throw new Error(`Error: el email es obligatorio para poder buscar a los siguientes usuarios`);
         //Si NO llega cant, devuelvo los 10 siguientes
         if (!cant) cant = 10;
 
@@ -140,8 +140,29 @@ class UserController extends Component {
         }
     }
 
+    searchUsersActive = async (search, cant) => {
+        if (!search) throw new Error(`Error: el "Parametro" de busqueda es obligatorio para poder buscar los usuario`);
+        //Si NO llega cant, devuelvo los 10 siguientes
+        if (!cant) cant = 10;
+
+        try {
+            let users = await UserRepo.searchUsersActive(search, cant);
+            console.log(`########### PAGINACIÓN -${cant}- #################`);
+
+            if (users) {
+                return users;
+            } else {
+                console.log("No se pudo obtener el listado de usuarios buscados");
+                return false;
+            }
+
+        } catch (error) {
+            console.log("Error:", error);
+        }
+    }
+
     editUser = async (data) => {       
-        if (!data || !data.email || !data.numeroDocumento) throw new Error(`Error: el email, tipo y número de documento son obligatorios para Editar/Registar un cliente`);
+        if (!data || !data.email || !data.numeroDocumento) throw new Error(`Error: el email, tipo y número de documento son obligatorios para Editar/Registar un usuario`);
         try {
             let user = new User();
             user = Object.assign({}, data); //Utilizo Object.assign para mapear el objeto
@@ -160,7 +181,7 @@ class UserController extends Component {
     }
 
     deleteUser = async (data) => {
-        if (!data.email) throw new Error(`Error: el email es obligatorio para eliminar un cliente`);
+        if (!data.email) throw new Error(`Error: el email es obligatorio para eliminar un usuario`);
         try {
             const result = await UserRepo.deleteUser(data.email);
 
