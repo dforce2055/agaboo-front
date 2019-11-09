@@ -4,6 +4,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 //AGREGADO
 import Fab from '@material-ui/core/Fab';
@@ -45,6 +46,7 @@ export default function CustomizedSelects(props) {
     <Fab 
       size="small" 
       aria-label="add" 
+      color="primary"
       className={classes.fab}
       onClick={addArrayProduct}
     ><AddIcon />
@@ -53,7 +55,7 @@ export default function CustomizedSelects(props) {
 
       <FormControl className={classes.margin}>    
         <Select
-          value={cant_prodt_select.producto}
+          value={cant_prodt_select.producto} //Muestra el valor en los select
           onChange={handleChange('producto')}
           input={<Input 
            type="text"/>}
@@ -78,8 +80,22 @@ export default function CustomizedSelects(props) {
       <TextField 
       style={{width:'100px'}}
       type="number"
+      value={cant_prodt_select.cantidad}
       placeholder="Cant."
       onChange={handleChange('cantidad')}
+      />
+      </FormControl>
+
+      <FormControl className={classes.margin}>
+      <TextField 
+      style={{width:'100px'}}
+      type="number"
+      value={cant_prodt_select.precio_X_unidad}
+      placeholder="Valor/u"
+      onChange={handleChange('precio_X_unidad')}
+      InputProps={{
+            startAdornment: <InputAdornment position="start">$</InputAdornment>,
+          }}
       />
       </FormControl>
 

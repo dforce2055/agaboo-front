@@ -12,13 +12,15 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import ResponsiveDialog from './ConfirmDialog';
-
-//Import clases de db
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import { withRouter } from "react-router-dom";
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+
+//Import componentes
 import OrderController from '../../../controllers/Order';
 import SimpleMenu from './ButtonOption.js';
 
@@ -29,14 +31,6 @@ const theme = createMuiTheme({ /* Plantilla de edicion */
         color:'#19a952',
       },
     },
-    MuiCheckbox:{
-        colorSecondary: {
-          color: '#42cfd6',
-          '&$checked': {
-            color: '#42cfd6',
-          },
-        }
-      },
     MuiTablePagination: {
       actions:{
         marginLeft:'0px',
@@ -86,11 +80,10 @@ const headCells = [
   { id: 'fechaEntrega', numeric: true, disablePadding: false, label: 'Fecha de entrega' },  
   { id: 'ciudad', numeric: false, disablePadding: false, label: 'Ciudad' },
   { id: 'direccion', numeric: false, disablePadding: false, label: 'Dirección' },
-  /**/
 ];
 
 function EnhancedTableHead(props) {
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+  const { classes, order, orderBy, onRequestSort } = props;
   const createSortHandler = property => event => {
     onRequestSort(event, property);
   };  
@@ -98,14 +91,6 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          />
-        </TableCell>
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
@@ -237,8 +222,22 @@ const useStyles = makeStyles(theme => ({
     top: 20,
     width: 1,
   },
+  fab: {
+    position: 'fixed',
+    bottom: theme.spacing(12),
+    right: theme.spacing(7),
+    zIndex: 99,
+    backgroundColor: '#3fb5a5',
+    '&:hover': {
+      backgroundColor: '#0ce8ca',
+      "@media (hover: none)": {
+        backgroundColor: "#0ce8ca"
+      },
+    },
+  },
 }));
-export default function EnhancedTable() {
+
+function EnhancedTable(props) {
   
   React.useEffect(()=>{
     if (a) {      
@@ -260,8 +259,9 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const {history} = props
 
-  function handleRequestSort(event, property) {
+  function handleRequestSort(property) {
     const isDesc = orderBy === property && order === 'desc';
     setOrder(isDesc ? 'asc' : 'desc');
     setOrderBy(property);
@@ -276,28 +276,7 @@ export default function EnhancedTable() {
     setSelected([]);
   }
 
-
-  function handleClick(event, nombre) {
-    const selectedIndex = selected.indexOf(nombre);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, nombre);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-
-    setSelected(newSelected);
-  }
-
-  function handleChangePage(event, newPage) {
+  function handleChangePage(newPage) {
     setPage(newPage);
   }
 
@@ -312,6 +291,11 @@ export default function EnhancedTable() {
 
   return (
     <MuiThemeProvider theme={theme}>
+
+    <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarPedido')} >
+          <AddIcon />
+        </Fab>   
+
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selected.length} />
@@ -345,21 +329,13 @@ export default function EnhancedTable() {
                       key={row.id}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          onClick={event => handleClick(event, row.cliente.id)}
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                        />
-                      </TableCell>
-
                       <TableCell>
-                      {/*Paso listado_productos por props, asi lo puede recibir la clase ButtonOption*/}
+                      {/*Paso listado_productos por props, asi lo puede recibir la clase ButtonOption el cual contiene las opciones que se utilizaran al hacer click en el icono MoreHorizIcon(los tres puntos)*/}
                       <SimpleMenu 
                       //Paso observer
                       setA={setA}
                       listado_producto = {row.listado_producto} //Listado producto entero
-                      id_pedido={row.id_pedido} //Id del pedido seleccionado de la tabla mapeada
+                      id_pedido={row.id_pedido} //Id del pedido seleccionado
                       />      
                       </TableCell>
 
@@ -370,7 +346,6 @@ export default function EnhancedTable() {
                       <TableCell align="right">{row.fechaEntrega}</TableCell>
                       <TableCell align="right">{row.ciudad}</TableCell>
                       <TableCell align="right">{row.direccion}</TableCell>
-                      {/*<TableCell align="right">{row.celular}</TableCell>*/}
                     </TableRow>
                   );
                 })}
@@ -405,3 +380,5 @@ export default function EnhancedTable() {
     </MuiThemeProvider>
   );
 }
+
+export default withRouter(EnhancedTable);

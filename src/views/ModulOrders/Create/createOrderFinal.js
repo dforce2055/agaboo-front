@@ -11,7 +11,7 @@ import PaymentForm from './orderForm';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
 //AGREGADO 
-import Review from './Review.js';
+import Review from './FinalPartOrdered/Review';
 import OrderController from '../../../controllers/Order.js';
 
 const theme = createMuiTheme({ /* Plantilla de edicion */
@@ -118,12 +118,15 @@ function Checkout(props) {
     var listado_producto= JSON.parse(sessionStorage.getItem('arreglo_productos'));
     var detalle_pedido; 
     detalle_pedido=JSON.parse(sessionStorage.getItem('info_detalle_pedido'));
+    var monto_calculado = JSON.parse(sessionStorage.getItem('monto_calculado'))
 
-    //Almaceno todos los datos guardados en sessionStorage en un mismo archivo para guardarlo en firestore. 
+
+    //Almaceno todos los datos guardados en sessionStorage en un mismo archivo para guardarlo en firestore como un pedido completo. 
     var data ={
       cliente,
       listado_producto,
       detalle_pedido,
+      monto_calculado,
       fechaEntrega:detalle_pedido.fechaDeEntregaPedido,
       nombre:cliente.nombre+' '+cliente.apellido,
       id_cliente:cliente.id,

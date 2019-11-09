@@ -6,6 +6,10 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Fab from '@material-ui/core/Fab';
+import { withRouter } from "react-router-dom";
+import AddIcon from '@material-ui/icons/Add';
+
 
 //Agrego imports
 import CustomerController from '../../../../controllers/Customer';
@@ -23,9 +27,22 @@ const useStyles = makeStyles(theme => ({
   root: {
     marginBottom: theme.spacing(3),
   },
+  fab: {
+    position: 'fixed',
+    bottom: theme.spacing(12),
+    right: theme.spacing(7),
+    zIndex: 99,
+    backgroundColor: '#3fb5a5',
+    '&:hover': {
+      backgroundColor: '#0ce8ca',
+      "@media (hover: none)": {
+        backgroundColor: "#0ce8ca"
+      },
+    },
+  },
 }));
 
-export default function ClientTable() {
+function ClientTable(props) {
 
   React.useEffect(()=>{
     //Si se realizo un cambio
@@ -71,6 +88,7 @@ export default function ClientTable() {
       }      
     });
 
+  const {history} = props;
   function updateStateArray(){
     setStateArray(true)
   }
@@ -126,6 +144,11 @@ export default function ClientTable() {
 
   return (
     <React.Fragment>
+    
+    <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarCliente')} >
+      <AddIcon />
+    </Fab>
+
     <TextField
         onKeyUp={ 
           event =>{
@@ -239,3 +262,5 @@ export default function ClientTable() {
     </React.Fragment>
   );
 }
+
+export default withRouter(ClientTable);

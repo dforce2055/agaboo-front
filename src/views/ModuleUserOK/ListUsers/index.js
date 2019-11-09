@@ -13,7 +13,12 @@ function DeleteUpdateUserAdmin(props) {
         alert('Por favor inicie sesión para acceder')
         props.history.replace('/login')
         return null
-      }
+    }
+
+    if (localStorage.userRole==="LOGISTICS"){ //si tiene rol de usuario de logistica
+      alert('No tenes permiso para acceder a esta ventana')
+      props.history.goBack();
+  }
 
     return (
         

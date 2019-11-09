@@ -6,12 +6,38 @@ import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
 import SearchBox from './SearchBox';
 import FilterProduct from './FilterProduct';
-import {connect } from 'react-redux'
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';  
+import Paper from '@material-ui/core/Paper';
+
+
+const useStyles = makeStyles(theme => ({
+    root: {
+      flexGrow: 1,
+      marginRight : 90 ,
+      marginTop: 20,
+    },
+    paper: {
+      height: 140,
+      width: 100,
+    },
+    table: {
+      padding: theme.spacing(2),
+      marginRight : 90 ,
+    },
+
+  }));
+  
+
+
 
 function useIndexUpdateProduct(props) {
     const [value , setValue] = useState("DISPONIBLE");
     const [rows,  setRows] = useState([]);
     const [update, setUpdate] = useState(true);
+    const classes = useStyles();
+
+
 
     if (!firebase.getCurrentUsername()) {
         // not logged in
@@ -22,35 +48,53 @@ function useIndexUpdateProduct(props) {
     
       
     return (
-        <div>
-
+        <React.Fragment>
             <NavBar/>
-            <SearchBox/>
-            <FilterProduct 
-                value = {value}
-                setValue = {setValue}
-                setUpdate = {setUpdate}
-            />
-            <CustomizedTables
-                setUpdate = {setUpdate}
-                update = {update}
-                rows = {rows}
-                setRows = {setRows}
-                value = {value}
-                setValue = {setValue}
-                />
+            <Grid container className={classes.root} spacing={2}>
+                <Grid item xs={12}>
+                    <Grid container justify="center" spacing={5}>
+                        <Grid key={2} item>
+                            <h1>Buscar producto</h1> 
+                            <SearchBox/>
+
+                        </Grid>
+                        <Grid key={2} item>
+                            <h1>Estado de producto</h1> 
+                            <FilterProduct 
+                                    value = {value}
+                                    setValue = {setValue}
+                                    setUpdate = {setUpdate}
+                            />
+                        </Grid>
+                    </Grid>
+                </Grid>
+                
+            </Grid>
+            <Grid container className={classes.table} spacing={2}>
+                <Grid item xs = {12} xl = {6}>
+                    <Paper>
+                        <CustomizedTables
+                                setUpdate = {setUpdate}
+                                update = {update}
+                                rows = {rows}
+                                setRows = {setRows}
+                                value = {value}
+                                setValue = {setValue}
+                            />
+                    </Paper>
+                </Grid>
+            </Grid>
             <footer>
-                <SimpleBottomNavigation/>
+                 <SimpleBottomNavigation/>
             </footer>
-        </div>
+            
+        </React.Fragment>
+        
+        
     )
 }
 
-// const mapsStateToProps = (state) => {
-//     store;
-// }
 
 
-// connect(mapStateToProps); 
 
 export default withRouter(useIndexUpdateProduct) ;

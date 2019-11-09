@@ -11,12 +11,12 @@ import {
 } from '@material-ui/core/';
 
 import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
+// import DateFnsUtils from '@date-io/date-fns';
+// import {
+//   MuiPickersUtilsProvider,
+//   KeyboardTimePicker,
+//   KeyboardDatePicker,
+// } from '@material-ui/pickers';
 
 import {
   Dialog, DialogActions,
@@ -78,7 +78,16 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 100,
     
 
-  }
+  },
+  buttonLeft: {
+    marginRight:'2px',
+    // marginLeft:'13px',
+    marginTop: theme.spacing(3),
+  },
+  buttonRight: {
+    marginLeft:'20px',
+    marginTop: theme.spacing(3),
+  },
 
 }));
 
@@ -503,6 +512,7 @@ function AddressForm(props) {
                 aria-label="large contained  button group"
               >
                 <Button
+                  className={classes.buttonLeft}
                   color="secondary"
                   variant="contained"
                   onClick={handleBtnClose}
@@ -510,6 +520,7 @@ function AddressForm(props) {
                   Cancelar
                   </Button>
                 <Button
+                  className={classes.buttonRight}
                   label={"Registrar Usuario"}
                   color="primary"
                   variant="contained"

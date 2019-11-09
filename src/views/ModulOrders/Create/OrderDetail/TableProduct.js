@@ -7,6 +7,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import CustomizedSelects from './SelectCantProduct';
+import ClearIcon from '@material-ui/icons/Clear';
+import Fab from '@material-ui/core/Fab';
 
 const useStyles = makeStyles({
   root: {
@@ -19,11 +21,21 @@ const useStyles = makeStyles({
 });
 
 export default function SimpleTable() {
+
+  React.useEffect(()=>{
+    if(stateArray){
+      //Elimino elemento seleccionado.
+      var indexDelete = arrayProduct.indexOf(deletePosition)
+      arrayProduct.splice(indexDelete,1)
+      setStateArray(false)
+    }
+  });
   const classes = useStyles();
 
     //Objeto el cual almacenare en sessionStorage
     const [cant_prodt_select, setCant_prodt_select] = React.useState({
       producto:'',
+      precio_X_unidad:'',
       modelo:'',
       cantidad:'',
       id_producto:''
@@ -31,6 +43,8 @@ export default function SimpleTable() {
   
   //Arreglo donde guardare los productos guardados en el listad.
   const [arrayProduct,setArrayProduct] = React.useState([]);
+  let [deletePosition,setDeletePosition] = React.useState({});
+  const [stateArray,setStateArray] = React.useState(false);
 /*
  Para evitar el error ==> index.js:1375 Warning: validateDOMNesting(...): <form> cannot appear as a descendant of <form>.
 
@@ -44,7 +58,7 @@ export default function SimpleTable() {
     
   //Vacia el campo, luego de completar las 3 etapoas de un pedido.
   const clearObj = () => {
-    setCant_prodt_select({producto:' ',modelo:' ',cantidad:' ',id_producto:' '});
+    setCant_prodt_select({producto:' ',modelo:' ',cantidad:' ',id_producto:' ','precio_X_unidad':''});
   }
 
   const addArrayProduct = () =>{
@@ -70,6 +84,12 @@ export default function SimpleTable() {
     clearObj();
   } 
 
+  //Metodo para eliminar una tupla de la tabla producto con cantidad.
+  const handleDelete = (row) => {
+    setDeletePosition(row)
+    setStateArray(true);
+  }
+
   return (
     <Paper className={classes.root}>
 
@@ -82,17 +102,26 @@ export default function SimpleTable() {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
+            <TableCell>Eliminar</TableCell>
             <TableCell>Producto</TableCell>
+            <TableCell>Precio/u</TableCell>
             <TableCell align="right">Modelo</TableCell>
             <TableCell align="right">Cantidad</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {arrayProduct.map(row => (
-            <TableRow key={arrayProduct.id_producto}>
+            <TableRow key={arrayProduct.producto}>
+              <TableCell>
+                <Fab size="small" color="secondary" aria-label="add" className={classes.margin}
+                onClick={()=>handleDelete(row)}>
+                  <ClearIcon />
+                </Fab>
+              </TableCell>
               <TableCell component="th" scope="row">
                 {row.producto}
               </TableCell>
+              <TableCell align="right">{row.precio_X_unidad}</TableCell>
               <TableCell align="right">{row.modelo}</TableCell>
               <TableCell align="right">{row.cantidad}</TableCell>
             </TableRow>

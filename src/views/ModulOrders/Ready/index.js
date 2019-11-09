@@ -1,7 +1,7 @@
 import React from 'react';
 import './OrderReady.css';
 import Navbar from '../../Header/Navigation'
-import EnhancedTable from './OrdersTable2';
+import EnhancedTable from './OrdersTable';
 import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
 import SimpleBottomNavigation from '../../Footer/Footer';
@@ -24,7 +24,7 @@ function OrderReady(props) {
         alert('Por favor inicie sesión para acceder')
         props.history.replace('/login')
         return null
-      }
+    }
 
     return (
         <div>

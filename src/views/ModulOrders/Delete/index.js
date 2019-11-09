@@ -7,7 +7,7 @@ import SimpleBottomNavigation from '../../Footer/Footer';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
-import StickyFooter from './StickyFooter';
+
 const theme = createMuiTheme({
     overrides:{
         MuiTypography:{
@@ -25,7 +25,12 @@ function DeleteOrder(props) {
         alert('Por favor inicie sesión para acceder')
         props.history.replace('/login')
         return null
-      }
+    }
+
+    if (localStorage.userRole==="LOGISTICS"){ //si tiene rol de usuario de logistica
+        alert('No tenes permiso para acceder a esta ventana')
+        props.history.goBack();
+    }
 
     return (
         <div>
@@ -40,7 +45,7 @@ function DeleteOrder(props) {
                 <CustomizedTables/>
             </div>
             <footer>
-                <StickyFooter></StickyFooter>
+                <SimpleBottomNavigation></SimpleBottomNavigation>
             </footer>
             </MuiThemeProvider>
         </div>
