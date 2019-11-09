@@ -14,7 +14,6 @@ import Paper from '@material-ui/core/Paper';
 const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
-      marginRight : 90 ,
       marginTop: 20,
     },
     paper: {
@@ -22,7 +21,7 @@ const useStyles = makeStyles(theme => ({
       width: 100,
     },
     table: {
-      padding: theme.spacing(2),
+      //padding: theme.spacing(2),
       marginRight : 90 ,
     },
 
