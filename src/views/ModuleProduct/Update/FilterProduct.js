@@ -105,7 +105,7 @@ const useStyles = makeStyles(theme => ({
 
 
     return(
-      <div>
+      <React.Fragment>
           <TextField classname = {classes.fab}
           id="type-product"
           select
@@ -132,8 +132,7 @@ const useStyles = makeStyles(theme => ({
           ))}
           
       </TextField>
-    </div>
-    
+  </React.Fragment>    
 )
     
 
