@@ -46,7 +46,7 @@ export default function Checkout(props) {
   const classes = useStyles();
   const {usuario} = props;
   const {handleClose} = props;
-  const {updateStateArray} =props;
+  const {updateStateArray} = props;
   return (
     <React.Fragment>
       <CssBaseline />      

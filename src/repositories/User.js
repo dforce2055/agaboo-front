@@ -181,6 +181,32 @@ class UserRepo extends Component {
         }
     }
 
+    searchUsersActive = async (search, cant) => {
+        try {
+            let users = [];
+            const end = search + '\uf8ff';
+            await firebase.db.collection(collection)
+                .where("eliminado", "==", false)
+                .orderBy("email")
+                .limit(cant)
+                .startAt(search)
+                .endAt(end)
+                .get()
+                .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
+                        users.push(doc.data());
+                    });
+                })
+                .catch(function (error) {
+                    console.log("Error al paginar usuarios: ", error);
+                    users = null;
+                });
+            return users;
+        } catch (error) {
+            console.log("Error:", error);
+        }
+    }
+
     addUser = async (newUser) => {
         if (!newUser) throw new Error(`Error: no se envio un usuario para registrar`);
         let result = await firebase.db.collection(collection)

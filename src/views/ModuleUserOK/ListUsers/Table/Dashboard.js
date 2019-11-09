@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import UsersTable from './UsersTable'
 //import UsersTable2 from './UsersTable2'
 import {Typography} from '@material-ui/core';
-import CustomizedInputBase from '../Search/buttonSearch';
+import AsynchronousSearch from '../Search/Autocomplete';
 
 const drawerWidth = 240;
 
@@ -132,24 +132,9 @@ export default function Dashboard(props) {
       <CssBaseline />
       <main className={classes.content}>
         <div className={classes.toolbar}/>
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/*Buttom search*/}
-            <Grid item xs={12}>
-              <div >
-                 <CustomizedInputBase />
-              </div>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-            <Typography variant="h4">Usuarios</Typography>
-                <Grid className={classes.GridContenedor} container spacing={3}>
-                  {/*<UsersTable2 />*/}
-                  <UsersTable />
-                </Grid>
-            </Grid>
-          </Grid>
-        </Container>
+          <Grid container alignItems="center" justify="center" className={classes.root} spacing={2}>
+            <UsersTable/>  
+          </Grid>    
       </main>
     </div>
     </MuiThemeProvider>
