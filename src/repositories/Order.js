@@ -89,15 +89,62 @@ class OrderRepo extends Component {
 
   }
 
+  search(id_pedido, array){
+    for(let i = 0;  i++ ;  i < array.lenght ){
+      if(id_pedido !== array[i].id_pedido){
+        return true;
+      }
+    }
+    return false;
+    
+  }
+
   async validateDate(fecha_ini,fecha_fin){
-    if(fecha_fin) throw new Error('Error: No llego la fecha de fin.')
-    if(fecha_ini) throw new Error('Error: No llego la fecha de inicio.')
+    if(!fecha_fin) throw new Error('Error: No llego la fecha de fin.')
+    if(!fecha_ini) throw new Error('Error: No llego la fecha de inicio.')
+
     try {
-      db.get().where(fecha_ini,"<","fechaDeCreacionPedido")
+      console.log("fecha_ini",fecha_ini);
+      console.log("fecha_fin",fecha_fin);
+
+      let queryIni = {};
+      await db
+      .where("detalle_pedido.fecha_finalizacion",">=",fecha_ini)
+      //.orderBy("detalle_pedido.fecha_finalizacion")
+        .get()
+        .then(result=>{
+          queryIni = result.docs.map(doc => doc.data())
+        })
+      console.log("MUESTRO QUERY INI ",queryIni);
+
+
+      let queryFin= {};
+      await db
+      .where("detalle_pedido.fecha_entrega","<=",fecha_fin)
+        .get()
+        .then(result=>{
+          queryFin = result.docs.map(doc => doc.data())
+        })
+        console.log("MUESTRO QUERY fin antes de filtrar ",queryFin);
+      
+      
+      queryIni.forEach(element => {
+        if(this.search(element.id_pedido, queryFin )){
+          queryFin.push(element);
+        }
+      });
+      console.log("MUESTRO QUERY FIN ",queryFin);
+
+      
+      return queryIni
     } catch (error) {
       console.error("Error en la base de datos, al validar las fechas.");
       
     }
   }
 }
+
+
 export default new OrderRepo();
+
+

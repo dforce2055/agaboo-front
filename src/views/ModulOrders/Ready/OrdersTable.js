@@ -23,6 +23,7 @@ import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 //Import componentes
 import OrderController from '../../../controllers/Order';
 import SimpleMenu from './ButtonOption.js';
+import { Button } from '@material-ui/core';
 
 const theme = createMuiTheme({ /* Plantilla de edicion */
   overrides: { 
@@ -289,12 +290,24 @@ function EnhancedTable(props) {
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+  const query = (fecha_ini,fecha_fin) =>{
+
+    console.log("ini=",fecha_ini);
+    console.log("fin=",fecha_fin);
+
+    OrderController.validateDate(fecha_ini,fecha_fin)
+    .then(result=>{
+      //console.log("muestro result=",result);
+    });
+    
+    }
   return (
     <MuiThemeProvider theme={theme}>
 
     <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarPedido')} >
           <AddIcon />
         </Fab>   
+        <Button onClick={()=>query('2019-11-08','2019-11-11')}>QUERY</Button>
 
     <div className={classes.root}>
       <Paper className={classes.paper}>
