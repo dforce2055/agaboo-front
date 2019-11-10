@@ -113,5 +113,15 @@ class OrderRepo extends Component {
 
   }
 
+  async validateDate(fecha_ini,fecha_fin){
+    if(fecha_fin) throw new Error('Error: No llego la fecha de fin.')
+    if(fecha_ini) throw new Error('Error: No llego la fecha de inicio.')
+    try {
+      db.get().where(fecha_ini,"<","fechaDeCreacionPedido")
+    } catch (error) {
+      console.error("Error en la base de datos, al validar las fechas.");
+      
+    }
+  }
 }
 export default new OrderRepo();

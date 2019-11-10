@@ -56,6 +56,15 @@ class OrderController extends Component {
       console.error("Error con el id del producto.");
     }
   }
+
+  validateDate(fecha_ini,fecha_fin){
+    try {
+      return OrderRepo.validateDate(fecha_ini,fecha_fin);
+    } catch (error) {
+      console.error("Error al verificar por fechas.");
+      
+    }
+  }
 }
 
 export default new OrderController();

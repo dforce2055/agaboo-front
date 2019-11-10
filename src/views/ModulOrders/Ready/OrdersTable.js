@@ -77,7 +77,7 @@ const headCells = [
   { id: '', numeric: false, disablePadding: false, label: 'Opciones' },
   { id: 'nombre', numeric: false, disablePadding: true, label: 'Nombre' },
   { id: 'id_cliente', numeric: true, disablePadding: false, label: 'CUIT/CUIL' },
-  { id: 'fechaEntrega', numeric: true, disablePadding: false, label: 'Fecha de entrega' },  
+  { id: 'fecha_entrega', numeric: true, disablePadding: false, label: 'Fecha de entrega' },  
   { id: 'ciudad', numeric: false, disablePadding: false, label: 'Ciudad' },
   { id: 'direccion', numeric: false, disablePadding: false, label: 'Dirección' },
 ];
@@ -343,7 +343,7 @@ function EnhancedTable(props) {
                         {row.nombre}
                       </TableCell>
                       <TableCell align="right">{row.id_cliente}</TableCell>
-                      <TableCell align="right">{row.fechaEntrega}</TableCell>
+                      <TableCell align="right">{row.fecha_entrega}</TableCell>
                       <TableCell align="right">{row.ciudad}</TableCell>
                       <TableCell align="right">{row.direccion}</TableCell>
                     </TableRow>
