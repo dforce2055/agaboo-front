@@ -127,7 +127,8 @@ function Checkout(props) {
       listado_producto,
       detalle_pedido,
       monto_calculado,
-      fechaEntrega:detalle_pedido.fechaDeEntregaPedido,
+      
+      fecha_entrega:detalle_pedido.fecha_entrega,
       nombre:cliente.nombre+' '+cliente.apellido,
       id_cliente:cliente.id,
       ciudad:detalle_pedido.ciudad,
