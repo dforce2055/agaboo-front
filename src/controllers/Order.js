@@ -20,6 +20,15 @@ class OrderController extends Component {
       console.error("Error al traer todos los pedidos.");
     }
   }
+  
+  getOrdersNow = async () => {
+    try {
+      let list = await OrderRepo.getOrdersNow();
+      return list;
+    } catch (error) {
+      console.error("Error al traer todos los pedidos del dia.");
+    }
+  }
 
   //Se utiliza en views/ModulOrders/Ready/ButtonOption.js
   deleteOrder(id_pedido){
