@@ -49,6 +49,30 @@ class OrderRepo extends Component {
     }
   }
 
+
+  //Devuelvo todos los pedidos
+  async getOrdersNow() {
+    try {
+      let fechaHoy = new Date();
+      let fechaFormat = fechaHoy.getFullYear() +'-'
+                        +(fechaHoy.getMonth()+1) +'-' //La función devuelve mes actual menos uno
+                        +(fechaHoy.getDate());
+      
+      let list = {};
+      await db
+        .where("eliminado", "==", false)
+        .where("fecha_entrega", "==", fechaFormat)
+        .get()
+        .then(result => {
+          list = result.docs.map(doc => doc.data())
+        })
+      return list;
+    } catch (error) {
+      console.error("Error en base de datos: ", error);
+    }
+  }
+
+
   //Metodo que verifica si tiene la cantidad disponible entre esas fechas
   async authAlqProduct(fec_ini,fec_fin){
     try {
