@@ -85,11 +85,11 @@ const useStyles = makeStyles(theme => ({
 
 const steps = ['Detalles de cliente', 'Detalles de pedido','Pedido completo'];
 
-function getStepContent(step) { 
+function getStepContent(step, setButtonState ) { 
   //LLAMO COMPONENTES
   switch (step) {
     case 0:
-      return <AddressForm />;
+      return <AddressForm setButtonState = {setButtonState}/>;
     case 1:
       return <PaymentForm />;
     case 2:
@@ -103,10 +103,17 @@ function Checkout(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const {history} = props;
+  const [buttonState, setButtonState] = React.useState(true);
+  console.log("button :" , buttonState);
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
+    if(sessionStorage.getItem('info_cliente_pedido')){
+      setActiveStep(activeStep + 1) ;  
+    }else{
+      alert("Debe ingrsar un cliente")
 
+    }
+    
   };
 
   const handleNexAndSaveOrder = () =>{
@@ -172,7 +179,7 @@ function Checkout(props) {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                {getStepContent(activeStep, setButtonState)}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>
@@ -195,6 +202,8 @@ function Checkout(props) {
                       color="secondary"
                       onClick={handleNext}
                       className={classes.button}
+                      disabled = {buttonState}
+
                     >
                         Siguiente
                     </Button>

@@ -176,7 +176,11 @@ export default function IntegrationReactSelect(props) {
   const [cliente,setCliente] = React.useState([]);
   const [estado,setEstado] = React.useState(false);
   const {setSeleccionado} = props;
-
+  const {setButtonState} = props; 
+  
+  
+  
+  
   React.useEffect(()=>{
     if(cliente.length === 0){
       CustomerController.getCustomerAll()
@@ -191,6 +195,8 @@ export default function IntegrationReactSelect(props) {
   const handleChangeSingle = value => {
     setSingle(value);
     setEstado(true);
+    setButtonState(false);
+    console.log("value : " , value)
   };
 
   const selectStyles = {
