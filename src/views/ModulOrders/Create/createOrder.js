@@ -59,9 +59,9 @@ function formulario(handleChange, value){
             <input
               placeholder="DD/MM/AAAA"
               type="date"
-              name="fechaDeCreacionPedido"
+              name="fecha_entrega"
               noValidate
-              onChange={handleChange('fechaDeCreacionPedido')}
+              onChange={handleChange('fecha_entrega')}
             />
           </div>
 
@@ -70,10 +70,10 @@ function formulario(handleChange, value){
             <input
               placeholder="DD/MM/AAAA"
               type="date"
-              name="fechaDeEntregaPedido"
+              name="fecha_finalizacion"
               noValidate
               min = {value}
-              onChange={handleChange('fechaDeEntregaPedido')}
+              onChange={handleChange('fecha_finalizacion')}
             />
           </div>
 
