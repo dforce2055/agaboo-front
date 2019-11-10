@@ -97,6 +97,7 @@ function clientNotExist() {
 }
 
 export default function ClientForm(props) {
+  const {setButtonState} = props ;
 
   const [seleccionado,setSeleccionado] = React.useState([]);
 
@@ -127,6 +128,7 @@ export default function ClientForm(props) {
         Detalles de cliente
       </Typography>
       <IntegrationReactSelect
+        setButtonState = {setButtonState}
         setSeleccionado = {setCustomerSeleccionado}
       />
       {seleccionado == null ? clientNotExist() : clientExist(seleccionado)}
