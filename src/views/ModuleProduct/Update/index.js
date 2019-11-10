@@ -51,8 +51,8 @@ function useIndexUpdateProduct(props) {
             <NavBar/>
             <Grid container className={classes.root} spacing={2}>
                 <Grid item xs={12}>
-                    <Grid container justify="center" spacing={5}>
-                        <Grid key={2} item>
+                    <Grid container justify="center" spacing={2}>
+                        <Grid  item>
                             <h1>Buscar producto</h1> 
                             <SearchBox/>
 
