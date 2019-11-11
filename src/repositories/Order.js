@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import firebase from '../config/firebase';
 import ProductController from '../controllers/Product';
+import { array } from 'prop-types';
 
 const collection = '/orders';
 
@@ -100,7 +101,7 @@ class OrderRepo extends Component {
     } catch (error) {
       console.log("Error en base de datos: ",error);
     }
-  }
+  };
 
   //Verifica que los productos agregados al pedido existan
   async verifyProductExistence(id_producto){
@@ -111,17 +112,19 @@ class OrderRepo extends Component {
       console.error("Error en la database: ",error);
     }
 
-  }
+  };
+  
 
-  search(id_pedido, array){
-    for(let i = 0;  i++ ;  i < array.lenght ){
-      if(id_pedido !== array[i].id_pedido){
-        return true;
-      }
-    }
-    return false;
-    
-  }
+
+  // contarProductos(array, listado_producto){
+  //   let i = 0;
+  //   while(listado_producto[i]< listado_producto.lenght){
+  //     array.push(listado_producto[i])
+  //     i++;
+  //   }
+
+  // }
+
 
   async validateDate(fecha_ini,fecha_fin){
     if(!fecha_fin) throw new Error('Error: No llego la fecha de fin.')
@@ -131,36 +134,54 @@ class OrderRepo extends Component {
       console.log("fecha_ini",fecha_ini);
       console.log("fecha_fin",fecha_fin);
 
-      let queryIni = {};
+      let query = {};
       await db
       .where("detalle_pedido.fecha_finalizacion",">=",fecha_ini)
       //.orderBy("detalle_pedido.fecha_finalizacion")
         .get()
         .then(result=>{
-          queryIni = result.docs.map(doc => doc.data())
+          query = result.docs.map(doc => doc.data())
         })
-      console.log("MUESTRO QUERY INI ",queryIni);
+      console.log("MUESTRO QUERY INI ",query);
+      let array = [];
+      let i = 0;
 
-
-      let queryFin= {};
-      await db
-      .where("detalle_pedido.fecha_entrega","<=",fecha_fin)
-        .get()
-        .then(result=>{
-          queryFin = result.docs.map(doc => doc.data())
-        })
-        console.log("MUESTRO QUERY fin antes de filtrar ",queryFin);
       
-      
-      queryIni.forEach(element => {
-        if(this.search(element.id_pedido, queryFin )){
-          queryFin.push(element);
+      query.forEach(element => {
+        
+        if(element.detalle_pedido.fecha_finalizacion < fecha_fin){
+          console.log("Contar sus productos :" , query[i]);
+          //contarProductos(array, element.listado_producto);
+        }else if(element.detalle_pedido.fecha_entrega < fecha_fin){
+          console.log("Contar sus productos :" , query[i]);
+          //contarProductos(array, listado_producto)
+        }else{
+          console.log("Saco este documento" , query[i]);
+          query.splice(i, 1);
         }
+        i++ ;
+        
       });
-      console.log("MUESTRO QUERY FIN ",queryFin);
+
+
+      console.log("MUESTRO QUERY FIN ",array);
+
+
+
+
+      // let queryFin= {};
+      // await db
+      // .where("detalle_pedido.fecha_entrega","<=",fecha_fin)
+      //   .get()
+      //   .then(result=>{
+      //     queryFin = result.docs.map(doc => doc.data())
+      //   })
+      //   console.log("MUESTRO QUERY fin antes de filtrar ",queryFin);
+      
+      
 
       
-      return queryIni
+      return query
     } catch (error) {
       console.error("Error en la base de datos, al validar las fechas.");
       
