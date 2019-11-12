@@ -102,6 +102,32 @@ class OrderRepo extends Component {
       console.log("Error en base de datos: ",error);
     }
   };
+  
+  contarProductos(pedidosSeleccionados){
+    let Oficina = 0;
+    let lsProductos = pedidosSeleccionados.map(function(x) {
+      return x.lista;
+    });
+    lsProductos = lsProductos.flat();
+    lsProductos.forEach(function(element) {
+      //console.log(element);
+    });
+    
+    const reducer = (accumulator,oficina)=>{
+      console.log(accumulator);
+      console.log(oficina);
+      let x = 0;
+      let x2 = 0;
+      x += parseInt(oficina.cantidad)
+          console.log("cantidad",x);
+
+        return x
+    }
+
+    console.log(lsProductos.reduce(reducer));
+    
+  }
+    
 
   //Verifica que los productos agregados al pedido existan
   async verifyProductExistence(id_producto){
@@ -131,35 +157,25 @@ class OrderRepo extends Component {
       await db
       .where("detalle_pedido.fecha_finalizacion",">=",fecha_ini)
       
-      //.orderBy("detalle_pedido.fecha_finalizacion")
         .get()
         .then(result=>{
           query = result.docs.map(doc => doc.data())
         })
       console.log("MUESTRO QUERY INI ",query);
-      let array = [];
+      let pedidosSelecionados = [];
       
-      query.forEach(element => {  
-        if(element.detalle_pedido.fecha_entrega <= fecha_fin ){
-          console.log("Pedido que entro", element.detalle_pedido.fecha_entrega, "Fecha fin" , element.detalle_pedido.fecha_finalizacion );
-          //this.agregarProductos(element.listado_producto, array);
+      query.forEach(pedido => {  
+        if(pedido.detalle_pedido.fecha_entrega <= fecha_fin ){
+          console.log("Pedido que entro", pedido.detalle_pedido.fecha_entrega, "Fecha fin" , pedido.detalle_pedido.fecha_finalizacion );
+          pedidosSelecionados.push({"id" : pedido.id_pedido, "lista" : pedido.listado_producto})
         }
       });
 
-
-      console.log("MUESTRO QUERY FIN ",query);
-
-
-      // let queryFin= {};
-      // await db
-      // .where("detalle_pedido.fecha_entrega","<=",fecha_fin)
-      //   .get()
-      //   .then(result=>{
-      //     queryFin = result.docs.map(doc => doc.data())
-      //   })
-      //   console.log("MUESTRO QUERY fin antes de filtrar ",queryFin);
+      console.log("Pedidos seleccionados ",pedidosSelecionados);
+      console.log(this.contarProductos(pedidosSelecionados)) ;
       
-      return query
+      return pedidosSelecionados;
+
     } catch (error) {
       console.error("Error en la base de datos, al validar las fechas.");
       
