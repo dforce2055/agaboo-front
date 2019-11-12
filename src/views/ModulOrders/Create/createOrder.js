@@ -7,7 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import SimpleTable from './OrderDetail/TableProduct';
 
-function formulario(handleChange){
+function formulario(handleChange,value){
   
   return(
     <form>
@@ -71,6 +71,7 @@ function formulario(handleChange){
               placeholder="DD/MM/AAAA"
               type="date"
               name="fechaDeEntregaPedido"
+              value = {value}
               noValidate
               onChange={handleChange('fechaDeEntregaPedido')}
             />
@@ -92,6 +93,7 @@ function formulario(handleChange){
               placeholder="Direccion de entrega"
               type="text"
               noValidate
+
               onChange={handleChange('ubicacionDeEntrega')} 
             />              
           </div>
@@ -99,56 +101,6 @@ function formulario(handleChange){
   );
 }
 
-function detallePedido(product,handleProductChange,handleChange){
-  /*//VA EN FORM
-  const [product, setProduct] = React.useState('false');
-  function handleProductChange(event) {
-    setProduct(event.target.value);
-  };*/
-
-  return(
-    <React.Fragment>
-      <div className="password">
-        <FormControl>
-          <InputLabel htmlFor="max-width">Seleccionar producto</InputLabel>
-            <Select 
-            value={product}
-            onChange={handleProductChange}
-            inputProps={{
-              name: 'max-width',
-              id: 'max-width',
-            }}>
-            <MenuItem value="baño quimico">Baño químico</MenuItem>
-            <MenuItem value="garita de seguridad">Garita de seguridad</MenuItem>
-            <MenuItem value="oficina de obra">Oficina de obra</MenuItem>
-            <MenuItem value="boleteria">Boletería</MenuItem>
-          </Select>
-        </FormControl>           
-        </div>
-
-        <div className="firstName">
-          <label htmlFor="firstName">Unidades</label> 
-          <input
-            placeholder="Cantidad"
-            type="number"
-            noValidate
-            onChange={handleChange("units")}
-          />
-        </div>
-
-        <div className="lastName">
-          <label htmlFor="lastName">Precio total</label> 
-          <input
-            placeholder="$"
-            type="number"
-            name="totalPrice"
-            noValidate
-            onChange={handleChange("totalPrice")}
-          />             
-      </div>
-    </React.Fragment>
-  );
-}
 export default function Form() {
 
   const [values,setValues] = React.useState({
@@ -157,7 +109,7 @@ export default function Form() {
     ContactoEnTrabajo:'',
     formaDePago:'',
     fechaDeCreacionPedido:'',
-    fechaDeEntregaPedido:'',
+    fechaDeEntregaPedido:fechaDeCreacionPedido,
     ubicacionDeEntrega:'',
     ciudad:''
     });  
@@ -166,6 +118,14 @@ export default function Form() {
     setValues({ ...values, [name]: event.target.value }); 
     sessionStorage.setItem('info_detalle_pedido',JSON.stringify(values)); 
   };
+
+  const [fec,setFec] = React.useState(false);
+
+  React.useEffect(()=>{
+    if (values.fechaDeCreacionPedido === '') {
+      setValues({ ...values, ['fechaDeEntregaPedido']: values.fechaDeCreacionPedido }); 
+    }
+  });
 
 
   const handleSubmit= () =>{
@@ -183,7 +143,7 @@ export default function Form() {
     <React.Fragment>
     <Container  maxWidth="md" className='nuevo'>
         <form onSubmit={handleSubmit} noValidate>
-          {formulario(handleChange)}
+          {formulario(handleChange,values.fechaDeCreacionPedido)}
           {/*detallePedido(product,handleProductChange,handleChange)*/}
           <SimpleTable></SimpleTable>
         </form>
