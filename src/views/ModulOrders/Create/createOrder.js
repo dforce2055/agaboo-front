@@ -1,16 +1,12 @@
 import React from "react";
 import "./Form.css";
 import Container from '@material-ui/core/Container';
-import FormControl from '@material-ui/core/FormControl';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
 import SimpleTable from './OrderDetail/TableProduct';
 
 function formulario(handleChange,value){
   
   return(
-    <form>
+    <form noValidate>
       <div className="password">
             <label htmlFor="dni">Direccion de cobro</label> 
             <input
@@ -59,9 +55,9 @@ function formulario(handleChange,value){
             <input
               placeholder="DD/MM/AAAA"
               type="date"
-              name="fechaDeCreacionPedido"
+              name="fecha_entrega"
               noValidate
-              onChange={handleChange('fechaDeCreacionPedido')}
+              onChange={handleChange('fecha_entrega')}
             />
           </div>
 
@@ -70,10 +66,10 @@ function formulario(handleChange,value){
             <input
               placeholder="DD/MM/AAAA"
               type="date"
-              name="fechaDeEntregaPedido"
-              value = {value}
+              name="fecha_finalizacion"
               noValidate
-              onChange={handleChange('fechaDeEntregaPedido')}
+              min = {value}
+              onChange={handleChange('fecha_finalizacion')}
             />
           </div>
 
@@ -108,8 +104,8 @@ export default function Form() {
     responsableDelPago:'',
     ContactoEnTrabajo:'',
     formaDePago:'',
-    fechaDeCreacionPedido:'',
-    fechaDeEntregaPedido:fechaDeCreacionPedido,
+    fecha_entrega:'',
+    fecha_finalizacion: '',
     ubicacionDeEntrega:'',
     ciudad:''
     });  
@@ -119,23 +115,11 @@ export default function Form() {
     sessionStorage.setItem('info_detalle_pedido',JSON.stringify(values)); 
   };
 
-  const [fec,setFec] = React.useState(false);
-
-  React.useEffect(()=>{
-    if (values.fechaDeCreacionPedido === '') {
-      setValues({ ...values, ['fechaDeEntregaPedido']: values.fechaDeCreacionPedido }); 
-    }
-  });
-
-
-  const handleSubmit= () =>{
-
-    //Agrego detalle pedido a SESSION STORAGE
-    
+  const handleSubmit= () =>{    
     
     console.log("Agrego info_detalle_pedido a SESSION STORAGE");
 
-    //sessionStorage.setItem("detalle_pedido",JSON.stringify());
+    sessionStorage.setItem("info_detalle_pedido",JSON.stringify(values));
   }
 
   
@@ -143,7 +127,7 @@ export default function Form() {
     <React.Fragment>
     <Container  maxWidth="md" className='nuevo'>
         <form onSubmit={handleSubmit} noValidate>
-          {formulario(handleChange,values.fechaDeCreacionPedido)}
+          {formulario(handleChange,values.fecha_entrega)}
           {/*detallePedido(product,handleProductChange,handleChange)*/}
           <SimpleTable></SimpleTable>
         </form>

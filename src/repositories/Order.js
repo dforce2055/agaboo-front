@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import firebase from '../config/firebase';
 import ProductController from '../controllers/Product';
+import { array } from 'prop-types';
 
 const collection = '/orders';
 
@@ -49,6 +50,30 @@ class OrderRepo extends Component {
     }
   }
 
+
+  //Devuelvo todos los pedidos
+  async getOrdersNow() {
+    try {
+      let fechaHoy = new Date();
+      let fechaFormat = fechaHoy.getFullYear() +'-'
+                        +(fechaHoy.getMonth()+1) +'-' //La función devuelve mes actual menos uno
+                        +(fechaHoy.getDate());
+      
+      let list = {};
+      await db
+        .where("eliminado", "==", false)
+        .where("fecha_entrega", "==", fechaFormat)
+        .get()
+        .then(result => {
+          list = result.docs.map(doc => doc.data())
+        })
+      return list;
+    } catch (error) {
+      console.error("Error en base de datos: ", error);
+    }
+  }
+
+
   //Metodo que verifica si tiene la cantidad disponible entre esas fechas
   async authAlqProduct(fec_ini,fec_fin){
     try {
@@ -76,7 +101,7 @@ class OrderRepo extends Component {
     } catch (error) {
       console.log("Error en base de datos: ",error);
     }
-  }
+  };
 
   //Verifica que los productos agregados al pedido existan
   async verifyProductExistence(id_producto){
@@ -87,7 +112,78 @@ class OrderRepo extends Component {
       console.error("Error en la database: ",error);
     }
 
+  };
+  
+  
+
+  //Se utiliza en validateDate
+
+
+  async validateDate(fecha_ini,fecha_fin){
+    if(!fecha_fin) throw new Error('Error: No llego la fecha de fin.')
+    if(!fecha_ini) throw new Error('Error: No llego la fecha de inicio.')
+
+    try {
+      console.log("fecha_ini",fecha_ini);
+      console.log("fecha_fin",fecha_fin);
+
+      let query = {};
+      await db
+      .where("detalle_pedido.fecha_finalizacion",">=",fecha_ini)
+      
+      //.orderBy("detalle_pedido.fecha_finalizacion")
+        .get()
+        .then(result=>{
+          query = result.docs.map(doc => doc.data())
+        })
+      console.log("MUESTRO QUERY INI ",query);
+      let array = [];
+      
+      query.forEach(element => {  
+        if(element.detalle_pedido.fecha_entrega <= fecha_fin ){
+          console.log("Pedido que entro", element.detalle_pedido.fecha_entrega, "Fecha fin" , element.detalle_pedido.fecha_finalizacion );
+          //this.agregarProductos(element.listado_producto, array);
+        }
+      });
+
+
+      console.log("MUESTRO QUERY FIN ",query);
+
+
+      // let queryFin= {};
+      // await db
+      // .where("detalle_pedido.fecha_entrega","<=",fecha_fin)
+      //   .get()
+      //   .then(result=>{
+      //     queryFin = result.docs.map(doc => doc.data())
+      //   })
+      //   console.log("MUESTRO QUERY fin antes de filtrar ",queryFin);
+      
+      return query
+    } catch (error) {
+      console.error("Error en la base de datos, al validar las fechas.");
+      
+    }
   }
 
+  async AllDeposits(){
+    try {
+      let list = [];
+      await db.where("eliminado","==",false) //Verifico que no este eliminado
+        .where("estado","==","INICIAL") //Verifico que el estado sea inicial
+        .get()
+        .then(result => {
+          list = result.docs.map(doc => doc.data().monto_calculado)
+        });
+      return list; //Devuelvo el listado de pedidos con estado INICIAL
+    } catch (error) {
+      console.error("Error en la base de datos al devolver depositos.");
+      
+    }
+  }
 }
+
+
 export default new OrderRepo();
+
+

@@ -14,17 +14,15 @@ import Paper from '@material-ui/core/Paper';
 const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
-      marginTop: 20,
     },
     paper: {
       height: 140,
       width: 100,
     },
     table: {
-      //padding: theme.spacing(2),
-      marginRight : 90 ,
+      padding: theme.spacing(2),
+      
     },
-
   }));
   
 
@@ -49,47 +47,34 @@ function useIndexUpdateProduct(props) {
     return (
         <React.Fragment>
             <NavBar/>
-            <Grid container className={classes.root} spacing={2}>
-                <Grid item xs={12}>
-                    <Grid container justify="center" spacing={2}>
-                        <Grid  item>
-                            <h1>Buscar producto</h1> 
-                            <SearchBox/>
-
-                        </Grid>
-                        <Grid key={2} item>
-                            <h1>Estado de producto</h1> 
-                            <FilterProduct 
-                                    value = {value}
-                                    setValue = {setValue}
-                                    setUpdate = {setUpdate}
-                            />
-                        </Grid>
-                    </Grid>
+            <Grid container alignItems="center" justify="center" className={classes.root} spacing={2}>
+                <Grid item xs={12} md={6} lg={6}>
+                    <h1>Buscar producto</h1>
+                    <SearchBox />
                 </Grid>
-                
-            </Grid>
-            <Grid container className={classes.table} spacing={2}>
-                <Grid item xs = {12} xl = {6}>
-                    <Paper>
-                        <CustomizedTables
-                                setUpdate = {setUpdate}
-                                update = {update}
-                                rows = {rows}
-                                setRows = {setRows}
-                                value = {value}
-                                setValue = {setValue}
-                            />
-                    </Paper>
+                <Grid item xs={12} md={6} lg={6}>
+                    <h1>Estado de producto</h1>
+                    <FilterProduct
+                        value={value}
+                        setValue={setValue}
+                        setUpdate={setUpdate}
+                    />
+                </Grid>
+                <Grid item xs = {12} xl={6}>
+                    <CustomizedTables
+                            setUpdate = {setUpdate}
+                            update = {update}
+                            rows = {rows}
+                            setRows = {setRows}
+                            value = {value}
+                            setValue = {setValue}
+                        />
                 </Grid>
             </Grid>
             <footer>
                  <SimpleBottomNavigation/>
             </footer>
-            
         </React.Fragment>
-        
-        
     )
 }
 

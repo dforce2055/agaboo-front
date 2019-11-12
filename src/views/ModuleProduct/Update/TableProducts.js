@@ -116,7 +116,6 @@ const useStyles = makeStyles(theme => ({
   
   return (
       <React.Fragment>
-        <Paper className={classes.root}>
             <Table className={classes.table}>
                 <TableHead>
                 <TableRow>
@@ -141,7 +140,6 @@ const useStyles = makeStyles(theme => ({
             <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/createProduct')} >
           <AddIcon />
         </Fab>  
-        </Paper>
       </React.Fragment>         
         
     

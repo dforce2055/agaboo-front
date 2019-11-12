@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
-    width: 270,
+    
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -70,9 +70,8 @@ export default function SearchBox() {
   
 
   return (
-    <div style={{marginTop:'20px'}}>
+    <React.Fragment>
       <Paper className={classes.root}>
-      
       <InputBase
         className={classes.input}
         placeholder="Codigo de producto"
@@ -96,8 +95,7 @@ export default function SearchBox() {
                     />
       
       <Divider className={classes.divider} orientation="vertical" />  
-      
     </Paper>
-    </div>
+    </React.Fragment>
   );
 }

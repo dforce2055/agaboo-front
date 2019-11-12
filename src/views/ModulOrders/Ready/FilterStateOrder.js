@@ -2,47 +2,19 @@ import React , {  useState }from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 
-
-
-
-
-const typeProduct = [
-  {
-    value: "Baño Químico",
-    label: "Baño Químico"
-  },
-  {
-    value: "Oficina",
-    label: "Oficina"
-  },
-  {
-    value: "Boletería",
-    label: "Boletería",
-  },
-  {
-    value: "Garita",
-    label: "Garita de Seguridad",
-  }
-  
-];
 const typeState = [
   {
-    value: "DISPONIBLE",
-    label: "DISPONIBLE",
+    value: "Pendiente",
+    label: "Pendiente",
   },
   {
-    value: "ALQUILADO",
-    label: "ALQUILADO",
+    value: "Pagado",
+    label: "Pagado",
   },
   {
-    value: "EN MANTENIMIENTO",
-    label: "EN MANTENIMIENTO",
-  },
-  {
-    value: "EN TRANSITO",
-    label: "EN TRANSITO",
-  }
-  
+    value: "Finalizado",
+    label: "Finalizado",
+  },  
 ];
 
 
@@ -88,7 +60,7 @@ const useStyles = makeStyles(theme => ({
 
 
 
-  export default function FilterProduct(props){
+  export default function FilterStateOrder(props){
     const {value, setValue, setUpdate} = props;
     const classes = useStyles();  
 
@@ -100,12 +72,9 @@ const useStyles = makeStyles(theme => ({
         }
         
       };
-    
-
-
-
+      
     return(
-      <React.Fragment>
+      <div>
           <TextField classname = {classes.fab}
           id="type-product"
           select
@@ -132,7 +101,8 @@ const useStyles = makeStyles(theme => ({
           ))}
           
       </TextField>
-  </React.Fragment>    
+    </div>
+    
 )
     
 

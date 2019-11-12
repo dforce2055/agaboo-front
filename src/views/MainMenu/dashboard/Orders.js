@@ -1,66 +1,95 @@
-/* eslint-disable no-script-url */
-
 import React from 'react';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
+import DialogOrders from './DialogOrders';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const rows = [
-  createData(0, '16 Mar, 2019', 'Elvis Presley', 'Tupelo, MS', 'VISA ⠀•••• 3719', 312.44),
-  createData(1, '16 Mar, 2019', 'Paul McCartney', 'London, UK', 'VISA ⠀•••• 2574', 866.99),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-  createData(3, '16 Mar, 2019', 'Michael Jackson', 'Gary, IN', 'AMEX ⠀•••• 2000', 654.39),
-  createData(4, '15 Mar, 2019', 'Bruce Springsteen', 'Long Branch, NJ', 'VISA ⠀•••• 5919', 212.79),
-];
+import OrderController from './../../../controllers/Order';
 
 const useStyles = makeStyles(theme => ({
   seeMore: {
     marginTop: theme.spacing(3),
   },
+  tablaPedidos: {
+    textAlign: "left",
+    borderCollapse: 'collapse',
+    borderSpacing: 0,
+    borderColor: 'rgba(0,0,0,.5)',
+    padding: '.25em',
+    
+    '& tbody': {
+      '& tr': {
+        border: '1px solid rgba(0,0,0,.1)',
+        padding: '.25em',
+      },
+      '& td': {
+        border: '1px solid rgba(0,0,0,.1)',
+        padding: '.25em',
+      }
+    },
+    '& thead': {
+      backgroundColor: 'rgba(0,0,0,.1)',
+      color: '#555',
+      border: '1px solid rgba(0,0,0,.1)',
+      padding: '.25em',
+      
+      '& th': {
+        border: '1px solid rgba(0,0,0,.1)',
+        padding: '.25em',
+      }
+    },
+  },
+  
 }));
 
-export default function Orders() {
+export default function Orders(props) {
   const classes = useStyles();
+  const [pedidos, setPedidos] = React.useState([]);
+  const [cargarPedidos, setCargarPedidos] = React.useState(true);
+   
+
+  React.useEffect(() => {
+
+    if (cargarPedidos) {
+      OrderController.getOrdersNow()
+        .then(pedidos => {
+          setPedidos(pedidos);
+          setCargarPedidos(false);
+        })
+        .catch(error => {
+          console.log("Error al traer los Pedidos del día => ", error);
+        })
+    }
+  });
+
   return (
-    <React.Fragment>
-      <Title>Ordenes recientes</Title>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Fecha</TableCell>
-            <TableCell>Nombre</TableCell>
-            <TableCell>Localidad</TableCell>
-            {/*<TableCell>Payment Method</TableCell>*/}
-            <TableCell align="right">Monto</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              {/*<TableCell>{row.paymentMethod}</TableCell>*/}
-              <TableCell align="right">{row.amount}</TableCell>
-            </TableRow>
+    <React.Fragment>                
+      <Title>Pedidos para Hoy</Title>
+      <Table className={classes.tablaPedidos}>
+        <Thead>
+          <Tr>
+            <Th>#</Th>
+            <Th>Nombre</Th>
+            <Th>Localidad</Th>
+            <Th>Dirección</Th>
+            <Th>Ver más...</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {pedidos.map((pedido, index, array) => (
+            <Tr key={pedido.id_pedido}>
+              <Td>{index+1}</Td> 
+              <Td>{pedido.cliente.nombre +' ' +pedido.cliente.apellido}</Td>
+              <Td>{pedido.ciudad}</Td>
+              <Td>{pedido.direccion}</Td>
+              <Td>
+                <DialogOrders pedido={pedido}/>
+              </Td>
+            </Tr>
           ))}
-        </TableBody>
+        </Tbody>
       </Table>
-      <div className={classes.seeMore}>
-        <Link color="primary" href="javascript:;">
-          Ver mas ordenes
-        </Link>
-      </div>
     </React.Fragment>
   );
 }

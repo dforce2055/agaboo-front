@@ -23,6 +23,7 @@ import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 //Import componentes
 import OrderController from '../../../controllers/Order';
 import SimpleMenu from './ButtonOption.js';
+import { Button } from '@material-ui/core';
 
 const theme = createMuiTheme({ /* Plantilla de edicion */
   overrides: { 
@@ -77,7 +78,7 @@ const headCells = [
   { id: '', numeric: false, disablePadding: false, label: 'Opciones' },
   { id: 'nombre', numeric: false, disablePadding: true, label: 'Nombre' },
   { id: 'id_cliente', numeric: true, disablePadding: false, label: 'CUIT/CUIL' },
-  { id: 'fechaEntrega', numeric: true, disablePadding: false, label: 'Fecha de entrega' },  
+  { id: 'fecha_entrega', numeric: true, disablePadding: false, label: 'Fecha de entrega' },  
   { id: 'ciudad', numeric: false, disablePadding: false, label: 'Ciudad' },
   { id: 'direccion', numeric: false, disablePadding: false, label: 'Dirección' },
 ];
@@ -289,12 +290,24 @@ function EnhancedTable(props) {
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+  const query = (fecha_ini,fecha_fin) =>{
+
+    console.log("ini=",fecha_ini);
+    console.log("fin=",fecha_fin);
+
+    OrderController.validateDate(fecha_ini,fecha_fin)
+    .then(result=>{
+      //console.log("muestro result=",result);
+    });
+    
+    }
   return (
     <MuiThemeProvider theme={theme}>
 
     <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarPedido')} >
           <AddIcon />
         </Fab>   
+        <Button variant="contained" color="primary" onClick={()=>query('2019-11-08','2019-11-11')}>QUERY</Button>
 
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -343,7 +356,7 @@ function EnhancedTable(props) {
                         {row.nombre}
                       </TableCell>
                       <TableCell align="right">{row.id_cliente}</TableCell>
-                      <TableCell align="right">{row.fechaEntrega}</TableCell>
+                      <TableCell align="right">{row.fecha_entrega}</TableCell>
                       <TableCell align="right">{row.ciudad}</TableCell>
                       <TableCell align="right">{row.direccion}</TableCell>
                     </TableRow>

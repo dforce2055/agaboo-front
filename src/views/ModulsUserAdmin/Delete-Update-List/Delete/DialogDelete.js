@@ -12,8 +12,8 @@ import CustomerController from '../../../../controllers/Customer';
 
 export default function AlertDialog(props) {
   const [open, setOpen] = React.useState(false);
-  const {cliente} = props;
-  const {updateStateArray} = props;
+  const {cliente} = props; //Cliente el cual selecciono para eliminar
+  const {updateStateArray} = props; //Si se elimina, se actualiza el array de clientes
   //const {setUpdateList} = props;
 
   const handleClickOpen = () => {
@@ -27,8 +27,6 @@ export default function AlertDialog(props) {
 
   const handleCloseAceptDelete = () => {
     let valor=CustomerController.deleteCustomer(cliente.id);
-    console.log("muestro que devuelve en componente => ",valor)
-    //setUpdateList(true);
     updateStateArray();
     setOpen(false);
   };
