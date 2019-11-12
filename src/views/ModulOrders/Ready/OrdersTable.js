@@ -307,7 +307,7 @@ function EnhancedTable(props) {
     <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarPedido')} >
           <AddIcon />
         </Fab>   
-        <Button onClick={()=>query('2019-11-08','2019-11-11')}>QUERY</Button>
+        <Button variant="contained" color="primary" onClick={()=>query('2019-11-08','2019-11-11')}>QUERY</Button>
 
     <div className={classes.root}>
       <Paper className={classes.paper}>

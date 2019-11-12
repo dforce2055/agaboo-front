@@ -91,7 +91,7 @@ function getStepContent(step, setButtonState ) {
     case 0:
       return <AddressForm setButtonState = {setButtonState}/>;
     case 1:
-      return <PaymentForm />;
+      return <PaymentForm/>;
     case 2:
       return <Review/>;
     default:
@@ -103,17 +103,12 @@ function Checkout(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const {history} = props;
-  const [buttonState, setButtonState] = React.useState(true);
-  console.log("button :" , buttonState);
-
+  const [buttonState, setButtonState] = React.useState(true); //Desactiva el disabled botton en clientForm
+  
   const handleNext = () => {
     if(sessionStorage.getItem('info_cliente_pedido')){
       setActiveStep(activeStep + 1) ;  
-    }else{
-      alert("Debe ingrsar un cliente")
-
     }
-    
   };
 
   const handleNexAndSaveOrder = () =>{
@@ -134,7 +129,8 @@ function Checkout(props) {
       listado_producto,
       detalle_pedido,
       monto_calculado,
-      
+      estado:'INICIAL', //Estado en cual se encuentra el pedido
+
       fecha_entrega:detalle_pedido.fecha_entrega,
       nombre:cliente.nombre+' '+cliente.apellido,
       id_cliente:cliente.id,
@@ -204,7 +200,6 @@ function Checkout(props) {
                       onClick={handleNext}
                       className={classes.button}
                       disabled = {buttonState}
-
                     >
                         Siguiente
                     </Button>

@@ -64,7 +64,7 @@ export default function Orders(props) {
   });
 
   return (
-    <React.Fragment>
+    <React.Fragment>                
       <Title>Pedidos para Hoy</Title>
       <Table className={classes.tablaPedidos}>
         <Thead>

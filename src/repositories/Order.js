@@ -113,6 +113,7 @@ class OrderRepo extends Component {
 
   }
 
+  //Se utiliza en validateDate
   search(id_pedido, array){
     for(let i = 0;  i++ ;  i < array.lenght ){
       if(id_pedido !== array[i].id_pedido){
@@ -163,6 +164,22 @@ class OrderRepo extends Component {
       return queryIni
     } catch (error) {
       console.error("Error en la base de datos, al validar las fechas.");
+      
+    }
+  }
+
+  async AllDeposits(){
+    try {
+      let list = [];
+      await db.where("eliminado","==",false) //Verifico que no este eliminado
+        .where("estado","==","INICIAL") //Verifico que el estado sea inicial
+        .get()
+        .then(result => {
+          list = result.docs.map(doc => doc.data().monto_calculado)
+        });
+      return list; //Devuelvo el listado de pedidos con estado INICIAL
+    } catch (error) {
+      console.error("Error en la base de datos al devolver depositos.");
       
     }
   }
