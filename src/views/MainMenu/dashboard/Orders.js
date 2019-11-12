@@ -6,14 +6,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-
 import OrderController from './../../../controllers/Order';
+
+import AlertDialog from './DialogSelectOrder.js';
 
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
@@ -29,20 +24,8 @@ export default function Orders(props) {
   const classes = useStyles();
   const [pedidos, setPedidos] = React.useState([]);
   const [cargarPedidos, setCargarPedidos] = React.useState(true);
-  const [open, setOpen] = React.useState(false);
-  const [pedidoSeleccionado, setPedidoSeleccionado] = React.useState();
-
-  const handleClickOpen = pedido  => {
-    setPedidoSeleccionado(pedido);
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
     React.useEffect(() => {
-      
       if (cargarPedidos) {
         OrderController.getOrdersNow()
           .then(pedidos => {
@@ -58,11 +41,12 @@ export default function Orders(props) {
     });
 
   return (
-    <React.Fragment>
+    <React.Fragment>                
       <Title>Pedidos para Hoy</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
+            <TableCell>Opciones</TableCell>
             <TableCell>Nombre</TableCell>
             <TableCell>Localidad</TableCell>
             <TableCell>Dirección</TableCell>
@@ -70,7 +54,11 @@ export default function Orders(props) {
         </TableHead>
         <TableBody>
           {pedidos.map(pedido => (
-            <TableRow key={pedido.id_pedido} onClick={() => handleClickOpen(pedido)}>
+            <TableRow key={pedido.id_pedido}>
+              
+              <TableCell>
+                <AlertDialog/>
+              </TableCell>
               <TableCell>{pedido.cliente.nombre +' ' +pedido.cliente.apellido}</TableCell>
               <TableCell>{pedido.ciudad}</TableCell>
               <TableCell>{pedido.direccion}</TableCell>
@@ -79,25 +67,6 @@ export default function Orders(props) {
         </TableBody>
       </Table>
 
-      <Dialog
-        open={open}
-        
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Detalle del Pedido"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Fecha de Entrega: {pedidoSeleccionado}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cerrar
-          </Button>
-        </DialogActions>
-      </Dialog>
     </React.Fragment>
   );
 }

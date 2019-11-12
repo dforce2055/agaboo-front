@@ -29,8 +29,8 @@ export default function Review() {
   detalle_pedido=JSON.parse(sessionStorage.getItem('info_detalle_pedido'));
 
   const payments = [
-    { name: 'Fecha de creacion: ', detail: detalle_pedido.fechaDeCreacionPedido },
-    { name: 'Fecha de entrega: ', detail: detalle_pedido.fechaDeEntregaPedido },
+    { name: 'Fecha de creacion: ', detail: detalle_pedido.fecha_entrega },
+    { name: 'Fecha de entrega: ', detail: detalle_pedido.fecha_finalizacion },
     { name: 'Contacto en trabajo: ', detail: detalle_pedido.ContactoEnTrabajo},
     { name: 'Ubicacion de entrega: ', detail: detalle_pedido.ubicacionDeEntrega },
   ];

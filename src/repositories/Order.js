@@ -116,15 +116,46 @@ class OrderRepo extends Component {
   
 
 
-  // contarProductos(array, listado_producto){
-  //   let i = 0;
-  //   while(listado_producto[i]< listado_producto.lenght){
-  //     array.push(listado_producto[i])
-  //     i++;
-  //   }
+  agregarProductos(listado_producto, array){
+    for (let index = 0; index < array.length; index++) {
+      array.push({"Cantidad : " : listado_producto[index].cantidad , 
+                  "Producto : " : listado_producto[index].producto});
+      }
+    
+      for (let index = 0; index < array.length; index++) {
+        const = }
+    // array.push({
+    //   if (listado_producto[index].producto === "Baño Quimico") {
+    //     if (listado_producto[index].modelo === "AG1") {
+          
+    //     }
+    //     if (listado_producto[index].modelo === "AG1") {
+          
+    //     }
+    //     if (listado_producto[incure dex].modelo === "AG1") {
+          
+    //     }
+    //   } else if (listado_producto[index]. === "AG1") {
+          
+    //   }
+    // })
+    
 
-  // }
+  };
 
+
+  
+
+  //Se utiliza en validateDate
+  search(id_pedido, array){
+    for(let i = 0;  i++ ;  i < array.lenght ){
+      if(id_pedido !== array[i].id_pedido){
+        return true;
+      }
+    }
+    return false;
+    
+  }
 
   async validateDate(fecha_ini,fecha_fin){
     if(!fecha_fin) throw new Error('Error: No llego la fecha de fin.')
@@ -137,6 +168,7 @@ class OrderRepo extends Component {
       let query = {};
       await db
       .where("detalle_pedido.fecha_finalizacion",">=",fecha_ini)
+      
       //.orderBy("detalle_pedido.fecha_finalizacion")
         .get()
         .then(result=>{
@@ -145,26 +177,17 @@ class OrderRepo extends Component {
       console.log("MUESTRO QUERY INI ",query);
       let array = [];
       let i = 0;
-
       
-      query.forEach(element => {
-        
-        if(element.detalle_pedido.fecha_finalizacion < fecha_fin){
-          console.log("Contar sus productos :" , query[i]);
-          //contarProductos(array, element.listado_producto);
-        }else if(element.detalle_pedido.fecha_entrega < fecha_fin){
-          console.log("Contar sus productos :" , query[i]);
-          //contarProductos(array, listado_producto)
-        }else{
-          console.log("Saco este documento" , query[i]);
-          query.splice(i, 1);
+      query.forEach(element => {  
+        if(element.detalle_pedido.fecha_entrega <= fecha_fin ){
+          console.log("Pedido que entro", element.detalle_pedido.fecha_entrega);
+          this.agregarProductos(element.listado_producto, array);
         }
-        i++ ;
-        
+        i++;
       });
 
 
-      console.log("MUESTRO QUERY FIN ",array);
+      console.log("MUESTRO QUERY FIN ",query);
 
 
 
@@ -184,6 +207,22 @@ class OrderRepo extends Component {
       return query
     } catch (error) {
       console.error("Error en la base de datos, al validar las fechas.");
+      
+    }
+  }
+
+  async AllDeposits(){
+    try {
+      let list = [];
+      await db.where("eliminado","==",false) //Verifico que no este eliminado
+        .where("estado","==","INICIAL") //Verifico que el estado sea inicial
+        .get()
+        .then(result => {
+          list = result.docs.map(doc => doc.data().monto_calculado)
+        });
+      return list; //Devuelvo el listado de pedidos con estado INICIAL
+    } catch (error) {
+      console.error("Error en la base de datos al devolver depositos.");
       
     }
   }

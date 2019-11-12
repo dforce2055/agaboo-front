@@ -1,16 +1,12 @@
 import React from "react";
 import "./Form.css";
 import Container from '@material-ui/core/Container';
-import FormControl from '@material-ui/core/FormControl';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
 import SimpleTable from './OrderDetail/TableProduct';
 
 function formulario(handleChange, value){
   
   return(
-    <form>
+    <form noValidate>
       <div className="password">
             <label htmlFor="dni">Direccion de cobro</label> 
             <input
@@ -118,38 +114,20 @@ export default function Form() {
     sessionStorage.setItem('info_detalle_pedido',JSON.stringify(values)); 
   };
 
-  // const authFec = () => {
-  //   if (values.fechaDeCreacionPedido) {
-  //     return values.fechaDeCreacionPedido;
-  //   }
-  // }
-
-  // React.useEffect( () => {
-  //   if(values.fechaDeCreacionPedido){
-  //     setValues({ ...values, ['fechaDeEntregaPedido']: values.fechaDeCreacionPedido }); 
-
-  //   }
-  // })
-
-
-  const handleSubmit= () =>{
-
-    //Agrego detalle pedido a SESSION STORAGE
-    
+  const handleSubmit= () =>{    
     
     console.log("Agrego info_detalle_pedido a SESSION STORAGE");
 
-    //sessionStorage.setItem("detalle_pedido",JSON.stringify());
+    sessionStorage.setItem("info_detalle_pedido",JSON.stringify(values));
   }
 
   
   return (
     <React.Fragment>
     <Container  maxWidth="md" className='nuevo'>
-        <form onSubmit={handleSubmit} noValidate>
-          {formulario(handleChange, values.fechaDeCreacionPedido)}
-          {/*detallePedido(product,handleProductChange,handleChange)*/}
-          <SimpleTable></SimpleTable>
+        <form onSubmit={handleSubmit}>
+          {formulario(handleChange, values.fechaDeCreacionPedido)}          <SimpleTable></SimpleTable>
+          <div Justify='center'>ASDS</div>
         </form>
     </Container>
   </React.Fragment>
