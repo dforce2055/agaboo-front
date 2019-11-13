@@ -21,7 +21,7 @@ const styles = theme => ({
         },
     },
     paper: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(5),
         marginBottom: theme.spacing(10),
         display: 'flex',
         flexDirection: 'column',
@@ -39,6 +39,7 @@ const styles = theme => ({
     },
     logo: {
         marginTop: theme.spacing(3),
+        marginBottom: theme.spacing(2),
     },
     photo: {
         backgroundSize: 'cover',
