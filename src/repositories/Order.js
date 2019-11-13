@@ -104,28 +104,37 @@ class OrderRepo extends Component {
   };
   
   contarProductos(pedidosSeleccionados){
-    let Oficina = 0;
+    
     let lsProductos = pedidosSeleccionados.map(function(x) {
       return x.lista;
     });
     lsProductos = lsProductos.flat();
-    lsProductos.forEach(function(element) {
-      //console.log(element);
-    });
-    
-    const reducer = (accumulator,oficina)=>{
-      console.log(accumulator);
-      console.log(oficina);
-      let x = 0;
-      let x2 = 0;
-      x += parseInt(oficina.cantidad)
-          console.log("cantidad",x);
 
-        return x
+    //Cuento la cantidad por los distintos productos.
+    var result = [];
+    lsProductos.reduce(function(res,value) {
+      if (!res[value.producto]) {
+        res[value.producto] = {producto:value.producto,cantidad:0};
+        result.push(res[value.producto])
+      }
+      res[value.producto].cantidad += parseInt(value.cantidad);
+      return res;
+    },{})
+    console.log(result); //Muestro el resultado de la cuenta.
+
+
+    //GROUP BY EN JAVASCRIPT
+    const groupBy = (array,key) => {
+      return array.reduce((result,currentValue) => {
+        (result[currentValue[key]] = result[currentValue[key]] || []).push(
+          parseInt(currentValue.cantidad)
+          )
+        return result;
+      },{})
     }
-
-    console.log(lsProductos.reduce(reducer));
-    
+    //Guardo resultado de groupBy y muestro por consola. Se agrupa por el parametro que indiques como segundo parametro.
+    const listGroupedByProducto = groupBy(lsProductos, 'producto');
+    console.log(listGroupedByProducto);
   }
     
 
@@ -140,11 +149,8 @@ class OrderRepo extends Component {
 
   };
   
-  
 
   //Se utiliza en validateDate
-
-
   async validateDate(fecha_ini,fecha_fin){
     if(!fecha_fin) throw new Error('Error: No llego la fecha de fin.')
     if(!fecha_ini) throw new Error('Error: No llego la fecha de inicio.')
@@ -161,12 +167,12 @@ class OrderRepo extends Component {
         .then(result=>{
           query = result.docs.map(doc => doc.data())
         })
-      console.log("MUESTRO QUERY INI ",query);
+      //console.log("MUESTRO QUERY INI ",query);
       let pedidosSelecionados = [];
       
       query.forEach(pedido => {  
         if(pedido.detalle_pedido.fecha_entrega <= fecha_fin ){
-          console.log("Pedido que entro", pedido.detalle_pedido.fecha_entrega, "Fecha fin" , pedido.detalle_pedido.fecha_finalizacion );
+         // console.log("Pedido que entro", pedido.detalle_pedido.fecha_entrega, "Fecha fin" , pedido.detalle_pedido.fecha_finalizacion );
           pedidosSelecionados.push({"id" : pedido.id_pedido, "lista" : pedido.listado_producto})
         }
       });
