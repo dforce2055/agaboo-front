@@ -190,9 +190,20 @@ class OrderRepo extends Component {
 
   async AllDeposits(){
     try {
+      let fechaActual = new Date();
+      let fechaInicioMes = fechaActual.getFullYear() +'-'
+                        +(fechaActual.getMonth()+1) +'-' //La función devuelve mes actual menos uno
+                        +'01';
+     
+      let fechaFinMes = fechaActual.getFullYear() +'-'
+                        +(fechaActual.getMonth()+1) +'-' //La función devuelve mes actual menos uno
+                        +'31';
+     
       let list = [];
       await db.where("eliminado","==",false) //Verifico que no este eliminado
         .where("estado","==","INICIAL") //Verifico que el estado sea inicial
+        .where("fecha_entrega",">=",fechaInicioMes)
+        .where("fecha_entrega","<=",fechaFinMes)
         .get()
         .then(result => {
           list = result.docs.map(doc => doc.data().monto_calculado)
@@ -200,7 +211,6 @@ class OrderRepo extends Component {
       return list; //Devuelvo el listado de pedidos con estado INICIAL
     } catch (error) {
       console.error("Error en la base de datos al devolver depositos.");
-      
     }
   }
 }
