@@ -1,7 +1,6 @@
 /* eslint-disable no-script-url */
 
 import React from 'react';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './Title';
@@ -16,7 +15,13 @@ const useStyles = makeStyles({
 
 export default function Deposits() {
   const classes = useStyles();  
-
+  const [loaded,setLoaded] = React.useState(true);
+  const [mountOrderCurrent,setMountOrderCurrent] = React.useState('Cargando...');
+  const handleNewQuery = () =>{
+    setLoaded(true);
+  }
+  const fechaActual = new Date();
+  
   React.useEffect(()=>{
     if (loaded) {      
       let sum = 0;
@@ -33,26 +38,21 @@ export default function Deposits() {
       setLoaded(false);
     }
   });
-  const [loaded,setLoaded] = React.useState(true);
-  const [mountOrderCurrent,setMountOrderCurrent] = React.useState('Cargando...');
-  const handleNewQuery = () =>{
-    setLoaded(true);
-  }
+  
+
   return (
     <React.Fragment>
     <Button variant="contained" onClick={handleNewQuery}>QUERY</Button>
-      <Title>Depositos Recientes</Title>
+      <Title>Ingreso Mensual</Title>
       <Typography component="p" variant="h4">
       {mountOrderCurrent}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
-        on 15 March, 2019
+      {'Dato correspondiente al mes '}
+        {fechaActual.getMonth()+1}
+        {'/'}
+        {fechaActual.getFullYear()}
       </Typography>
-      {/*<div>
-        <Link color="primary" href="javascript:;">
-          View balance
-        </Link>
-      </div>*/}
     </React.Fragment>
   );
 }
