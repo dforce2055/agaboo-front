@@ -352,13 +352,13 @@ function EnhancedTable(props) {
                       />      
                       </TableCell>
 
-                      <TableCell component="th" id={labelId} scope="row" padding="none">
+                      <TableCell component="th" id={labelId} scope="row" padding="none" key={row.id}>
                         {row.nombre}
                       </TableCell>
-                      <TableCell align="right">{row.id_cliente}</TableCell>
-                      <TableCell align="right">{row.fecha_entrega}</TableCell>
-                      <TableCell align="right">{row.ciudad}</TableCell>
-                      <TableCell align="right">{row.direccion}</TableCell>
+                      <TableCell align="right" key={row.id}>{row.id_cliente}</TableCell>
+                      <TableCell align="right" key={row.id}>{row.fecha_entrega}</TableCell>
+                      <TableCell align="right" key={row.id}>{row.ciudad}</TableCell>
+                      <TableCell align="right" key={row.id}>{row.direccion}</TableCell>
                     </TableRow>
                   );
                 })}
