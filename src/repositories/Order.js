@@ -105,10 +105,7 @@ class OrderRepo extends Component {
   
   contarProductos(pedidosSeleccionados){
     
-    let lsProductos = pedidosSeleccionados.map(function(x) {
-      return x.lista;
-    });
-    lsProductos = lsProductos.flat();
+    let lsProductos = pedidosSeleccionados.flatMap(pedido => pedido.lista);
 
     //Cuento la cantidad por los distintos productos.
     var result = [];
@@ -190,25 +187,27 @@ class OrderRepo extends Component {
 
   async AllDeposits(){
     try {
+      //Guardo fecha del mes actual
       let fechaActual = new Date();
-      let fechaInicioMes = fechaActual.getFullYear() +'-'
-                        +(fechaActual.getMonth()+1) +'-' //La función devuelve mes actual menos uno
-                        +'01';
-     
-      let fechaFinMes = fechaActual.getFullYear() +'-'
-                        +(fechaActual.getMonth()+1) +'-' //La función devuelve mes actual menos uno
-                        +'31';
-     
-      let list = [];
+      let fecha_inicio_mes = fechaActual.getFullYear() +'-'+(fechaActual.getMonth()+1)+'-'+'01';
+      let fecha_fin_mes = fechaActual.getFullYear() +'-'+(fechaActual.getMonth()+1) +'-'+'31';
+
+      //Suma total que voy a retornar
+      let sum = 0;
+
       await db.where("eliminado","==",false) //Verifico que no este eliminado
         .where("estado","==","INICIAL") //Verifico que el estado sea inicial
         // .where("fecha_entrega",">=",fechaInicioMes)
         // .where("fecha_entrega","<=",fechaFinMes)
         .get()
         .then(result => {
-          list = result.docs.map(doc => doc.data().monto_calculado)
+          result.docs.map( doc =>{
+            if (doc.data().fecha_entrega >= fecha_inicio_mes && doc.data().fecha_entrega <=fecha_fin_mes) 
+              sum += doc.data().monto_calculado
+          })
         });
-      return list; //Devuelvo el listado de pedidos con estado INICIAL
+        
+      return sum;
     } catch (error) {
       console.error("Error en la base de datos al devolver depositos.");
     }

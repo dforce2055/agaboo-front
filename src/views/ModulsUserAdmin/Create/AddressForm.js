@@ -194,7 +194,7 @@ function AddressForm(props) {
               fullWidth
               required
               value={values.calle}
-              validators={['required','matchRegexp:^[a-zA-Z ]*$']}
+              validators={['required','matchRegexp:[0-9a-zA-Z]+$']}
               errorMessages={['Campo requerido', 'Calle no valida']}
             />
           </Grid>

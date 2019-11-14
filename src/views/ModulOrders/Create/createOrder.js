@@ -3,7 +3,9 @@ import "./Form.css";
 import Container from '@material-ui/core/Container';
 import SimpleTable from './OrderDetail/TableProduct';
 
-function formulario(handleChange,value){
+function formulario(handleChange, value){
+  const now = new Date;
+  const minDate = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
   
   return(
     <form noValidate>
@@ -57,6 +59,7 @@ function formulario(handleChange,value){
               type="date"
               name="fecha_entrega"
               noValidate
+              min= {minDate}
               onChange={handleChange('fecha_entrega')}
             />
           </div>
@@ -97,14 +100,15 @@ function formulario(handleChange,value){
   );
 }
 
-export default function Form() {
+export default function Form(props) {
+  const { setButtonState } = props; 
 
   const [values,setValues] = React.useState({
     lugarDePago:'',
     responsableDelPago:'',
     ContactoEnTrabajo:'',
     formaDePago:'',
-    fecha_entrega:'',
+    fecha_entrega: '',
     fecha_finalizacion: '',
     ubicacionDeEntrega:'',
     ciudad:''
@@ -112,7 +116,7 @@ export default function Form() {
 
   const handleChange = name => event => {    
     setValues({ ...values, [name]: event.target.value }); 
-    sessionStorage.setItem('info_detalle_pedido',JSON.stringify(values)); 
+    sessionStorage.setItem('info_detalle_pedido',JSON.stringify(values));    
   };
 
   const handleSubmit= () =>{    
@@ -127,9 +131,9 @@ export default function Form() {
     <React.Fragment>
     <Container  maxWidth="md" className='nuevo'>
         <form onSubmit={handleSubmit} noValidate>
-          {formulario(handleChange,values.fecha_entrega)}
+          {formulario(handleChange, values.fecha_entrega)}
           {/*detallePedido(product,handleProductChange,handleChange)*/}
-          <SimpleTable></SimpleTable>
+          <SimpleTable setButtonState={setButtonState}></SimpleTable>
         </form>
     </Container>
   </React.Fragment>
