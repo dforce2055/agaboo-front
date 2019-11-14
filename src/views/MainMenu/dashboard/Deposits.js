@@ -22,11 +22,11 @@ export default function Deposits() {
       let sum = 0;
       OrderController.allDeposits()
       .then(result=>{
-        //Recorro y sumo todos los valores que devuelto
-        for (let i = 0; i < result.length; i++) {
-          sum += result[i];
+        if (result) { //Si result existe suma
+          sum = result.reduce((acc,index) => acc+index,0)
+        }else{ //En caso de que no exista mostrara error
+          sum = 'ERROR';
         }
-      console.log(sum);
       setMountOrderCurrent('$'+sum);
       });
 
@@ -34,7 +34,7 @@ export default function Deposits() {
     }
   });
   const [loaded,setLoaded] = React.useState(true);
-  const [mountOrderCurrent,setMountOrderCurrent] = React.useState('Cargando...');
+  const [mountOrderCurrent,setMountOrderCurrent] = React.useState('Calculando...');
   const handleNewQuery = () =>{
     setLoaded(true);
   }
