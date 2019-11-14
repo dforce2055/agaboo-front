@@ -20,14 +20,18 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleTable() {
+export default function SimpleTable(props) {
 
   React.useEffect(()=>{
     if(stateArray){
       //Elimino elemento seleccionado.
       var indexDelete = arrayProduct.indexOf(deletePosition)
       arrayProduct.splice(indexDelete,1)
-      setStateArray(false)
+      if (arrayProduct.length === 0 ) {
+        setButtonState(true);
+        sessionStorage.removeItem('arreglo_productos');
+      }
+      setStateArray(false);
     }
   });
   const classes = useStyles();
@@ -45,6 +49,8 @@ export default function SimpleTable() {
   const [arrayProduct,setArrayProduct] = React.useState([]);
   let [deletePosition,setDeletePosition] = React.useState({});
   const [stateArray,setStateArray] = React.useState(false);
+
+  const { setButtonState } = props; 
 /*
  Para evitar el error ==> index.js:1375 Warning: validateDOMNesting(...): <form> cannot appear as a descendant of <form>.
 
@@ -82,6 +88,23 @@ export default function SimpleTable() {
     console.log("MUESTRO INFORMACION DE DETALLE GUARDADA EN SESSION STORAGE:",JSON.parse(infoDetalle));
     
     clearObj();
+
+
+    let infoDetalleValidation = JSON.parse(infoDetalle);
+    let incomplete;
+    if (infoDetalleValidation) {
+      if (!infoDetalleValidation.ContactoEnTrabajo) incomplete = true;     
+      if (!infoDetalleValidation.ciudad) incomplete = true;     
+      if (!infoDetalleValidation.fecha_entrega) incomplete = true;     
+      if (!infoDetalleValidation.fecha_finalizacion) incomplete = true;     
+      if (!infoDetalleValidation.formaDePago) incomplete = true;     
+      if (!infoDetalleValidation.lugarDePago) incomplete = true;     
+      if (!infoDetalleValidation.responsableDelPago) incomplete = true;     
+      if (!infoDetalleValidation.ubicacionDeEntrega) incomplete = true;     
+      
+      if (!incomplete) setButtonState(false);
+    }
+    
   } 
 
   //Metodo para eliminar una tupla de la tabla producto con cantidad.

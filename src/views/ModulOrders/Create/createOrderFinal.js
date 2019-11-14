@@ -13,6 +13,8 @@ import { withRouter } from "react-router-dom";
 //AGREGADO 
 import Review from './FinalPartOrdered/Review';
 import OrderController from '../../../controllers/Order.js';
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 const theme = createMuiTheme({ /* Plantilla de edicion */
     overrides: {
@@ -91,7 +93,7 @@ function getStepContent(step, setButtonState ) {
     case 0:
       return <AddressForm setButtonState = {setButtonState}/>;
     case 1:
-      return <PaymentForm/>;
+      return <PaymentForm setButtonState={setButtonState}/>;
     case 2:
       return <Review/>;
     default:
@@ -107,7 +109,8 @@ function Checkout(props) {
   
   const handleNext = () => {
     if(sessionStorage.getItem('info_cliente_pedido')){
-      setActiveStep(activeStep + 1) ;  
+      setActiveStep(activeStep + 1) ;
+      setButtonState(true);
     }
   };
 
@@ -194,15 +197,20 @@ function Checkout(props) {
                         Registrar pedido
                     </Button>
                     ) : (
-                      <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={handleNext}
-                      className={classes.button}
-                      disabled = {buttonState}
-                    >
-                        Siguiente
-                    </Button>
+                      
+                            <Tooltip title="Complete todos los campos para habilitar el botón" aria-label="add">
+                              <span>
+                                <Button
+                                variant="contained"
+                                color="secondary"
+                                onClick={handleNext}
+                                className={classes.button}
+                                disabled = {buttonState}
+                              >
+                                  Siguiente
+                              </Button>
+                            </span>
+                          </Tooltip>
                     )}
                 </div>
               </React.Fragment>
