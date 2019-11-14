@@ -185,7 +185,7 @@ class OrderRepo extends Component {
     }
   }
 
-  async AllDeposits(){
+  async allDepositsInActualMonth(){
     try {
       //Guardo fecha del mes actual
       let fechaActual = new Date();
@@ -197,8 +197,6 @@ class OrderRepo extends Component {
 
       await db.where("eliminado","==",false) //Verifico que no este eliminado
         .where("estado","==","INICIAL") //Verifico que el estado sea inicial
-        // .where("fecha_entrega",">=",fechaInicioMes)
-        // .where("fecha_entrega","<=",fechaFinMes)
         .get()
         .then(result => {
           result.docs.map( doc =>{

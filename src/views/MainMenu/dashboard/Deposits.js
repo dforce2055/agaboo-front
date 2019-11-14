@@ -5,11 +5,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './Title';
 import OrderController from '../../../controllers/Order.js';
-import { Button } from '@material-ui/core';
+// import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles({
   depositContext: {
     flex: 1,
+    marginTop:'50px',
   },
 });
 
@@ -17,15 +18,15 @@ export default function Deposits() {
   const classes = useStyles();  
   const [loaded,setLoaded] = React.useState(true);
   const [mountOrderCurrent,setMountOrderCurrent] = React.useState('Calculando...');
-  const handleNewQuery = () =>{
-    setLoaded(true);
-  }
+  // const handleNewQuery = () =>{
+  //   setLoaded(true);
+  // }
   const fechaActual = new Date();
   
   React.useEffect(()=>{
     if (loaded) {      
       let sum = 0;
-      OrderController.allDeposits()
+      OrderController.allDepositsInActualMonth()
       .then(result=>{
         if (result) { //Si result existe suma
           sum = result
@@ -42,7 +43,7 @@ export default function Deposits() {
 
   return (
     <React.Fragment>
-    <Button variant="contained" onClick={handleNewQuery}>QUERY</Button>
+    {/* <Button variant="contained" onClick={handleNewQuery}>QUERY</Button> */}
       <Title>Ingreso Mensual</Title>
       <Typography component="p" variant="h4">
       {mountOrderCurrent}

@@ -66,9 +66,9 @@ class OrderController extends Component {
     }
   }
 
-  allDeposits(){    
+  allDepositsInActualMonth(){    
     try {
-      return OrderRepo.AllDeposits()
+      return OrderRepo.allDepositsInActualMonth()
     } catch (error) {
       console.error("Error en el controlador de pedidos al enviar depositos.");      
     }
