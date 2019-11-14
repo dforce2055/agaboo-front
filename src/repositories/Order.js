@@ -105,10 +105,7 @@ class OrderRepo extends Component {
   
   contarProductos(pedidosSeleccionados){
     
-    let lsProductos = pedidosSeleccionados.map(function(x) {
-      return x.lista;
-    });
-    lsProductos = lsProductos.flat();
+    let lsProductos = pedidosSeleccionados.flatMap(pedido => pedido.lista);
 
     //Cuento la cantidad por los distintos productos.
     var result = [];
