@@ -10,7 +10,7 @@ function SimpleMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const {history} = props;
   const {listado_producto} = props;
-
+  const {updateArray} = props;
   //Pedido entero, asi lo puedo mapear en ProductListOrder.js. El cual es la pantalla para mostrar todos los productos y su cantidad, asi el empleado puede agregar un id's.
   const {id_pedido} = props;
 
@@ -33,7 +33,7 @@ function SimpleMenu(props) {
   const handleDeleteOrder = () =>{
     OrderController.deleteOrder(id_pedido)
     //Cambio estado para actualizar el listado de los pedidos. Cuando uno sea eliminado.
-    setA(true);
+    updateArray();
     setAnchorEl(null);
   }
 

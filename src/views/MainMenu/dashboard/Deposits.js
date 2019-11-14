@@ -23,7 +23,7 @@ export default function Deposits() {
       OrderController.allDeposits()
       .then(result=>{
         if (result) { //Si result existe suma
-          sum = result.reduce((acc,index) => acc+index,0)
+          sum = result
         }else{ //En caso de que no exista mostrara error
           sum = 'ERROR';
         }

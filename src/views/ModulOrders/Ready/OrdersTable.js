@@ -241,17 +241,17 @@ const useStyles = makeStyles(theme => ({
 function EnhancedTable(props) {
   
   React.useEffect(()=>{
-    if (a) {      
+    if (stateArray) {      
       //Guardo la informacion traida de la base de datos en ROWS para poder mapear el array
       OrderController.getOrders()
         .then(value =>{
           rows = value;
-        setA(false);
+          setStateArray(false);
         }); 
     }
   });
    
-  const [a,setA] = React.useState(true);
+  const [stateArray,setStateArray] = React.useState(true);
 
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
@@ -284,6 +284,10 @@ function EnhancedTable(props) {
   function handleChangeRowsPerPage(event) {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  }
+
+  const updateArray = () => {
+    setStateArray(true);
   }
 
   const isSelected = nombre => selected.indexOf(nombre) !== -1;
@@ -345,8 +349,7 @@ function EnhancedTable(props) {
                       <TableCell>
                       {/*Paso listado_productos por props, asi lo puede recibir la clase ButtonOption el cual contiene las opciones que se utilizaran al hacer click en el icono MoreHorizIcon(los tres puntos)*/}
                       <SimpleMenu 
-                      //Paso observer
-                      setA={setA}
+                      updateArray={updateArray}
                       listado_producto = {row.listado_producto} //Listado producto entero
                       id_pedido={row.id_pedido} //Id del pedido seleccionado
                       />      
