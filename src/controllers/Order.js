@@ -69,9 +69,9 @@ class OrderController extends Component {
   }
 
   //Devuelve todos la suma de todos los pedidos que estan pendiente de pago del mes actual.
-  allDeposits(){    
+  allDepositsInActualMonth(){    
     try {
-      return OrderRepo.AllDeposits()
+      return OrderRepo.allDepositsInActualMonth()
     } catch (error) {
       console.error("Error en el controlador de pedidos al enviar depositos. ",error); 
     }

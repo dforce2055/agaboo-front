@@ -10,7 +10,7 @@ import Fab from '@material-ui/core/Fab';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AddIcon from '@material-ui/icons/Add';
 import { withRouter } from "react-router-dom";
-
+import { hideFooter } from './../../Footer/HideFooter';
 
 
 
@@ -112,6 +112,7 @@ const useStyles = makeStyles(theme => ({
 
   useEffect(() => {
     getProducts();
+    hideFooter();
   });
   
   return (

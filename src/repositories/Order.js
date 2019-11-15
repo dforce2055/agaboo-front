@@ -151,7 +151,7 @@ class OrderRepo extends Component {
     }
   }
 
-  async AllDeposits(){
+  async allDepositsInActualMonth(){
     try {
       //Guardo fecha del mes actual
       let fechaActual = new Date();
