@@ -144,7 +144,7 @@ function ListAdmin(props){
           
   {/* //******************************LISTA ESTADO DE CUENTA********************************** */}
   <List>
-    <ListItem button> 
+    <ListItem button onClick={() => history.push('/EstadoDeCuenta')}> 
       <ListItemIcon>      
       <LocalAtmIcon/>
       </ListItemIcon> 

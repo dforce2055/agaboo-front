@@ -21,6 +21,7 @@ import { CssBaseline } from '@material-ui/core'
 import firebase from '../src/config/firebase';
 import LoaderScreen from './views/LoaderScreen/LoaderScreen';
 
+import AccountStatus from './views/ModulOrders/AccountStatus/index.js';
 
 import CustomizedTables from './views/ModulOrders/Ready/Add-ID/ProductListOrder';
 
@@ -54,6 +55,7 @@ export default function App() {
                 <Route path= "/pedidosListos" component={OrderReady} />
                 <Route path= "/eliminarPedidos" component={DeleteOrder} />
                 <Route path = "/rellenarPedido" component={CustomizedTables}/>
+                <Route path = "/EstadoDeCuenta" component={AccountStatus}/>
             </React.Fragment>
         </ BrowserRouter>
     </MuiThemeProvider>

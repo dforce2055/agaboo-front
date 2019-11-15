@@ -1,7 +1,5 @@
 import { Component } from 'react';
 import firebase from '../config/firebase';
-import ProductController from '../controllers/Product';
-import { array } from 'prop-types';
 
 const collection = '/orders';
 
@@ -55,37 +53,18 @@ class OrderRepo extends Component {
   async getOrdersNow() {
     try {
       let fechaHoy = new Date();
-      let fechaFormat = fechaHoy.getFullYear() +'-'
-                        +(fechaHoy.getMonth()+1) +'-' //La función devuelve mes actual menos uno
-                        +(fechaHoy.getDate());
+       //La función devuelve mes actual menos uno
+      let fechaFormat = fechaHoy.getFullYear() +'-'+(fechaHoy.getMonth()+1) +'-'+(fechaHoy.getDate());
       
       let list = {};
       await db
         .where("eliminado", "==", false)
         .where("fecha_entrega", "==", fechaFormat)
         .get()
-        .then(result => {
-          list = result.docs.map(doc => doc.data())
-        })
+        .then(result => list = result.docs.map(doc => doc.data()))
       return list;
     } catch (error) {
       console.error("Error en base de datos: ", error);
-    }
-  }
-
-
-  //Metodo que verifica si tiene la cantidad disponible entre esas fechas
-  async authAlqProduct(fec_ini,fec_fin){
-    try {
-      let ini = fec_ini;
-      let fin = fec_fin;
-      let id = ''; //Poner el id del pedido.
-      if (ini <= fin) {
-        db.get(id)
-          .then()
-      }      
-    } catch (error) {
-      console.log("Error en base de datos: ",error);
     }
   }
 
@@ -132,20 +111,7 @@ class OrderRepo extends Component {
     //Guardo resultado de groupBy y muestro por consola. Se agrupa por el parametro que indiques como segundo parametro.
     const listGroupedByProducto = groupBy(lsProductos, 'producto');
     console.log(listGroupedByProducto);
-  }
-    
-
-  //Verifica que los productos agregados al pedido existan
-  async verifyProductExistence(id_producto){
-    try { 
-      return ProductController.getExistsProduct(id_producto.toString())
-
-    } catch (error) {
-      console.error("Error en la database: ",error);
-    }
-
-  };
-  
+  }  
 
   //Se utiliza en validateDate
   async validateDate(fecha_ini,fecha_fin){
@@ -207,8 +173,51 @@ class OrderRepo extends Component {
         
       return sum;
     } catch (error) {
-      console.error("Error en la base de datos al devolver depositos.");
-      
+      console.error("Error en la base de datos al devolver depositos. ",error);
+    }
+  }
+
+  //Devuelve todos los pedidos que no estan cobrados
+  async unpaidOrders(){
+    try {
+      let list = [];
+      await db.where("eliminado","==",false)
+      .get()
+      .then(result=>{
+        if(result.estado !== "PAGADO")
+          list = result.docs.map(doc => doc.data())
+      });
+
+      return list;
+    } catch (error) {
+      console.error("Error en la base de datos al devolver los pedidos. ",error)
+    }
+  }
+
+  async totalUnpaidOrders(){
+    try {
+      let sum = 0;
+      await db.where("eliminado","==",false)
+      .get()
+      .then(result=>{
+        result.docs.map( doc =>{
+          if (doc.data().estado !== "PAGADO")
+            sum += doc.data().monto_calculado
+        })
+      })
+      return sum;
+    } catch (error) {
+      console.error("Error en la base de datos al calcular el valor total de pedidos impagos.",error);
+    }
+  }
+
+  async changeOrderPayment(id_pedido){
+    try {
+      db.doc(id_pedido)
+        .update({eliminado:true,estado:'PAGADO'})
+
+    } catch (error) {
+      console.error("Error en la base de datos al cambiar estado del pedido"+id_pedido+".",error);
     }
   }
 }
