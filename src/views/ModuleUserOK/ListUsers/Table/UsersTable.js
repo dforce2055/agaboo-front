@@ -30,6 +30,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import AsynchronousSearch from '../Search/Autocomplete';
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { hideFooter } from './../../../Footer/HideFooter';
 
 const theme = createMuiTheme({
   overrides: {
@@ -183,6 +184,8 @@ function UsersTable(props) {
             console.log("Error al traer los usuarios => ", error);
           })
       }
+
+      hideFooter();
     });
 
   function updateStateArray(){

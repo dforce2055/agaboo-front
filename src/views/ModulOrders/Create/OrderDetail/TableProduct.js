@@ -10,6 +10,8 @@ import CustomizedSelects from './SelectCantProduct';
 import ClearIcon from '@material-ui/icons/Clear';
 import Fab from '@material-ui/core/Fab';
 
+import { hideFooter } from './../../../Footer/HideFooter';
+
 const useStyles = makeStyles({
   root: {
     width: '100%',
@@ -33,7 +35,10 @@ export default function SimpleTable(props) {
       }
       setStateArray(false);
     }
+
+    hideFooter();
   });
+
   const classes = useStyles();
 
     //Objeto el cual almacenare en sessionStorage

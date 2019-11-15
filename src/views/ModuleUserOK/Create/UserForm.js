@@ -24,6 +24,8 @@ import {
   DialogTitle
 } from '@material-ui/core/';
 
+import { hideFooter } from './../../Footer/HideFooter';
+
 
 const theme = createMuiTheme({
   overrides: {
@@ -220,6 +222,8 @@ function AddressForm(props) {
     if (usuario) { //Seteo los campos con los datos del usuario
       setValues(usuario);
     }
+
+    hideFooter();
   }, []);
 
   const handleChange = name => event => {
