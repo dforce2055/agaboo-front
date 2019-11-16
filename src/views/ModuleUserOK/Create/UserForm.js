@@ -87,7 +87,7 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-const IOSSwitch = withStyles((theme: Theme) =>
+const IOSSwitch = withStyles((theme) =>
   createStyles({
     root: {
       width: 48,
@@ -126,7 +126,7 @@ const IOSSwitch = withStyles((theme: Theme) =>
     checked: {},
     focusVisible: {},
   }),
-)(({ classes, ...props }: Props) => {
+)(({ classes, ...props }) => {
   return (
     <Switch
       focusVisibleClassName={classes.focusVisible}

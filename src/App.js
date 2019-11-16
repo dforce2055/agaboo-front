@@ -57,7 +57,7 @@ export default function App() {
                 <Route path = "/rellenarPedido" component={CustomizedTables}/>
                 <Route path = "/EstadoDeCuenta" component={AccountStatus}/>
             </React.Fragment>
-        </ BrowserRouter>
+        </BrowserRouter>
     </MuiThemeProvider>
     ) : <LoaderScreen/>
 }
