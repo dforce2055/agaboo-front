@@ -40,7 +40,7 @@ class UserController extends Component {
     
 
     getAllUsers = async (cant) => {
-        if (!cant) cant = 10; 
+        if (!cant) let cant = 10; 
         try {
             let users = await UserRepo.getAllUsers(cant);
 
