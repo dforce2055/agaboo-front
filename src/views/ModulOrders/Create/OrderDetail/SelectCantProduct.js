@@ -22,6 +22,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function CustomizedSelects(props) {
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(()=>{
     if (cant_prodt_select.producto === 'Baño Quimico') {
       setModeloBaño(true);

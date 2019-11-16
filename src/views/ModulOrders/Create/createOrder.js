@@ -4,7 +4,7 @@ import Container from '@material-ui/core/Container';
 import SimpleTable from './OrderDetail/TableProduct';
 
 function formulario(handleChange, value){
-  const now = new Date;
+  const now = new Date();
   const minDate = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
   
   return(

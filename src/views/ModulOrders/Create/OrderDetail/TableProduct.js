@@ -24,6 +24,7 @@ const useStyles = makeStyles({
 
 export default function SimpleTable(props) {
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(()=>{
     if(stateArray){
       //Elimino elemento seleccionado.

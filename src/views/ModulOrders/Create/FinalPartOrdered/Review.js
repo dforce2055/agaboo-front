@@ -36,6 +36,9 @@ export default function Review() {
   ];
 
   const [valueTotal,setValueTotal] = React.useState();
+
+  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(()=>{
     if(cliente !== null){
       console.log("MUESTRO cliente: ",cliente);
@@ -74,7 +77,7 @@ export default function Review() {
             <ListItemText primary={product.producto} secondary={product.modelo} />
             <Typography 
             variant="body2">
-              {"Precio/u= $"+product.precio_X_unidad+".  "+"        Unidades="+product.cantidad}
+              {"Precio/u= $"+product.precio_X_unidad+".  Unidades="+product.cantidad}
             </Typography>
           </ListItem>
         ))}

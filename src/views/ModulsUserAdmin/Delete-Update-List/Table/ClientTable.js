@@ -44,6 +44,8 @@ const useStyles = makeStyles(theme => ({
 
 function ClientTable(props) {
 
+  
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(()=>{
     //Si se realizo un cambio
     if(stateArray){
@@ -74,7 +76,7 @@ function ClientTable(props) {
         var customerPag = clientes;        
         CustomerController.getCustomerPagination(lastPosition.id)
         .then(result=>{
-          if (result==false) {
+          if (result===false) {
             console.log("No hay mas usuario");
             return;
           }

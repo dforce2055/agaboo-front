@@ -2,13 +2,8 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles,useTheme,MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import UsersTable from './UsersTable'
-//import UsersTable2 from './UsersTable2'
-import {Typography} from '@material-ui/core';
-import AsynchronousSearch from '../Search/Autocomplete';
+import UsersTable from './UsersTable';
 
 const drawerWidth = 240;
 
@@ -115,17 +110,6 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
 
 export default function Dashboard(props) {
   const classes = useStyles();
-  const theme = useTheme();
-  const { history } = props;
-  const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
   return (
     <MuiThemeProvider theme={theme2}>
     <div className={classes.root}>

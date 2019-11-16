@@ -7,7 +7,6 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
-import Paper from '@material-ui/core/Paper';
 
 //Importo componente
 import OrderController from '../../../controllers/Order.js';
@@ -35,6 +34,7 @@ export default function DialogPayment(props) {
   const {handleOpenReload}=props;
   const {handlesetLoadOrder} = props;
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(()=>{
     if (confirmPayment) {
       console.log(id_pedido);

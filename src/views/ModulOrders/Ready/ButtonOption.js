@@ -13,9 +13,6 @@ function SimpleMenu(props) {
   const {updateArray} = props;
   //Pedido entero, asi lo puedo mapear en ProductListOrder.js. El cual es la pantalla para mostrar todos los productos y su cantidad, asi el empleado puede agregar un id's.
   const {id_pedido} = props;
-
-  //Guardo state para actualizar el listado en OrdersTable. Es decir, actualizar la tabla cada vez que se elimine un usuario.
-  const {setA} = props;
   
   const handleClick = event => {
     setAnchorEl(event.currentTarget);

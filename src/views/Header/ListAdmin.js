@@ -1,60 +1,28 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ExpandLess from '@material-ui/icons/ExpandLess'; //Icono de flecha expandida
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import Collapse from '@material-ui/core/Collapse'; 
 import { withRouter } from "react-router-dom";
 //ICONOS DE USUARIOS
 import UsersIcon from '@material-ui/icons/SupervisedUserCircle';
 //ICONOS DE CLIENTES
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import ContactsIcon from '@material-ui/icons/Contacts';
 import PeopleIcon from '@material-ui/icons/People';
 //ICONOS DE PRODUCTOS
 import StoreIcon from '@material-ui/icons/Store';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import BallotIcon from '@material-ui/icons/Ballot';
 //ICONOS DE STOCK
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
-// import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-// import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
-//ICONOS PEDIDOS
-import DoneOtulineIcon from '@material-ui/icons/DoneOutline';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import ArchiveIcon from '@material-ui/icons/Archive';
 //ICONOS DE ESTADOS DE CUENTA
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 //ICONOS DE MANTENIMIENTO
 import BuildIcon from '@material-ui/icons/Build';
 
-const useStyles = makeStyles(theme => ({
-    nested: { //CLASE CSS DE BOTON DESPLEGADO
-      paddingLeft: theme.spacing(4),
-    },
-  }));
-
 function ListAdmin(props){
-    const classes = useStyles();
     const {history} = props;
-    const [visible, setVisible] = React.useState(false);
     const [productos, setProductos] = React.useState(false);
-    const [pedidos, setPedidos] = React.useState(false);
-
-    function handleClick() { 
-        setVisible(!visible);
-      }
 
     function handleClickProductos() { 
         setProductos(!productos);
-      }
-    
-      function handleClickPedidos() { 
-        setPedidos(!pedidos);
       }
 
     return(

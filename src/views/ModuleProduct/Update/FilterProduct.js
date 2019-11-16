@@ -1,30 +1,7 @@
-import React , {  useState }from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 
-
-
-
-
-const typeProduct = [
-  {
-    value: "Baño Químico",
-    label: "Baño Químico"
-  },
-  {
-    value: "Oficina",
-    label: "Oficina"
-  },
-  {
-    value: "Boletería",
-    label: "Boletería",
-  },
-  {
-    value: "Garita",
-    label: "Garita de Seguridad",
-  }
-  
-];
 const typeState = [
   {
     value: "DISPONIBLE",

@@ -1,4 +1,4 @@
-// eslint-disable-next-line
+/* eslint-disable-line */
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Button,Typography,ButtonGroup } from '@material-ui/core';
@@ -68,7 +68,7 @@ function AddressForm(props) {
                 required
                 //Validacion necesaria
                 value={values.nombre}
-                validators={['required','matchRegexp:^([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])?$']}
+                validators={['required','matchRegexp:^([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+[s]?([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])?$']}
                 errorMessages={['Campo requerido', 'Nombre no valido']}
               />
             </Grid>

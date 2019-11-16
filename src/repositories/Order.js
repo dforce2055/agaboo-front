@@ -155,8 +155,8 @@ class OrderRepo extends Component {
     try {
       //Guardo fecha del mes actual
       let fechaActual = new Date();
-      let fecha_inicio_mes = fechaActual.getFullYear() +'-'+(fechaActual.getMonth()+1)+'-'+'01';
-      let fecha_fin_mes = fechaActual.getFullYear() +'-'+(fechaActual.getMonth()+1) +'-'+'31';
+      let fecha_inicio_mes = fechaActual.getFullYear() +'-'+(fechaActual.getMonth()+1)+'-01';
+      let fecha_fin_mes = fechaActual.getFullYear() +'-'+(fechaActual.getMonth()+1) +'-31';
 
       //Suma total que voy a retornar
       let sum = 0;

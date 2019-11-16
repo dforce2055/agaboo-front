@@ -131,7 +131,7 @@ class ProductController extends Component {
 
         try {
             product = Object.assign({}, product); //Utilizo Object.assign para mapear el objeto
-            let productFound = await ProductRepo.getProductByCode(product.code);
+            await ProductRepo.getProductByCode(product.code);
             let result = ProductRepo.editProduct(product.code, product);
             if (result) {
                 console.log(`Se editó correctamente el producto`, product);

@@ -4,7 +4,7 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { makeStyles, useTheme, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import UserController from '../../../../controllers/User';
 
 const theme = createMuiTheme({
@@ -82,6 +82,7 @@ export default function AsynchronousSearch(props) {
         return () => {
             active = false;
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loading]);
 
     React.useEffect(() => {

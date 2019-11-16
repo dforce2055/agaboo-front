@@ -145,6 +145,7 @@ function UsersTable(props) {
   const id = open ? 'simple-popover' : undefined;
 
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(()=>{    
 
     if(stateArray){
@@ -154,7 +155,7 @@ function UsersTable(props) {
 
       UserController.getUsersActivePagination(lastUser.email, 5)
         .then(moreUsers => {
-          if (moreUsers == false) {
+          if (moreUsers === false) {
             console.log("No hay más usuarios");
             setLoading(false);
             return;

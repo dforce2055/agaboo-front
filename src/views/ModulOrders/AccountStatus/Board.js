@@ -48,12 +48,13 @@ const useStyles = makeStyles(theme => ({
 export default function Board(props) {
   const classes = useStyles();
 
-  const {handleCloseReload} = props;
   const {handleOpenReload} = props;
 
   const [unpaid, setUnpaid] = React.useState([]);
   const [loadOrder, setLoadOrder] = React.useState(true);
 
+  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(() => {
     if (loadOrder) {
       OrderController.unpaidOrders()
@@ -65,6 +66,7 @@ export default function Board(props) {
       })
       setLoadOrder(false)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   });
 
   const handlesetLoadOrder = () =>{

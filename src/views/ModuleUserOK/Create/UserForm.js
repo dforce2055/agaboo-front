@@ -3,20 +3,14 @@ import UserController from '../../../controllers/User';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { withRouter } from "react-router-dom";
 import { makeStyles, MuiThemeProvider, createStyles } from '@material-ui/core/styles';
-import { red, blue } from '@material-ui/core/colors';
+import { blue } from '@material-ui/core/colors';
 import {
-  Grid, TextField, InputLabel, Select, MenuItem, Button, ButtonGroup,
-  Typography, createMuiTheme, FormGroup, FormControlLabel,
+  Grid, TextField, MenuItem, Button, ButtonGroup,
+  Typography, createMuiTheme, FormControlLabel,
   Switch, withStyles
 } from '@material-ui/core/';
 
 import 'date-fns';
-// import DateFnsUtils from '@date-io/date-fns';
-// import {
-//   MuiPickersUtilsProvider,
-//   KeyboardTimePicker,
-//   KeyboardDatePicker,
-// } from '@material-ui/pickers';
 
 import {
   Dialog, DialogActions,
@@ -218,13 +212,13 @@ function AddressForm(props) {
     mostrarDialog: false,
   });
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(() => {
     if (usuario) { //Seteo los campos con los datos del usuario
       setValues(usuario);
     }
-
     hideFooter();
-  }, []);
+  });
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
@@ -236,15 +230,9 @@ function AddressForm(props) {
     setValues({ ...values, estado: estado });
   };
 
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
-
-  const handleDateChange = date => {
-    setSelectedDate(date);
-    setValues({ ...values, fechNac: date });
-  };
 
   const [open, setOpen] = React.useState(false);
-  const handleClickOpenDialog = (value) => {
+  const handleClickOpenDialog = () => {
     setOpen(true);
   };
 

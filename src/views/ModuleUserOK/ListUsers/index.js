@@ -7,7 +7,6 @@ import { withRouter } from 'react-router-dom';
 
 
 function DeleteUpdateUserAdmin(props) {
-    const { history } = props;
     if (!firebase.getCurrentUsername()) {
         // not logged in
         alert('Por favor inicie sesión para acceder')

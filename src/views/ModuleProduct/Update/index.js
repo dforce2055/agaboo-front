@@ -1,4 +1,4 @@
-import React, {useState , useEffect} from 'react';
+import React, {useState } from 'react';
 import NavBar from '../../Header/Navigation';
 import CustomizedTables from './TableProducts';
 import SimpleBottomNavigation from '../../Footer/Footer';
@@ -8,8 +8,6 @@ import SearchBox from './SearchBox';
 import FilterProduct from './FilterProduct';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';  
-import Paper from '@material-ui/core/Paper';
-
 
 const useStyles = makeStyles(theme => ({
     root: {

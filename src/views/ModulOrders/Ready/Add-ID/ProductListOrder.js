@@ -65,10 +65,10 @@ const useStyles = makeStyles(theme => ({
    
   const classes = useStyles();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(()=>{
     if (actualizar) {  
         //Utilizo storage para traer la informacion de la cantidad de productos que tiene un pedido.
-        //Por que? ==> Porque no tenia manera de relacionarlo mediante las props.
         setListOrders(JSON.parse(sessionStorage.getItem('listado_producto')));
         //Traigo el pedido completo guardado en la storage
         setOrderId(JSON.parse(sessionStorage.getItem('pedido')));
@@ -132,8 +132,6 @@ const useStyles = makeStyles(theme => ({
       //Se guarda con el nombre del modelo que sea
       if (obj.modelo === 'AG1') { 
         setList_cant({...list_cant, ['Baño_Quimico_AG1']: obj});
-      }else if(obj.modelo === 'AG2'){
-        setList_cant({...list_cant, ['Baño_Quimico_AG2']: obj});
       }else if(obj.modelo === 'AG2'){
         setList_cant({...list_cant, ['Baño_Quimico_AG2']: obj});
       }

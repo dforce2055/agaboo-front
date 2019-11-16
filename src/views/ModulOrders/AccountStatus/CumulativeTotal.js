@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import OrderController from '../../../controllers/Order.js';
-//import { TextField } from '@material-ui/core';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import { Paper } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
@@ -24,9 +23,9 @@ export default function CumulativeTotal(props) {
   const classes = useStyles();
 
   const {handleCloseReload} = props;
-  const {handleOpenReload} = props;
   const {reloadCumulativeTotal} = props;
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(()=>{
     if (unpaidMoney) {
       OrderController.totalUnpaidOrders().then(result => setValue(result))
