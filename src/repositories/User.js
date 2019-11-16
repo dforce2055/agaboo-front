@@ -68,7 +68,7 @@ class UserRepo extends Component {
             .where('email', '==', email)
             .limit(1)
             .get()
-            .then(function (querySnapshot) {
+            .then(querySnapshot=> {
                 querySnapshot.forEach(function (doc) {
                     // doc.data() is never undefined for query doc snapshots
                     //console.log(doc.id, " => ", doc.data());
@@ -100,7 +100,7 @@ class UserRepo extends Component {
             .orderBy("email")
             .limit(1)
             .get()
-            .then(function (querySnapshot) {
+            .then(querySnapshot=> {
                 querySnapshot.forEach(function (doc) {
                     // doc.data() is never undefined for query doc snapshots
                     //console.log(doc.id, " => ", doc.data());
@@ -165,7 +165,7 @@ class UserRepo extends Component {
                 .startAfter(lastId)
                 .limit(cant)
                 .get()
-                .then(function (querySnapshot) {
+                .then(querySnapshot=>{
                     querySnapshot.forEach(function (doc) {
                         //console.log(doc.id, " => ", doc.data());
                         users.push(doc.data());
@@ -192,7 +192,7 @@ class UserRepo extends Component {
                 .startAt(search)
                 .endAt(end)
                 .get()
-                .then(function (querySnapshot) {
+                .then(querySnapshot=> {
                     querySnapshot.forEach(function (doc) {
                         users.push(doc.data());
                     });

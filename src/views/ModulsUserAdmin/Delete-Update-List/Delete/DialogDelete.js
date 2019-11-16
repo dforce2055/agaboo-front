@@ -10,7 +10,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import {IconButton, Button } from '@material-ui/core';
 import CustomerController from '../../../../controllers/Customer';
 
-export default function AlertDialog(props) {
+export default function DialogDelete(props) {
   const [open, setOpen] = React.useState(false);
   const {cliente} = props; //Cliente el cual selecciono para eliminar
   const {updateStateArray} = props; //Si se elimina, se actualiza el array de clientes

@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleTable(props) {
+export default function TableProduct(props) {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(()=>{

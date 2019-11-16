@@ -1,7 +1,0 @@
-organization=instancia-sonar-agaboo
-projectKey=agaboo-key
-serverUrl=https://sonarcloud.io
-serverVersion=8.0.0.2662
-dashboardUrl=https://sonarcloud.io/dashboard?id=agaboo-key
-ceTaskId=AW509FDsaOBnGdfdICmK
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AW509FDsaOBnGdfdICmK

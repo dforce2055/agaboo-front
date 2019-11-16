@@ -14,7 +14,7 @@ import { Button } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import "./OrderDelete.css";
 
-const theme = createMuiTheme({ /* Plantilla de edicion */
+const themeMuiProvider = createMuiTheme({ /* Plantilla de edicion */
   overrides: { 
     MuiSvgIcon:{
       colorPrimary:{
@@ -119,11 +119,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function CustomizedTables() {
+export default function OrdersTable() {
   const classes = useStyles();
 
   return (
-    <MuiThemeProvider theme={theme}>
+    <MuiThemeProvider theme={themeMuiProvider}>
       <div>
         <TextField variant="outlined" type="date">
           Buscar por fecha

@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import ProductController from '../../../controllers/Product';
 
 
-const theme = createMuiTheme({
+const themeMuiProvider = createMuiTheme({
   overrides: {
     MuiButton: {
       containedPrimary: {
@@ -153,7 +153,7 @@ const useStyles = makeStyles(theme => ({
 
   return (
       <div style={{marginTop:'20px'}}>
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider theme={themeMuiProvider}>
       <Paper className={classes.paper} > 
         <Grid container spacing = {1} justify = { "center" } className = { "grid"} >
           

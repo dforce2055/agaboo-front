@@ -25,7 +25,7 @@ import OrderController from '../../../controllers/Order';
 import SimpleMenu from './ButtonOption.js';
 import { Button } from '@material-ui/core';
 
-const theme = createMuiTheme({ /* Plantilla de edicion */
+const themeMuiProvider = createMuiTheme({ /* Plantilla de edicion */
   overrides: { 
     MuiIconButton:{
       root:{
@@ -306,7 +306,7 @@ function EnhancedTable(props) {
     
     }
   return (
-    <MuiThemeProvider theme={theme}>
+    <MuiThemeProvider theme={themeMuiProvider}>
 
     <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarPedido')} >
           <AddIcon />

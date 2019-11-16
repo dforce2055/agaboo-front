@@ -50,7 +50,7 @@ const DialogActions = withStyles(theme => ({
     },
 }))(MuiDialogActions);
 
-export default function CustomizedDialogs(props) {
+export default function DialogOrders(props) {
     const [open, setOpen] = React.useState(false);
     const { pedido } = props;
     const handleClickOpen = () => {

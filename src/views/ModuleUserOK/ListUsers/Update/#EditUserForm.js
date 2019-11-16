@@ -1,7 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Button,Typography,ButtonGroup } from '@material-ui/core';
-import UserController from '../../../../controllers/User';
 import DialogAcept from './dialogAcept';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { withRouter } from "react-router-dom";
@@ -20,7 +19,7 @@ function AddressForm(props) {
 
   const handleOnClick = () => {
     console.log('Guardando...')
-    let data = {
+    /*let data = {
       nombre: values.nombre,
       apellido: values.apellido,
       cuit: values.cuit,
@@ -38,7 +37,7 @@ function AddressForm(props) {
       estado: values.estado,
       role: values.role,
       //eliminado:false,
-    }
+    }*/
     //CustomerController.setCustomer(data)    //BORRA LOS CAMPOS QUE NO ESTEN EN EL DATA
     //UserController.editCustomer(data);
     updateStateArray();
@@ -58,24 +57,9 @@ function AddressForm(props) {
     setValues({ ...values, estado: estado });
   };
 
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
-
   const handleDateChange = date => {
-    setSelectedDate(date);
     setValues({ ...values, fechNac: date });
   };
-
-  function setCuitOrCuil() {
-    if (values.tipoDocumento === 'CUIT') {
-      setValues({ ...values, cuit: 'CUIT' });
-      //values.cuit = values.numeroDocumento;
-    }
-    if (values.tipoDocumento === 'CUIL') {
-      setValues({ ...values, cuil: 'CUIL' });
-    }
-  }
-
-
   return (
     <MuiThemeProvider theme={theme}>
       <React.Fragment>

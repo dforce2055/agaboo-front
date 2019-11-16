@@ -34,11 +34,11 @@ class ProductRepo extends Component {
                 console.log("Error getting documents: ", error);
                 product = null;
             });
-        if (product === null) {
+
+        if (product == null) {
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
     getProduct = async (id) => {
         if (!id) throw new Error(`Error: el id es obligatorio`);
@@ -62,7 +62,7 @@ class ProductRepo extends Component {
             .where('codebar', '==', codebar)
             .limit(1)
             .get()
-            .then(function (querySnapshot) {
+            .then(querySnapshot=>{
                 querySnapshot.forEach(function (doc) {
                     // doc.data() is never undefined for query doc snapshots
                     //console.log(doc.id, " => ", doc.data());
@@ -84,7 +84,7 @@ class ProductRepo extends Component {
             .where('code', '==', code)
             .limit(1)
             .get()
-            .then(function (querySnapshot) {
+            .then(querySnapshot=>{
                 querySnapshot.forEach(function (doc) {
                     // doc.data() is never undefined for query doc snapshots
                     //console.log(doc.id, " => ", doc.data());
@@ -130,11 +130,11 @@ class ProductRepo extends Component {
         }
     };
 
-    addProduct = async (newProduct) => {
-        if (!newProduct) throw new Error(`Error: no se envió un Producto para registrar`);
+    addProduct = async (newProduct_parameter) => {
+        if (!newProduct_parameter) throw new Error(`Error: no se envió un Producto para registrar`);
         //newProduct.localization = new firebase.admin.firestore.GeoPoint(newProduct.localization._lat, newProduct.localization._long);
         //newProduct.creationDate = new firebase.admin.firestore.Timestamp(newProduct.creationDate.seconds, newProduct.creationDate.nanoseconds);
-        newProduct = Object.assign({}, newProduct);
+        let newProduct = Object.assign({}, newProduct_parameter);
         //newProduct = JSON.parse(JSON.stringify(newProduct));
 
         

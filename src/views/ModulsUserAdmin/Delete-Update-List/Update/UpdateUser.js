@@ -26,7 +26,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FullScreenDialog(props) {
+export default function UpdateUser(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   

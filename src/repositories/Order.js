@@ -80,7 +80,7 @@ class OrderRepo extends Component {
     } catch (error) {
       console.log("Error en base de datos: ",error);
     }
-  };
+  }
   
   contarProductos(pedidosSeleccionados){
     
@@ -101,11 +101,11 @@ class OrderRepo extends Component {
 
     //GROUP BY EN JAVASCRIPT
     const groupBy = (array,key) => {
-      return array.reduce((result,currentValue) => {
-        (result[currentValue[key]] = result[currentValue[key]] || []).push(
+      return array.reduce((res,currentValue) => {
+        (res[currentValue[key]] = res[currentValue[key]] || []).push(
           parseInt(currentValue.cantidad)
           )
-        return result;
+        return res;
       },{})
     }
     //Guardo resultado de groupBy y muestro por consola. Se agrupa por el parametro que indiques como segundo parametro.

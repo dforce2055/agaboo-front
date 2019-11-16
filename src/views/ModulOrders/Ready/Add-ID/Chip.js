@@ -2,8 +2,8 @@ import React from 'react'
 import ChipInput from 'material-ui-chip-input'
 import { Container } from '@material-ui/core';
 import OrderController from '../../../../controllers/Order';
-import SnackbarsSuccess from './SnackbarSuccess.js';
-import SnackbarsError from './SnackbarError.js';
+import SnackbarsSuccess from './SnackbarsSuccess.js';
+import SnackbarsError from './SnackbarsError.js';
 
 export default function Chip(props){
   const[existProduct,setExistProduct] = React.useState(false);

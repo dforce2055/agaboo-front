@@ -81,7 +81,7 @@ function ClientTable(props) {
             return;
           }
 
-          result.forEach((result) => customerPag.push(result));
+          result.forEach((res) => customerPag.push(res));
         console.log("Estos son los clientes actuales;",clientes);
         console.log("Estos son los usuarios agregados.",result);
         setClientes(customerPag)
@@ -122,7 +122,7 @@ function ClientTable(props) {
 
   function getPagination(){ 
     setPagination(true);
-  };
+  }
 
   function Filter(){  
     //El método filter() crea un nuevo array con todos los elementos que cumplan la condición implementada por la función dada.

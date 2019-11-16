@@ -1,6 +1,5 @@
 import React from 'react';
-import clsx from 'clsx';
-import { makeStyles,useTheme,MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { makeStyles,MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import UsersTable from './UsersTable';
@@ -84,7 +83,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const theme2 = createMuiTheme({ /* Plantilla de edicion */
+const themeMuiProvider = createMuiTheme({ /* Plantilla de edicion */
   overrides: { 
     MuiAppBar: {
       colorPrimary: {
@@ -111,7 +110,7 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
 export default function Dashboard(props) {
   const classes = useStyles();
   return (
-    <MuiThemeProvider theme={theme2}>
+    <MuiThemeProvider theme={themeMuiProvider}>
     <div className={classes.root}>
       <CssBaseline />
       <main className={classes.content}>
