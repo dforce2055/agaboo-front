@@ -3,5 +3,5 @@ projectKey=agaboo-key
 serverUrl=https://sonarcloud.io
 serverVersion=8.0.0.2662
 dashboardUrl=https://sonarcloud.io/dashboard?id=agaboo-key
-ceTaskId=AW51cWeZ4cF8pgF6GCev
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AW51cWeZ4cF8pgF6GCev
+ceTaskId=AW517-RxmgnF5jOuhcJF
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AW517-RxmgnF5jOuhcJF
