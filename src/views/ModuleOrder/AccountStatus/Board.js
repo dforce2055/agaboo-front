@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import Title from './Title';
 import DialogOrders from './DialogOrders';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
@@ -8,6 +9,16 @@ import './Table.css';
 
 import OrderController from '../../../controllers/Order';
 import DialogPayment from './DialogPayment';
+
+const theme = createMuiTheme({ /* Plantilla de edicion */
+  overrides: {
+      MuiTypography:{
+        gutterBottom:{
+          marginLeft:'15px',
+        },
+      },
+
+}});
 
 const useStyles = makeStyles(theme => ({
   seeMore: {
@@ -19,7 +30,8 @@ const useStyles = makeStyles(theme => ({
     borderSpacing: 0,
     borderColor: 'rgba(0,0,0,.5)',
     padding: '.25em',
-    
+    marginBottom:theme.spacing(10),
+
     '& tbody': {
       '& tr': {
         border: '1px solid rgba(0,0,0,.1)',
@@ -72,8 +84,10 @@ export default function Board(props) {
   const handlesetLoadOrder = () =>{
     setLoadOrder(true);
   }
+
   return (
-    <React.Fragment>           
+    <React.Fragment>
+      <MuiThemeProvider theme={theme}>
       <Title>Pedidos impagos</Title>
       <Table className={classes.tablaPedidos}>
         <Thead>
@@ -107,6 +121,7 @@ export default function Board(props) {
           ))}
         </Tbody>
       </Table>
+      </MuiThemeProvider>
     </React.Fragment>
   );
 }

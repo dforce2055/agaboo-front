@@ -5,6 +5,21 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import { Paper } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+
+const theme = createMuiTheme({ /* Plantilla de edicion */
+  overrides: {
+      MuiSvgIcon:{
+        colorError:{
+          color:'#158e34',
+        },
+        fontSizeLarge:{
+          fontSize:'1.7rem',
+          marginRight:'5px',
+        },
+      },
+
+}});
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,6 +56,7 @@ export default function CumulativeTotal(props) {
   const [value,setValue] = React.useState('Calculando...');
 
   return (
+    <MuiThemeProvider theme={theme}>
       <Paper className={classes.espacio}>
         <Typography component="div">
       <Box component="span" fontSize="h4.fontSize" m={2}>
@@ -60,5 +76,6 @@ export default function CumulativeTotal(props) {
         }}
       />*/}
       </Paper>
+    </MuiThemeProvider>
   );
 }

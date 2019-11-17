@@ -5,11 +5,27 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
 //AGREGADO
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { TextField, Input } from '@material-ui/core';
+
+
+const theme = createMuiTheme({ /* Plantilla de edicion */
+  overrides: {
+      MuiFab:{
+        primary:{
+          backgroundColor:'#20b79b',
+          '&:hover': {
+            backgroundColor: '#18d2af',
+          },
+          margin:'auto',
+        },
+      },
+
+}});
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,18 +59,7 @@ export default function CustomizedSelects(props) {
 
   return (
     <div className={classes.root}>
-
-    <FormControl className={classes.margin}>
-    <Fab 
-      size="small" 
-      aria-label="add" 
-      color="primary"
-      className={classes.fab}
-      onClick={addArrayProduct}
-    ><AddIcon />
-      </Fab>
-    </FormControl>
-
+      <MuiThemeProvider theme={theme}>
       <FormControl className={classes.margin}>    
         <Select
           value={cant_prodt_select.producto} //Muestra el valor en los select
@@ -68,6 +73,7 @@ export default function CustomizedSelects(props) {
           <MenuItem value={'Boleteria'}>Boleteria</MenuItem>
         </Select>
       </FormControl>
+      
       
       { modeloBaño ?  <FormControl className={classes.margin}>
         <NativeSelect
@@ -100,7 +106,15 @@ export default function CustomizedSelects(props) {
           }}
       />
       </FormControl>
-
+      <Fab 
+      size="small" 
+      aria-label="add" 
+      color="primary"
+      onClick={addArrayProduct}
+    >
+      <AddIcon />
+    </Fab>
+      </MuiThemeProvider>
     </div>
   );
 }
