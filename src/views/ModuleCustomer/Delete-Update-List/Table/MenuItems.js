@@ -4,7 +4,6 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { withRouter } from 'react-router-dom';
-import SendIcon from '@material-ui/icons/Send';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DialogDelete from '../Delete/DialogDelete';
 import UpdateUser from '../Update/UpdateUser';
@@ -32,7 +31,7 @@ function MenuItems(props) {
   const [open, setOpen] = React.useState(false);
 
   const dialogOpen = () => {
-    console.log("abierto");
+    console.log("abierto(como tu culo)");
     setOpen(true);
   };
 
@@ -53,35 +52,22 @@ function MenuItems(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem >
-          <ListItemIcon>
-            <UpdateUser
+{/* LLAMO A DIALOG DE MODIFICAR CLIENTE */}
+        <UpdateUser
               updateStateArray={updateStateArray}
               valor={row}
-            />
-          </ListItemIcon>
-          Modificar cliente</MenuItem>
-
-        <MenuItem button onClick={dialogOpen} /*Metodo de abrir*/> 
-        <ListItemIcon>
-          <VisibilityClient
+        />
+{/* LLAMO A DIALOG DE VER CLIENTE */}
+        <VisibilityClient
             cliente={row}
             open = {open} //Estado 
-            handleClose={dialogClose} //Metodo de cerrar
-          />
-        </ListItemIcon>
-        Ver cliente
-        </MenuItem>
-        
-        <MenuItem >
-         <ListItemIcon>
-          <DialogDelete
+            handleClose={dialogClose} 
+        />
+{/* LLAMO A DIALOG DE ELIMINAR CLIENTE */}       
+        <DialogDelete
             updateStateArray={updateStateArray}
             cliente={row}
-          />
-        </ListItemIcon>
-        Eliminar pedido
-        </MenuItem>
+        />
       </Menu>
     </div>
   );

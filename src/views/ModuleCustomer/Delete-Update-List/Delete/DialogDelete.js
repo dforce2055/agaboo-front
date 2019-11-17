@@ -5,6 +5,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import MenuItem from '@material-ui/core/MenuItem';
 
 //Imports agregados
 import {IconButton, Button } from '@material-ui/core';
@@ -33,9 +35,12 @@ export default function DialogDelete(props) {
 
   return (
     <div>
-      <IconButton onClick={handleClickOpen}>      
-        <DeleteIcon />
-      </IconButton>
+      <MenuItem onClick={handleClickOpen}>
+        <ListItemIcon>
+         <DeleteIcon />
+        </ListItemIcon>
+        Eliminar pedido
+      </MenuItem>
       <Dialog
         open={open}
         onClose={handleClose}
