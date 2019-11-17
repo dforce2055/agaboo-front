@@ -23,6 +23,7 @@ export default function Deposits() {
   // }
   const fechaActual = new Date();
   
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(()=>{
     if (loaded) {      
       let sum = 0;

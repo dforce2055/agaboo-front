@@ -30,7 +30,6 @@ const useStyles = makeStyles(theme => ({
 export default function SearchBox() {
   const classes = useStyles();
   const [dialogOpen, setDialog] = React.useState(false);
-  const [product, setProduct] = React.useState();
   const [search, setSearch] = React.useState("");
   const [stateSearch, setStateSearch] = React.useState(false);
   const [goSearch, setGoSearch]= React.useState(false);
@@ -38,8 +37,7 @@ export default function SearchBox() {
 
   async function getProductBar(code){
     if(goSearch){
-      const getProduct = await ProductController.getProductByCode(code);
-      setProduct(getProduct);
+      await ProductController.getProductByCode(code);
       setGoSearch(false)
       //setSearch("") 
       setDialog(true);

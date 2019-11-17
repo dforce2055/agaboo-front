@@ -5,24 +5,25 @@ import { BrowserRouter, Route  } from "react-router-dom";
 import HomePage from "./views/HomePage/HomePage";
 import MainMenu from "./views/MainMenu/MainMenu";
 import LogIn from './views/LogIn/Login';
-import DeleteUpdateUserAdmin from "./views/ModulsUserAdmin/Delete-Update-List/index";
+import DeleteUpdateUserAdmin from "./views/ModuleCustomer/Delete-Update-List/index";
 import * as serviceWorker from './serviceWorker';
-import CreateUserAdm from './views/ModulsUserAdmin/Create/index'; //Componente para registrar un nuevo cliente¿
-import CreateUserAdmOK from './views/ModuleUserOK/Create/index';
-import ListUsers from './views/ModuleUserOK/ListUsers/index';
+import CreateUserAdm from './views/ModuleCustomer/Create/index'; //Componente para registrar un nuevo cliente¿
+import CreateUserAdmOK from './views/ModuleUser/Create/index';
+import ListUsers from './views/ModuleUser/ListUsers/index';
 import indexCreateProduct from './views/ModuleProduct/Create/index'
 import indexUpdateProduct from './views/ModuleProduct/Update/index';
-import CreateOrder from './views/ModulOrders/Create/index';
-import OrderReady from './views/ModulOrders/Ready/index';
-import DeleteOrder from './views/ModulOrders/Delete/index';
+import CreateOrder from './views/ModuleOrder/Create/index';
+import OrderReady from './views/ModuleOrder/Ready/index';
+import DeleteOrder from './views/ModuleOrder/Delete/index';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { CssBaseline } from '@material-ui/core'
 
 import firebase from '../src/config/firebase';
 import LoaderScreen from './views/LoaderScreen/LoaderScreen';
 
+import AccountStatus from './views/ModuleOrder/AccountStatus/index';
 
-import CustomizedTables from './views/ModulOrders/Ready/Add-ID/ProductListOrder';
+import CustomizedTables from './views/ModuleOrder/Ready/Add-ID/ProductListOrder';
 
 const theme = createMuiTheme();
 
@@ -54,8 +55,9 @@ export default function App() {
                 <Route path= "/pedidosListos" component={OrderReady} />
                 <Route path= "/eliminarPedidos" component={DeleteOrder} />
                 <Route path = "/rellenarPedido" component={CustomizedTables}/>
+                <Route path = "/EstadoDeCuenta" component={AccountStatus}/>
             </React.Fragment>
-        </ BrowserRouter>
+        </BrowserRouter>
     </MuiThemeProvider>
     ) : <LoaderScreen/>
 }

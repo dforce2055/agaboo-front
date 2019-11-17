@@ -4,8 +4,10 @@ import Title from './Title';
 import DialogOrders from './DialogOrders';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
+import './Table.css';
 
-import OrderController from './../../../controllers/Order';
+import OrderController from '../../../controllers/Order';
+import DialogPayment from './DialogPayment';
 
 const useStyles = makeStyles(theme => ({
   seeMore: {
@@ -43,57 +45,68 @@ const useStyles = makeStyles(theme => ({
   
 }));
 
-export default function Orders() {
+export default function Board(props) {
   const classes = useStyles();
-  const [pedidos, setPedidos] = React.useState([]);
-  const [cargarPedidos, setCargarPedidos] = React.useState(true);
-   
 
+  const {handleOpenReload} = props;
+
+  const [unpaid, setUnpaid] = React.useState([]);
+  const [loadOrder, setLoadOrder] = React.useState(true);
+
+  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(() => {
-
-    if (cargarPedidos) {
-      OrderController.getOrdersNow()
-        .then(pedidos => {
-          setPedidos(pedidos);
-          setCargarPedidos(false);
-        })
-        .catch(error => {
-          console.log("Error al traer los Pedidos del día => ", error);
-        })
+    if (loadOrder) {
+      OrderController.unpaidOrders()
+      .then(result =>{
+        if (result)
+          setUnpaid(result)
+        else
+          setUnpaid([]);
+      })
+      setLoadOrder(false)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   });
 
-  return pedidos.length === 0 ? (
-    <React.Fragment>
-      <Title>No tiene pedidos para Hoy</Title>
-    </React.Fragment>
-  ) : 
-    <React.Fragment>                
-      <Title>Pedidos para Hoy</Title>
-
+  const handlesetLoadOrder = () =>{
+    setLoadOrder(true);
+  }
+  return (
+    <React.Fragment>           
+      <Title>Pedidos impagos</Title>
       <Table className={classes.tablaPedidos}>
         <Thead>
-          <Tr>
+          <Tr style={{background: '#f5f5f5'}}> 
             <Th>#</Th>
             <Th>Nombre</Th>
             <Th>Localidad</Th>
             <Th>Dirección</Th>
             <Th>Ver más...</Th>
+            <Th>Confirmar pago</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {pedidos.map((pedido, index, array) => (
+          {unpaid.map((pedido, index, array) => (
             <Tr key={pedido.id_pedido}>
-              <Td>{index+1}</Td> 
+              <Td style={{ padding:'5px'}}>{index+1}</Td> 
               <Td>{pedido.cliente.nombre +' ' +pedido.cliente.apellido}</Td>
               <Td>{pedido.ciudad}</Td>
               <Td>{pedido.direccion}</Td>
               <Td>
                 <DialogOrders pedido={pedido}/>
               </Td>
+              <Td>
+                <DialogPayment 
+                  id_pedido={pedido.id_pedido} 
+                  handleOpenReload={handleOpenReload} //Si acepta cobrar el pedido, se recarga el "Total Acumulado"
+                  handlesetLoadOrder={handlesetLoadOrder} //Si acepta el eliminar se actualizara el array
+                  />
+              </Td>
             </Tr>
           ))}
         </Tbody>
       </Table>
     </React.Fragment>
+  );
 }

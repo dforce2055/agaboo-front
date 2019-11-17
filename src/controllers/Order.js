@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import OrderRepo from '../repositories/Order.js';
+import ProductController from '../controllers/Product';
 
 class OrderController extends Component {
   
@@ -49,14 +50,15 @@ class OrderController extends Component {
     }
   }
 
+  //Verifica que los productos agregados al pedido existan
   verifyProductExistence(id_producto){
     try {
-     return OrderRepo.verifyProductExistence(id_producto)
+     return ProductController.getExistsProduct(id_producto.toString())
     } catch (error) {
       console.error("Error con el id del producto.");
     }
   }
-
+  
   validateDate(fecha_ini,fecha_fin){
     try {
       return OrderRepo.validateDate(fecha_ini,fecha_fin);
@@ -66,11 +68,30 @@ class OrderController extends Component {
     }
   }
 
+  //Devuelve todos la suma de todos los pedidos que estan pendiente de pago del mes actual.
   allDepositsInActualMonth(){    
     try {
       return OrderRepo.allDepositsInActualMonth()
     } catch (error) {
-      console.error("Error en el controlador de pedidos al enviar depositos.");      
+      console.error("Error en el controlador de pedidos al enviar depositos. ",error); 
+    }
+  }
+
+  //Devuelve todos los pedidos que estan sin pagar.
+  unpaidOrders(){
+    try {
+      return OrderRepo.unpaidOrders();
+    } catch (error) {
+      console.error("Error en el controlador de pedidos al enviar los pedidos sin pagar. ", error);
+    }
+  }
+
+  //Devuelve el total acumulado de los pedidos impagos.
+  totalUnpaidOrders(){
+    try {
+      return OrderRepo.totalUnpaidOrders();
+    } catch (error) {
+      console.error("Error en el controlador de pedidos al enviar el total acumulado. ", error);
     }
   }
 
@@ -81,6 +102,14 @@ class OrderController extends Component {
       console.error("Error en el controlador de pedidos al enviar depositos.");      
     }
   }
+  changeOrderPayment(id_pedido){
+    try {
+      OrderRepo.changeOrderPayment(id_pedido);
+    } catch (error) {
+      console.error("Error en el controlador de pedidos al poner pagado el pedido.",error);
+    }
+  }
+
 }
 
 export default new OrderController();

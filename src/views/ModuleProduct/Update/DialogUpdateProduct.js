@@ -166,10 +166,9 @@ export default function FormDialog(props) {
       
       
       
-      <Dialog open={open} 
-        onClose={handleClose} 
+      <Dialog 
+        open={open} 
         aria-labelledby="form-dialog-title"
-        open={open}
         onClose={handleClose}
         fullScreen={fullScreen}
 
