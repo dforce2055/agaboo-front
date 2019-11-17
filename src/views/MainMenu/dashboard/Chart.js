@@ -3,44 +3,22 @@ import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recha
 import Title from './Title';
 import OrderController from '../../../controllers/Order';
 
-// Generate Sales Data
-function createData(time, amount) {
-  return { time, amount };
-}
-
-const data = [
-  createData('01-01-2019', 0),
-  createData('01-02-2019', 7000),
-  createData('01-03-2019', 6500),
-  createData('01-04-2019', 800),
-  createData('01-05-2019', 8500),
-  createData('01-06-2019', 15000),
-  createData('01-07-2019', 12500),
-  createData('01-08-2019', 17500),
-  createData('01-09-2019', 17500),
-  createData('01-10-2019', 17500),
-  createData('01-11-2019', 17500),
-  createData('01-12-2019', 17500),
-  // createData('10-12-2019', undefined),
-];
-
 export default function Chart() {
-  const [pedidos, setPedidos] = React.useState([{}]);
-  const [cargarDatos, setCargarDatos] = React.useState(false);
-
+  const [loadData, setLoadData] = React.useState(true);
+  const [data,setData] = React.useState([]);
 
   React.useEffect(() => {
-
-    if (!cargarDatos) {
+    if (loadData) { //Al cargar la pagina, se llenaran los datos del chart
       OrderController.allDepositsPerYear()
-        .then(pedidos => {
-          setPedidos(pedidos);
-          setCargarDatos(true);
-          console.log("resultado: ",pedidos);
+        .then(result=>{
+          if (result) {
+            setData(result);
+          }
         })
-        .catch(error => {
-          console.log("Error al traer los Pedidos del día => ", error);
-        })
+        .catch(error =>{
+          console.log("Error al traer los Pedidos del día => ", error)
+        });
+        setLoadData(false) //Finalizo la carga de datos
     }
   });
 
@@ -49,7 +27,7 @@ export default function Chart() {
       <Title>Variación mensual en el año</Title>
       <ResponsiveContainer>
         <LineChart
-          data={data}
+          data={data} //Paso data con la informacion al chart
           margin={{
             top: 16,
             right: 16,

@@ -48,7 +48,6 @@ export default function DialogPayment(props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(()=>{
     if (confirmPayment) {
-      console.log(id_pedido);
       OrderController.changeOrderPayment(id_pedido);
       setConfirmPayment(false);
       handleOpenReload();

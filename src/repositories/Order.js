@@ -82,10 +82,8 @@ class OrderRepo extends Component {
     }
   }
   
-  contarProductos(pedidosSeleccionados){
-    
+  contarProductos(pedidosSeleccionados){    
     let lsProductos = pedidosSeleccionados.flatMap(pedido => pedido.lista);
-
     //Cuento la cantidad por los distintos productos.
     var result = [];
     lsProductos.reduce(function(res,value) {
@@ -97,7 +95,6 @@ class OrderRepo extends Component {
       return res;
     },{})
     console.log(result); //Muestro el resultado de la cuenta.
-
 
     //GROUP BY EN JAVASCRIPT
     const groupBy = (array,key) => {
@@ -125,17 +122,14 @@ class OrderRepo extends Component {
       let query = {};
       await db
       .where("detalle_pedido.fecha_finalizacion",">=",fecha_ini)
-      
         .get()
         .then(result=>{
           query = result.docs.map(doc => doc.data())
         })
-      //console.log("MUESTRO QUERY INI ",query);
       let pedidosSelecionados = [];
       
       query.forEach(pedido => {  
         if(pedido.detalle_pedido.fecha_entrega <= fecha_fin ){
-         // console.log("Pedido que entro", pedido.detalle_pedido.fecha_entrega, "Fecha fin" , pedido.detalle_pedido.fecha_finalizacion );
           pedidosSelecionados.push({"id" : pedido.id_pedido, "lista" : pedido.listado_producto})
         }
       });
@@ -229,32 +223,41 @@ class OrderRepo extends Component {
     }
   }
 
+  //Sumatoria del monto mensual
   async allDepositsPerYear(){
     try {
       let fechaActual = new Date();
       let fechaInicioAño = fechaActual.getFullYear() +'-'+'01'+'-'+'01';
       let fechaFinAño = fechaActual.getFullYear() +'-'+'12'+'-'+'31';
+      let list = [];
 
-      let fechaPedido;
-      let list = [{}];
-      let sum = 0;
-
-      await db.where("eliminado","==",false) //Verifico que no este eliminado
-        .where("estado","==","INICIAL") //Verifico que el estado sea inicial
+      //Cuando un pedido esta pagado, se elimina logicamente de la db. Por ende, busco los que esten eliminados y pagados.
+      await db.where("eliminado","==",true) 
+        .where("estado","==","PAGADO")
         .get()
         .then(result => {
           result.docs.map( doc =>{
+            //Filtro todos los pedidos de este año y los agrego
             if(doc.data().fecha_entrega >= fechaInicioAño && doc.data().fecha_entrega<=fechaFinAño){
-            fechaPedido=doc.data().fecha_entrega;
-            sum+=doc.data().monto_calculado;
-            list=[{fechaPedido, sum}];
+              list.push({amount:doc.data().monto_calculado,time:doc.data().detalle_pedido.fecha_finalizacion.substr(0,7)})
             }
           })
         });
-
-      return list;
+      
+      //Sumo el valor mensualente
+      let fmList = []; //Donde se guardaran todos los meses con su respectivo monto pagado.
+      list.reduce(function(res,value) { //Sumo por mes
+        if (!res[value.time]) {
+          res[value.time] = {time:value.time,amount:0};
+          fmList.push(res[value.time])
+        }
+        res[value.time].amount += value.amount;
+        return res;
+      },{}) //Tiene que devolver una coleccion de objetos
+      
+      return fmList;
     } catch(error){
-      console.error("Error en la base de datos al devolver depositos.");
+      console.error("Error en la base de datos al devolver la suma de los chart.");
     }
   }
 
