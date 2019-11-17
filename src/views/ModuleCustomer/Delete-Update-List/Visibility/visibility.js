@@ -30,7 +30,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function VisibilityClient(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const {open} = props;
+  const {cliente} = props;
+  const {handleClose}=props;
+
+  /*const [open, setOpen] = React.useState(false);
   const {cliente} = props;
   
   const handleClickOpen = () => {
@@ -39,11 +43,11 @@ export default function VisibilityClient(props) {
 
   const handleClose = () => {
     setOpen(false);
-  };
+  };*/
 
   return (
     <div>
-    <IconButton onClick={handleClickOpen} >
+    <IconButton /*onClick={handleClickOpen}*/ >
       <Visibility/>  
     </IconButton>
 

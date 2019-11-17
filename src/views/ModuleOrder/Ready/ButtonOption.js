@@ -6,7 +6,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { withRouter } from 'react-router-dom';
 import OrderController from '../../../controllers/Order';
 
-function SimpleMenu(props) {
+function MenuItems(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const {history} = props;
   const {listado_producto} = props;
@@ -57,4 +57,4 @@ function SimpleMenu(props) {
   );
 }
 
-export default withRouter(SimpleMenu);
+export default withRouter(MenuItems);

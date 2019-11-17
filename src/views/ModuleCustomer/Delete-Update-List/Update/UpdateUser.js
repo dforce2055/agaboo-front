@@ -60,7 +60,7 @@ export default function UpdateUser(props) {
             
           </Toolbar>
         </AppBar>
-        
+        {/*CHECKOUT*/}
         <Checkout updateStateArray={updateStateArray} cliente={valor} handleClose={handleClose}/>
       </Dialog>
     </div>

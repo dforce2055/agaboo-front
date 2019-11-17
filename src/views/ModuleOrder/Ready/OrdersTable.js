@@ -22,7 +22,7 @@ import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
 //Import componentes
 import OrderController from '../../../controllers/Order';
-import SimpleMenu from './ButtonOption.js';
+import ButtonOption from './ButtonOption.js';
 import { Button } from '@material-ui/core';
 
 const themeMuiProvider = createMuiTheme({ /* Plantilla de edicion */
@@ -348,7 +348,7 @@ function EnhancedTable(props) {
                     >
                       <TableCell>
                       {/*Paso listado_productos por props, asi lo puede recibir la clase ButtonOption el cual contiene las opciones que se utilizaran al hacer click en el icono MoreHorizIcon(los tres puntos)*/}
-                      <SimpleMenu 
+                      <ButtonOption 
                       updateArray={updateArray}
                       listado_producto = {row.listado_producto} //Listado producto entero
                       id_pedido={row.id_pedido} //Id del pedido seleccionado

@@ -20,6 +20,7 @@ import { IconButton,  TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { hideFooter } from './../../../Footer/HideFooter';
+import MenuItems from './MenuItems';
 
 const useStyles = makeStyles(theme => ({
   seeMore: {
@@ -78,13 +79,9 @@ function ClientTable(props) {
         CustomerController.getCustomerPagination(lastPosition.id)
         .then(result=>{
           if (result===false) {
-            console.log("No hay mas usuario");
             return;
           }
-
           result.forEach((res) => customerPag.push(res));
-        console.log("Estos son los clientes actuales;",clientes);
-        console.log("Estos son los usuarios agregados.",result);
         setClientes(customerPag)
         setPagination(false);
       });
@@ -94,7 +91,7 @@ function ClientTable(props) {
     });
   
   const {history} = props;
-  function updateStateArray(){
+  function updateStateArray(){    
     setStateArray(true)
   }
   
@@ -178,9 +175,7 @@ function ClientTable(props) {
         { !validador ? <Table size="small">
         <TableHead>
           <TableRow>
-          <TableCell>Eliminar</TableCell>
-            <TableCell>Modificar</TableCell>
-            <TableCell>Ver</TableCell>
+          <TableCell>Opciones</TableCell>
             <TableCell>Nombre</TableCell>
             <TableCell>Apellido</TableCell>
             <TableCell>CUIT/CUIL</TableCell>
@@ -190,23 +185,13 @@ function ClientTable(props) {
         <TableBody>
           {clientes.map(row => (
             <TableRow key={row.id}>
-            {/*Dialog de ELIMINAR cliente*/}
-            <TableCell>   
-              <AlertDialog
-                 updateStateArray={updateStateArray}
-                 cliente={row}/>
+
+            <TableCell>
+              <MenuItems
+                updateStateArray={updateStateArray}
+                row={row}
+              />
             </TableCell>
-              {/*Dialog de MODIFICAR cliente*/}
-              <TableCell>
-                <FullScreenDialog 
-                  updateStateArray={updateStateArray}
-                  valor={row}/>  
-              </TableCell>
-              {/*Dialog de VER cliente*/}
-              <TableCell>              
-                <VisibilityClient 
-                  cliente = {row}/>
-              </TableCell>
               <TableCell>{row.nombre}</TableCell>
               <TableCell>{row.apellido}</TableCell>
               <TableCell>{row.id}</TableCell>
@@ -216,13 +201,13 @@ function ClientTable(props) {
           ))}
         </TableBody>
       </Table> 
+
       :
+
       <Table size="small">
         <TableHead>
           <TableRow>
-          <TableCell>Eliminar</TableCell>
-            <TableCell>Modificar</TableCell>
-            <TableCell>Ver</TableCell>
+          <TableCell>Opciones</TableCell>
             <TableCell>Nombre</TableCell>
             <TableCell>Apellido</TableCell>
             <TableCell>CUIT/CUIL</TableCell>
@@ -230,27 +215,14 @@ function ClientTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-        
           {data.map(row => ( //Utilizo el nuevo arreglo con los parametros encontrados.
             <TableRow key={row.id}>
-            {/*Dialog de ELIMINAR cliente*/}
-            <TableCell>   
-              <AlertDialog
-                 updateStateArray={updateStateArray}
-                 cliente={row}/>
-            </TableCell>
-              {/*Dialog de MODIFICAR cliente*/}
-              <TableCell>
-                <FullScreenDialog 
+            <TableCell> 
+              <MenuItems
                   updateStateArray={updateStateArray}
-                  valor={row}/>  
-              </TableCell>
-              {/*Dialog de VER cliente*/}
-              <TableCell>              
-                <VisibilityClient 
-                  cliente = {row}/>
-              </TableCell>
-
+                  row={row}
+                />
+            </TableCell>
               <TableCell>{row.nombre}</TableCell>
               <TableCell>{row.apellido}</TableCell>
               <TableCell>{row.id}</TableCell>

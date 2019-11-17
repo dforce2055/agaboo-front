@@ -21,8 +21,8 @@ import { CssBaseline } from '@material-ui/core'
 import firebase from '../src/config/firebase';
 import LoaderScreen from './views/LoaderScreen/LoaderScreen';
 
-import AccountStatus from './views/ModuleOrder/AccountStatus/index';
-
+import AccountStatus from './views/ModuleOrder/AccountStatus/Index';
+import Service from './views/ModuleService/Index.js'
 import CustomizedTables from './views/ModuleOrder/Ready/Add-ID/ProductListOrder';
 
 const theme = createMuiTheme();
@@ -56,6 +56,7 @@ export default function App() {
                 <Route path= "/eliminarPedidos" component={DeleteOrder} />
                 <Route path = "/rellenarPedido" component={CustomizedTables}/>
                 <Route path = "/EstadoDeCuenta" component={AccountStatus}/>
+                <Route path = "/servicios" component={Service}/>
             </React.Fragment>
         </BrowserRouter>
     </MuiThemeProvider>

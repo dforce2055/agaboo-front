@@ -3,7 +3,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Button,Typography,ButtonGroup } from '@material-ui/core';
 import CustomerController from '../../../../controllers/Customer';
-import DialogAcept from '../';
+import DialogAcept from './DialogAcept';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { withRouter } from "react-router-dom";
 
