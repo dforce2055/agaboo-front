@@ -5,9 +5,9 @@ import { BrowserRouter, Route  } from "react-router-dom";
 import HomePage from "./views/HomePage/HomePage";
 import MainMenu from "./views/MainMenu/MainMenu";
 import LogIn from './views/LogIn/Login';
-import DeleteUpdateUserAdmin from "./views/ModulsUserAdmin/Delete-Update-List/index";
+import DeleteUpdateUserAdmin from "./views/ModuleCustomer/Delete-Update-List/index";
 import * as serviceWorker from './serviceWorker';
-import CreateUserAdm from './views/ModulsUserAdmin/Create/index'; //Componente para registrar un nuevo cliente¿
+import CreateUserAdm from './views/ModuleCustomer/Create/index'; //Componente para registrar un nuevo cliente¿
 import CreateUserAdmOK from './views/ModuleUserOK/Create/index';
 import ListUsers from './views/ModuleUserOK/ListUsers/index';
 import indexCreateProduct from './views/ModuleProduct/Create/index'
