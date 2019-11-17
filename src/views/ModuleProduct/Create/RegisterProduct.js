@@ -98,14 +98,13 @@ const useStyles = makeStyles(theme => ({
   },
   buttonLeft: {
     marginRight:'2px',
-    marginLeft:'13px',
+    marginLeft:'10px',
     marginTop: theme.spacing(3),
   },
   buttonRight: {
     marginLeft:'20px',
     marginTop: theme.spacing(3),
   },
-
 }));
 
 
@@ -149,14 +148,11 @@ const useStyles = makeStyles(theme => ({
   } 
 
 
-
-
   return (
       <div style={{marginTop:'20px'}}>
       <MuiThemeProvider theme={themeMuiProvider}>
       <Paper className={classes.paper} > 
-        <Grid container spacing = {1} justify = { "center" } className = { "grid"} >
-          
+        <Grid container justify = { "center" } className = { "grid"} >
           <Grid item xs = {12} sm = {6}>
               <h1 >Registro de productos</h1>
               <form className={classes.container} noValidate autoComplete="off" >
@@ -242,6 +238,7 @@ const useStyles = makeStyles(theme => ({
                 
                 
             </form>
+            <Grid item xs = {12} alignItems = {"center"}>
             <ButtonGroup
                 variant="text"
                 size="large"
@@ -254,7 +251,7 @@ const useStyles = makeStyles(theme => ({
                   onClick={ () => history.goBack()  }
                 >
                   Cancelar
-                  </Button>
+                </Button>
                 <Button
                   className={classes.buttonRight}
                   label={"Registrar Usuario"}
@@ -266,11 +263,9 @@ const useStyles = makeStyles(theme => ({
                   Guardar
                 </Button>
             </ButtonGroup>
-              {/* <Button type="submit" label ={"Registrar Producto"} onClick = { registerProduct } ></Button>
-              <Button label = {"Cancelar"} onClick ={ () => history.goBack()  } ></Button> */}
+            </Grid>
           </Grid>
         </Grid>
-     
       </Paper>
       </MuiThemeProvider>
       </div>

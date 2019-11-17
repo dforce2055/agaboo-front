@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
@@ -24,6 +24,17 @@ const theme = createMuiTheme({ /* Plantilla de edicion */
           label:{
             fontSize: '0.875rem',
           },
+      },
+      MuiButton:{
+        containedSecondary:{
+          backgroundColor: '#139641',
+          '&:hover': {
+            backgroundColor: '#16cc57',
+            "@media (hover: none)": {
+              backgroundColor: "#16cc57"
+            },
+          },
+        },
       },
 
 }});
@@ -71,12 +82,12 @@ export default function DialogPayment(props) {
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
       >
-        <DialogTitle id="responsive-dialog-title">{"¿Esta seguro de poner como pagado este pedido?"}</DialogTitle>
+        <DialogTitle id="responsive-dialog-title">{'¿Desea marcar el pedido seleccionado como cobrado?'}</DialogTitle>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancelar
           </Button>
-          <Button onClick={confirmPay} variant='contained' color="secondary" autoFocus startIcon={<CheckCircleIcon />}>
+          <Button onClick={confirmPay} variant='contained' color="secondary" autoFocus startIcon={<AttachMoneyIcon />}>
             Confirmar pago
           </Button>
         </DialogActions>

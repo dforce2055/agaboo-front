@@ -5,6 +5,7 @@ import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import CustomerController from '../../../../controllers/Customer';
+import { hideFooter } from './../../Footer/HideFooter';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,6 +46,10 @@ export default function ButtonSearch(props) {
        setHandleFounDb(result);
       });
   }
+
+  React.useEffect(() => {
+    hideFooter();
+  }); 
 
   return (
     <Paper className={classes.root}>

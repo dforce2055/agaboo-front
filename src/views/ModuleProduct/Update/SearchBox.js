@@ -13,7 +13,9 @@ const useStyles = makeStyles(theme => ({
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
-    
+    width: 270,
+    marginTop:theme.spacing(2),
+    marginBottom:theme.spacing(2),
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -90,9 +92,7 @@ export default function SearchBox() {
                     dialogOpen = {dialogOpen}
                     setSearch = {setSearch}
                    // abreDialog = {abreDialog}
-                    />
-      
-      <Divider className={classes.divider} orientation="vertical" />  
+        /> 
     </Paper>
     </React.Fragment>
   );

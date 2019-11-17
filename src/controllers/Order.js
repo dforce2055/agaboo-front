@@ -95,6 +95,13 @@ class OrderController extends Component {
     }
   }
 
+  allDepositsPerYear(){
+    try {
+      return OrderRepo.allDepositsPerYear();
+    } catch (error) {
+      console.error("Error en el controlador de pedidos al enviar depositos.");      
+    }
+  }
   changeOrderPayment(id_pedido){
     try {
       OrderRepo.changeOrderPayment(id_pedido);

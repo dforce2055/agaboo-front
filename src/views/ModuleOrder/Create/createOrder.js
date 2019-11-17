@@ -2,6 +2,17 @@ import React from "react";
 import "./Form.css";
 import Container from '@material-ui/core/Container';
 import SimpleTable from './OrderDetail/TableProduct';
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+
+const theme = createMuiTheme({ /* Plantilla de edicion */
+  overrides: {
+      MuiContainer:{
+        root:{
+          paddingTop:'14px',
+        },
+      },
+
+}});
 
 function formulario(handleChange, value){
   const now = new Date();
@@ -129,13 +140,15 @@ export default function CreateOrder(props) {
   
   return (
     <React.Fragment>
-    <Container  maxWidth="md" className='nuevo'>
-        <form onSubmit={handleSubmit} noValidate>
-          {formulario(handleChange, values.fecha_entrega)}
-          {/*detallePedido(product,handleProductChange,handleChange)*/}
-          <SimpleTable setButtonState={setButtonState}></SimpleTable>
-        </form>
-    </Container>
+    <MuiThemeProvider theme={theme}>
+      <Container  maxWidth="md" className='nuevo'>
+          <form onSubmit={handleSubmit} noValidate>
+            {formulario(handleChange, values.fecha_entrega)}
+            {/*detallePedido(product,handleProductChange,handleChange)*/}
+            <SimpleTable setButtonState={setButtonState}></SimpleTable>
+          </form>
+      </Container>
+    </MuiThemeProvider>
   </React.Fragment>
   );
 }

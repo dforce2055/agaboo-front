@@ -19,6 +19,7 @@ import VisibilityClient from '../Visibility/visibility';
 import { IconButton,  TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { hideFooter } from './../../../Footer/HideFooter';
 
 const useStyles = makeStyles(theme => ({
   seeMore: {
@@ -88,8 +89,10 @@ function ClientTable(props) {
         setPagination(false);
       });
       }      
+    
+      hideFooter();
     });
-
+  
   const {history} = props;
   function updateStateArray(){
     setStateArray(true)

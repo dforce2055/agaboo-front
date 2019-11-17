@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
   
 }));
 
-export default function Orders(props) {
+export default function Orders() {
   const classes = useStyles();
   const [pedidos, setPedidos] = React.useState([]);
   const [cargarPedidos, setCargarPedidos] = React.useState(true);
@@ -63,9 +63,14 @@ export default function Orders(props) {
     }
   });
 
-  return (
+  return pedidos.length === 0 ? (
+    <React.Fragment>
+      <Title>No tiene pedidos para Hoy</Title>
+    </React.Fragment>
+  ) : 
     <React.Fragment>                
       <Title>Pedidos para Hoy</Title>
+
       <Table className={classes.tablaPedidos}>
         <Thead>
           <Tr>
@@ -91,5 +96,4 @@ export default function Orders(props) {
         </Tbody>
       </Table>
     </React.Fragment>
-  );
 }

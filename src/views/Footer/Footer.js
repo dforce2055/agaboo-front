@@ -99,7 +99,7 @@ function SimpleBottomNavigation(props) {
                 <DialogTitle id="responsive-dialog-title">{"Confirmar cierre de sesión"}</DialogTitle>
                 <DialogContent>
                   <DialogContentText>
-                    Está seguro que desea cerrar sesión?.
+                    Está seguro que desea cerrar sesión?
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
