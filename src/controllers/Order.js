@@ -73,6 +73,14 @@ class OrderController extends Component {
       console.error("Error en el controlador de pedidos al enviar depositos.");      
     }
   }
+
+  allDepositsPerYear(){
+    try {
+      return OrderRepo.allDepositsPerYear();
+    } catch (error) {
+      console.error("Error en el controlador de pedidos al enviar depositos.");      
+    }
+  }
 }
 
 export default new OrderController();

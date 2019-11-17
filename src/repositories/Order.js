@@ -210,6 +210,44 @@ class OrderRepo extends Component {
       console.error("Error en la base de datos al devolver depositos.");
     }
   }
+
+  async allDepositsPerMonth(){
+    try {
+      
+    } catch (error) {
+      console.error("Error en la base de datos al devolver depositos.");
+    }
+  }
+
+  async allDepositsPerYear(){
+    try {
+      let fechaActual = new Date();
+      let fechaInicioAño = fechaActual.getFullYear() +'-'+'01'+'-'+'01';
+      let fechaFinAño = fechaActual.getFullYear() +'-'+'12'+'-'+'31';
+
+      let fechaPedido;
+      let list = [{}];
+      let sum = 0;
+
+      await db.where("eliminado","==",false) //Verifico que no este eliminado
+        .where("estado","==","INICIAL") //Verifico que el estado sea inicial
+        .get()
+        .then(result => {
+          result.docs.map( doc =>{
+            if(doc.data().fecha_entrega >= fechaInicioAño && doc.data().fecha_entrega<=fechaFinAño){
+            fechaPedido=doc.data().fecha_entrega;
+            sum+=doc.data().monto_calculado;
+            list=[{fechaPedido, sum}];
+            }
+          })
+        });
+
+      return list;
+    } catch(error){
+      console.error("Error en la base de datos al devolver depositos.");
+    }
+  }
+
 }
 
 

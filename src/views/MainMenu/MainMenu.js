@@ -47,16 +47,7 @@ function MainMenu(props){
             <div>
               <MuiThemeProvider theme={theme}>
                  <Navbar/>
-                 {/* <div><Chart></Chart></div> */}
-        
-                {/*<div  className = {"Button"}><ButtonClient fullWidth/></div>
-                <div  className = {"Button"}><ButtonProduct fullWidth/></div>
-                <div  className = {"Button"}><ButtonStock fullWidth/></div>
-                <div  className = {"Button"}><ButtonOrder fullWidth/></div>
-                <div  className = {"Button"}><ButtonSimple nombre = {'Estado de cuenta'/*Utilizo los props para reutilizar el boton simple*/} {/*fullWidth/></div>
-                <div  className = {"Button"}><ButtonSimple nombre = {'Mantenimientos a realizar'} fullWidth/></div>*/}
-                <Dashboard></Dashboard>
-                
+                 <Dashboard></Dashboard>
                 <footer>
                   <SimpleBottomNavigation/>
                 </footer>

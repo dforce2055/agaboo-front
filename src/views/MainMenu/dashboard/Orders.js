@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
   
 }));
 
-export default function Orders(props) {
+export default function Orders() {
   const classes = useStyles();
   const [pedidos, setPedidos] = React.useState([]);
   const [cargarPedidos, setCargarPedidos] = React.useState(true);
