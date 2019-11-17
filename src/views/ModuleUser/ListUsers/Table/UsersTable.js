@@ -28,7 +28,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import AutocompleteSearch from '../Search/AutocompleteSearch';
+import AutocompleteSearch from '../Search/AutocompleteSearch.js';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { hideFooter } from './../../../Footer/HideFooter';
 
