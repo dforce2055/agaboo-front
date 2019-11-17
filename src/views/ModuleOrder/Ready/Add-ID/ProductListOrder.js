@@ -19,7 +19,7 @@ import OrderController from '../../../../controllers/Order';
 import Chip from './Chip';
 import AlertDialog from './AlertDialog';
 
-const theme = createMuiTheme({ /* Plantilla de edicion */
+const themeMuiProvider = createMuiTheme({ /* Plantilla de edicion */
   overrides: { 
     MuiSvgIcon:{
       colorPrimary:{
@@ -146,7 +146,7 @@ const useStyles = makeStyles(theme => ({
   }
   
   return (
-    <MuiThemeProvider theme={theme}>
+    <MuiThemeProvider theme={themeMuiProvider}>
     <Container >
     <Paper className={classes.root}>
       <Table className={classes.table}>

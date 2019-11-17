@@ -111,7 +111,7 @@ function formulario(handleChange, value){
   );
 }
 
-export default function Form(props) {
+export default function CreateOrder(props) {
   const { setButtonState } = props; 
 
   const [values,setValues] = React.useState({

@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
   
 }));
 
-export default function Board(props) {
+export default function TableAccount(props) {
   const classes = useStyles();
 
   const {handleOpenReload} = props;
@@ -100,6 +100,7 @@ export default function Board(props) {
             <Th>Nombre</Th>
             <Th>Localidad</Th>
             <Th>Dirección</Th>
+            <Th>Monto</Th>
             <Th>Ver más...</Th>
             <Th>Confirmar pago</Th>
           </Tr>
@@ -111,6 +112,7 @@ export default function Board(props) {
               <Td>{pedido.cliente.nombre +' ' +pedido.cliente.apellido}</Td>
               <Td>{pedido.ciudad}</Td>
               <Td>{pedido.direccion}</Td>
+              <Td>{pedido.monto_calculado}</Td>
               <Td>
                 <DialogOrders pedido={pedido}/>
               </Td>

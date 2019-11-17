@@ -15,7 +15,7 @@ class UserController extends Component {
             },
 
         };
-    };
+    }
 
 
     addUser = async (data) => {
@@ -39,8 +39,14 @@ class UserController extends Component {
 
     
 
-    getAllUsers = async (cant) => {
-        if (!cant) cant = 10; 
+    getAllUsers = async (cant_parameter) => {
+        let cant = 0;
+        if (!cant_parameter){
+            cant = 10;
+        }
+        else{
+            cant = cant_parameter;
+        }
         try {
             let users = await UserRepo.getAllUsers(cant);
 
@@ -79,8 +85,14 @@ class UserController extends Component {
         }
     }
 
-    getActiveUsers = async (cant) => {
-        if (!cant) cant = 10;
+    getActiveUsers = async (cant_parameter) => {
+        let cant = 0;
+        if (!cant_parameter){
+            cant = 10;
+        }
+        else{
+            cant = cant_parameter;
+        }
         try {
             let users = await UserRepo.getActiveUsers(cant);
 
@@ -99,10 +111,16 @@ class UserController extends Component {
         }
     }
 
-    getUsersPagination = async (lastId, cant) => {        
+    getUsersPagination = async (lastId, cant_parameter) => {        
         if (!lastId) throw new Error(`Error: el email es obligatorio para poder buscar a los siguientes usuarios`);
-        //Si NO llega cant, devuelvo los 10 siguientes
-        if (!cant) cant = 10; 
+        //Si NO llega cant_parameter, devuelvo los 10 siguientes
+        let cant = 0;
+        if (!cant_parameter){
+            cant = 10;
+        }
+        else{
+            cant = cant_parameter;
+        }
 
         try {
             let users = await UserRepo.getUsersPagination(lastId, cant);
@@ -119,10 +137,16 @@ class UserController extends Component {
         }
     }
 
-    getUsersActivePagination = async (lastId, cant) => {
+    getUsersActivePagination = async (lastId, cant_parameter) => {
         if (!lastId) throw new Error(`Error: el email es obligatorio para poder buscar a los siguientes usuarios`);
         //Si NO llega cant, devuelvo los 10 siguientes
-        if (!cant) cant = 10;
+        let cant = 0;
+        if (!cant_parameter){
+            cant = 10;
+        }
+        else{
+            cant = cant_parameter;
+        }
 
         try {
             let users = await UserRepo.getActiveUsersPagination(lastId, cant);
@@ -140,10 +164,16 @@ class UserController extends Component {
         }
     }
 
-    searchUsersActive = async (search, cant) => {
+    searchUsersActive = async (search, cant_parameter) => {
         if (!search) throw new Error(`Error: el "Parametro" de busqueda es obligatorio para poder buscar los usuario`);
         //Si NO llega cant, devuelvo los 10 siguientes
-        if (!cant) cant = 10;
+        let cant = 0;
+        if (!cant_parameter){
+            cant = 10;
+        }
+        else{
+            cant = cant_parameter;
+        }
 
         try {
             let users = await UserRepo.searchUsersActive(search, cant);

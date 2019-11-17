@@ -21,7 +21,7 @@ import {
 import { hideFooter } from '../../Footer/HideFooter';
 
 
-const theme = createMuiTheme({
+const themeMuiProvider = createMuiTheme({
   overrides: {
     MuiFormHelperText: {
       root: {
@@ -299,7 +299,7 @@ function AddressForm(props) {
 
 
   return (
-    <MuiThemeProvider theme={theme}>
+    <MuiThemeProvider theme={themeMuiProvider}>
       <React.Fragment>
         <Typography variant="h6" gutterBottom>
           Por favor complete los siguientes campos para registrar un usuario

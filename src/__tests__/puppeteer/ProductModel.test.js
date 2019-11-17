@@ -21,7 +21,6 @@ const productTest = new Product(
 test('un test', () => {
     //productTest.type = "NAME";
     console.log(productTest);
-    let fechaCreacion = new Date(productTest.creationDate.seconds);
     console.log(`Fecha de creación ${ productTest.getCreationDateFormated() }`);
     console.log(`Ubicación actual ${ productTest.getCurrentAddress() }`);
     expect(true).toBeTruthy();

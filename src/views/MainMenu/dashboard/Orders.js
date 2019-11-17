@@ -53,8 +53,8 @@ export default function Orders() {
 
     if (cargarPedidos) {
       OrderController.getOrdersNow()
-        .then(pedidos => {
-          setPedidos(pedidos);
+        .then(result => {
+          setPedidos(result);
           setCargarPedidos(false);
         })
         .catch(error => {

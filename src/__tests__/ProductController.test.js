@@ -187,7 +187,6 @@ describe('Metodo getProductsByState', () => {
     test('Metodo getProductsByState', async () => {
         //Debería devolver un array de objetos del tipo Product si 
         //Encuentra productos con el estado pasado por parametro
-        let STATES = ['ALQUILADO', 'DISPONIBLE', 'EN MANTENIMIENTO', 'EN TRANSITO'];
         let products = await ProductController.getProductsByState('DISPONIBLE');
 
         //Comparo el objeto con un array de objetos del tipo Product

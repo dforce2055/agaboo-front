@@ -28,11 +28,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import AsynchronousSearch from '../Search/Autocomplete';
+import AutocompleteSearch from '../Search/AutocompleteSearch.js';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { hideFooter } from './../../../Footer/HideFooter';
 
-const theme = createMuiTheme({
+const themeMuiProvider = createMuiTheme({
   overrides: {
     MuiIconButton: {
       colorPrimary: {
@@ -154,14 +154,14 @@ function UsersTable(props) {
       setLoading(true);
 
       UserController.getUsersActivePagination(lastUser.email, 5)
-        .then(moreUsers => {
-          if (moreUsers === false) {
+        .then(result => {
+          if (result === false) {
             console.log("No hay más usuarios");
             setLoading(false);
             return;
           }
           
-          moreUsers.forEach((user) => {
+          result.forEach((user) => {
             usersBack.push(user);
           });
 
@@ -194,7 +194,7 @@ function UsersTable(props) {
   }
   
   return (
-    <MuiThemeProvider theme={theme}>
+    <MuiThemeProvider theme={themeMuiProvider}>
       <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrar-usuario')} >
         <AddIcon />
       </Fab>
@@ -202,7 +202,7 @@ function UsersTable(props) {
         <Typography variant="h4" className={classes.titulo}>Usuarios</Typography>
       </Grid>
       <Grid item xs={12} md={9} lg={9}>
-        <AsynchronousSearch usuarios={usuarios} setUsuarios={setUsuarios} updateStateArray={updateStateArray}/>
+        <AutocompleteSearch usuarios={usuarios} setUsuarios={setUsuarios} updateStateArray={updateStateArray}/>
       </Grid>
       <Grid item xs={12} md={9} lg={9}>
         <List className={classes.root}>

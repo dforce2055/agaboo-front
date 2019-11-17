@@ -34,7 +34,7 @@ const theme = createMuiTheme({ /* Plantilla de edicion */
 }
 });
 
-export default function ResponsiveDialog() {
+export default function ConfirmDialog() {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
