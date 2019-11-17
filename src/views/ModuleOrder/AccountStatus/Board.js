@@ -6,8 +6,8 @@ import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 import './Table.css';
 
-import OrderController from './../../../controllers/Order';
-import DialogPayment from './DialogPayment.js';
+import OrderController from '../../../controllers/Order';
+import DialogPayment from './DialogPayment';
 
 const useStyles = makeStyles(theme => ({
   seeMore: {

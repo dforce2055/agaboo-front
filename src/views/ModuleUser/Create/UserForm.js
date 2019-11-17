@@ -18,7 +18,7 @@ import {
   DialogTitle
 } from '@material-ui/core/';
 
-import { hideFooter } from './../../Footer/HideFooter';
+import { hideFooter } from '../../Footer/HideFooter';
 
 
 const theme = createMuiTheme({

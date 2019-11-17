@@ -5,9 +5,9 @@ import { withRouter } from 'react-router-dom';
 import SimpleBottomNavigation from '../../Footer/Footer';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper } from '@material-ui/core';
-import CumulativeTotal from './CumulativeTotal.js';
+import CumulativeTotal from './CumulativeTotal';
 //Import componentes
-import Board from './Board.js';
+import Board from './Board';
 
 const useStyles = makeStyles(theme => ({
     espacio:{
