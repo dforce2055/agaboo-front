@@ -85,7 +85,11 @@ export default function Board(props) {
     setLoadOrder(true);
   }
 
-  return (
+  return unpaid.length === 0 ? (
+    <React.Fragment>
+      <Title>No tiene pedidos impagos</Title>
+    </React.Fragment>
+  ) : (
     <React.Fragment>
       <MuiThemeProvider theme={theme}>
       <Title>Pedidos impagos</Title>
