@@ -83,7 +83,7 @@ const useStyles = makeStyles(theme => ({
 
     return(
       <React.Fragment>
-          <TextField classname = {classes.fab}
+          <TextField className = {classes.fab}
           id="type-product"
           select
           

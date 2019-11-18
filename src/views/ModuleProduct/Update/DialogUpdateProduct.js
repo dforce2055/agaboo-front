@@ -159,8 +159,8 @@ export default function DialogUpdateProduct(props) {
 
   return (
     <div>
-      <IconButton>
-          <SearchIcon onClick={handleClickOpen}/>
+      <IconButton onClick={handleClickOpen}>
+          <SearchIcon />
       </IconButton>
       
       

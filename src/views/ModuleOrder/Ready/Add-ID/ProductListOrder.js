@@ -118,7 +118,7 @@ const useStyles = makeStyles(theme => ({
         }else if(obj.modelo === 'discapacitado'){
           setList_cant({...list_cant, ['Baño_Quimico_Discapacitado']: obj});
         }
-      case 'Boleteria':
+      case 'Boletería':
         setList_cant({...list_cant, [name]: obj});
       case 'Oficina':
         setList_cant({...list_cant, [name]: obj});

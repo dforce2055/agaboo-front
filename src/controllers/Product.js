@@ -123,6 +123,19 @@ class ProductController extends Component {
 
     }
 
+    getTypesOfProducts = async () => {
+        try {
+            let typesOfProducts = await ProductRepo.getTypesOfProducts();
+            if (typesOfProducts) {
+                return [...new Set(typesOfProducts )];
+            } else {
+                console.log("No se pudo obtener los productos");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     addProduct = async (data) => {
         if (!data) throw new Error(`Error: no se envió un Producto para registrar`);
         
@@ -146,11 +159,11 @@ class ProductController extends Component {
         if (!product) throw new Error(`Error: no se envió un Producto para editar`);
 
         try {
-            let product = Object.assign({}, product); //Utilizo Object.assign para mapear el objeto
-            await ProductRepo.getProductByCode(product.code);
-            let result = ProductRepo.editProduct(product.code, product);
+            let productObj = Object.assign({}, product); //Utilizo Object.assign para mapear el objeto
+            await ProductRepo.getProductByCode(productObj.code);
+            let result = ProductRepo.editProduct(productObj.code, product);
             if (result) {
-                console.log(`Se editó correctamente el producto`, product);
+                console.log(`Se editó correctamente el producto`, productObj);
                 return true;
             } else {
                 console.log(`No se pudó editar el producto ${ product } `);

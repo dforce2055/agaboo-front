@@ -88,7 +88,12 @@ class OrderController extends Component {
 
   async chequearDisponibilidad(productos) {
     let productosDisponibles = {};
-    
+    let tiposDeProductos = await ProductController.getTypesOfProducts();
+
+    tiposDeProductos.forEach(tipoDeProducto => {
+      if (tipoDeProducto in productos == false) productos[tipoDeProducto] = 0;
+    })
+
     for (var [key, value] of Object.entries(productos)) {
       await ProductController.getCantProductsByType(key)
             .then( (disponibles) => {

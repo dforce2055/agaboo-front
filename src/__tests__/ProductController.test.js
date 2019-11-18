@@ -180,6 +180,17 @@ describe('Metodo getCantProductsByType', () => {
     });
 });
 
+describe('Metodo getTypesOfProducts', () => {
+    // Pruebas del metodo getTypesOfProducts
+    test('getTypesOfProducts', async () => {
+        //Debería devolver un array de objetos del tipo Product en Json
+        let typesOfProducts = await ProductController.getTypesOfProducts('Baño Químico');
+        console.log("Tipos de productos");
+        await console.log(typesOfProducts);
+        await expect(typeof typesOfProducts).toBe('object');
+    },);
+});
+
 
 
 describe('Metodo editProduct', () => {
