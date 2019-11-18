@@ -48,6 +48,7 @@ export default function SelectCantProduct(props) {
       setModeloBaño(true);
     }else if(cant_prodt_select.producto !== 'Baño Químico'){
       setModeloBaño(false);
+      cant_prodt_select.modelo = '';
     }
 
     if (tiposDeProductos.length === 0) {
@@ -64,8 +65,21 @@ export default function SelectCantProduct(props) {
   const {handleChange} = props;
   const {cant_prodt_select} = props;
   const {addArrayProduct} = props;
+  const {alquilables} = props;
 
-  //Si fue seleccionado el baño publico, se pondra verdadero y mostrara los demas modelos
+  const authCant=()=>{
+    alquilables.forEach(element => {
+      if (element.type === cant_prodt_select.producto) { //Si se encuentra el producto
+
+        if (element.cantidad >= cant_prodt_select.cantidad) {//Verifico que la cantidad introducida sea mayor a la disponible. Si no lo es rechaza
+          element.cantidad -= cant_prodt_select.cantidad; //Resto la cantidad introducida    
+        addArrayProduct() //Agrego al arreglo de productos del pedido
+        }
+      }
+    });
+  }
+
+  //Si fue seleccionado el baño publico, se pondra verdadero y mostrara los modelos
   const [modeloBaño,setModeloBaño] = React.useState(false);
 
   return (
@@ -122,7 +136,7 @@ export default function SelectCantProduct(props) {
       size="small" 
       aria-label="add" 
       color="primary"
-      onClick={addArrayProduct}
+      onClick={authCant}
     >
       <AddIcon />
     </Fab>

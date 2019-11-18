@@ -121,11 +121,11 @@ function formulario(handleChange, value){
 
 export default function CreateOrder(props) {
   const { setButtonState } = props; 
-  const [loadData,setLoadData] = React.useState(false); //Si los campos de fecha estan llenos se instanciara validateDate
-  const [alquilables,setAlquilables] = React.useState([]);//La cantidad de baños alquilables
+  const [loadData,setLoadData] = React.useState(true);
+  const [alquilables,setAlquilables] = React.useState([]);
 
   React.useEffect(()=>{
-    if (loadData) {
+    if (values.fecha_entrega != '' && values.fecha_finalizacion != '' && loadData) {
       OrderController.validateOrder(values.fecha_entrega,values.fecha_finalizacion)
         .then(result=>{
          if (result) {
@@ -149,19 +149,13 @@ export default function CreateOrder(props) {
 
   const handleChange = name => event => {    
     setValues({ ...values, [name]: event.target.value }); 
-    if (values.fecha_entrega != '' && values.fecha_finalizacion) { //Valido si estan llenas o no los campus de fecha
-      setLoadData(true)
-    } 
     sessionStorage.setItem('info_detalle_pedido',JSON.stringify(values));    
   };
 
   const handleSubmit= () =>{    
-    
     console.log("Agrego info_detalle_pedido a SESSION STORAGE");
-
     sessionStorage.setItem("info_detalle_pedido",JSON.stringify(values));
   }
-
   
   return (
     <React.Fragment>
@@ -169,11 +163,10 @@ export default function CreateOrder(props) {
       <Container  maxWidth="md" className='nuevo'>
           <form onSubmit={handleSubmit} noValidate>
             {formulario(handleChange, values.fecha_entrega)}
-           <div>
-            {alquilables.length > 0 ?<TableOrderDisp rows = {alquilables}/> : nada} 
-           </div>
+            {alquilables.length > 0  && <div><TableOrderDisp rows={alquilables}/></div>}  {/*Renderizo la tabla que contiene la cantidad de productos disponibles para su alquiler*/}
+
             <TableProduct 
-            alquilables = {alquilables}
+            alquilables = {alquilables} //Paso alquilables, para verificar cada vez que se introduzca un valor nuevo al arreglo.
             setButtonState={setButtonState}/>
           </form>
       </Container>

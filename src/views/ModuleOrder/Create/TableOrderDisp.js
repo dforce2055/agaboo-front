@@ -9,35 +9,62 @@ import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing(3),
-    overflowX: 'auto',
-  },
-  table: {
-    minWidth: 350,
+  tablaPedidos: {
+    textAlign: "left",
+    borderCollapse: 'collapse',
+    borderSpacing: 0,
+    borderColor: 'rgba(0,0,0,.5)',
+    padding: '.25em',
+    
+    '& tbody': {
+      '& tr': {
+        border: '1px solid rgba(0,0,0,.1)',
+        padding: '.25em',
+      },
+      '& td': {
+        border: '1px solid rgba(0,0,0,.1)',
+        padding: '.25em',
+      }
+    },
+    '& thead': {
+      backgroundColor: 'rgba(0,0,0,.1)',
+      color: '#555',
+      border: '1px solid rgba(0,0,0,.1)',
+      padding: '.25em',
+      
+      '& th': {
+        border: '1px solid rgba(0,0,0,.1)',
+        padding: '.25em',
+      }
+    },
   },
 }));
 
 export default function TableOrderDisp(props) {
   const classes = useStyles();
   const {rows} = props;
+  let data = [];
+  if (rows) {
+    data = rows;    
+  } else {
+    data = [];
+  }
   return (
-    <Paper className={classes.root}>
-      <Table className={classes.table} aria-label="caption table">
+    <Paper>
+      <Table className={classes.tablaPedidos} aria-label="caption table">
         <Thead>
           <Tr>
             <Td>Producto</Td>
-            <Td align="right">Cantidad Alquilable</Td>
+            <Td>Cantidad Alquilable</Td>
           </Tr>
         </Thead>
         <Tbody>
-          {rows.map(row => (
+          {data.map(row => (
             <Tr key={row.type}>
               <Td component="th" scope="row">
                 {row.type}
               </Td>
-              {row.cantidad > 0 ? <Td align="right">{row.cantidad}</Td> : <Td align="right">No alquilables</Td>}
+              {row.cantidad > 0 ? <Td align="right">{row.cantidad}</Td> : <Td align="right">0</Td>}
             </Tr>
           ))}
         </Tbody>

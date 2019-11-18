@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import CustomizedSelects from './SelectCantProduct';
+import SelectCantProduct from './SelectCantProduct';
 import ClearIcon from '@material-ui/icons/Clear';
 import Fab from '@material-ui/core/Fab';
 
@@ -16,9 +16,6 @@ const useStyles = makeStyles({
   root: {
     width: '100%',
     overflowX: 'auto',
-  },
-  table: {
-    minWidth: 400,
   },
 });
 
@@ -51,19 +48,13 @@ export default function TableProduct(props) {
       id_producto:''
     });
   
-  //Arreglo donde guardare los productos guardados en el listad.
-  const [arrayProduct,setArrayProduct] = React.useState([]);
+  const [arrayProduct,setArrayProduct] = React.useState([]); //Arreglo donde guardare los productos guardados en el listad.
   let [deletePosition,setDeletePosition] = React.useState({});
-  const [stateArray,setStateArray] = React.useState(false);
+  const [stateArray,setStateArray] = React.useState(false); //Se utiliza para iniciar la carga cuando se renderiza el componente
 
   const { setButtonState } = props; 
-/*
- Para evitar el error ==> index.js:1375 Warning: validateDOMNesting(...): <form> cannot appear as a descendant of <form>.
+  const { alquilables } = props; //Cantidad alquilable de productos
 
- SOLUCION ==> const arrayProduct = [];
-
- PROBLEMA==> No guarda mas de un valor al momento de agregar un producto
-*/
   const handleChange = name => event => {    
     setCant_prodt_select({ ...cant_prodt_select, [name]: event.target.value });  
   };
@@ -116,17 +107,25 @@ export default function TableProduct(props) {
   //Metodo para eliminar una tupla de la tabla producto con cantidad.
   const handleDelete = (row) => {
     setDeletePosition(row)
+    console.log(row);
+
+    alquilables.forEach(element => {//Recorro y busco el elemento borrado para sumarle la cantidad del que se esta borrando
+      if (element.type === row.producto) {        
+        element.cantidad += parseInt(row.cantidad);
+      }
+    });
     setStateArray(true);
   }
 
   return (
     <Paper className={classes.root}>
 
-    <CustomizedSelects
+    <SelectCantProduct
       handleChange={handleChange}
       cant_prodt_select={cant_prodt_select}
       addArrayProduct={addArrayProduct}
-    ></CustomizedSelects>
+      alquilables={alquilables}//Paso la cantidad de productos disponibles
+    />
 
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
