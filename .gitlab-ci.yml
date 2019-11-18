@@ -7,10 +7,9 @@
 #image: rambabusaravanan/firebase
 image: node:latest
 
+test_variable:
 stages:
   - deploy
-
-test_variable:
 script:
   - echo $FIREBASE_TOKEN # calls a predefined variable
   - echo $TEST # calls a custom variable of type `env_var`
