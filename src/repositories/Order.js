@@ -150,7 +150,7 @@ class OrderRepo extends Component {
       await db.where("eliminado","==",false)
       .get()
       .then(result=>{
-        if(result.estado !== "PAGADO")
+        if(result.estado !== "PAGADO") //FILTRO
           list = result.docs.map(doc => doc.data())
       });
 
@@ -184,14 +184,6 @@ class OrderRepo extends Component {
 
     } catch (error) {
       console.error("Error en la base de datos al cambiar estado del pedido"+id_pedido+".",error);
-    }
-  }
-
-  async allDepositsPerMonth(){
-    try {
-      
-    } catch (error) {
-      console.error("Error en la base de datos al devolver depositos.");
     }
   }
 

@@ -85,6 +85,17 @@ class ProductController extends Component {
 
     }
 
+    cantidad_sin_Alquilar = () =>{
+        try {
+            console.log("Llegue al controlador de producto");
+            
+            return ProductRepo.cantidad_sin_Alquilar();
+        } catch (error) {
+            console.error("Error en el controlador de productos al devolver la cantidad de productos.");
+            
+        }
+    }
+
     getCantProductsByType = async (type) => {
         if (!type) throw new Error(`Error: no se envió el tipo de producto para buscar en Productos`);
 

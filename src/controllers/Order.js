@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import OrderRepo from '../repositories/Order.js';
 import ProductController from '../controllers/Product';
-import "core-js/fn/array/flat-map"; //importo flatMap, por alguna razón no lo reconoce...
+//import "core-js/fn/array/flat-map"; //importo flatMap, por alguna razón no lo reconoce...
 class OrderController extends Component {
   
   //Metodo para agregar un nuevo pedido a base de datos.
@@ -72,9 +72,8 @@ class OrderController extends Component {
 
       productosDisponibles = await this.chequearDisponibilidad(cantidadProductos);
       
-      
       console.log("Cantidad de Productos en los pedidos desde " +fecha_ini +" hasta " +fecha_fin);
-      console.log(cantidadProductos);
+      console.log(cantidadProductos);  
 
       console.log("Disponibilidad de Productos: ");
       console.log(productosDisponibles);
@@ -94,9 +93,10 @@ class OrderController extends Component {
             .then( (disponibles) => {
               if (disponibles > value) productosDisponibles[key] = disponibles - value;
               else productosDisponibles[key] = false;
-            });
-                        
+            });  
     }
+
+         ProductController.cantidad_sin_Alquilar().then(res=>console.log("Lo que traje de repositorio product==",res))
 
     return productosDisponibles;
   }
