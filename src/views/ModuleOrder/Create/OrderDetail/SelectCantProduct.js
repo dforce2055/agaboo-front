@@ -53,8 +53,6 @@ export default function SelectCantProduct(props) {
     if (tiposDeProductos.length === 0) {
       ProductController.getTypesOfProducts()
       .then(tiposDeProducto => {
-        console.log("Tipos de Productos => ");
-        console.log(tiposDeProducto);
         setTiposDeProductos(tiposDeProducto);
       })
     } 

@@ -134,7 +134,7 @@ class OrderController extends Component {
     }
     //Guardo resultado de groupBy y muestro por consola. Se agrupa por el parametro que indiques como segundo parametro.
     const listGroupedByProducto = groupBy(lsProductos, 'producto');
-    console.log(listGroupedByProducto);
+    //console.log(listGroupedByProducto);
 
     let productos = {};
 
