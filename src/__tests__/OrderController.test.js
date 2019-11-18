@@ -14,7 +14,9 @@ describe('Metodo getOrdersNow', () => {
         console.log("Pedidos buscados")
         console.log(orders);
         expect(typeof orders).toBe('object');
-
+        console.error('#######VARIABLES DE ENTORNO#########')
+        console.error(process.env.NODE_ENV)
+        console.error(process.env.FIREBASE_CONFIG)
         //Comparo el objeto con un objeto del tipo User
         //expect(orders).toMatchObject(orders);
 
