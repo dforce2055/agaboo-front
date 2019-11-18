@@ -64,7 +64,7 @@ class CustomerRepo extends Component {
                 .where('cuil', '==', cuil)
                 .limit(1)
                 .get()
-                .then(function (querySnapshot) {
+                .then(querySnapshot=> {
                     querySnapshot.forEach(function (doc) {
                         customer = doc.data();
                     });
@@ -114,9 +114,9 @@ class CustomerRepo extends Component {
     }
 
     //Se utiliza en ModulsUserAdmin\Create\AddresForm.js
-    addCustomer = async (newCustomer) => {
-        if (!newCustomer) throw new Error(`Error: no se envió un Cliente para registrar`);
-        newCustomer = Object.assign({}, newCustomer);
+    addCustomer = async (newCustomer_parameter) => {
+        if (!newCustomer_parameter) throw new Error(`Error: no se envió un Cliente para registrar`);
+        let newCustomer = Object.assign({}, newCustomer_parameter);
         let result = await firebase.db.collection(collection)
             .doc(newCustomer.id)
             .set(newCustomer)

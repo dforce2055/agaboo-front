@@ -55,7 +55,7 @@ function SignIn(props) {
                 <Typography component="h1" variant="h5">
                     Iniciar sesión
        			</Typography>
-                <form className={classes.form} onSubmit={e => e.preventDefault() && false}>
+                <form className={classes.form} onSubmit={e => e.preventDefault()}>
                     {/*
                     <FormControl margin="normal" required fullWidth>
                         <InputLabel htmlFor="email">Email</InputLabel>

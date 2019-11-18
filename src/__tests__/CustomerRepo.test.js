@@ -4,7 +4,9 @@
  */
 import CustomerRepo from '../repositories/Customer';
 import { Customer } from '../models/Customer';
+
 const Customers = expect.any(Array);
+
 const customerTest = new Customer(
     "nombre_test",
     "apellido_test",
@@ -29,7 +31,6 @@ const customerMock = {
         seconds: expect.any(Number),
         nanoseconds: expect.any(Number),
     }),
-    nombre:expect.any(String),
     apellido: expect.any(String),
     nombre: expect.any(String),
     cuil: expect.any(String),

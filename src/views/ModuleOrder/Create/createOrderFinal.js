@@ -16,7 +16,7 @@ import OrderController from '../../../controllers/Order.js';
 import Tooltip from '@material-ui/core/Tooltip';
 
 
-const theme = createMuiTheme({ /* Plantilla de edicion */
+const themeMuiTheme = createMuiTheme({ /* Plantilla de edicion */
     overrides: {
       MuiButton: {
         containedPrimary: {
@@ -169,7 +169,7 @@ function Checkout(props) {
   };
 
   return (
-    <MuiThemeProvider theme={theme}>
+    <MuiThemeProvider theme={themeMuiTheme}>
     <React.Fragment>
       <main className={classes.layout}>
         <Paper className={classes.paper}>

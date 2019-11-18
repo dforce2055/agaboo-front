@@ -40,7 +40,7 @@ function sleep(delay = 0) {
     });
 }
 
-export default function AsynchronousSearch(props) {
+export default function AutocompleteSearch(props) {
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState([]);
     const loading = open && options.length === 0;

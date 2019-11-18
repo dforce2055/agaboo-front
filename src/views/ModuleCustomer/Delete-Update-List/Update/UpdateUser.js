@@ -7,6 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import MenuItem from '@material-ui/core/MenuItem';
 
 //Importo
 import EditIcon from '@material-ui/icons/Edit';
@@ -26,7 +28,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FullScreenDialog(props) {
+export default function UpdateUser(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   
@@ -44,9 +46,12 @@ export default function FullScreenDialog(props) {
 
   return (
     <div>
-      <IconButton onClick={handleClickOpen}>  
-        <EditIcon /> 
-      </IconButton>
+      <MenuItem onClick={handleClickOpen}>
+        <ListItemIcon>
+            <EditIcon/>
+        </ListItemIcon>
+        Modificar cliente
+      </MenuItem>
 
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
@@ -60,7 +65,7 @@ export default function FullScreenDialog(props) {
             
           </Toolbar>
         </AppBar>
-        
+        {/*CHECKOUT*/}
         <Checkout updateStateArray={updateStateArray} cliente={valor} handleClose={handleClose}/>
       </Dialog>
     </div>

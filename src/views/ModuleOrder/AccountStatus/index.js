@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Paper } from '@material-ui/core';
 import CumulativeTotal from './CumulativeTotal';
 //Import componentes
-import Board from './Board';
+import TableAccount from './TableAccount';
 
 const useStyles = makeStyles(theme => ({
     espacio:{
@@ -52,7 +52,7 @@ function AccountStatus(props) {
                 reloadCumulativeTotal={reloadCumulativeTotal}
             />
             <Paper className={classes.espacio}>
-            <Board
+            <TableAccount
                 handleCloseReload={handleCloseReload}
                 handleOpenReload={handleOpenReload}
             />

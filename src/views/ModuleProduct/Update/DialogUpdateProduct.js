@@ -57,7 +57,7 @@ const typeProduct = [
 
 
 
-export default function FormDialog(props) {
+export default function DialogUpdateProduct(props) {
   const [open, setOpen] = useState(props.setDialog);
   const [openAlert, setOpenAlert] = useState(false) 
   const [values, setValues] = useState(props.values);
@@ -100,7 +100,7 @@ export default function FormDialog(props) {
     } else {
       setOpenAlert(true);
     }
-  };
+  }
 
 
    function updateProduct(){
@@ -116,8 +116,7 @@ export default function FormDialog(props) {
     //alert("El producto ha sido aculizado");
     setOpen(false);
     setSearch("");
-
-  };
+  }
 
   function deleteProduct() {
 

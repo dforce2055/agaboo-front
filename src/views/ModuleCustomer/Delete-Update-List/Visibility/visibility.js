@@ -11,6 +11,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+
 
 import Visibility from '@material-ui/icons/Visibility';
 
@@ -30,8 +33,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function VisibilityClient(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
   const {cliente} = props;
+  const [open, setOpen] = React.useState(false);
   
   const handleClickOpen = () => {
     setOpen(true);
@@ -43,9 +46,12 @@ export default function VisibilityClient(props) {
 
   return (
     <div>
-    <IconButton onClick={handleClickOpen} >
-      <Visibility/>  
-    </IconButton>
+      <MenuItem button onClick={handleClickOpen}> 
+        <ListItemIcon>
+          <Visibility/>
+        </ListItemIcon>
+        Ver cliente
+      </MenuItem>
 
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>

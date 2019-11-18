@@ -40,7 +40,7 @@ results.then(dt => {
 })
 
 async function getSubCollection(dt){
-  for (let [key, value] of Object.entries([dt[collectionName]][0])){
+  for (let [key] of Object.entries([dt[collectionName]][0])){
     if(subCollection !== undefined){
       data[collectionName][key]['subCollection'] = {};
       await addSubCollection(key, data[collectionName][key]['subCollection']);            

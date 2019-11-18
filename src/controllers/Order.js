@@ -177,8 +177,8 @@ class OrderController extends Component {
   }
 
   allDepositsPerYear(){
-    try {
-      return OrderRepo.allDepositsPerYear();
+    try {      
+      return OrderRepo.allDepositsPerYear(); //Retorno el monto mensual
     } catch (error) {
       console.error("Error en el controlador de pedidos al enviar depositos.");      
     }

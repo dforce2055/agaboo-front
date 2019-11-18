@@ -24,7 +24,6 @@ const password = 'lsfalv666';
     await page.waitFor(6000);
     let pages = await browser.pages();
     
-    const fPage = pages[1];
     const sPage = pages[2];
 
     // correo electrónico

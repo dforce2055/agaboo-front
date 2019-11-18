@@ -146,7 +146,7 @@ class ProductController extends Component {
         if (!product) throw new Error(`Error: no se envió un Producto para editar`);
 
         try {
-            product = Object.assign({}, product); //Utilizo Object.assign para mapear el objeto
+            let product = Object.assign({}, product); //Utilizo Object.assign para mapear el objeto
             await ProductRepo.getProductByCode(product.code);
             let result = ProductRepo.editProduct(product.code, product);
             if (result) {

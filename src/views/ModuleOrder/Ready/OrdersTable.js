@@ -22,10 +22,10 @@ import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
 //Import componentes
 import OrderController from '../../../controllers/Order';
-import SimpleMenu from './ButtonOption.js';
+import ButtonOption from './ButtonOption.js';
 import { Button } from '@material-ui/core';
 
-const theme = createMuiTheme({ /* Plantilla de edicion */
+const themeMuiProvider = createMuiTheme({ /* Plantilla de edicion */
   overrides: { 
     MuiIconButton:{
       root:{
@@ -306,7 +306,7 @@ function EnhancedTable(props) {
     
     }
   return (
-    <MuiThemeProvider theme={theme}>
+    <MuiThemeProvider theme={themeMuiProvider}>
 
     <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarPedido')} >
       <AddIcon />
@@ -349,7 +349,7 @@ function EnhancedTable(props) {
                     >
                       <TableCell>
                       {/*Paso listado_productos por props, asi lo puede recibir la clase ButtonOption el cual contiene las opciones que se utilizaran al hacer click en el icono MoreHorizIcon(los tres puntos)*/}
-                      <SimpleMenu 
+                      <ButtonOption 
                       updateArray={updateArray}
                       listado_producto = {row.listado_producto} //Listado producto entero
                       id_pedido={row.id_pedido} //Id del pedido seleccionado

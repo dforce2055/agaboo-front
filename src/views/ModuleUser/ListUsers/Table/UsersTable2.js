@@ -1,9 +1,8 @@
 import React from 'react';
 import UserController from '../../../../controllers/User';
-import { withRouter } from "react-router-dom";
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { lighten, makeStyles, MuiThemeProvider, createStyles, createMuiTheme } from '@material-ui/core/styles';
+import { lighten, makeStyles , createMuiTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -22,8 +21,7 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
+
 
 function createData(nombre, apellido, email, cuil, accion) {
     return { nombre, apellido, email, cuil, accion };
@@ -99,31 +97,13 @@ function EnhancedTableHead(props) {
     const createSortHandler = property => event => {
         onRequestSort(event, property);
     };
-    const [rows, setRows] = React.useState([]);
     
-    //const classes = useStyles();
-    const { history } = props;
     //Coleccion de customers
     const [usuarios, setUsuarios] = React.useState([]);
-    const [usuarioSeleccionado, setUsuarioSeleccionado] = React.useState();
+
 
     //Avisa un cambio
     const [stateArray, setStateArray] = React.useState(false);
-
-    const [anchorEl, setAnchorEl] = React.useState(null);
-
-    const handleClick = usuario => event => {
-        setAnchorEl(event.currentTarget);
-        setUsuarioSeleccionado(usuario);
-    };
-
-    const handleClose = (e) => {
-        setAnchorEl(null);
-
-    };
-
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
 
     React.useEffect(() => {
         //Si se realizo un cambio
@@ -260,25 +240,6 @@ EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
 };
 
-const theme = createMuiTheme({
-    overrides: {
-        MuiIconButton: {
-            colorPrimary: {
-                color: '#666',
-                '&:hover': {
-                    color: '#0ce8ca',
-                }
-            },
-            colorSecondary: {
-                color: '#b53f3f',
-                '&:hover': {
-                    color: '#f30b0b',
-                }
-            },
-        },
-    }
-})
-
 const useStyles = makeStyles(theme => ({
     root: {
         width: '100%',
@@ -318,7 +279,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function EnhancedTable() {
+export default function UsersTable2() {
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');

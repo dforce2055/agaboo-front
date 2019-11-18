@@ -5,7 +5,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { act, isElement, isElementOfType } from 'react-dom/test-utils';
 import { Counter } from '../views/TCounter';
-import { exportAllDeclaration } from '@babel/types';
 
 /* esto esta OK
 it('renders without crashing', () => {

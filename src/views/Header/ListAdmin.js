@@ -47,50 +47,7 @@ function ListAdmin(props){
           <ListItemText primary="Clientes" />
         </ListItem>
       </List>
-  {/* //******************************LISTA PRODUCTOS********************************** */}
-  {/* <List>
-  <ListItem button onClick={handleClickProductos}>
-    <ListItemIcon>         
-    <StoreIcon/> 
-    </ListItemIcon>
-  <ListItemText primary="Productos" /> 
-  {productos ? <ExpandLess /> : <ExpandMore />}     
-</ListItem> 
-
-<Collapse in={productos} timeout="auto" unmountOnExit> 
   
-<List component="div" disablePadding>
-    <ListItem button className={classes.nested} onClick ={ () => history.push('/stock')}>
-      <ListItemIcon >
-        <AssignmentIcon/>
-      </ListItemIcon>
-      <ListItemText primary="Stock"  />
-    </ListItem>
-  </List>
-  <List component="div" disablePadding> 
-    <ListItem button className={classes.nested} onClick ={ () => history.push('/createProduct')}> 
-      <ListItemIcon>
-        <AddCircleOutlineIcon />
-      </ListItemIcon>
-      <ListItemText primary="Crear Productos"/>
-    </ListItem>
-  </List>
-
-  <List component="div" disablePadding>
-    <ListItem button className={classes.nested} onClick ={ () => history.push('/tableProduct')}>
-      <ListItemIcon >
-        <BallotIcon/>
-      </ListItemIcon>
-      <ListItemText primary="Modificar/Eliminar Productos"  />
-    </ListItem>
-  </List>
-  
-  
-
-</Collapse>
-
-</List> */}
-
 {/* PRUEBA DE IVAN */}
   <List>
     <ListItem button onClick={handleClickProductos}>
@@ -122,7 +79,7 @@ function ListAdmin(props){
   </List>
   {/* //******************************LISTA MANTENIMIENTOS A REALIZAR********************************** */}
   <List>
-    <ListItem button> 
+    <ListItem button onClick={() => history.push('/servicios')}> 
       <ListItemIcon>      
       <BuildIcon/>
       </ListItemIcon> 

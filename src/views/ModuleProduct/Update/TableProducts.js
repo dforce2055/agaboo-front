@@ -91,14 +91,14 @@ const useStyles = makeStyles(theme => ({
       setUpdate(false); 
     }
 
-  };
+  }
 
-  function countProducts(product, array){ // Funcion para contar Productos
+  function countProducts(product, array_parameter){ // Funcion para contar Productos
 
     let count = 0;
     let i = 0;
-    while(i < array.length) {
-      if(product === array[i].type){
+    while(i < array_parameter.length) {
+      if(product === array_parameter[i].type){
         count++ ;
       }
       i++;
