@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import OrderRepo from '../repositories/Order.js';
 import ProductController from '../controllers/Product';
-//import "core-js/fn/array/flat-map"; //importo flatMap, por alguna razón no lo reconoce...
 class OrderController extends Component {
   
   //Metodo para agregar un nuevo pedido a base de datos.

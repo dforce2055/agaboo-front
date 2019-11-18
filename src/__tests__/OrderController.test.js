@@ -3,7 +3,7 @@
  * Order **Controller** Test
  */
 import OrderController  from '../controllers/Order';
-
+import "core-js/fn/array/flat-map"; //importo flatMap, por alguna razón no lo reconoce...
 
 describe('Metodo getOrdersNow', () => {
     // Pruebas del metodo getOrdersNow
