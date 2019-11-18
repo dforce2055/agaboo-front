@@ -62,15 +62,18 @@ class OrderController extends Component {
   async validateOrder(fecha_ini, fecha_fin){
     if (!fecha_fin) throw new Error('Error: No llego la fecha de fin.')
     if (!fecha_ini) throw new Error('Error: No llego la fecha de inicio.')
-    //if (!productos) throw new Error('Error: Los Productos son obligatorios para calcular disponibilidad del pedido')
 
     try {
       //return OrderRepo.validateDate(fecha_ini,fecha_fin);
-      let pedidosSeleccionados = await OrderRepo.validateDate(fecha_ini,fecha_fin);
-      let cantidadProductos = this.contarProductos(pedidosSeleccionados)    
-      let productosDisponibles = {};
+      let pedidosSeleccionados = await OrderRepo.validateDate(fecha_ini,fecha_fin); //Selecciono los pedidos con su id y detalle_facutra
+      let _alquilados = this.contarProductosAlquilados(pedidosSeleccionados) //Filtro y selecciono el modelo con su cantidad.
+      let _disponibles = this.contarProductosDisponibles();
+      console.log("DISPONIBLES=",_disponibles);
+      console.log("ALQUILADOS=",_alquilados);    
 
-      productosDisponibles = await this.chequearDisponibilidad(cantidadProductos);
+     /*
+     //DE DIEGO
+     productosDisponibles = await this.chequearDisponibilidad(cantidadProductos);
       
       console.log("Cantidad de Productos en los pedidos desde " +fecha_ini +" hasta " +fecha_fin);
       console.log(cantidadProductos);  
@@ -78,10 +81,24 @@ class OrderController extends Component {
       console.log("Disponibilidad de Productos: ");
       console.log(productosDisponibles);
       
-      return productosDisponibles;
+      return productosDisponibles;*/
     } catch (error) {
       console.error("Error al verificar por fechas. " +error);
       
+    }
+  }
+
+  //Metodo que devuelve la cantidad disponible y su modelo de producto
+  contarProductosDisponibles(){
+    try {
+      let array = [];
+      ProductController.cantidad_sin_Alquilar()
+        .then(result=>{
+          result.forEach(res => array.push(res))
+        }); //Conjunto de productos y su cantidad
+      return array;
+    } catch (error) {
+      console.error("ERROR al calcular la cantidad de productos disponibles.");
     }
   }
 
@@ -101,7 +118,7 @@ class OrderController extends Component {
     return productosDisponibles;
   }
 
-  contarProductos(pedidosSeleccionados) {
+  contarProductosAlquilados(pedidosSeleccionados) {
 
     let lsProductos = pedidosSeleccionados.flatMap(pedido => pedido.lista);
     
@@ -109,7 +126,7 @@ class OrderController extends Component {
     var result = [];
     lsProductos.reduce(function (res, value) {
       if (!res[value.producto]) {
-        res[value.producto] = { producto: value.producto, cantidad: 0 };
+        res[value.producto] = { type: value.producto, cantidad: 0 };
         result.push(res[value.producto])
       }
       res[value.producto].cantidad += parseInt(value.cantidad);
@@ -117,7 +134,7 @@ class OrderController extends Component {
     }, {})
     //console.log(result); //Muestro el resultado de la cuenta.
 
-
+/* //NO LO NECESITO
     //GROUP BY EN JAVASCRIPT
     const groupBy = (array, key) => {
       return array.reduce((result, currentValue) => {
@@ -129,7 +146,7 @@ class OrderController extends Component {
     }
     //Guardo resultado de groupBy y muestro por consola. Se agrupa por el parametro que indiques como segundo parametro.
     const listGroupedByProducto = groupBy(lsProductos, 'producto');
-    console.log(listGroupedByProducto);
+    //console.log(listGroupedByProducto);
 
     let productos = {};
 
@@ -144,9 +161,9 @@ class OrderController extends Component {
 
       productos[producto] = cant;
 
-    });
+    });*/
 
-    return productos;
+    return result;
   }
 
   //Devuelve todos la suma de todos los pedidos que estan pendiente de pago del mes actual.

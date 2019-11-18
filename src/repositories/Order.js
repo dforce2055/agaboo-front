@@ -81,10 +81,8 @@ class OrderRepo extends Component {
       console.log("Error en base de datos: ",error);
     }
   }
-  
-  
 
-  //Se utiliza en validateDate
+
   async validateDate(fecha_ini, fecha_fin){
     if(!fecha_fin) throw new Error('Error: No llego la fecha de fin.')
     if(!fecha_ini) throw new Error('Error: No llego la fecha de inicio.')
