@@ -153,8 +153,8 @@ class ProductRepo extends Component {
         return products.length;
     };
 
-    addProduct = async (newProduct) => {
-        if (!newProduct) throw new Error(`Error: no se envió un Producto para registrar`);
+    addProduct = async (newProduct_parameter) => {
+        if (!newProduct_parameter) throw new Error(`Error: no se envió un Producto para registrar`);
         //newProduct.localization = new firebase.admin.firestore.GeoPoint(newProduct.localization._lat, newProduct.localization._long);
         //newProduct.creationDate = new firebase.admin.firestore.Timestamp(newProduct.creationDate.seconds, newProduct.creationDate.nanoseconds);
         let newProduct = Object.assign({}, newProduct_parameter);
