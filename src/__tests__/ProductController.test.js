@@ -104,7 +104,7 @@ describe('Metodo getProductByCodebar', () => {
         //Debería devolver un mensaje de error
         let message = false
         try {
-            await ProductController.getProductByCodeBar();
+            await ProductController.getProductByCodebar();
         } catch (e) {
             message = e.message
         }
@@ -154,6 +154,29 @@ describe('Metodo getProducts', () => {
                 productMock
             ])
         )
+    });
+});
+
+describe('Metodo getCantProductsByType', () => {
+    jest.setTimeout(30000);
+    // Pruebas del metodo getCantProductsByType
+    test('getCantProductsByType', async () => {
+        //Debería devolver un array de objetos del tipo Product en Json
+        let cantProducts = await ProductController.getCantProductsByType('Baño Químico');
+        await console.log(cantProducts);
+        await expect(typeof cantProducts).toBe('number');
+    }, 30000);
+    
+    test('Metodo getCantProductsByType sin parametros', async () => {
+        //Debería devolver un mensaje de error
+        let message = false
+        try {
+            await ProductController.getCantProductsByType();
+        } catch (e) {
+            message = e.message
+        }
+        //console.log(message);
+        expect(message).toBeTruthy()
     });
 });
 

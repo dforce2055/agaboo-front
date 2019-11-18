@@ -13,7 +13,7 @@ describe('Metodo getOrdersNow', () => {
         
         console.log("Pedidos buscados")
         console.log(orders);
-        //expect(typeof orders).toBe('object');
+        expect(typeof orders).toBe('object');
 
         //Comparo el objeto con un objeto del tipo User
         //expect(orders).toMatchObject(orders);
@@ -29,5 +29,31 @@ describe('Metodo getOrdersNow', () => {
             ])
         )
         */
+    });
+});
+
+describe('Metodo validateOrder', () => {
+    jest.setTimeout(30000);
+    // Pruebas del metodo validateOrder
+    test('validateOrder', async () => {
+        //Debería devolver un array de objetos del tipo User en Json
+        let productosDisponibles = await OrderController.validateOrder('2019-11-17', '2019-11-24');
+
+        console.log("Productos Disponibles")
+        console.log(productosDisponibles);
+        expect(typeof productosDisponibles).toBe('object');
+    }, 30000);
+
+
+    test('validateOrder sin parametros', async () => {
+        //Debería devolver un mensaje de error
+        let message = false
+        try {
+            await OrderController.validateOrder();
+        } catch (e) {
+            message = e.message
+        }
+        //console.log(message);
+        expect(message).toBeTruthy()
     });
 });

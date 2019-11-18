@@ -56,7 +56,7 @@ class ProductController extends Component {
 
     }
     getProductByCode = async (code) => {
-        if (!code) return 1 ;//throw new Error(`Error: el Código de producto es obligatorio`);
+        if (!code) throw new Error(`Error: el Código de producto es obligatorio`);
         try {
             let product = await ProductRepo.getProductByCode(code);
             if ( product ) {
@@ -75,13 +75,29 @@ class ProductController extends Component {
         try {
             let products  = await ProductRepo.getProducts();
             if ( products ) {
-                console.log('products : ', products)
                 return products;
             } else {
                 console.log("No se pudo obtener los productos");
             }
         } catch (error) {
             throw new Error();
+        }
+
+    }
+
+    getCantProductsByType = async (type) => {
+        if (!type) throw new Error(`Error: no se envió el tipo de producto para buscar en Productos`);
+
+        try {
+            let cantProducts = await ProductRepo.getCantProductsByType(type);
+            if ( cantProducts ) {
+                //console.log('Cantidad de Productos del tipo ', type +" : " +cantProducts);
+                return cantProducts;
+            } else {
+                console.error('No se pudo obtener la cantidad productos del tipo ', type );
+            }
+        } catch (error) {
+           console.error(error);
         }
 
     }

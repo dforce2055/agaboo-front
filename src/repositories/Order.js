@@ -82,39 +82,10 @@ class OrderRepo extends Component {
     }
   };
   
-  contarProductos(pedidosSeleccionados){
-    
-    let lsProductos = pedidosSeleccionados.flatMap(pedido => pedido.lista);
-
-    //Cuento la cantidad por los distintos productos.
-    var result = [];
-    lsProductos.reduce(function(res,value) {
-      if (!res[value.producto]) {
-        res[value.producto] = {producto:value.producto,cantidad:0};
-        result.push(res[value.producto])
-      }
-      res[value.producto].cantidad += parseInt(value.cantidad);
-      return res;
-    },{})
-    console.log(result); //Muestro el resultado de la cuenta.
-
-
-    //GROUP BY EN JAVASCRIPT
-    const groupBy = (array,key) => {
-      return array.reduce((result,currentValue) => {
-        (result[currentValue[key]] = result[currentValue[key]] || []).push(
-          parseInt(currentValue.cantidad)
-          )
-        return result;
-      },{})
-    }
-    //Guardo resultado de groupBy y muestro por consola. Se agrupa por el parametro que indiques como segundo parametro.
-    const listGroupedByProducto = groupBy(lsProductos, 'producto');
-    console.log(listGroupedByProducto);
-  }  
+  
 
   //Se utiliza en validateDate
-  async validateDate(fecha_ini,fecha_fin){
+  async validateDate(fecha_ini, fecha_fin){
     if(!fecha_fin) throw new Error('Error: No llego la fecha de fin.')
     if(!fecha_ini) throw new Error('Error: No llego la fecha de inicio.')
 
@@ -140,8 +111,6 @@ class OrderRepo extends Component {
         }
       });
 
-      console.log("Pedidos seleccionados ",pedidosSelecionados);
-      console.log(this.contarProductos(pedidosSelecionados)) ;
       
       return pedidosSelecionados;
 

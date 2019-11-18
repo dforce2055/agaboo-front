@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import OrderRepo from '../repositories/Order.js';
 import ProductController from '../controllers/Product';
-
+import "core-js/fn/array/flat-map"; //importo flatMap, por alguna razón no lo reconoce...
 class OrderController extends Component {
   
   //Metodo para agregar un nuevo pedido a base de datos.
@@ -59,13 +59,94 @@ class OrderController extends Component {
     }
   }
   
-  validateDate(fecha_ini,fecha_fin){
+  async validateOrder(fecha_ini, fecha_fin){
+    if (!fecha_fin) throw new Error('Error: No llego la fecha de fin.')
+    if (!fecha_ini) throw new Error('Error: No llego la fecha de inicio.')
+    //if (!productos) throw new Error('Error: Los Productos son obligatorios para calcular disponibilidad del pedido')
+
     try {
-      return OrderRepo.validateDate(fecha_ini,fecha_fin);
+      //return OrderRepo.validateDate(fecha_ini,fecha_fin);
+      let pedidosSeleccionados = await OrderRepo.validateDate(fecha_ini,fecha_fin);
+      let cantidadProductos = this.contarProductos(pedidosSeleccionados)    
+      let productosDisponibles = {};
+
+      productosDisponibles = await this.chequearDisponibilidad(cantidadProductos);
+      
+      
+      console.log("Cantidad de Productos en los pedidos desde " +fecha_ini +" hasta " +fecha_fin);
+      console.log(cantidadProductos);
+
+      console.log("Disponibilidad de Productos: ");
+      console.log(productosDisponibles);
+      
+      return productosDisponibles;
     } catch (error) {
-      console.error("Error al verificar por fechas.");
+      console.error("Error al verificar por fechas. " +error);
       
     }
+  }
+
+  async chequearDisponibilidad(productos) {
+    let productosDisponibles = {};
+    
+    for (var [key, value] of Object.entries(productos)) {
+      await ProductController.getCantProductsByType(key)
+            .then( (disponibles) => {
+              if (disponibles > value) productosDisponibles[key] = disponibles - value;
+              else productosDisponibles[key] = false;
+            });
+                        
+    }
+
+    return productosDisponibles;
+  }
+
+  contarProductos(pedidosSeleccionados) {
+
+    let lsProductos = pedidosSeleccionados.flatMap(pedido => pedido.lista);
+    
+    //Cuento la cantidad por los distintos productos.
+    var result = [];
+    lsProductos.reduce(function (res, value) {
+      if (!res[value.producto]) {
+        res[value.producto] = { producto: value.producto, cantidad: 0 };
+        result.push(res[value.producto])
+      }
+      res[value.producto].cantidad += parseInt(value.cantidad);
+      return res;
+    }, {})
+    //console.log(result); //Muestro el resultado de la cuenta.
+
+
+    //GROUP BY EN JAVASCRIPT
+    const groupBy = (array, key) => {
+      return array.reduce((result, currentValue) => {
+        (result[currentValue[key]] = result[currentValue[key]] || []).push(
+          parseInt(currentValue.cantidad)
+        )
+        return result;
+      }, {})
+    }
+    //Guardo resultado de groupBy y muestro por consola. Se agrupa por el parametro que indiques como segundo parametro.
+    const listGroupedByProducto = groupBy(lsProductos, 'producto');
+    console.log(listGroupedByProducto);
+
+    let productos = {};
+
+    Object.entries(listGroupedByProducto).forEach(([key, value]) => {
+      let cant = 0;
+      let producto = "";
+
+      value.forEach(cantidad =>  cant += parseInt(cantidad))
+
+      //if (key.toLowerCase() === "Baño Químico") producto = "baño"
+      producto = key;
+
+      productos[producto] = cant;
+
+    });
+
+    return productos;
   }
 
   //Devuelve todos la suma de todos los pedidos que estan pendiente de pago del mes actual.

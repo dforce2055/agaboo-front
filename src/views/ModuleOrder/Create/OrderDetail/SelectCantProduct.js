@@ -41,9 +41,9 @@ export default function CustomizedSelects(props) {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(()=>{
-    if (cant_prodt_select.producto === 'Baño Quimico') {
+    if (cant_prodt_select.producto === 'Baño Químico') {
       setModeloBaño(true);
-    }else if(cant_prodt_select.producto !== 'Baño Quimico'){
+    }else if(cant_prodt_select.producto !== 'Baño Químico'){
       setModeloBaño(false);
     }
   });
@@ -67,7 +67,7 @@ export default function CustomizedSelects(props) {
           input={<Input 
            type="text"/>}
         >
-          <MenuItem value={'Baño Quimico'}>Baño Quimico</MenuItem>
+          <MenuItem value={'Baño Químico'}>Baño Químico</MenuItem>
           <MenuItem value={'Oficina'}>Oficina de obra</MenuItem>
           <MenuItem value={'Garita'}>Garita de seguridad</MenuItem>
           <MenuItem value={'Boleteria'}>Boleteria</MenuItem>

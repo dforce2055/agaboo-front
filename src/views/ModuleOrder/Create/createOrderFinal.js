@@ -143,8 +143,24 @@ function Checkout(props) {
       eliminado:false
     };   
 
+
+    //Validación de pedido
+    
+    console.log(detalle_pedido.fecha_entrega + " - " + detalle_pedido.fecha_finalizacion);
+    OrderController.validateOrder(detalle_pedido.fecha_entrega, detalle_pedido.fecha_finalizacion)
+    .then(resultado => {
+      let estado = true;
+      Object.entries(resultado).forEach(([key, value]) => {
+        if (value === false) estado = false;
+        console.log(key + ': ' + value);
+      })
+      return estado;
+    })
+      .then(estado => {
+        if (estado) console.log("El pedido se puede realizar");
+      })
     //Guardo la informacion del pedido en firestore.
-    OrderController.addOrder(data);
+    //OrderController.addOrder(data);
 
   }
 
