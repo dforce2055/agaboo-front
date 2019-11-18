@@ -20,9 +20,9 @@ deploy-prod:
   only:
     - master
   script:
-    - echo $FIREBASE_TOKEN # calls a predefined variable
-    - echo $FIREBASE_CONFIG_GITLAB # calls a predefined variable
-    - echo $TEST # calls a custom variable of type `env_var`
+    #- echo $FIREBASE_TOKEN 
+    #- echo $FIREBASE_CONFIG_GITLAB 
+    #- echo $TEST 
     - npm install -g firebase-tools
     - npm install -g bower
     - npm install
