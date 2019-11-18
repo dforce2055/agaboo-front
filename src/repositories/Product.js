@@ -174,6 +174,7 @@ class ProductRepo extends Component {
                         res[value.type].cantidad++;
                         return res;
                     },{})  
+                    
             return array;
         } catch (error) {
             console.error("Error al devolver la cantidad de productos disponibles desde repo.",error);

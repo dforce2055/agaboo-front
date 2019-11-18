@@ -64,65 +64,50 @@ class OrderController extends Component {
     if (!fecha_ini) throw new Error('Error: No llego la fecha de inicio.')
 
     try {
-      //return OrderRepo.validateDate(fecha_ini,fecha_fin);
-      let pedidosSeleccionados = await OrderRepo.validateDate(fecha_ini,fecha_fin); //Selecciono los pedidos con su id y detalle_facutra
-      let _alquilados = this.contarProductosAlquilados(pedidosSeleccionados) //Filtro y selecciono el modelo con su cantidad.
-      let _disponibles = this.contarProductosDisponibles();
-      console.log("DISPONIBLES=",_disponibles);
-      console.log("ALQUILADOS=",_alquilados);    
+      let pedidosSeleccionados = await OrderRepo.validateDate(fecha_ini,fecha_fin); //Selecciono los pedidos que estan en el rango de fechas
+      let _alquilados = this.contarProductosAlquilados(pedidosSeleccionados) //Cantidad total de productos que estan alquilados
 
-     /*
-     //DE DIEGO
-     productosDisponibles = await this.chequearDisponibilidad(cantidadProductos);
-      
-      console.log("Cantidad de Productos en los pedidos desde " +fecha_ini +" hasta " +fecha_fin);
-      console.log(cantidadProductos);  
+      let sobrante = []; //Resultado de los productos alquilados menos los productos que estan sin alquilar. Es decir la cantidad total de productos que podes alquilar en el rango de fechas dadas
 
-      console.log("Disponibilidad de Productos: ");
-      console.log(productosDisponibles);
-      
-      return productosDisponibles;*/
+      let concatenados;
+      //Cantidad de productos disponibles
+      ProductController.cantidad_sin_Alquilar() 
+        .then(result=>{
+
+          console.log("disponibles=",result);
+          console.log("alquilados=",_alquilados);
+          for (let i = 0; i < result.length; i++) { 
+            for (let n = 0; n < _alquilados.length; n++) {
+              if (result[i].type == _alquilados[n].type) { //Si el producto es igual al producto alquilado en esas
+                let resta = result[i].cantidad - _alquilados[n].cantidad
+                if (resta < 0) {
+                  sobrante.push({type:result[i].type,cantidad:0})
+                }else{
+                  sobrante.push({type:result[i].type,cantidad:resta})
+                }
+              }
+            }      
+          }
+      });       
+      console.log("CANTIDADES DIOSPONIBLES PARA ALQUILARSE=",sobrante); // ===>>> NO SE COMO MOSTRAR LOS PRODUCTOS QUE NO ESTAN EN ALQUILADOS,ejemplo => Boleteria
+
+      //NO LO RECORRE!!! POR QUE NO LO HACE???
+      for (let i = 0; i < sobrante.length; i++) {
+        const element = sobrante[i];
+        console.log(element);
+        
+      }
+      //return sobrante;
     } catch (error) {
       console.error("Error al verificar por fechas. " +error);
-      
     }
-  }
-
-  //Metodo que devuelve la cantidad disponible y su modelo de producto
-  contarProductosDisponibles(){
-    try {
-      let array = [];
-      ProductController.cantidad_sin_Alquilar()
-        .then(result=>{
-          result.forEach(res => array.push(res))
-        }); //Conjunto de productos y su cantidad
-      return array;
-    } catch (error) {
-      console.error("ERROR al calcular la cantidad de productos disponibles.");
-    }
-  }
-
-  async chequearDisponibilidad(productos) {
-    let productosDisponibles = {};
-    
-    for (var [key, value] of Object.entries(productos)) {
-      await ProductController.getCantProductsByType(key)
-            .then( (disponibles) => {
-              if (disponibles > value) productosDisponibles[key] = disponibles - value;
-              else productosDisponibles[key] = false;
-            });  
-    }
-
-         ProductController.cantidad_sin_Alquilar().then(res=>console.log("Lo que traje de repositorio product==",res))
-
-    return productosDisponibles;
   }
 
   contarProductosAlquilados(pedidosSeleccionados) {
 
     let lsProductos = pedidosSeleccionados.flatMap(pedido => pedido.lista);
     
-    //Cuento la cantidad por los distintos productos.
+    //Resultado de cantidad por producto
     var result = [];
     lsProductos.reduce(function (res, value) {
       if (!res[value.producto]) {
@@ -132,36 +117,6 @@ class OrderController extends Component {
       res[value.producto].cantidad += parseInt(value.cantidad);
       return res;
     }, {})
-    //console.log(result); //Muestro el resultado de la cuenta.
-
-/* //NO LO NECESITO
-    //GROUP BY EN JAVASCRIPT
-    const groupBy = (array, key) => {
-      return array.reduce((result, currentValue) => {
-        (result[currentValue[key]] = result[currentValue[key]] || []).push(
-          parseInt(currentValue.cantidad)
-        )
-        return result;
-      }, {})
-    }
-    //Guardo resultado de groupBy y muestro por consola. Se agrupa por el parametro que indiques como segundo parametro.
-    const listGroupedByProducto = groupBy(lsProductos, 'producto');
-    //console.log(listGroupedByProducto);
-
-    let productos = {};
-
-    Object.entries(listGroupedByProducto).forEach(([key, value]) => {
-      let cant = 0;
-      let producto = "";
-
-      value.forEach(cantidad =>  cant += parseInt(cantidad))
-
-      //if (key.toLowerCase() === "Baño Químico") producto = "baño"
-      producto = key;
-
-      productos[producto] = cant;
-
-    });*/
 
     return result;
   }

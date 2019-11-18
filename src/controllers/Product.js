@@ -86,9 +86,7 @@ class ProductController extends Component {
     }
 
     cantidad_sin_Alquilar = () =>{
-        try {
-            console.log("Llegue al controlador de producto");
-            
+        try {            
             return ProductRepo.cantidad_sin_Alquilar();
         } catch (error) {
             console.error("Error en el controlador de productos al devolver la cantidad de productos.");
