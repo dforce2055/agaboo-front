@@ -6,6 +6,7 @@ import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import ProductController from '../../../../controllers/Product';
 
 //AGREGADO
 import Fab from '@material-ui/core/Fab';
@@ -38,6 +39,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SelectCantProduct(props) {
+  const [tiposDeProductos, setTiposDeProductos] = React.useState([]);
+
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(()=>{
@@ -46,6 +49,14 @@ export default function SelectCantProduct(props) {
     }else if(cant_prodt_select.producto !== 'Baño Químico'){
       setModeloBaño(false);
     }
+
+    if (tiposDeProductos.length === 0) {
+      ProductController.getTypesOfProducts()
+      .then(tiposDeProducto => {
+        setTiposDeProductos(tiposDeProducto);
+      })
+    } 
+
   });
 
   const classes = useStyles();
@@ -67,10 +78,11 @@ export default function SelectCantProduct(props) {
           input={<Input 
            type="text"/>}
         >
-          <MenuItem value={'Baño Químico'}>Baño Químico</MenuItem>
-          <MenuItem value={'Oficina'}>Oficina de obra</MenuItem>
-          <MenuItem value={'Garita'}>Garita de seguridad</MenuItem>
-          <MenuItem value={'Boleteria'}>Boleteria</MenuItem>
+            {tiposDeProductos.map(tipoDeProducto => ( 
+              <MenuItem value={tipoDeProducto}>{tipoDeProducto}</MenuItem>
+            ))}
+
+          
         </Select>
       </FormControl>
       

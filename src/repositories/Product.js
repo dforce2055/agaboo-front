@@ -183,6 +183,16 @@ class ProductRepo extends Component {
     }
 
 
+    getTypesOfProducts = async () => {
+        try {
+            let coleccion = await firebase.db.collection(collection).get();
+            let typesOfProducts = coleccion.docs.map(doc => doc.data().type);
+            return typesOfProducts;
+        } catch (error) {
+            throw new Error();
+        }
+    }
+
     addProduct = async (newProduct_parameter) => {
         if (!newProduct_parameter) throw new Error(`Error: no se envió un Producto para registrar`);
         //newProduct.localization = new firebase.admin.firestore.GeoPoint(newProduct.localization._lat, newProduct.localization._long);

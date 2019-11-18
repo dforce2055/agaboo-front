@@ -36,34 +36,14 @@ const themeMuiProvider = createMuiTheme({
   }
 })
 
-const typeProduct = [
-  {
-    value: "Baño Químico",
-    label: "Baño Químico"
-  },
-  {
-    value: "Oficina",
-    label: "Oficina"
-  },
-  {
-    value: "Boletería",
-    label: "Boletería",
-  },
-  {
-    value: "Garita",
-    label: "Garita de Seguridad",
-  }
-  
-];
+
+
+let typeProduct = [];
 //'ALQUILADO', 'DISPONIBLE', 'EN MANTENIMIENTO', 'EN TRANSITO', 'ELIMINADO'
 const typeState = [
   {
     value: "DISPONIBLE",
     label: "DISPONIBLE",
-  },
-  {
-    value: "ALQUILADO",
-    label: "ALQUILADO",
   },
   {
     value: "EN MANTENIMIENTO",
@@ -118,9 +98,27 @@ const useStyles = makeStyles(theme => ({
     description:""
   });
 
+   const [tiposDeProductos, setTiposDeProductos] = React.useState([]);
+
+   React.useEffect(() => {
+    if (tiposDeProductos.length === 0) {
+      getTypesOfProducts();
+    }
+   }); 
+
+   function getTypesOfProducts() {
+     ProductController.getTypesOfProducts()
+       .then(tiposDeProducto => {
+         setTiposDeProductos(tiposDeProducto);
+
+         typeProduct = [];
+         tiposDeProducto.forEach(producto => {
+           typeProduct.push({ value: producto, label: producto });
+         })
+       })
+   }
+   
   const handleChange = name => event => {
-    
-      
     setValues({ ...values, [name]: event.target.value });
   };
 
@@ -149,6 +147,7 @@ const useStyles = makeStyles(theme => ({
 
 
   return (
+    <React.Fragment>
       <div style={{marginTop:'20px'}}>
       <MuiThemeProvider theme={themeMuiProvider}>
       <Paper className={classes.paper} > 
@@ -164,8 +163,8 @@ const useStyles = makeStyles(theme => ({
                     label="Producto"
                     className={classes.textField}
                     value={values.typeProduct}
-                    
                     onChange={handleChange("typeProduct")}
+                    onClick={getTypesOfProducts}
                     SelectProps={{
                       native: true,
                       MenuProps: {
@@ -176,9 +175,9 @@ const useStyles = makeStyles(theme => ({
                     margin="normal"
                     variant="outlined"
                   >
-                    {typeProduct.map(option => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
+                      {typeProduct.map(option => (
+                        <option key={option.value} value={option.value}>
+                          {option.value}
                       </option>
                     ))}
                     
@@ -269,7 +268,7 @@ const useStyles = makeStyles(theme => ({
       </Paper>
       </MuiThemeProvider>
       </div>
-      
+    </React.Fragment>
 
   );
 }

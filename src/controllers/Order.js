@@ -65,7 +65,7 @@ class OrderController extends Component {
 
     try {
       let pedidosSeleccionados = await OrderRepo.validateDate(fecha_ini,fecha_fin); //Selecciono los pedidos que estan en el rango de fechas
-      let _alquilados = this.contarProductosAlquilados(pedidosSeleccionados) //Cantidad total de productos que estan alquilados
+      let _alquilados = this.contarProductos(pedidosSeleccionados) //Cantidad total de productos que estan alquilados
 
       let sobrante = []; //Resultado de los productos alquilados menos los productos que estan sin alquilar. Es decir la cantidad total de productos que podes alquilar en el rango de fechas dadas
 
@@ -103,7 +103,28 @@ class OrderController extends Component {
     }
   }
 
-  contarProductosAlquilados(pedidosSeleccionados) {
+  /*contarProductosAlquilados(pedidosSeleccionados) {
+  async chequearDisponibilidad(productos) {
+    let productosDisponibles = {};
+    let tiposDeProductos = await ProductController.getTypesOfProducts();
+
+    tiposDeProductos.forEach(tipoDeProducto => {
+      if (tipoDeProducto in productos == false) productos[tipoDeProducto] = 0;
+    })
+
+    for (var [key, value] of Object.entries(productos)) {
+      await ProductController.getCantProductsByType(key)
+            .then( (disponibles) => {
+              if (disponibles > value) productosDisponibles[key] = disponibles - value;
+              else productosDisponibles[key] = false;
+            });
+                        
+    }
+
+    return productosDisponibles;
+  }*/
+
+  contarProductos(pedidosSeleccionados) {
 
     let lsProductos = pedidosSeleccionados.flatMap(pedido => pedido.lista);
     
@@ -117,6 +138,37 @@ class OrderController extends Component {
       res[value.producto].cantidad += parseInt(value.cantidad);
       return res;
     }, {})
+    //console.log(result); //Muestro el resultado de la cuenta.
+
+
+    
+    /*//GROUP BY EN JAVASCRIPT
+    const groupBy = (array, key) => {
+      return array.reduce((result, currentValue) => {
+        (result[currentValue[key]] = result[currentValue[key]] || []).push(
+          parseInt(currentValue.cantidad)
+        )
+        return result;
+      }, {})
+    }
+    //Guardo resultado de groupBy y muestro por consola. Se agrupa por el parametro que indiques como segundo parametro.
+    const listGroupedByProducto = groupBy(lsProductos, 'producto');
+    //console.log(listGroupedByProducto);
+
+    let productos = {};
+
+    Object.entries(listGroupedByProducto).forEach(([key, value]) => {
+      let cant = 0;
+      let producto = "";
+
+      value.forEach(cantidad =>  cant += parseInt(cantidad))
+
+      //if (key.toLowerCase() === "Baño Químico") producto = "baño"
+      producto = key;
+
+      productos[producto] = cant;
+
+    });*/
 
     return result;
   }
