@@ -141,12 +141,14 @@ export default function TableProduct(props) {
         <TableBody>
           {arrayProduct.map(row => (
             <TableRow key={arrayProduct.producto}>
+            
               <TableCell>
                 <Fab size="small" color="secondary" aria-label="add" className={classes.margin}
                 onClick={()=>handleDelete(row)}>
                   <ClearIcon />
                 </Fab>
               </TableCell>
+
               <TableCell component="th" scope="row">
                 {row.producto}
               </TableCell>

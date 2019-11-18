@@ -1,9 +1,13 @@
 import React from "react";
 import "./Form.css";
 import Container from '@material-ui/core/Container';
-import SimpleTable from './OrderDetail/TableProduct';
+import TableProduct from './OrderDetail/TableProduct';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
+//IMPORTO 
+import OrderController from '../../../controllers/Order';
+import TableOrderDisp from './TableOrderDisp.js';
+ 
 const theme = createMuiTheme({ /* Plantilla de edicion */
   overrides: {
       MuiContainer:{
@@ -13,6 +17,10 @@ const theme = createMuiTheme({ /* Plantilla de edicion */
       },
 
 }});
+
+function nada() {
+  return console.log("No hay nada cargado");
+}
 
 function formulario(handleChange, value){
   const now = new Date();
@@ -113,6 +121,20 @@ function formulario(handleChange, value){
 
 export default function CreateOrder(props) {
   const { setButtonState } = props; 
+  const [loadData,setLoadData] = React.useState(false); //Si los campos de fecha estan llenos se instanciara validateDate
+  const [alquilables,setAlquilables] = React.useState([]);//La cantidad de baños alquilables
+
+  React.useEffect(()=>{
+    if (loadData) {
+      OrderController.validateOrder(values.fecha_entrega,values.fecha_finalizacion)
+        .then(result=>{
+         if (result) {
+          setAlquilables(result)
+         }
+        })
+      setLoadData(false)
+    }
+  });
 
   const [values,setValues] = React.useState({
     lugarDePago:'',
@@ -123,10 +145,13 @@ export default function CreateOrder(props) {
     fecha_finalizacion: '',
     ubicacionDeEntrega:'',
     ciudad:''
-    });  
+    });
 
   const handleChange = name => event => {    
     setValues({ ...values, [name]: event.target.value }); 
+    if (values.fecha_entrega != '' && values.fecha_finalizacion) { //Valido si estan llenas o no los campus de fecha
+      setLoadData(true)
+    } 
     sessionStorage.setItem('info_detalle_pedido',JSON.stringify(values));    
   };
 
@@ -144,8 +169,12 @@ export default function CreateOrder(props) {
       <Container  maxWidth="md" className='nuevo'>
           <form onSubmit={handleSubmit} noValidate>
             {formulario(handleChange, values.fecha_entrega)}
-            {/*detallePedido(product,handleProductChange,handleChange)*/}
-            <SimpleTable setButtonState={setButtonState}></SimpleTable>
+           <div>
+            {alquilables.length > 0 ?<TableOrderDisp rows = {alquilables}/> : nada} 
+           </div>
+            <TableProduct 
+            alquilables = {alquilables}
+            setButtonState={setButtonState}/>
           </form>
       </Container>
     </MuiThemeProvider>

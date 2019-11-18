@@ -67,37 +67,32 @@ class OrderController extends Component {
       let pedidosSeleccionados = await OrderRepo.validateDate(fecha_ini,fecha_fin); //Selecciono los pedidos que estan en el rango de fechas
       let _alquilados = this.contarProductos(pedidosSeleccionados) //Cantidad total de productos que estan alquilados
 
-      let sobrante = []; //Resultado de los productos alquilados menos los productos que estan sin alquilar. Es decir la cantidad total de productos que podes alquilar en el rango de fechas dadas
-
-      let concatenados;
-      //Cantidad de productos disponibles
-      ProductController.cantidad_sin_Alquilar() 
+      //retorno la cantidad de productos alquilable. 
+      return ProductController.cantidad_sin_Alquilar() 
         .then(result=>{
 
           console.log("disponibles=",result);
           console.log("alquilados=",_alquilados);
-          for (let i = 0; i < result.length; i++) { 
-            for (let n = 0; n < _alquilados.length; n++) {
-              if (result[i].type == _alquilados[n].type) { //Si el producto es igual al producto alquilado en esas
-                let resta = result[i].cantidad - _alquilados[n].cantidad
-                if (resta < 0) {
-                  sobrante.push({type:result[i].type,cantidad:0})
-                }else{
-                  sobrante.push({type:result[i].type,cantidad:resta})
-                }
-              }
-            }      
-          }
-      });       
-      console.log("CANTIDADES DIOSPONIBLES PARA ALQUILARSE=",sobrante); // ===>>> NO SE COMO MOSTRAR LOS PRODUCTOS QUE NO ESTAN EN ALQUILADOS,ejemplo => Boleteria
 
-      //NO LO RECORRE!!! POR QUE NO LO HACE???
-      for (let i = 0; i < sobrante.length; i++) {
-        const element = sobrante[i];
-        console.log(element);
-        
-      }
-      //return sobrante;
+          //Filtro para saber la cantidad de productos que tengo para alquilar
+
+          let _concat = result.concat(_alquilados) //Concateno los valores asi los puedo reducir 
+          var concat_reducido = []; //Se guardara el resultado luego de utilizar reduce con _concat
+          
+          _concat.reduce(function (res, value) { //Se utiliza para descontar los repetidos y en caso de que exista los agrega.
+            if (!res[value.type]) { //Si el valor no existe lo agrego
+              res[value.type] = { type: value.type, cantidad: value.cantidad };
+              concat_reducido.push(res[value.type])
+            }else if (res[value.type]) { //Si el valor ya existe descuento su valor
+              res[value.type].cantidad -= value.cantidad;
+            }
+            return res;
+          }, {})
+          console.log("disponibles para alquilar en esa fecha",concat_reducido);
+
+          return concat_reducido;
+      });       
+
     } catch (error) {
       console.error("Error al verificar por fechas. " +error);
     }

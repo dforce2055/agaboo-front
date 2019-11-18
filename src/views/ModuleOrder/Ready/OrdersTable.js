@@ -301,7 +301,7 @@ function EnhancedTable(props) {
 
     OrderController.validateOrder(fecha_ini,fecha_fin)
     .then(result=>{
-      //console.log("muestro result=",result);
+      console.log("muestro result=",result);
     });
     
     }
