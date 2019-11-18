@@ -149,6 +149,10 @@ export default function CreateOrder(props) {
 
   const handleChange = name => event => {    
     setValues({ ...values, [name]: event.target.value }); 
+    //Recalcula la cantidad luego de haber cambiado la fecha de entrega o de finalizacion
+    if (name == 'fecha_finalizacion' || name == 'fecha_entrega') {
+      setLoadData(true)
+    }
     sessionStorage.setItem('info_detalle_pedido',JSON.stringify(values));    
   };
 
