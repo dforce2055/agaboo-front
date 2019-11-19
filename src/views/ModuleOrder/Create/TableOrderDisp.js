@@ -15,6 +15,8 @@ const useStyles = makeStyles(theme => ({
     borderSpacing: 0,
     borderColor: 'rgba(0,0,0,.5)',
     padding: '.25em',
+    marginBottom: '2em',
+    fontSize: '.8em',
     
     '& tbody': {
       '& tr': {
@@ -50,12 +52,11 @@ export default function TableOrderDisp(props) {
     data = [];
   }
   return (
-    <Paper>
       <Table className={classes.tablaPedidos} aria-label="caption table">
         <Thead>
           <Tr>
             <Td>Producto</Td>
-            <Td>Cantidad Alquilable</Td>
+            <Td>Q. Disponible</Td>
           </Tr>
         </Thead>
         <Tbody>
@@ -69,6 +70,5 @@ export default function TableOrderDisp(props) {
           ))}
         </Tbody>
       </Table>
-    </Paper>
   );
 }

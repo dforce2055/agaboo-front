@@ -253,19 +253,7 @@ describe('Metodo getProductsByState', () => {
 });
 
 describe('Metodo deleteProduct', () => {
-    test('Metodo deleteProduct', async () => {
-        //Debería devolver true si encuentra el código de barras
-        //y logra eliminar el producto
-        //Creo un producto nuevo
-        await ProductController.addProduct(productTest);
-
-        //Lo elimino y evaluo el resultado
-        let result = await ProductController.deleteProduct(productTest.code);
-        console.log("Producto eliminado " +result);
-        //expect(typeof result).toBe('boolean');
-        expect(result).toBe(true);
-    });
-
+    
     test('Metodo deleteProduct sin parametros', async () => {
         //Debería devolver un mensaje de error
         let message = false

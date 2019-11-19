@@ -3,7 +3,7 @@
  * Order **Controller** Test
  */
 import OrderController  from '../controllers/Order';
-
+//import "core-js/fn/array/flat-map"; //importo flatMap, por alguna razón no lo reconoce...
 
 describe('Metodo getOrdersNow', () => {
     test('getOrdersNow', async () => {
@@ -46,9 +46,8 @@ describe('Metodo validateOrder', () => {
 
 describe('Metodo getOrderById', () => {
     test('getOrderById', async () => {
-        let getOrderById = await OrderController.getOrderById('z7a6hS6P66iAACSTYBxS
-');
-        console.log(getOrderById);
+        let getOrderById = await OrderController.getOrderById("4E0bHtS4M8QdO6FavKPx");
+        console.log("Resultado de get order by id=",getOrderById);
         expect(typeof {value: 'value'}).toBe('object');
         //expect(Object.is(received, expected)).toBe(true)
     });

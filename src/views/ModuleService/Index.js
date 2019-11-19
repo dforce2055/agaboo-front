@@ -31,9 +31,10 @@ function Service(props) {
             </header>
 
             <div>
-            <Paper className={classes.espacio}>
+            <h1>Informacion</h1>
+             {/*<Paper className={classes.espacio}>
             <TableService/>
-            </Paper>
+            </Paper>*/}
             </div>
             <footer>
                 <SimpleBottomNavigation/>

@@ -213,7 +213,7 @@ function AddressForm(props) {
               errorMessages={['Campo requerido', 'Celular es invalido']}
             />
           </Grid> 
-          <Grid item xs={12} sm={6}>
+
           <ButtonGroup 
               variant="text"
               size="large"
@@ -237,7 +237,7 @@ function AddressForm(props) {
                   Guardar
                 </Button>
               </ButtonGroup>
-          </Grid>      
+              
         </Grid>
 
       </ValidatorForm>

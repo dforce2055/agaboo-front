@@ -1,23 +1,18 @@
-/**
- * acá va tu config de Firebase, en un archivo firebase-config.js ignorado por git
- * export const firebaseConfig = {
- *   apiKey: "apiKey",
- *   authDomain: "TU-DOMINIO.firebaseapp.com",
- *   databaseURL: "https://TU-DOMINIO.firebaseio.com",
- *   projectId: "TU-DOMINIO",
- *   storageBucket: "TU-DOMINIO.appspot.com",
- *   messagingSenderId: "MENSAJE_ID",
- *   appId: "appID"
- *   };
- *
- */
-
+    
 import { firebaseConfig } from './firebase-config';
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firebase-firestore';
 //import 'firebase-admin';
-
+/*
+let firebaseConfig;
+if (process.env.NODE_ENV === 'test') {
+    firebaseConfig = process.env.FIREBASE_CONFIG;
+} else {
+    firebaseConfig = process.env.FIREBASE_CONFIG_GITLAB;
+}
+*/
+ 
 class Firebase {
     constructor() {
         app.initializeApp(firebaseConfig);

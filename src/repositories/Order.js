@@ -39,7 +39,7 @@ class OrderRepo extends Component {
     try {
       let order = {};
       await db.where("eliminado","==",false)
-        .doc(id_pedido)
+        .where("id_pedido","==",id_pedido)
         .get()
         .limit(1)
         .then(result=>{
