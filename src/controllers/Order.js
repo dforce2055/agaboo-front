@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import OrderRepo from '../repositories/Order.js';
 import ProductController from '../controllers/Product';
-
 class OrderController extends Component {
   
   //Metodo para agregar un nuevo pedido a base de datos.
@@ -10,6 +9,14 @@ class OrderController extends Component {
       OrderRepo.addOrder(e);
     } catch (error) {
       console.error("ERROR NO PASO EL CONTROL.",error);
+    }
+  }
+
+  getOrderById(id_pedido){
+    try {      
+      return OrderController.getOrderById(id_pedido);
+    } catch (error) {
+      console.error("Error al solicitar el pedido "+id_pedido+" de la base de datos.");
     }
   }
 
@@ -59,13 +66,113 @@ class OrderController extends Component {
     }
   }
   
-  validateDate(fecha_ini,fecha_fin){
+  async validateOrder(fecha_ini, fecha_fin){
+    if (!fecha_fin) throw new Error('Error: No llego la fecha de fin.')
+    if (!fecha_ini) throw new Error('Error: No llego la fecha de inicio.')
+
     try {
-      return OrderRepo.validateDate(fecha_ini,fecha_fin);
+      let pedidosSeleccionados = await OrderRepo.validateDate(fecha_ini,fecha_fin); //Selecciono los pedidos que estan en el rango de fechas
+      let _alquilados = this.contarProductos(pedidosSeleccionados) //Cantidad total de productos que estan alquilados
+
+      //retorno la cantidad de productos alquilable. 
+      return ProductController.cantidad_sin_Alquilar() 
+        .then(result=>{
+
+          console.log("disponibles=",result);
+          console.log("alquilados=",_alquilados);
+
+          //Filtro para saber la cantidad de productos que tengo para alquilar
+
+          let _concat = result.concat(_alquilados) //Concateno los valores asi los puedo reducir 
+          var concat_reducido = []; //Se guardara el resultado luego de utilizar reduce con _concat
+          
+          _concat.reduce(function (res, value) { //Se utiliza para descontar los repetidos y en caso de que exista los agrega.
+            if (!res[value.type]) { //Si el valor no existe lo agrego
+              res[value.type] = { type: value.type, cantidad: value.cantidad };
+              concat_reducido.push(res[value.type])
+            }else if (res[value.type]) { //Si el valor ya existe descuento su valor
+              res[value.type].cantidad -= value.cantidad;
+            }
+            return res;
+          }, {})
+          console.log("disponibles para alquilar en esa fecha",concat_reducido);
+
+          return concat_reducido;
+      });       
+
     } catch (error) {
-      console.error("Error al verificar por fechas.");
-      
+      console.error("Error al verificar por fechas. " +error);
     }
+  }
+
+  /*contarProductosAlquilados(pedidosSeleccionados) {
+  async chequearDisponibilidad(productos) {
+    let productosDisponibles = {};
+    let tiposDeProductos = await ProductController.getTypesOfProducts();
+
+    tiposDeProductos.forEach(tipoDeProducto => {
+      if (tipoDeProducto in productos == false) productos[tipoDeProducto] = 0;
+    })
+
+    for (var [key, value] of Object.entries(productos)) {
+      await ProductController.getCantProductsByType(key)
+            .then( (disponibles) => {
+              if (disponibles > value) productosDisponibles[key] = disponibles - value;
+              else productosDisponibles[key] = false;
+            });
+                        
+    }
+
+    return productosDisponibles;
+  }*/
+
+  contarProductos(pedidosSeleccionados) {
+
+    let lsProductos = pedidosSeleccionados.flatMap(pedido => pedido.lista);
+    
+    //Resultado de cantidad por producto
+    var result = [];
+    lsProductos.reduce(function (res, value) {
+      if (!res[value.producto]) {
+        res[value.producto] = { type: value.producto, cantidad: 0 };
+        result.push(res[value.producto])
+      }
+      res[value.producto].cantidad += parseInt(value.cantidad);
+      return res;
+    }, {})
+    //console.log(result); //Muestro el resultado de la cuenta.
+
+
+    
+    /*//GROUP BY EN JAVASCRIPT
+    const groupBy = (array, key) => {
+      return array.reduce((result, currentValue) => {
+        (result[currentValue[key]] = result[currentValue[key]] || []).push(
+          parseInt(currentValue.cantidad)
+        )
+        return result;
+      }, {})
+    }
+    //Guardo resultado de groupBy y muestro por consola. Se agrupa por el parametro que indiques como segundo parametro.
+    const listGroupedByProducto = groupBy(lsProductos, 'producto');
+    //console.log(listGroupedByProducto);
+
+    let productos = {};
+
+    Object.entries(listGroupedByProducto).forEach(([key, value]) => {
+      let cant = 0;
+      let producto = "";
+
+      value.forEach(cantidad =>  cant += parseInt(cantidad))
+
+      //if (key.toLowerCase() === "Baño Químico") producto = "baño"
+      producto = key;
+
+      productos[producto] = cant;
+
+    });*/
+
+    return result;
   }
 
   //Devuelve todos la suma de todos los pedidos que estan pendiente de pago del mes actual.

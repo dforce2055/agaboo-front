@@ -6,6 +6,7 @@ import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import ProductController from '../../../../controllers/Product';
 
 //AGREGADO
 import Fab from '@material-ui/core/Fab';
@@ -38,14 +39,25 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SelectCantProduct(props) {
+  const [tiposDeProductos, setTiposDeProductos] = React.useState([]);
+
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(()=>{
-    if (cant_prodt_select.producto === 'Baño Quimico') {
+    if (cant_prodt_select.producto === 'Baño Químico') {
       setModeloBaño(true);
-    }else if(cant_prodt_select.producto !== 'Baño Quimico'){
+    }else if(cant_prodt_select.producto !== 'Baño Químico'){
       setModeloBaño(false);
+      cant_prodt_select.modelo = '';
     }
+
+    if (tiposDeProductos.length === 0) {
+      ProductController.getTypesOfProducts()
+      .then(tiposDeProducto => {
+        setTiposDeProductos(tiposDeProducto);
+      })
+    } 
+
   });
 
   const classes = useStyles();
@@ -53,8 +65,21 @@ export default function SelectCantProduct(props) {
   const {handleChange} = props;
   const {cant_prodt_select} = props;
   const {addArrayProduct} = props;
+  const {alquilables} = props;
 
-  //Si fue seleccionado el baño publico, se pondra verdadero y mostrara los demas modelos
+  const authCant=()=>{
+    alquilables.forEach(element => {
+      if (element.type === cant_prodt_select.producto) { //Si se encuentra el producto
+
+        if (element.cantidad >= cant_prodt_select.cantidad) {//Verifico que la cantidad introducida sea mayor a la disponible. Si no lo es rechaza
+          element.cantidad -= cant_prodt_select.cantidad; //Resto la cantidad introducida    
+        addArrayProduct() //Agrego al arreglo de productos del pedido
+        }
+      }
+    });
+  }
+
+  //Si fue seleccionado el baño publico, se pondra verdadero y mostrara los modelos
   const [modeloBaño,setModeloBaño] = React.useState(false);
 
   return (
@@ -67,10 +92,11 @@ export default function SelectCantProduct(props) {
           input={<Input 
            type="text"/>}
         >
-          <MenuItem value={'Baño Quimico'}>Baño Quimico</MenuItem>
-          <MenuItem value={'Oficina'}>Oficina de obra</MenuItem>
-          <MenuItem value={'Garita'}>Garita de seguridad</MenuItem>
-          <MenuItem value={'Boleteria'}>Boleteria</MenuItem>
+            {tiposDeProductos.map(tipoDeProducto => ( 
+              <MenuItem value={tipoDeProducto}>{tipoDeProducto}</MenuItem>
+            ))}
+
+          
         </Select>
       </FormControl>
       
@@ -110,7 +136,7 @@ export default function SelectCantProduct(props) {
       size="small" 
       aria-label="add" 
       color="primary"
-      onClick={addArrayProduct}
+      onClick={authCant}
     >
       <AddIcon />
     </Fab>

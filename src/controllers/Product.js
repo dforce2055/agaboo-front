@@ -56,7 +56,7 @@ class ProductController extends Component {
 
     }
     getProductByCode = async (code) => {
-        if (!code) return 1 ;//throw new Error(`Error: el Código de producto es obligatorio`);
+        if (!code) throw new Error(`Error: el Código de producto es obligatorio`);
         try {
             let product = await ProductRepo.getProductByCode(code);
             if ( product ) {
@@ -75,13 +75,38 @@ class ProductController extends Component {
         try {
             let products  = await ProductRepo.getProducts();
             if ( products ) {
-                console.log('products : ', products)
                 return products;
             } else {
                 console.log("No se pudo obtener los productos");
             }
         } catch (error) {
             throw new Error();
+        }
+
+    }
+
+    cantidad_sin_Alquilar = () =>{
+        try {            
+            return ProductRepo.cantidad_sin_Alquilar();
+        } catch (error) {
+            console.error("Error en el controlador de productos al devolver la cantidad de productos.");
+            
+        }
+    }
+
+    getCantProductsByType = async (type) => {
+        if (!type) throw new Error(`Error: no se envió el tipo de producto para buscar en Productos`);
+
+        try {
+            let cantProducts = await ProductRepo.getCantProductsByType(type);
+            if ( cantProducts ) {
+                //console.log('Cantidad de Productos del tipo ', type +" : " +cantProducts);
+                return cantProducts;
+            } else {
+                console.error('No se pudo obtener la cantidad productos del tipo ', type );
+            }
+        } catch (error) {
+           console.error(error);
         }
 
     }
@@ -107,6 +132,19 @@ class ProductController extends Component {
 
     }
 
+    getTypesOfProducts = async () => {
+        try {
+            let typesOfProducts = await ProductRepo.getTypesOfProducts();
+            if (typesOfProducts) {
+                return [...new Set(typesOfProducts )];
+            } else {
+                console.log("No se pudo obtener los productos");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     addProduct = async (data) => {
         if (!data) throw new Error(`Error: no se envió un Producto para registrar`);
         
@@ -130,11 +168,11 @@ class ProductController extends Component {
         if (!product) throw new Error(`Error: no se envió un Producto para editar`);
 
         try {
-            let product = Object.assign({}, product); //Utilizo Object.assign para mapear el objeto
-            await ProductRepo.getProductByCode(product.code);
-            let result = ProductRepo.editProduct(product.code, product);
+            let productObj = Object.assign({}, product); //Utilizo Object.assign para mapear el objeto
+            await ProductRepo.getProductByCode(productObj.code);
+            let result = ProductRepo.editProduct(productObj.code, product);
             if (result) {
-                console.log(`Se editó correctamente el producto`, product);
+                console.log(`Se editó correctamente el producto`, productObj);
                 return true;
             } else {
                 console.log(`No se pudó editar el producto ${ product } `);

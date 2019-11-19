@@ -100,7 +100,7 @@ class ProductRepo extends Component {
     }
 
     getProductsByState = async (state) => {
-        if (!state) throw new Error(`Error: el código de producto es obligatorio`);
+        if (!state) throw new Error(`Error: el estado de producto es obligatorio`);
         let products = [];
         await firebase.db.collection(collection)
             .where('state', '==', state)
@@ -130,6 +130,69 @@ class ProductRepo extends Component {
         }
     };
 
+    getCantProductsByType = async (type) => {
+        if (!type) throw new Error(`Error: no se envió el tipo de producto para buscar en Productos`);
+        let products = [];
+        await firebase.db.collection(collection)
+            .where('state', '==', 'DISPONIBLE')
+            .where('type', '==', type)
+            .get()
+            .then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    // doc.data() is never undefined for query doc snapshots
+                    //console.log(doc.id, " => ", doc.data());
+                    products.push(doc.data());
+                });
+            })
+            .catch(function (error) {
+                console.error("Error getting documents: ", error);
+                products = null;
+            });
+        //console.log(products);
+
+        return products.length;
+    };
+
+    //-----------CESAR------
+    async cantidad_sin_Alquilar(){
+        try {
+            let sin_alquilar = []; //Se guardara la cantidad disp. con su tipo de prod
+
+            await firebase.db.collection(collection)
+                .where('state', '==', 'DISPONIBLE')
+                .get()
+                .then(result=>{   
+                     sin_alquilar = result.docs.map(doc=>doc.data())
+                })       
+
+                const array= [];
+                sin_alquilar.reduce(function(res,value) {
+                        if (!res[value.type]) { //FILTRO
+                            res[value.type] = {type:value.type ,cantidad:0} //Creo el tipo de coleccion de objetos
+                            array.push(res[value.type]) //agrego sin alquilar
+                        }
+                        res[value.type].cantidad++;
+                        return res;
+                    },{})  
+                    
+            return array;
+        } catch (error) {
+            console.error("Error al devolver la cantidad de productos disponibles desde repo.",error);
+            
+        }
+    }
+
+
+    getTypesOfProducts = async () => {
+        try {
+            let coleccion = await firebase.db.collection(collection).get();
+            let typesOfProducts = coleccion.docs.map(doc => doc.data().type);
+            return typesOfProducts;
+        } catch (error) {
+            throw new Error();
+        }
+    }
+
     addProduct = async (newProduct_parameter) => {
         if (!newProduct_parameter) throw new Error(`Error: no se envió un Producto para registrar`);
         //newProduct.localization = new firebase.admin.firestore.GeoPoint(newProduct.localization._lat, newProduct.localization._long);
@@ -143,7 +206,6 @@ class ProductRepo extends Component {
             .doc(newProduct.code)
             .set(newProduct) //Utilizo Object.assign para mapear el objeto
             .then(() => {
-                console.log("Producto guardado exitosamente!!!");
                 return true;
             })
             .catch(function (error) {

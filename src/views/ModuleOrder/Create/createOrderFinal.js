@@ -14,7 +14,8 @@ import { withRouter } from "react-router-dom";
 import Review from './FinalPartOrdered/Review';
 import OrderController from '../../../controllers/Order.js';
 import Tooltip from '@material-ui/core/Tooltip';
-
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Grid from '@material-ui/core/Grid';
 
 const themeMuiTheme = createMuiTheme({ /* Plantilla de edicion */
     overrides: {
@@ -83,6 +84,16 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
+  loading: {
+    bottom: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'aquamarine'
+  }
 }));
 
 const steps = ['Detalles de cliente', 'Detalles de pedido','Pedido completo'];
@@ -106,11 +117,14 @@ function Checkout(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const {history} = props;
   const [buttonState, setButtonState] = React.useState(true); //Desactiva el disabled botton en clientForm
-  
+  const [loading, setLoading] = React.useState(true);
+  const [validado, setValidado] = React.useState("");
+
   const handleNext = () => {
     if(sessionStorage.getItem('info_cliente_pedido')){
       setActiveStep(activeStep + 1) ;
       setButtonState(true);
+      setLoading(true);
     }
   };
 
@@ -143,8 +157,47 @@ function Checkout(props) {
       eliminado:false
     };   
 
-    //Guardo la informacion del pedido en firestore.
-    OrderController.addOrder(data);
+
+    //Validación de pedido
+    
+    console.log(detalle_pedido.fecha_entrega + " - " + detalle_pedido.fecha_finalizacion);
+    let disponibilidad;
+    OrderController.validateOrder(detalle_pedido.fecha_entrega, detalle_pedido.fecha_finalizacion)
+    .then(resultado => {
+      let estado = true;
+      disponibilidad = resultado;
+
+      listado_producto.forEach(prodPedido => {
+        if (prodPedido.producto in resultado) {
+          let diferencia = parseInt(resultado[prodPedido.producto]) - parseInt(prodPedido.cantidad);
+
+          console.log("Diferencia : " + diferencia);
+          if (diferencia < 0) estado = false;
+          if (resultado[prodPedido.producto] === false)  estado = false;
+        }
+      });
+
+      return estado;
+    })
+      .then(estado => {
+        if (estado) {
+          setValidado("Pedido realizado exitosamente");
+          //Guardo la informacion del pedido en firestore.
+          OrderController.addOrder(data);
+         } else {
+          let error = "\n Disponibles: \n";
+            Object.entries(disponibilidad).forEach(([producto, cantidad]) => {
+              console.log(producto + ": " + cantidad);
+              if (cantidad === false) error += (producto + ": SIN DISPONIBILIDAD '\n'" );
+              else error += (producto + ": " + cantidad + '\n');
+
+            })
+          setValidado("NO puede realirse el pedido, verifique las cantidades => \n" + error);
+         }
+      })
+      .then(() => {
+        setLoading(false);
+      })
 
   }
 
@@ -170,9 +223,13 @@ function Checkout(props) {
           <React.Fragment>
             {activeStep === steps.length ? (
               <React.Fragment>
-                <Typography variant="h5" gutterBottom>
-                  Pedido registrado con éxito.
-                </Typography>
+                {loading ? (
+                <Grid item xs={12} md={12} lg={12} className={classes.loading}>
+                  <CircularProgress color="inherit" size={40} />
+                </Grid>
+                ) : 
+                      <Grid>{ validado }</Grid>
+                }
                 <Button variant="contained" color="primary" className={classes.button} onClick ={ () => history.goBack()}>
                     Cerrar
                 </Button>

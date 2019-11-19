@@ -299,9 +299,9 @@ function EnhancedTable(props) {
     console.log("ini=",fecha_ini);
     console.log("fin=",fecha_fin);
 
-    OrderController.validateDate(fecha_ini,fecha_fin)
+    OrderController.validateOrder(fecha_ini,fecha_fin)
     .then(result=>{
-      //console.log("muestro result=",result);
+      console.log("muestro result=",result);
     });
     
     }
@@ -309,10 +309,11 @@ function EnhancedTable(props) {
     <MuiThemeProvider theme={themeMuiProvider}>
 
     <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarPedido')} >
-          <AddIcon />
-        </Fab>   
-        {/* <Button variant="contained" color="primary" onClick={()=>query('2019-11-08','2019-11-11')}>QUERY</Button> */}
-
+      <AddIcon />
+    </Fab>   
+    {/* TETS 
+    <Button variant="contained" color="primary" onClick={()=>query('2019-11-08','2019-11-11')}>QUERY</Button>
+    */}
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selected.length} />

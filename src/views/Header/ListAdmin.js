@@ -27,7 +27,6 @@ function ListAdmin(props){
 
     return(
         <>
-        {console.log("lista admin")}
         {/* //******************************LISTA USUARIOS********************************** */}
         <List>
         <ListItem button onClick={() => history.push('/usuarios')}>

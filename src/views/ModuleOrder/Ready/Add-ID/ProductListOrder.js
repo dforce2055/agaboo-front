@@ -26,6 +26,26 @@ const themeMuiProvider = createMuiTheme({ /* Plantilla de edicion */
         color:'#16984a',
       },
     },
+    MuiButton: {
+      containedPrimary: {
+        backgroundColor: '#3fb5a5',
+        '&:hover': {
+          backgroundColor: '#0ce8ca',
+          "@media (hover: none)": {
+            backgroundColor: "#0ce8ca"
+          },
+        },
+      },
+      containedSecondary: {
+        backgroundColor: '#b53f3f',
+        '&:hover': {
+          backgroundColor: '#f30b0b',
+          "@media (hover: none)": {
+            backgroundColor: "#f30b0b"
+          },
+        },
+      },
+    }, 
 }
 });
 
@@ -104,11 +124,11 @@ const useStyles = makeStyles(theme => ({
   
 
   const handleChange2 = (name,obj) => {    
-    /*//ERROOORR==>> Al momento de guardar el baño quimico, me guarda "baño quimico" en vez de "Baño_Quimico_AG1" y lo mismo pasa con el AG2. Entra al case y al if, pero me lo guarda de la misma manera.
+    /*//ERROOORR==>> Al momento de guardar el Baño Químico, me guarda "Baño Químico" en vez de "Baño_Quimico_AG1" y lo mismo pasa con el AG2. Entra al case y al if, pero me lo guarda de la misma manera.
     switch (name) { 
       case 'Oficina':
         setList_cant({...list_cant, [name]: obj});
-      case 'Baño Quimico':
+      case 'Baño Químico':
         if (obj.modelo === 'AG1') {
           console.log("entro a ag1");
           setList_cant({...list_cant, ['Baño_Quimico_AG1']: obj});
@@ -118,17 +138,17 @@ const useStyles = makeStyles(theme => ({
         }else if(obj.modelo === 'discapacitado'){
           setList_cant({...list_cant, ['Baño_Quimico_Discapacitado']: obj});
         }
-      case 'Boleteria':
+      case 'Boletería':
         setList_cant({...list_cant, [name]: obj});
       case 'Oficina':
         setList_cant({...list_cant, [name]: obj});
       default:        
     }*/
 
-    //Si no es un baño quimico que se guarde
-    if (name !== 'Baño Quimico') {
+    //Si no es un Baño Químico que se guarde
+    if (name !== 'Baño Químico') {
       setList_cant({...list_cant, [name]: obj});
-    } else if(name === 'Baño Quimico'){//Si lo es
+    } else if(name === 'Baño Químico'){//Si lo es
       //Se guarda con el nombre del modelo que sea
       if (obj.modelo === 'AG1') { 
         setList_cant({...list_cant, ['Baño_Quimico_AG1']: obj});

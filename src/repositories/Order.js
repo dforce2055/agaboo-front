@@ -34,6 +34,24 @@ class OrderRepo extends Component {
     }
   }
 
+  //Devuelvo pedidos por id
+  async getOrderById(id_pedido){
+    try {
+      let order = {};
+      await db.where("eliminado","==",false)
+        .where("id_pedido","==",id_pedido)
+        .get()
+        .limit(1)
+        .then(result=>{
+          result.forEach(doc => {
+            order = doc.data();
+          });
+        })
+    } catch (error) {
+      console.error("Error al solicitar el pedido "+id_pedido+" de la base de datos.");
+    }
+  }
+
   //Devuelvo todos los pedidos
   async getOrders(){
     try {
@@ -81,37 +99,9 @@ class OrderRepo extends Component {
       console.log("Error en base de datos: ",error);
     }
   }
-  
-  contarProductos(pedidosSeleccionados){    
-    let lsProductos = pedidosSeleccionados.flatMap(pedido => pedido.lista);
-    //Cuento la cantidad por los distintos productos.
-    var result = [];
-    lsProductos.reduce(function(res,value) {
-      if (!res[value.producto]) {
-        res[value.producto] = {producto:value.producto,cantidad:0};
-        result.push(res[value.producto])
-      }
-      res[value.producto].cantidad += parseInt(value.cantidad);
-      return res;
-    },{})
-    console.log(result); //Muestro el resultado de la cuenta.
 
-    //GROUP BY EN JAVASCRIPT
-    const groupBy = (array,key) => {
-      return array.reduce((res,currentValue) => {
-        (res[currentValue[key]] = res[currentValue[key]] || []).push(
-          parseInt(currentValue.cantidad)
-          )
-        return res;
-      },{})
-    }
-    //Guardo resultado de groupBy y muestro por consola. Se agrupa por el parametro que indiques como segundo parametro.
-    const listGroupedByProducto = groupBy(lsProductos, 'producto');
-    console.log(listGroupedByProducto);
-  }  
 
-  //Se utiliza en validateDate
-  async validateDate(fecha_ini,fecha_fin){
+  async validateDate(fecha_ini, fecha_fin){
     if(!fecha_fin) throw new Error('Error: No llego la fecha de fin.')
     if(!fecha_ini) throw new Error('Error: No llego la fecha de inicio.')
 
@@ -134,8 +124,6 @@ class OrderRepo extends Component {
         }
       });
 
-      console.log("Pedidos seleccionados ",pedidosSelecionados);
-      console.log(this.contarProductos(pedidosSelecionados)) ;
       
       return pedidosSelecionados;
 
@@ -178,7 +166,7 @@ class OrderRepo extends Component {
       await db.where("eliminado","==",false)
       .get()
       .then(result=>{
-        if(result.estado !== "PAGADO")
+        if(result.estado !== "PAGADO") //FILTRO
           list = result.docs.map(doc => doc.data())
       });
 
@@ -212,14 +200,6 @@ class OrderRepo extends Component {
 
     } catch (error) {
       console.error("Error en la base de datos al cambiar estado del pedido"+id_pedido+".",error);
-    }
-  }
-
-  async allDepositsPerMonth(){
-    try {
-      
-    } catch (error) {
-      console.error("Error en la base de datos al devolver depositos.");
     }
   }
 

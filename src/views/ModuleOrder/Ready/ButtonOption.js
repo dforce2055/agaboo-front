@@ -22,11 +22,6 @@ function MenuItems(props) {
     setAnchorEl(null);
   };
 
-  const handleCompleteOrder = () =>{
-    console.log("MUESTRO COMPLETAR PEDIDO");
-    setAnchorEl(null);
-  }
-
   const handleDeleteOrder = () =>{
     OrderController.deleteOrder(id_pedido)
     //Cambio estado para actualizar el listado de los pedidos. Cuando uno sea eliminado.
@@ -50,7 +45,6 @@ function MenuItems(props) {
           sessionStorage.setItem('pedido',JSON.stringify(id_pedido));
           sessionStorage.setItem('listado_producto',JSON.stringify(listado_producto))
           history.push('/rellenarPedido') }}>Completar pedido</MenuItem>
-        <MenuItem onClick={handleCompleteOrder}>Editar pedido</MenuItem>
         <MenuItem onClick={handleDeleteOrder}>Eliminar pedido</MenuItem>
       </Menu>
     </div>

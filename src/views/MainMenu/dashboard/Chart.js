@@ -3,6 +3,7 @@ import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recha
 import Title from './Title';
 import OrderController from '../../../controllers/Order';
 
+
 export default function Chart() {
   const [loadData, setLoadData] = React.useState(true);
   const [data,setData] = React.useState([]);
@@ -27,6 +28,7 @@ export default function Chart() {
     <React.Fragment>
       <Title>Variación mensual en el año</Title>
       <ResponsiveContainer>
+      
         <LineChart
           data={data} //Paso data con la informacion al chart
           margin={{

@@ -41,6 +41,7 @@
     "react-test-renderer": "^16.11.0",
     "react-with-firebase-auth": "^1.1.0",
     "recharts": "^1.8.5",
+    "sonarqube": "0.0.1",
     "styled-components": "^4.4.0",
     "underscore": "^1.9.1",
     "use-force-update": "^1.0.7",

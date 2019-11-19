@@ -53,6 +53,8 @@ const DialogActions = withStyles(theme => ({
 export default function DialogOrders(props) {
     const [open, setOpen] = React.useState(false);
     const { pedido } = props;
+    console.log("props",props);
+    
     const handleClickOpen = () => {
         setOpen(true);
     };

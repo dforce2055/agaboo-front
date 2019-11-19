@@ -1,9 +1,13 @@
 import React from "react";
 import "./Form.css";
 import Container from '@material-ui/core/Container';
-import SimpleTable from './OrderDetail/TableProduct';
+import TableProduct from './OrderDetail/TableProduct';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
+//IMPORTO 
+import OrderController from '../../../controllers/Order';
+import TableOrderDisp from './TableOrderDisp.js';
+ 
 const theme = createMuiTheme({ /* Plantilla de edicion */
   overrides: {
       MuiContainer:{
@@ -13,6 +17,10 @@ const theme = createMuiTheme({ /* Plantilla de edicion */
       },
 
 }});
+
+function nada() {
+  return console.log("No hay nada cargado");
+}
 
 function formulario(handleChange, value){
   const now = new Date();
@@ -113,6 +121,20 @@ function formulario(handleChange, value){
 
 export default function CreateOrder(props) {
   const { setButtonState } = props; 
+  const [loadData,setLoadData] = React.useState(true);
+  const [alquilables,setAlquilables] = React.useState([]);
+
+  React.useEffect(()=>{
+    if (values.fecha_entrega != '' && values.fecha_finalizacion != '' && loadData) {
+      OrderController.validateOrder(values.fecha_entrega,values.fecha_finalizacion)
+        .then(result=>{
+         if (result) {
+          setAlquilables(result)
+         }
+        })
+      setLoadData(false)
+    }
+  });
 
   const [values,setValues] = React.useState({
     lugarDePago:'',
@@ -123,20 +145,21 @@ export default function CreateOrder(props) {
     fecha_finalizacion: '',
     ubicacionDeEntrega:'',
     ciudad:''
-    });  
+    });
 
   const handleChange = name => event => {    
     setValues({ ...values, [name]: event.target.value }); 
+    //Recalcula la cantidad luego de haber cambiado la fecha de entrega o de finalizacion
+    if (name == 'fecha_finalizacion' || name == 'fecha_entrega') {
+      setLoadData(true)
+    }
     sessionStorage.setItem('info_detalle_pedido',JSON.stringify(values));    
   };
 
   const handleSubmit= () =>{    
-    
     console.log("Agrego info_detalle_pedido a SESSION STORAGE");
-
     sessionStorage.setItem("info_detalle_pedido",JSON.stringify(values));
   }
-
   
   return (
     <React.Fragment>
@@ -144,8 +167,11 @@ export default function CreateOrder(props) {
       <Container  maxWidth="md" className='nuevo'>
           <form onSubmit={handleSubmit} noValidate>
             {formulario(handleChange, values.fecha_entrega)}
-            {/*detallePedido(product,handleProductChange,handleChange)*/}
-            <SimpleTable setButtonState={setButtonState}></SimpleTable>
+            {alquilables.length > 0  && <TableOrderDisp rows={alquilables}/>}  {/*Renderizo la tabla que contiene la cantidad de productos disponibles para su alquiler*/}
+
+            <TableProduct 
+            alquilables = {alquilables} //Paso alquilables, para verificar cada vez que se introduzca un valor nuevo al arreglo.
+            setButtonState={setButtonState}/>
           </form>
       </Container>
     </MuiThemeProvider>

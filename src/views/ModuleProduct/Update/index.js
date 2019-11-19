@@ -116,7 +116,7 @@ function useIndexUpdateProduct(props) {
           <Grid container className={classes.root}>
               <Grid item xs={12}>
                   <Grid container justify="center">
-                      <Grid key={2} item>
+                      <Grid key={1} item>
                         <h1>Buscar producto</h1> 
                         <SearchBox/>
                       </Grid>
