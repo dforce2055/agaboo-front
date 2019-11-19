@@ -12,6 +12,7 @@ export default function Chart() {
       OrderController.allDepositsPerYear()
         .then(result=>{
           if (result) {
+            console.log(result)
             setData(result);
           }
         })

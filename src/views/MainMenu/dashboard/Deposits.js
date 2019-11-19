@@ -45,7 +45,7 @@ export default function Deposits() {
   return (
     <React.Fragment>
     {/* <Button variant="contained" onClick={handleNewQuery}>QUERY</Button> */}
-      <Title>Ingreso Mensual</Title>
+      <Title>Ingreso del Mes</Title>
       <Typography component="p" variant="h4">
       {mountOrderCurrent}
       </Typography>

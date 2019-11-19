@@ -189,7 +189,7 @@ const useStyles = makeStyles(theme => ({
     />
 
     <ButtonGroup fullWidth aria-label="full width outlined button group">
-      <Button variant='contained' color='secondary'onClick ={ () => {history.push('/pedidosListos')}}>volver</Button>
+      <Button variant='contained' color='secondary'onClick ={ () => {history.goBack()}}>volver</Button>
       <Button variant='contained'  color='primary' onClick={handleClickOpen} //Metodo para guardar los id's con el pedido seleccionado
       >guardar</Button>
     </ButtonGroup>
