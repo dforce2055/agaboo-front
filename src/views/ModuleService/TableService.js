@@ -2,13 +2,10 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import Title from './Title';
-import DialogOrders from './DialogOrders';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
-import './Table.css';
 
-import OrderController from '../../../controllers/Order';
-import DialogPayment from './DialogPayment';
+import OrderController from '../../controllers/Order';
 
 const theme = createMuiTheme({ /* Plantilla de edicion */
   overrides: {
@@ -57,7 +54,7 @@ const useStyles = makeStyles(theme => ({
   
 }));
 
-export default function TableAccount(props) {
+export default function TableService(props) {
   const classes = useStyles();
 
   const {handleOpenReload} = props;
@@ -84,8 +81,6 @@ export default function TableAccount(props) {
   const handlesetLoadOrder = () =>{
     setLoadOrder(true);
   }
-  console.log(unpaid);
-  
 
   return unpaid.length === 0 ? (
     <React.Fragment>
@@ -94,7 +89,7 @@ export default function TableAccount(props) {
   ) : (
     <React.Fragment>
       <MuiThemeProvider theme={theme}>
-      <Title>Pedidos impagos</Title>
+      <Title>Pedidos para servicio</Title>
       <Table className={classes.tablaPedidos}>
         <Thead>
           <Tr style={{background: '#f5f5f5'}}> 
@@ -111,20 +106,11 @@ export default function TableAccount(props) {
           {unpaid.map((pedido, index, array) => (
             <Tr key={pedido.id_pedido}>
               <Td style={{ padding:'5px'}}>{index+1}</Td> 
-              <Td>{pedido.cliente.nombre +' '+pedido.cliente.apellido}</Td>
+              <Td>{pedido.cliente.nombre +' ' +pedido.cliente.apellido}</Td>
               <Td>{pedido.ciudad}</Td>
               <Td>{pedido.direccion}</Td>
               <Td>{pedido.monto_calculado}</Td>
-              <Td>
-                <DialogOrders pedido={pedido}/>
-              </Td>
-              <Td>
-                <DialogPayment 
-                  id_pedido={pedido.id_pedido} 
-                  handleOpenReload={handleOpenReload} //Si acepta cobrar el pedido, se recarga el "Total Acumulado"
-                  handlesetLoadOrder={handlesetLoadOrder} //Si acepta el eliminar se actualizara el array
-                  />
-              </Td>
+              
             </Tr>
           ))}
         </Tbody>

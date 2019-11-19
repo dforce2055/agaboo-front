@@ -34,6 +34,24 @@ class OrderRepo extends Component {
     }
   }
 
+  //Devuelvo pedidos por id
+  async getOrderById(id_pedido){
+    try {
+      let order = {};
+      await db.where("eliminado","==",false)
+        .doc(id_pedido)
+        .get()
+        .limit(1)
+        .then(result=>{
+          result.forEach(doc => {
+            order = doc.data();
+          });
+        })
+    } catch (error) {
+      console.error("Error al solicitar el pedido "+id_pedido+" de la base de datos.");
+    }
+  }
+
   //Devuelvo todos los pedidos
   async getOrders(){
     try {

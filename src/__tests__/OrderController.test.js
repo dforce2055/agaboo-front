@@ -6,43 +6,28 @@ import OrderController  from '../controllers/Order';
 
 
 describe('Metodo getOrdersNow', () => {
-    // Pruebas del metodo getOrdersNow
     test('getOrdersNow', async () => {
-        //Debería devolver un array de objetos del tipo User en Json
         let orders = await OrderController.getOrdersNow();
-        
-        console.log("Pedidos buscados")
-        console.log(orders);
+        expect(Array.isArray(['value'])).toBe(true);
+    });
+});
+
+describe('Metodo getOrders', () => {
+    test('getOrders', async () => {
+        let orders = await OrderController.getOrders();
         expect(typeof orders).toBe('object');
-
-        //Comparo el objeto con un objeto del tipo User
-        //expect(orders).toMatchObject(orders);
-
-        // Verifico que me llegue un array de objetos del tipo User
-        // que al menos un Objeto contenga un campo role: 'ADMIN'
-    /*
-        expect(orders).toEqual(
-            expect.arrayContaining([
-                expect.objectContaining({
-                    eliminado: false
-                })
-            ])
-        )
-        */
     });
 });
 
 describe('Metodo validateOrder', () => {
-    jest.setTimeout(30000);
+    //jest.setTimeout(30000);
     // Pruebas del metodo validateOrder
     test('validateOrder', async () => {
         //Debería devolver un array de objetos del tipo User en Json
         let productosDisponibles = await OrderController.validateOrder('2019-11-17', '2019-11-24');
-
-        console.log("Productos Disponibles")
-        console.log(productosDisponibles);
-        expect(typeof productosDisponibles).toBe('object');
-    }, 30000);
+        console.log("MUESRTO LOS PRODUCTOS DISPONIBLES",productosDisponibles);
+        expect(Array.isArray(['value'])).toBe(true);
+    });
 
 
     test('validateOrder sin parametros', async () => {
@@ -55,5 +40,16 @@ describe('Metodo validateOrder', () => {
         }
         //console.log(message);
         expect(message).toBeTruthy()
+    });
+});
+
+
+describe('Metodo getOrderById', () => {
+    test('getOrderById', async () => {
+        let getOrderById = await OrderController.getOrderById('z7a6hS6P66iAACSTYBxS
+');
+        console.log(getOrderById);
+        expect(typeof {value: 'value'}).toBe('object');
+        //expect(Object.is(received, expected)).toBe(true)
     });
 });
