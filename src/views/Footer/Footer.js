@@ -52,6 +52,26 @@ const theme = createMuiTheme({ /* Plantilla de edicion */
   }});
 
 function SimpleBottomNavigation(props) {
+
+  React.useEffect(() => {
+    console.log("useEffect");
+    // creamos una función para actualizar el estado con el clientWidth
+    const updateWidth = () => {
+      const width = document.body.clientWidth;
+      console.log(`updateWidth con ${width}`);
+      setWidthWindows(width);
+    };
+
+    // actualizaremos el width al montar el componente
+    updateWidth();
+
+    // nos suscribimos al evento resize de window
+    window.addEventListener("resize", updateWidth);
+  }, []); //Permite solo ejecutar cuando algun evento se realize
+
+  
+
+  const [widthWindow, setWidthWindows] = React.useState(0); //Ancho de la ventana
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const {history} = props;
@@ -78,40 +98,45 @@ function SimpleBottomNavigation(props) {
   return (
     <div className="footer">
         <MuiThemeProvider theme={theme}>
-              <BottomNavigation
-              value={value}
-              onChange={(event, newValue) => {
-                  setValue(newValue);
-              }}
-              showLabels
-              className={classes.root}
-              >
-              <BottomNavigationAction label="Volver" icon={<ArrowBackIosTwoToneIcon />} onClick ={ () => history.goBack()}/>
-              <BottomNavigationAction label="Menu Principal" icon={<HomeTwoToneIcon />} onClick ={ () => history.push('/mainMenu')}/>
-              <BottomNavigationAction label="Cerrar Sesión" icon={<HttpsTwoToneIcon />} onClick ={handleClickOpen}/>
-             
-              <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="responsive-dialog-title"
-                maxWidth="xl"
-              >
-                <DialogTitle id="responsive-dialog-title">{"Confirmar cierre de sesión"}</DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    Está seguro que desea cerrar sesión?
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleClose} color="primary">
-                    Cancelar
-                  </Button>
-                  <Button variant='contained' onClick={logOut} color="secondary" autoFocus startIcon={<HttpsTwoToneIcon />}>
-                    Cerrar Sesion
-                  </Button>
-                </DialogActions>
-              </Dialog>
-              </BottomNavigation>
+              {
+                (widthWindow < 550) ? 
+                  <BottomNavigation
+                    value={value}
+                    onChange={(event, newValue) => {
+                        setValue(newValue);
+                    }}
+                    showLabels
+                    className={classes.root}
+                  >
+                <BottomNavigationAction label="Volver" icon={<ArrowBackIosTwoToneIcon />} onClick ={ () => history.goBack()}/>
+                <BottomNavigationAction label="Menu Principal" icon={<HomeTwoToneIcon />} onClick ={ () => history.push('/mainMenu')}/>
+                <BottomNavigationAction label="Cerrar Sesión" icon={<HttpsTwoToneIcon />} onClick ={handleClickOpen}/>
+              
+                  <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="responsive-dialog-title"
+                    maxWidth="xl"
+                  >
+                    <DialogTitle id="responsive-dialog-title">{"Confirmar cierre de sesión"}</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>
+                        Está seguro que desea cerrar sesión?
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleClose} color="primary">
+                        Cancelar
+                      </Button>
+                      <Button variant='contained' onClick={logOut} color="secondary" autoFocus startIcon={<HttpsTwoToneIcon />}>
+                        Cerrar Sesion
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </BottomNavigation>
+              :
+              <span></span>
+              }
         </MuiThemeProvider>
     </div>
   );

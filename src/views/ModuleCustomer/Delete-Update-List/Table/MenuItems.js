@@ -43,7 +43,7 @@ function MenuItems(props) {
   return (
     <div>
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-        <MoreHorizIcon></MoreHorizIcon>
+        <MoreHorizIcon size='small'></MoreHorizIcon>
       </Button>
       <Menu
         id="simple-menu"

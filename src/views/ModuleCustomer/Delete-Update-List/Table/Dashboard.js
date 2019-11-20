@@ -4,8 +4,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import ClientTable from './ClientTable';
+//import ClientTable from './ClientTable';
 
+import ClientTable from './TableResponsive';
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
