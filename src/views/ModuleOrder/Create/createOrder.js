@@ -167,7 +167,7 @@ export default function CreateOrder(props) {
       <Container  maxWidth="md" className='nuevo'>
           <form onSubmit={handleSubmit} noValidate>
             {formulario(handleChange, values.fecha_entrega)}
-            {alquilables.length > 0  && <div><TableOrderDisp rows={alquilables}/></div>}  {/*Renderizo la tabla que contiene la cantidad de productos disponibles para su alquiler*/}
+            {alquilables.length > 0  && <TableOrderDisp rows={alquilables}/>}  {/*Renderizo la tabla que contiene la cantidad de productos disponibles para su alquiler*/}
 
             <TableProduct 
             alquilables = {alquilables} //Paso alquilables, para verificar cada vez que se introduzca un valor nuevo al arreglo.

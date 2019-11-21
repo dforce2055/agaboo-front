@@ -12,6 +12,14 @@ class OrderController extends Component {
     }
   }
 
+  getOrderById(id_pedido){
+    try {      
+      return OrderController.getOrderById(id_pedido);
+    } catch (error) {
+      console.error("Error al solicitar el pedido "+id_pedido+" de la base de datos.");
+    }
+  }
+
   getOrders = async () => {
     try {
       let list = await OrderRepo.getOrders();

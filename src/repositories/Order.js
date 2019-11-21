@@ -34,6 +34,24 @@ class OrderRepo extends Component {
     }
   }
 
+  //Devuelvo pedidos por id
+  async getOrderById(id_pedido){
+    try {
+      let order = {};
+      await db.where("eliminado","==",false)
+        .where("id_pedido","==",id_pedido)
+        .get()
+        .limit(1)
+        .then(result=>{
+          result.forEach(doc => {
+            order = doc.data();
+          });
+        })
+    } catch (error) {
+      console.error("Error al solicitar el pedido "+id_pedido+" de la base de datos.");
+    }
+  }
+
   //Devuelvo todos los pedidos
   async getOrders(){
     try {
@@ -217,6 +235,15 @@ class OrderRepo extends Component {
         return res;
       },{}) //Tiene que devolver una coleccion de objetos
       
+      //Ordeno por meses 
+        fmList.sort(function(minor,higher) {
+          if (minor.time > higher.time) {
+            return 1;
+          }else{
+            return -1
+          }
+        });
+
       return fmList;
     } catch(error){
       console.error("Error en la base de datos al devolver la suma de los chart.");

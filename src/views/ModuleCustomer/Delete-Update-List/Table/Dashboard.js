@@ -4,8 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import ClientTable from './ClientTable';
-
+import ClientTable from './ClientTable.js';
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -96,16 +95,6 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
 
 export default function Dashboard() {
   const classes = useStyles();
-
-  /*const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  */
 
   return (
     <MuiThemeProvider theme={theme2}>

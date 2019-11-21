@@ -5,10 +5,18 @@ import { withRouter } from 'react-router-dom';
 import SimpleBottomNavigation from '../Footer/Footer';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper } from '@material-ui/core';
+
 //Import componentes
+import TableService from './TableService.js';
+
+const useStyles = makeStyles(theme => ({
+    espacio:{
+      margin: theme.spacing(3),
+    }
+  }));
 
 function Service(props) {
-
+    const classes = useStyles();
     if (!firebase.getCurrentUsername()) {
         // not logged in
         alert('Por favor inicie sesión para acceder')
@@ -24,6 +32,9 @@ function Service(props) {
 
             <div>
             <h1>Informacion</h1>
+             {/*<Paper className={classes.espacio}>
+            <TableService/>
+            </Paper>*/}
             </div>
             <footer>
                 <SimpleBottomNavigation/>

@@ -26,6 +26,26 @@ const themeMuiProvider = createMuiTheme({ /* Plantilla de edicion */
         color:'#16984a',
       },
     },
+    MuiButton: {
+      containedPrimary: {
+        backgroundColor: '#3fb5a5',
+        '&:hover': {
+          backgroundColor: '#0ce8ca',
+          "@media (hover: none)": {
+            backgroundColor: "#0ce8ca"
+          },
+        },
+      },
+      containedSecondary: {
+        backgroundColor: '#b53f3f',
+        '&:hover': {
+          backgroundColor: '#f30b0b',
+          "@media (hover: none)": {
+            backgroundColor: "#f30b0b"
+          },
+        },
+      },
+    }, 
 }
 });
 
@@ -189,7 +209,7 @@ const useStyles = makeStyles(theme => ({
     />
 
     <ButtonGroup fullWidth aria-label="full width outlined button group">
-      <Button variant='contained' color='secondary'onClick ={ () => {history.push('/pedidosListos')}}>volver</Button>
+      <Button variant='contained' color='secondary'onClick ={ () => {history.goBack()}}>volver</Button>
       <Button variant='contained'  color='primary' onClick={handleClickOpen} //Metodo para guardar los id's con el pedido seleccionado
       >guardar</Button>
     </ButtonGroup>
