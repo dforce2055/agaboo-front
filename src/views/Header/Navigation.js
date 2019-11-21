@@ -15,7 +15,7 @@ import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
 import ListAdmin from './ListAdmin';
 import ListLogistics from './ListLogistics';
-
+import DashboardIcon from '@material-ui/icons/Dashboard';
 
 const drawerWidth = 240;
 
@@ -77,25 +77,12 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(4),
   },
   title: {
-    left:'0',
-    right:'0',
-    position:'fixed',
+    flexGrow: 1,
     fontFamily: 'Quicksand',
     fontSize: '28px',
-    zIndex:-1,
-  },
-  bajarBoton:{
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    //background: 'linear-gradient( 45deg, #3fb5a5 30%, #05fcda 90%)', //PRUEBA DE COLOR DE BOTON DE CERRAR SESION
-    border: 0,
-    borderRadius: 3,
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    color: 'white',
-    height: 48,
-    padding: '0 30px',
-    marginTop: theme.spacing(14),
   },
 }));
+
 
 const theme2 = createMuiTheme({ /* Plantilla de edicion */
   overrides: { 
@@ -132,6 +119,25 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
 });
 
 function Navbar(props) {
+
+  React.useEffect(() => {
+    console.log("useEffect");
+    // creamos una función para actualizar el estado con el clientWidth
+    const updateWidth = () => {
+      const width = document.body.clientWidth;
+      console.log(`updateWidth con ${width}`);
+      setWidthWindows(width);
+    };
+
+    // actualizaremos el width al montar el componente
+    updateWidth();
+
+    // nos suscribimos al evento resize de window
+    window.addEventListener("resize", updateWidth);
+  }, []);
+
+
+  const [widthWindow, setWidthWindows] = React.useState(0); //Ancho de la ventana
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -155,7 +161,6 @@ function Navbar(props) {
       return false;
     }
   }
-
   
   return (
     <MuiThemeProvider theme={theme2}>
@@ -177,11 +182,25 @@ function Navbar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" align="center" className={classes.title} onClick ={ () => history.push('/mainMenu')}>
+          <Typography variant="h6" align="center" className={classes.title}>
             agaboo
           </Typography>
+
+          {
+            (widthWindow > 550) &&
+              <IconButton 
+                title="Menu Principal" 
+                aria-label="display more actions" 
+                edge="end" 
+                color="inherit"
+                onClick ={ () => history.push('/mainMenu')}
+              >
+                <DashboardIcon fontSize='large'/>
+              </IconButton>
+          }
         </Toolbar>
       </AppBar>
+
       <Drawer
         className={classes.drawer}
         variant="persistent"
