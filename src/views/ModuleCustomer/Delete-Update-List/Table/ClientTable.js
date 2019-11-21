@@ -103,7 +103,7 @@ function table(clientes,updateStateArray,width) {
   return(
     <div>
       {
-        (width > 473) ? 
+        (width > 450) ? 
             <Table size="small">
             <TableHead>
               <TableRow>
@@ -258,7 +258,9 @@ function ClientTable(props) {
 
   return (
     <React.Fragment>
-
+    <div>
+      <span>Width es de {widthWindow}px</span>
+    </div>
     <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarCliente')} inputRef={'/registrarCliente'} ref={inputRef}>
       <AddIcon />
     </Fab>

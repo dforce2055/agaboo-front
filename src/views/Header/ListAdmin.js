@@ -109,7 +109,7 @@ function ListAdmin(props){
   </ListItem>
   </List>
   {
-    (width > 550) &&
+    (width > 450) &&
     <List className={classes.footer}>
     <ListItem button onClick={logOut}> 
       <ListItemIcon>      

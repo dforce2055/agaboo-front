@@ -187,7 +187,7 @@ function Navbar(props) {
           </Typography>
 
           {
-            (widthWindow > 550) &&
+            (widthWindow > 450) &&
               <IconButton 
                 title="Menu Principal" 
                 aria-label="display more actions" 

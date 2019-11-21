@@ -99,7 +99,7 @@ function SimpleBottomNavigation(props) {
     <div className="footer">
         <MuiThemeProvider theme={theme}>
               {
-                (widthWindow < 550) ? 
+                (widthWindow < 450) ? 
                   <BottomNavigation
                     value={value}
                     onChange={(event, newValue) => {
