@@ -44,7 +44,8 @@ const useStyles = makeStyles(theme => ({
     overflowX: 'auto',
   },
   table: {
-    minWidth: 300,
+    //minWidth: 300,
+    
   },
 
   fab: {
@@ -107,8 +108,33 @@ const useStyles = makeStyles(theme => ({
     return count;
   }
 
+  const [widthWindow, setWidthWindows] = React.useState(0); //Ancho de la ventana
+/*
+  React.useEffect(() => {
+    console.log("useEffect");
+    // creamos una función para actualizar el estado con el clientWidth
+    const updateWidth = () => {
+      const width = document.body.clientWidth;
+      console.log(`updateWidth con ${width}`);
+      setWidthWindows(width);
+    };
 
+    // actualizaremos el width al montar el componente
+    updateWidth();
+
+    // nos suscribimos al evento resize de window
+    window.addEventListener("resize", updateWidth);
+  }, []);*/
+  
   useEffect(() => {
+    const updateWidth = () => {
+      const width = document.body.clientWidth;
+      console.log(`updateWidth con ${width}`);
+      setWidthWindows(width);
+    }
+    updateWidth();
+
+
     getProducts();
     hideFooter();
   });
@@ -118,7 +144,7 @@ const useStyles = makeStyles(theme => ({
             <Table className={classes.table}>
                 <TableHead>
                 <TableRow>
-                    <StyledTableCell align= "justify">Producto</StyledTableCell>
+                    <StyledTableCell align = "justify" wir>Producto</StyledTableCell>
                     {/* <StyledTableCell align="justyfy">Estado</StyledTableCell> */}
                     <StyledTableCell align="justify">Cantidad</StyledTableCell>
                 </TableRow>
@@ -135,10 +161,10 @@ const useStyles = makeStyles(theme => ({
                     </StyledTableRow>
                 ))}
                 </TableBody>
-            </Table>
-            <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/createProduct')} >
-          <AddIcon />
-        </Fab>  
+           </Table>
+           <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/createProduct')} >
+             <AddIcon />
+           </Fab>  
       </React.Fragment>         
         
     
