@@ -16,6 +16,9 @@ import ProductController from '../../../controllers/Product';
 
 
 
+
+
+
 const StyledTableCell = withStyles(theme => ({
   head: {
     backgroundColor: '#3fb5a5',
@@ -44,8 +47,8 @@ const useStyles = makeStyles(theme => ({
     overflowX: 'auto',
   },
   table: {
-    //minWidth: 300,
-    
+    minWidth: 300,
+    xs : 3, 
   },
 
   fab: {
@@ -128,12 +131,11 @@ const useStyles = makeStyles(theme => ({
   
   useEffect(() => {
     const updateWidth = () => {
-      const width = document.body.clientWidth;
-      console.log(`updateWidth con ${width}`);
-      setWidthWindows(width);
+      const widthVariable = document.body.clientWidth;
+      console.log(`updateWidth con ${widthVariable}`);
+      setWidthWindows(widthVariable);
     }
     updateWidth();
-
 
     getProducts();
     hideFooter();
@@ -149,7 +151,7 @@ const useStyles = makeStyles(theme => ({
                     <StyledTableCell align="justify">Cantidad</StyledTableCell>
                 </TableRow>
                 </TableHead>
-                <TableBody>
+                <TableBody >
                 {rows.map(row => (
                     <StyledTableRow key={row.typeProduct}>
                     <StyledTableCell component="th" scope="row">

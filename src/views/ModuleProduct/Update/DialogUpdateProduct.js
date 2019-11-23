@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import SearchIcon from '@material-ui/icons/Search'
 import IconButton from '@material-ui/core/IconButton';
-import { makeStyles , useTheme } from "@material-ui/core/styles";
+import { makeStyles , useTheme, MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ProductController from '../../../controllers/Product';
@@ -15,8 +15,32 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 
 
 const useStyles = makeStyles(theme => ({
+  buttonsDialog : {
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width : 200 , 
+
+      
+    },
+  },
+  
     
     }));
+    const themeOverride = createMuiTheme({ /* Plantilla de edicion */
+      overrides: {
+        MuiSelect:{
+          outlined:{
+            width:'230px',
+          },
+        },
+        MuiOutlinedInput:{
+          input:{
+            paddingBottom:'15px',
+          },
+        },
+      }
+    });
 
 
 const typeState = [
@@ -53,8 +77,6 @@ const typeProduct = [
         }
         
 ];
-
-
 
 
 export default function DialogUpdateProduct(props) {
@@ -165,17 +187,20 @@ export default function DialogUpdateProduct(props) {
       
       
       
-      <Dialog 
+      <Dialog theme = {theme}
         open={open} 
         aria-labelledby="form-dialog-title"
         onClose={handleClose}
         fullScreen={fullScreen}
+        
+        
+      
 
       >
         <DialogTitle id="form-dialog-title" alignItems = {"center"} >Modificar Producto</DialogTitle>
         <DialogContent>
             <Grid container spacing = {1} justify = { "center" } className = { "grid"} >
-             <Grid item xs = {6} xl = {6} alignItems = {"center"} md = {3} >
+             <Grid item xs = {6} xl = {6} alignItems = {"center"} md = {3} justify-content = {'initial'} >
 
                 <TextField
                     id="type-product"
@@ -256,7 +281,7 @@ export default function DialogUpdateProduct(props) {
                  </TextField>
                 </Grid> 
             </Grid>
-            <DialogActions calssName = {classes.bajarBoton}>
+            <DialogActions calssName = {classes.buttonsDialog}>
           <Button  onClick = {updateProduct}color="primary">
             Modificar
           </Button>
