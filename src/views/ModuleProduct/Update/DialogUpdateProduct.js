@@ -13,34 +13,22 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ProductController from '../../../controllers/Product';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
-
 const useStyles = makeStyles(theme => ({
-  buttonsDialog : {
-    textField: {
+  
+  textField: {
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
       width : 200 , 
-
-      
     },
-  },
+  
+
+  dialog : {
+    background : 'red',
+
+  }
   
     
     }));
-    const themeOverride = createMuiTheme({ /* Plantilla de edicion */
-      overrides: {
-        MuiSelect:{
-          outlined:{
-            width:'230px',
-          },
-        },
-        MuiOutlinedInput:{
-          input:{
-            paddingBottom:'15px',
-          },
-        },
-      }
-    });
 
 
 const typeState = [
@@ -187,7 +175,8 @@ export default function DialogUpdateProduct(props) {
       
       
       
-      <Dialog theme = {theme}
+      <Dialog 
+        //className = {}
         open={open} 
         aria-labelledby="form-dialog-title"
         onClose={handleClose}
