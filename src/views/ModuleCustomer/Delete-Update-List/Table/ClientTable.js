@@ -12,6 +12,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 
 //Agrego imports
+
 import CustomerController from '../../../../controllers/Customer';
 import FullScreenDialog from '../Update/UpdateUser';
 import AlertDialog from '../Delete/DialogDelete';
@@ -21,7 +22,13 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { hideFooter } from './../../../Footer/HideFooter';
 import MenuItems from './MenuItems';
-
+import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ComplexGrid from './TableColumn.js';
+import Divider from '@material-ui/core/Divider';
 const useStyles = makeStyles(theme => ({
   seeMore: {
     marginTop: theme.spacing(3),
@@ -44,8 +51,93 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function ClientTable(props) {
+function inputSearch(Filter,handleChange,width) {
+  let widthInput;
+  if (width>415) {
+    let widthInput = "width:'300px'";
+  }else{
+    let widthInput = "width:'100px'";
+  }
+  return(
+    <div>
+        <TextField
+        onKeyUp={ 
+          event =>{
+              Filter()
+        }} 
+        onChange={handleChange('buscar')} 
 
+        style={{widthInput}} 
+
+        placeholder="Buscar Cliente"
+        variant="outlined"
+        InputProps={{
+          startAdornment: <InputAdornment position="start"><SearchIcon></SearchIcon></InputAdornment>,
+        }}
+        >
+          <IconButton 
+     style={{ padding: '10'}} 
+      aria-label="search">
+        <SearchIcon />
+        </IconButton>
+        </TextField>
+    </div>
+  )
+}
+
+function customList(items,updateStateArray) {
+  return(
+    <div>
+    {items.map((item,index)=>(
+      <div>
+      <br/>
+      <Divider key={item.id} />
+      <ComplexGrid  items={item} i={index+1} updateStateArray={updateStateArray}/>
+      <br/>
+      </div>
+    ))}
+    </div>
+  )
+}
+
+function table(clientes,updateStateArray,width) {
+  return(
+    <div>
+      {
+        (width > 450) ? 
+            <Table size="small">
+            <TableHead>
+              <TableRow>
+              <TableCell>Opciones</TableCell>
+                <TableCell>Nombre</TableCell>
+                <TableCell>CUIT/CUIL</TableCell>
+                <TableCell align="right">Localidad</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {clientes.map(row => (
+                <TableRow key={row.id}>
+                <TableCell>
+                  <MenuItems
+                    updateStateArray={updateStateArray}
+                    row={row}
+                  />
+                </TableCell>
+                  <TableCell>{row.nombre+' '+row.apellido}</TableCell>
+                  <TableCell>{row.id}</TableCell>
+                  <TableCell align="right">{row.localidad}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table> 
+        :
+          customList(clientes,updateStateArray) //Mapeo en columna los datos
+      }
+    </div>
+  )
+}
+
+function ClientTable(props) {
   
     // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(()=>{
@@ -59,6 +151,7 @@ function ClientTable(props) {
       console.log("Error al traer el cliente: ",error);
     })
     }
+
     if (clientes.length === 0) {
         CustomerController.getCustomers()
         .then(value=> {
@@ -77,18 +170,36 @@ function ClientTable(props) {
         var lastPosition = clientes[clientes.length-1];
         var customerPag = clientes;        
         CustomerController.getCustomerPagination(lastPosition.id)
-        .then(result=>{
-          if (result===false) {
-            return;
-          }
-          result.forEach((res) => customerPag.push(res));
-        setClientes(customerPag)
-        setPagination(false);
-      });
-      }      
+          .then(result=>{
+              if (result===false) {
+                return;
+              }
+              result.forEach((res) => customerPag.push(res));
+              setClientes(customerPag)
+              setPagination(false);
+          });
+    }//Fin de useEffect
     
       hideFooter();
     });
+
+  const [widthWindow, setWidthWindows] = React.useState(0); //Ancho de la ventana
+
+  React.useEffect(() => {
+    console.log("useEffect");
+    // creamos una función para actualizar el estado con el clientWidth
+    const updateWidth = () => {
+      const width = document.body.clientWidth;
+      console.log(`updateWidth con ${width}`);
+      setWidthWindows(width);
+    };
+
+    // actualizaremos el width al montar el componente
+    updateWidth();
+
+    // nos suscribimos al evento resize de window
+    window.addEventListener("resize", updateWidth);
+  }, []);
   
   const {history} = props;
   function updateStateArray(){    
@@ -144,93 +255,23 @@ function ClientTable(props) {
     setData(newData); //Guardo resultados obtenidos en un nuevo arreglo para no modificar el arreglo clientes.
   }  
 
+  const inputRef = React.createRef(null);
+
   return (
     <React.Fragment>
-    
-    <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarCliente')} >
+    <div>
+      <span>Width es de {widthWindow}px</span>
+    </div>
+    <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarCliente')} inputRef={'/registrarCliente'} ref={inputRef}>
       <AddIcon />
     </Fab>
 
-    <TextField
-        onKeyUp={ 
-          event =>{
-              Filter()
-        }} 
-        onChange={handleChange('buscar')} 
-        style={{width:'300px'}}
-        placeholder="Buscar Cliente"
-        variant="outlined"
-        InputProps={{
-          startAdornment: <InputAdornment position="start"><SearchIcon></SearchIcon></InputAdornment>,
-        }}
-        >
-          <IconButton 
-     style={{ padding: '10'}} 
-      aria-label="search">
-        <SearchIcon />
-        </IconButton>
-        
-        </TextField>
-
-        { !validador ? <Table size="small">
-        <TableHead>
-          <TableRow>
-          <TableCell>Opciones</TableCell>
-            <TableCell>Nombre</TableCell>
-            <TableCell>Apellido</TableCell>
-            <TableCell>CUIT/CUIL</TableCell>
-            <TableCell align="right">Localidad</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {clientes.map(row => (
-            <TableRow key={row.id}>
-
-            <TableCell>
-              <MenuItems
-                updateStateArray={updateStateArray}
-                row={row}
-              />
-            </TableCell>
-              <TableCell>{row.nombre}</TableCell>
-              <TableCell>{row.apellido}</TableCell>
-              <TableCell>{row.id}</TableCell>
-              {/*<TableCell>{row.paymentMethod}</TableCell>*/}
-              <TableCell align="right">{row.localidad}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table> 
-
-      :
-
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-          <TableCell>Opciones</TableCell>
-            <TableCell>Nombre</TableCell>
-            <TableCell>Apellido</TableCell>
-            <TableCell>CUIT/CUIL</TableCell>
-            <TableCell align="right">Localidad</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map(row => ( //Utilizo el nuevo arreglo con los parametros encontrados.
-            <TableRow key={row.id}>
-            <TableCell> 
-              <MenuItems
-                  updateStateArray={updateStateArray}
-                  row={row}
-                />
-            </TableCell>
-              <TableCell>{row.nombre}</TableCell>
-              <TableCell>{row.apellido}</TableCell>
-              <TableCell>{row.id}</TableCell>
-              <TableCell align="right">{row.localidad}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>}
+    {inputSearch(Filter,handleChange,widthWindow)}
+    {(!validador) ? 
+        table(clientes,updateStateArray,widthWindow) 
+      : 
+        table(data,updateStateArray,widthWindow) 
+    }
       <div className={classes.seeMore}>
         <Link color="primary" onClick={getPagination}>
           Ver mas clientes

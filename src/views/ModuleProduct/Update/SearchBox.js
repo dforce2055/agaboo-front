@@ -38,8 +38,8 @@ export default function SearchBox() {
   async function getProductBar(code){
     if(goSearch){
       await ProductController.getProductByCode(code);
+      
       setGoSearch(false)
-      //setSearch("") 
       setDialog(true);
 
     }
@@ -58,10 +58,6 @@ export default function SearchBox() {
     }
   }
 
-  // function abreDialog(){
-  //   setDialog(true);
-  //   console.log('abreDialog: ', dialogOpen);
-  // };
 
   function getCode(){
     return search;
@@ -84,14 +80,13 @@ export default function SearchBox() {
         
 
       />
-        <FormDialog values = {getProductBar()}
+        <FormDialog values = {getProductBar(search)}
                     setDialog = { setDialog }
                     getCode = {getCode}
                     stateSearch = {stateSearch}
                     setStateSearch = {setStateSearch}
                     dialogOpen = {dialogOpen}
                     setSearch = {setSearch}
-                   // abreDialog = {abreDialog}
         /> 
     </Paper>
     </React.Fragment>

@@ -16,15 +16,38 @@ import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 //ICONOS DE MANTENIMIENTO
 import BuildIcon from '@material-ui/icons/Build';
+import { makeStyles } from '@material-ui/core/styles';
+import firebase from '../../config/firebase';
+import HttpsTwoToneIcon from '@material-ui/icons/HttpsTwoTone';
+
+const useStyles = makeStyles(theme => ({
+  footer: {
+    marginTop: 'auto',
+    marginBottom: theme.spacing(2),
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+  },
+}));
 
 function ListAdmin(props){
+    const classes = useStyles();  
     const {history} = props;
     const [productos, setProductos] = React.useState(false);
 
     function handleClickProductos() { 
         setProductos(!productos);
-      }
+      }      
 
+    var width = window.innerWidth
+
+    async function logOut(){
+      try {
+          await firebase.logout();
+          localStorage.removeItem('userRole')
+          props.history.replace('/');
+      } catch (error) {
+          alert(error.message)
+      }
+    }
     return(
         <>
         {/* //******************************LISTA USUARIOS********************************** */}
@@ -82,10 +105,21 @@ function ListAdmin(props){
       <ListItemIcon>      
       <BuildIcon/>
       </ListItemIcon> 
-    <ListItemText primary="Mantenimientos a realizar" />      
+    <ListItemText primary="Mantenimientos a realizar" />
   </ListItem>
-
   </List>
+  {
+    (width > 450) &&
+    <List className={classes.footer}>
+    <ListItem button onClick={logOut}> 
+      <ListItemIcon>      
+      <HttpsTwoToneIcon/>
+      </ListItemIcon> 
+    <ListItemText primary="Cerrar Sesion" />
+  </ListItem>
+  </List>
+  
+  }
   </>
     )
 }
