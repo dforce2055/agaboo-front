@@ -8,10 +8,11 @@ import { Paper } from '@material-ui/core';
 
 //Import componentes
 import TableService from './TableService.js';
+import DenseTable from './NewTable.js';
 
 const useStyles = makeStyles(theme => ({
     espacio:{
-      margin: theme.spacing(3),
+      margin: theme.spacing(3)
     }
   }));
 
@@ -32,9 +33,11 @@ function Service(props) {
 
             <div>
             <h1>Informacion</h1>
-             {/*<Paper className={classes.espacio}>
-            <TableService/>
-            </Paper>*/}
+             <Paper className={classes.espacio}>
+            <DenseTable/>
+            </Paper>
+
+            
             </div>
             <footer>
                 <SimpleBottomNavigation/>

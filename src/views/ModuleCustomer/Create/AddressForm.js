@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Button,ButtonGroup,Typography} from '@material-ui/core';
 import CustomerController from '../../../controllers/Customer';
-import DialogAcept from './dialogAcept';
+import DialogAcept from './DialogAcept';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { withRouter } from "react-router-dom";
 import {MuiThemeProvider, createMuiTheme, makeStyles} from '@material-ui/core/styles';

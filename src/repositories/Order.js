@@ -176,20 +176,32 @@ class OrderRepo extends Component {
     }
   }
 
-  async totalUnpaidOrders(){
+  async paid_UnpaidOrders(){
     try {
-      let sum = 0;
+      let values = {
+        sum_paid:0,
+        sum_unpaid:0,
+      };
+      await db.where("eliminado","==",true)
+      .get()
+      .then(result=>{
+        result.docs.map( doc =>{
+          if (doc.data().estado === "PAGADO") //Sumo el monto de todos los pedidos que esten pagos
+            values.sum_paid += doc.data().monto_calculado
+        })
+      })
+
       await db.where("eliminado","==",false)
       .get()
       .then(result=>{
         result.docs.map( doc =>{
-          if (doc.data().estado !== "PAGADO")
-            sum += doc.data().monto_calculado
+          if (doc.data().estado !== "PAGADO") //Sumo el monto de todos los pedidos que esten impagos 
+            values.sum_unpaid += doc.data().monto_calculado
         })
       })
-      return sum;
+      return values;
     } catch (error) {
-      console.error("Error en la base de datos al calcular el valor total de pedidos impagos.",error);
+      console.error("Error en la base de datos al calcular el valor total de pedidos pagos e impagos.",error);
     }
   }
 

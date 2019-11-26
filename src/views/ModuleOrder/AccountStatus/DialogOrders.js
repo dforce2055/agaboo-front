@@ -53,8 +53,7 @@ const DialogActions = withStyles(theme => ({
 export default function DialogOrders(props) {
     const [open, setOpen] = React.useState(false);
     const { pedido } = props;
-    console.log("props",props);
-    
+        
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -92,6 +91,12 @@ export default function DialogOrders(props) {
                         {pedido.listado_producto.map(producto => (
                             <span key={producto.producto}>{producto.producto}: <b>({producto.cantidad} u.)</b><br /></span>
                         ))}
+                    </Typography>
+                    <Divider />
+                    <Typography gutterBottom>
+                        <b>Id. factura:</b><br />
+                        {pedido.id_pedido}
+                        
                     </Typography>
                 </DialogContent>
                 <DialogActions>

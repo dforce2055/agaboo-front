@@ -121,11 +121,9 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
 function Navbar(props) {
 
   React.useEffect(() => {
-    console.log("useEffect");
     // creamos una función para actualizar el estado con el clientWidth
     const updateWidth = () => {
       const width = document.body.clientWidth;
-      console.log(`updateWidth con ${width}`);
       setWidthWindows(width);
     };
 
