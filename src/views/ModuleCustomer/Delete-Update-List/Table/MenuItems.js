@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DialogDelete from '../Delete/DialogDelete';
 import UpdateUser from '../Update/UpdateUser';
-import VisibilityClient from '../Visibility/visibility.js';
+import VisibilityClient from '../Visibility/VisibilityClient.js';
 
 function MenuItems(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -60,8 +60,8 @@ function MenuItems(props) {
 {/* LLAMO A DIALOG DE VER CLIENTE */}
         <VisibilityClient
             cliente={row}
-            open = {open} //Estado 
-            handleClose={dialogClose} 
+            /*open = {open} //Estado 
+            handleClose={dialogClose} */
         />
 {/* LLAMO A DIALOG DE ELIMINAR CLIENTE */}       
         <DialogDelete

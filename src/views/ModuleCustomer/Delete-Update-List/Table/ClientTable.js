@@ -259,9 +259,6 @@ function ClientTable(props) {
 
   return (
     <React.Fragment>
-    <div>
-      <span>Width es de {widthWindow}px</span>
-    </div>
     <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarCliente')} inputRef={'/registrarCliente'} ref={inputRef}>
       <AddIcon />
     </Fab>
