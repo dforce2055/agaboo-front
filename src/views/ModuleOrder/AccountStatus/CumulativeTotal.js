@@ -58,7 +58,7 @@ function roundDecimals(numero, decimales) {
 function getPercentage(sum_paid,sum_unpaid) {
   let value_total = (sum_paid+sum_unpaid);
   let porc = ((sum_unpaid*100)/value_total);
-  let result = roundDecimals(porc,2);
+  let result = roundDecimals(porc,1);
 
   return result;
 }

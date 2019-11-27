@@ -143,8 +143,8 @@ class OrderRepo extends Component {
       //Suma total que voy a retornar
       let sum = 0;
 
-      await db.where("eliminado","==",false) //Verifico que no este eliminado
-        .where("estado","==","INICIAL") //Verifico que el estado sea inicial
+      await db.where("eliminado","==",true) //Verifico que este eliminado
+        .where("estado","==","PAGADO") //Verifico que el estado sea pago
         .get()
         .then(result => {
           result.docs.map( doc =>{

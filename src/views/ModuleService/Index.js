@@ -7,8 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Paper } from '@material-ui/core';
 
 //Import componentes
-import TableService from './TableService.js';
-import DenseTable from './NewTable.js';
+import LatestOrders from './TableService.js';
 
 const useStyles = makeStyles(theme => ({
     espacio:{
@@ -34,7 +33,7 @@ function Service(props) {
             <div>
             <h1>Informacion</h1>
              <Paper className={classes.espacio}>
-            <DenseTable/>
+            <LatestOrders/>
             </Paper>
 
             
