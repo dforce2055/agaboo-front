@@ -5,15 +5,31 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { withRouter } from 'react-router-dom';
 import OrderController from '../../../controllers/Order';
+import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
+import { IconButton } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
 
-function MenuItems(props) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+function ButtonOption(props) {
+  
   const {history} = props;
-  const {listado_producto} = props;
+
+  const {order} = props;
   const {updateArray} = props;
-  //Pedido entero, asi lo puedo mapear en ProductListOrder.js. El cual es la pantalla para mostrar todos los productos y su cantidad, asi el empleado puede agregar un id's.
-  const {id_pedido} = props;
   const {estado} = props;
+  
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [widthWindow, setWidthWindows] = React.useState(0); //Ancho de la ventana
+
+  //Actualiza el ancho de la ventana
+  React.useEffect(() => {
+    const updateWidth = () => {
+      const width = document.body.clientWidth;
+      setWidthWindows(width);
+    };
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+  }, []);
+
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -24,7 +40,7 @@ function MenuItems(props) {
 
   const handleDeleteOrder = () =>{
     if (estado !=='PAGADO') {
-      OrderController.deleteOrder(id_pedido)
+      OrderController.deleteOrder(order.id_pedido)
     //Cambio estado para actualizar el listado de los pedidos. Cuando uno sea eliminado.
     updateArray();
     setAnchorEl(null);
@@ -35,25 +51,25 @@ function MenuItems(props) {
 
   return (
     <div>
-      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-        <MoreHorizIcon></MoreHorizIcon>
-      </Button>
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick ={ () => {
-          sessionStorage.setItem('pedido',JSON.stringify(id_pedido));
-          sessionStorage.setItem('listado_producto',JSON.stringify(listado_producto))
-          history.push('/rellenarPedido') }}>Completar pedido</MenuItem>
-        <MenuItem onClick={handleDeleteOrder}>Eliminar pedido</MenuItem>
-        <MenuItem>Ver pedido completo</MenuItem>
-      </Menu>
+            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+              <MoreHorizIcon fontSize='large'></MoreHorizIcon>
+            </Button>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick ={ () => {
+                sessionStorage.setItem('pedido',JSON.stringify(order.id_pedido));
+                sessionStorage.setItem('listado_producto',JSON.stringify(order.listado_producto))
+                history.push('/rellenarPedido')}}>Completar pedido</MenuItem>
+              <MenuItem onClick={handleDeleteOrder}>Eliminar pedido</MenuItem>
+              <MenuItem>Ver pedido completo</MenuItem>
+            </Menu>
     </div>
   );
 }
 
-export default withRouter(MenuItems);
+export default withRouter(ButtonOption);

@@ -73,9 +73,9 @@ const IndexTable = props => {
           <Button
             color="primary"
             size="small"
-            variant="text"
+            variant="outlined"
           >
-            View all <ArrowRightIcon />
+           Ver mas <ArrowRightIcon />
           </Button>
         </CardActions>
       </Card>

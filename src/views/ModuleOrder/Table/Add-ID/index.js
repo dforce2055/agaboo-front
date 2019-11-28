@@ -81,7 +81,7 @@ const useStyles = makeStyles(theme => ({
 
 //let array = []; //Utilizo para meter todos los chips dentro de un array
 
- function CustomizedTables(props) {  
+function ProductListOrder(props) {  
    
   const classes = useStyles();
 
@@ -219,4 +219,4 @@ const useStyles = makeStyles(theme => ({
   );
 }
 
-export default withRouter(CustomizedTables);
+export default withRouter(ProductListOrder);
