@@ -193,10 +193,10 @@ class OrderController extends Component {
     }
   }
 
-  //Devuelve el total acumulado de los pedidos impagos.
-  totalUnpaidOrders(){
+  //Devuelve el total acumulado de los pedidos impagos y pagos.
+  paid_UnpaidOrders(){
     try {
-      return OrderRepo.totalUnpaidOrders();
+      return OrderRepo.paid_UnpaidOrders();
     } catch (error) {
       console.error("Error en el controlador de pedidos al enviar el total acumulado. ", error);
     }

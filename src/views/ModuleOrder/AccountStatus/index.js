@@ -8,7 +8,7 @@ import { Paper } from '@material-ui/core';
 import CumulativeTotal from './CumulativeTotal';
 //Import componentes
 import TableAccount from './TableAccount';
-
+import { Grid } from '@material-ui/core';
 const useStyles = makeStyles(theme => ({
     espacio:{
       margin: theme.spacing(3),
@@ -19,7 +19,7 @@ function AccountStatus(props) {
     const classes = useStyles();
 
 
-    //Se utiliza para que cuando un pedido sea eliminado, se pueda actualizar el valor acumulado de los pedidos.
+    //Se utiliza para que cuando un pedido sea pagado, se pueda actualizar el valor en los demas componentes
     const [reloadCumulativeTotal,setReloadCumulativeTotal] = React.useState(false);
 
     //Metodo que se utilizara en CumulativeTotal.js. Sirve para que no se este ejecutando siempre la llamada a la base de datos en CumulativeTotal
@@ -27,7 +27,7 @@ function AccountStatus(props) {
         setReloadCumulativeTotal(false)
     }
 
-    //Se llamara cuando un pedido sea cobrado y pondra en verdadero reloadCumulativeTotal.
+    //Se llamara cuando un pedido sea cobrado
     const handleOpenReload = () =>{
         setReloadCumulativeTotal(true)
     }
@@ -44,7 +44,6 @@ function AccountStatus(props) {
             <header>
                 <Navbar/>
             </header>
-
             <div>
             <CumulativeTotal 
                 handleCloseReload={handleCloseReload}

@@ -92,6 +92,12 @@ export default function DialogOrders(props) {
                             <span key={producto.producto}>{producto.producto}: <b>({producto.cantidad} u.)</b><br /></span>
                         ))}
                     </Typography>
+                    <Divider />
+                    <Typography gutterBottom>
+                        <b>Id. factura:</b><br />
+                        {pedido.id_pedido}
+                        
+                    </Typography>
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={handleClose} color="primary">
