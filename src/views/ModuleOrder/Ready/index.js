@@ -1,24 +1,21 @@
 import React from 'react';
-import './OrderReady.css';
 import Navbar from '../../Header/Navigation'
-import EnhancedTable from './OrdersTable';
+import LatestOrders from './OrdersTable';
 import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import SimpleBottomNavigation from '../../Footer/Footer';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-
-const theme = createMuiTheme({
-    overrides:{
-        MuiTypography:{
-            overline:{
-            fontSize: '0.9rem',
-            },
-        },
+import { CardHeader } from '@material-ui/core';
+import { Paper } from '@material-ui/core';
+const useStyles = makeStyles(theme => ({
+    espacio:{
+      margin: theme.spacing(3),
     }
-});
+  }));
 
 function OrderReady(props) {
-
+    const classes = useStyles();
     if (!firebase.getCurrentUsername()) {
         // not logged in
         alert('Por favor inicie sesión para acceder')
@@ -28,17 +25,20 @@ function OrderReady(props) {
 
     return (
         <div>
-            <MuiThemeProvider theme={theme}>
             <header>
                 <Navbar/>
             </header>
-            <div className='contenido'>
-                <EnhancedTable/>
-            </div>
+            <Paper className={classes.espacio}>
+                    <h1>
+                        <CardHeader titleTypographyProps = {'titulo'}title="Pedidos" />
+                    </h1>
+                </Paper>
+                <Paper className={classes.espacio}>
+                    <LatestOrders/>
+                </Paper>
             <footer>
                 <SimpleBottomNavigation/>
             </footer>
-            </MuiThemeProvider>
         </div>
         
     )

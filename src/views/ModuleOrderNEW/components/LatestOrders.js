@@ -22,6 +22,9 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import mockData from './data';
 import ButtonColorStatus from './ButtonColorStatus';
 import OrderController from '../../../controllers/Order.js';
+import ButtonOption from './ButtonOption.js';
+
+
 const useStyles = makeStyles(theme => ({
   actions: {
     justifyContent: 'flex-end'
@@ -55,9 +58,12 @@ const LatestOrders = props => {
   const [loadData,setLoadData] = useState(true);
   const [orders,setOrders] = useState([]);
 
+  const updateArray = () => {
+    setLoadData(true);
+  }
+
   return (
-      <Card
-      >
+      <Card>
         <Divider />
         <CardContent>
             <div>
@@ -68,6 +74,7 @@ const LatestOrders = props => {
                     <StyledTableCell>Cliente</StyledTableCell>
                     <StyledTableCell>Fecha Entrega</StyledTableCell>
                     <StyledTableCell>Estado</StyledTableCell>
+                    <StyledTableCell>Opciones</StyledTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -85,6 +92,14 @@ const LatestOrders = props => {
                         <div>
                           <ButtonColorStatus status ={order.estado} />
                         </div>
+                      </TableCell>
+                      <TableCell>
+                      <ButtonOption 
+                      updateArray={updateArray}
+                      listado_producto = {order.listado_producto} //Listado producto entero
+                      id_pedido={order.id_pedido} //Id del pedido seleccionado
+                      estado={order.estado}
+                      />    
                       </TableCell>
                     </TableRow>
                   ))}
