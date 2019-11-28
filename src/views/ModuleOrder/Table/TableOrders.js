@@ -19,16 +19,9 @@ import {
   TableSortLabel
 } from '@material-ui/core';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import mockData from './data';
 import ButtonColorStatus from './ButtonColorStatus';
 import OrderController from '../../../controllers/Order.js';
 import ButtonOption from './ButtonOption.js';
-
-const useStyles = makeStyles(theme => ({
-  actions: {
-    justifyContent: 'flex-end'
-  },
-}));
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -41,7 +34,6 @@ const StyledTableCell = withStyles(theme => ({
 }))(TableCell);
 
 const TableOrders = (orders,updateArray) =>{
-  const classes = useStyles();
 
   const [widthWindow, setWidthWindows] = React.useState(0); //Ancho de la ventana
 
@@ -62,7 +54,7 @@ const TableOrders = (orders,updateArray) =>{
   }, []);
 
   return(
-    <Table className={classes.table}>
+    <Table>
       <TableHead  >
         <TableRow hover={true}>
             <StyledTableCell>Nro. Pedido</StyledTableCell>
@@ -103,50 +95,4 @@ const TableOrders = (orders,updateArray) =>{
   );
 }
 
-const LatestOrders = props => {
-
-  const classes = useStyles();
-
-  React.useEffect(()=>{
-    if (loadData) {
-      OrderController.getOrders()
-        .then(result =>{
-          setOrders(result);
-          setLoadData(false);
-        }); 
-      setLoadData(false);
-    }
-  });
-
-  const [loadData,setLoadData] = useState(true);
-  const [orders,setOrders] = useState([]);
-
-  const updateArray = () => {
-    setLoadData(true);
-  }
-
-  return (
-      <Card>
-        <Divider />
-        <CardContent>
-          {TableOrders(orders,updateArray)}
-        </CardContent>
-        <Divider />
-        <CardActions className={classes.actions}>
-          <Button
-            color="primary"
-            size="small"
-            variant="text"
-          >
-            View all <ArrowRightIcon />
-          </Button>
-        </CardActions>
-      </Card>
-  );
-};
-
-LatestOrders.propTypes = {
-  className: PropTypes.string
-};
-
-export default LatestOrders;
+export default TableOrders;

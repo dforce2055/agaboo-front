@@ -13,7 +13,7 @@ import ListUsers from './views/ModuleUser/ListUsers/index';
 import indexCreateProduct from './views/ModuleProduct/Create/index'
 import indexUpdateProduct from './views/ModuleProduct/Update/index';
 import CreateOrder from './views/ModuleOrder/Create/index';
-import OrderReady from './views/ModuleOrder/Ready/index';
+import OrderReady from './views/ModuleOrder/index';
 import DeleteOrder from './views/ModuleOrder/Delete/index';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { CssBaseline } from '@material-ui/core'

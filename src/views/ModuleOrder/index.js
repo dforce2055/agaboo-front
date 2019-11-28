@@ -1,13 +1,14 @@
 import React from 'react';
-import Navbar from '../../Header/Navigation'
-import LatestOrders from './OrdersTable';
-import firebase from '../../../config/firebase';
+import Navbar from '../Header/Navigation'
+import firebase from '../../config/firebase';
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import SimpleBottomNavigation from '../../Footer/Footer';
+import SimpleBottomNavigation from '../Footer/Footer';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import { CardHeader } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
+import IndexTable from './Table/index.js';
+
 const useStyles = makeStyles(theme => ({
     espacio:{
       margin: theme.spacing(3),
@@ -34,7 +35,7 @@ function OrderReady(props) {
                     </h1>
                 </Paper>
                 <Paper className={classes.espacio}>
-                    <LatestOrders/>
+                    <IndexTable/>
                 </Paper>
             <footer>
                 <SimpleBottomNavigation/>
