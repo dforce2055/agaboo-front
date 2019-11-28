@@ -33,23 +33,28 @@ const StyledTableCell = withStyles(theme => ({
   },
 }))(TableCell);
 
-const TableOrders = (orders,updateArray) =>{
+const TableResponsive = (orders,updateArray) => {
+  return(
+    <React.Fragment>
+      
+    </React.Fragment>
+  );
+}
+
+const TableOrders = props =>{
+  
+  const {updateArray} = props;
+  const {orders} = props;
 
   const [widthWindow, setWidthWindows] = React.useState(0); //Ancho de la ventana
 
+  //Actualiza el ancho de la ventana
   React.useEffect(() => {
-    console.log("useEfo9pfect");
-    // creamos una función para actualizar el estado con el clientWidth
     const updateWidth = () => {
       const width = document.body.clientWidth;
-      console.log(`updateWidth con ${width}`);
       setWidthWindows(width);
     };
-
-    // actualizaremos el width al montar el componente
     updateWidth();
-
-    // nos suscribimos al evento resize de window
     window.addEventListener("resize", updateWidth);
   }, []);
 

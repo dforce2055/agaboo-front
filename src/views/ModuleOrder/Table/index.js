@@ -1,39 +1,42 @@
 import React, { useState } from 'react';
-import clsx from 'clsx';
-import moment from 'moment';
 import PropTypes from 'prop-types';
-import { makeStyles,withStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
 import {
   Card,
   CardActions,
-  CardHeader,
   CardContent,
   Button,
-  Divider,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Tooltip,
-  TableSortLabel
+  Divider
 } from '@material-ui/core';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import ButtonColorStatus from './ButtonColorStatus';
 import OrderController from '../../../controllers/Order.js';
-import ButtonOption from './ButtonOption.js';
 import TableOrders from './TableOrders.js';
-
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import { withRouter } from "react-router-dom";
 const useStyles = makeStyles(theme => ({
   actions: {
     justifyContent: 'flex-end'
+  },
+  fab: {
+    position: 'fixed',
+    bottom: theme.spacing(12),
+    right: theme.spacing(7),
+    zIndex: 99,
+    backgroundColor: '#3fb5a5',
+    '&:hover': {
+      backgroundColor: '#0ce8ca',
+      "@media (hover: none)": {
+        backgroundColor: "#0ce8ca"
+      },
+    },
   },
 }));
 
 const IndexTable = props => {
 
   const classes = useStyles();
-
+  const {history} = props;
   React.useEffect(()=>{
     if (loadData) {
       OrderController.getOrders()
@@ -53,10 +56,17 @@ const IndexTable = props => {
   }
 
   return (
+    <React.Fragment>
+    <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarPedido')} >
+      <AddIcon />
+    </Fab> 
       <Card>
         <Divider />
         <CardContent>
-          {TableOrders(orders,updateArray)}
+          <TableOrders
+            orders={orders}
+            updateArray={updateArray}
+          />
         </CardContent>
         <Divider />
         <CardActions className={classes.actions}>
@@ -69,6 +79,7 @@ const IndexTable = props => {
           </Button>
         </CardActions>
       </Card>
+    </React.Fragment>
   );
 };
 
@@ -76,4 +87,4 @@ IndexTable.propTypes = {
   className: PropTypes.string
 };
 
-export default IndexTable;
+export default withRouter(IndexTable);
