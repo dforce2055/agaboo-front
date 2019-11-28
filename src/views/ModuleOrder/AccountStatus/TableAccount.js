@@ -61,7 +61,7 @@ export default function TableAccount(props) {
   const classes = useStyles();
 
   const {handleOpenReload} = props;
-
+  const {reloadCumulativeTotal} = props;
   const [unpaid, setUnpaid] = React.useState([]);
   const [loadOrder, setLoadOrder] = React.useState(true);
 
@@ -70,6 +70,16 @@ export default function TableAccount(props) {
   React.useEffect(() => {
     if (loadOrder) {
       OrderController.unpaidOrders()
+      .then(result =>{
+        if (result)
+          setUnpaid(result)
+        else
+          setUnpaid([]);
+      })
+      setLoadOrder(false)
+    }
+    if (reloadCumulativeTotal) {
+        OrderController.unpaidOrders()
       .then(result =>{
         if (result)
           setUnpaid(result)

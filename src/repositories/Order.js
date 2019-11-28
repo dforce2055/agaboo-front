@@ -143,7 +143,7 @@ class OrderRepo extends Component {
       //Suma total que voy a retornar
       let sum = 0;
 
-      await db.where("eliminado","==",true) //Verifico que este eliminado
+      await db.where("eliminado","==",false) //Verifico que este eliminado
         .where("estado","==","PAGADO") //Verifico que el estado sea pago
         .get()
         .then(result => {
@@ -166,8 +166,11 @@ class OrderRepo extends Component {
       await db.where("eliminado","==",false)
       .get()
       .then(result=>{
-        if(result.estado !== "PAGADO") //FILTRO
-          list = result.docs.map(doc => doc.data())
+        //FILTRO
+        result.docs.map( doc =>{
+          if (doc.data().estado !== "PAGADO")
+            list.push(doc.data())
+        })
       });
 
       return list;
@@ -182,11 +185,11 @@ class OrderRepo extends Component {
         sum_paid:0,
         sum_unpaid:0,
       };
-      await db.where("eliminado","==",true)
+      await db.where("eliminado","==",false)
       .get()
       .then(result=>{
         result.docs.map( doc =>{
-          if (doc.data().estado === "PAGADO") //Sumo el monto de todos los pedidos que esten pagos
+          if (doc.data().estado == "PAGADO")
             values.sum_paid += doc.data().monto_calculado
         })
       })
@@ -195,7 +198,7 @@ class OrderRepo extends Component {
       .get()
       .then(result=>{
         result.docs.map( doc =>{
-          if (doc.data().estado !== "PAGADO") //Sumo el monto de todos los pedidos que esten impagos 
+          if (doc.data().estado !== "PAGADO")
             values.sum_unpaid += doc.data().monto_calculado
         })
       })
@@ -208,7 +211,7 @@ class OrderRepo extends Component {
   async changeOrderPayment(id_pedido){
     try {
       db.doc(id_pedido)
-        .update({eliminado:true,estado:'PAGADO'})
+        .update({eliminado:false,estado:'PAGADO'})
 
     } catch (error) {
       console.error("Error en la base de datos al cambiar estado del pedido"+id_pedido+".",error);
@@ -224,7 +227,7 @@ class OrderRepo extends Component {
       let list = [];
 
       //Cuando un pedido esta pagado, se elimina logicamente de la db. Por ende, busco los que esten eliminados y pagados.
-      await db.where("eliminado","==",true) 
+      await db.where("eliminado","==",false) 
         .where("estado","==","PAGADO")
         .get()
         .then(result => {

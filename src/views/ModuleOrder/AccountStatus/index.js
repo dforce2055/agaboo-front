@@ -54,6 +54,7 @@ function AccountStatus(props) {
             <TableAccount
                 handleCloseReload={handleCloseReload}
                 handleOpenReload={handleOpenReload}
+                reloadCumulativeTotal={reloadCumulativeTotal}
             />
             </Paper>
             </div>
