@@ -16,7 +16,7 @@ import AddIcon from '@material-ui/icons/Add';
 import CustomerController from '../../../../controllers/Customer';
 import FullScreenDialog from '../Update/UpdateUser';
 import AlertDialog from '../Delete/DialogDelete';
-import VisibilityClient from '../Visibility/visibility';
+import VisibilityClient from '../Visibility/VisibilityClient';
 import { IconButton,  TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
