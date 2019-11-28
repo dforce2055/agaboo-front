@@ -3,19 +3,18 @@ import Navbar from '../Header/Navigation'
 import firebase from '../../config/firebase';
 import { withRouter } from 'react-router-dom';
 import SimpleBottomNavigation from '../Footer/Footer';
-import { makeStyles } from '@material-ui/core/styles';
+import LatestOrders from './components/LatestOrders';
 import { Paper } from '@material-ui/core';
-
-//Import componentes
-import LatestOrders from './TableService.js';
-
+import { makeStyles } from '@material-ui/core/styles';
+import { CardHeader } from '@material-ui/core';
 const useStyles = makeStyles(theme => ({
     espacio:{
-      margin: theme.spacing(3)
+      margin: theme.spacing(3),
     }
   }));
 
-function Service(props) {
+
+function OrderNEW(props) {
     const classes = useStyles();
     if (!firebase.getCurrentUsername()) {
         // not logged in
@@ -29,15 +28,15 @@ function Service(props) {
             <header>
                 <Navbar/>
             </header>
-
-            <div>
-            <h1>Informacion</h1>
-             <Paper className={classes.espacio}>
-            <LatestOrders/>
-            </Paper>
-
-            
-            </div>
+                
+                <Paper className={classes.espacio}>
+                    <h1>
+                        <CardHeader titleTypographyProps = {'titulo'}title="Pedidos" />
+                    </h1>
+                </Paper>
+                <Paper className={classes.espacio}>
+                    <LatestOrders/>
+                </Paper>
             <footer>
                 <SimpleBottomNavigation/>
             </footer>
@@ -46,4 +45,4 @@ function Service(props) {
     )
 }
 
-export default withRouter(Service);
+export default withRouter(OrderNEW);

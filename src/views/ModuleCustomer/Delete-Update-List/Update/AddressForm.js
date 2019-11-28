@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Button,Typography,ButtonGroup } from '@material-ui/core';
 import CustomerController from '../../../../controllers/Customer';
-import DialogAcept from './dialogAcept';
+import DialogAcept from './DialogAcept';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { withRouter } from "react-router-dom";
 import {MuiThemeProvider, createMuiTheme, makeStyles} from '@material-ui/core/styles';
@@ -134,6 +134,7 @@ function AddressForm(props) {
               value={values.id}
               validators={['required', 'matchRegexp:(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]']}
               errorMessages={['Campo requerido', 'CUIT/CUIL no valido']}
+              disabled={true}
             />
           </Grid>
           <Grid item xs={12} sm={6}>

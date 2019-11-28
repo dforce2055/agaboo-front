@@ -18,9 +18,6 @@ export default function Deposits() {
   const classes = useStyles();  
   const [loaded,setLoaded] = React.useState(true);
   const [mountOrderCurrent,setMountOrderCurrent] = React.useState('Calculando...');
-  // const handleNewQuery = () =>{
-  //   setLoaded(true);
-  // }
   const fechaActual = new Date();
   
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,7 +26,9 @@ export default function Deposits() {
       let sum = 0;
       OrderController.allDepositsInActualMonth()
       .then(result=>{
-        if (result) { //Si result existe suma
+        console.log(result);
+        
+        if (result || result === 0) { //Si result existe suma
           sum = result
         }else{ //En caso de que no exista mostrara error
           sum = 'ERROR';

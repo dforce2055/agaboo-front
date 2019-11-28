@@ -16,7 +16,7 @@ import AddIcon from '@material-ui/icons/Add';
 import CustomerController from '../../../../controllers/Customer';
 import FullScreenDialog from '../Update/UpdateUser';
 import AlertDialog from '../Delete/DialogDelete';
-import VisibilityClient from '../Visibility/visibility';
+import VisibilityClient from '../Visibility/VisibilityClient';
 import { IconButton,  TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -259,9 +259,6 @@ function ClientTable(props) {
 
   return (
     <React.Fragment>
-    <div>
-      <span>Width es de {widthWindow}px</span>
-    </div>
     <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarCliente')} inputRef={'/registrarCliente'} ref={inputRef}>
       <AddIcon />
     </Fab>

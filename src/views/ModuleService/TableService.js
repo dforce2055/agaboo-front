@@ -1,121 +1,146 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-import Title from './Title';
-import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
-import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
+import React, { useState } from 'react';
+import clsx from 'clsx';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/styles';
+import Base, { Color } from 'react-bullet-status'
+import {
+  Card,
+  CardActions,
+  CardHeader,
+  CardContent,
+  Button,
+  Divider,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Tooltip,
+  TableSortLabel
+} from '@material-ui/core';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
-import OrderController from '../../controllers/Order';
+import mockData from './data';
 
-const theme = createMuiTheme({ /* Plantilla de edicion */
-  overrides: {
-      MuiTypography:{
-        gutterBottom:{
-          marginLeft:'15px',
-        },
-      },
-
-}});
 
 const useStyles = makeStyles(theme => ({
-  seeMore: {
-    marginTop: theme.spacing(3),
+  root: {},
+  content: {
+    padding: 0
   },
-  tablaPedidos: {
-    textAlign: "left",
-    borderCollapse: 'collapse',
-    borderSpacing: 0,
-    borderColor: 'rgba(0,0,0,.5)',
-    padding: '.25em',
-    marginBottom:theme.spacing(10),
-
-    '& tbody': {
-      '& tr': {
-        border: '1px solid rgba(0,0,0,.1)',
-        padding: '.25em',
-      },
-      '& td': {
-        border: '1px solid rgba(0,0,0,.1)',
-        padding: '.25em',
-      }
-    },
-    '& thead': {
-      backgroundColor: 'rgba(0,0,0,.1)',
-      color: '#555',
-      border: '1px solid rgba(0,0,0,.1)',
-      padding: '.25em',
-      
-      '& th': {
-        border: '1px solid rgba(0,0,0,.1)',
-        padding: '.25em',
-      }
-    },
+  inner: {
+    minWidth: 800
   },
-  
+  statusContainer: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  status: {
+    marginRight: theme.spacing(1)
+  },
+  actions: {
+    justifyContent: 'flex-end'
+  }
 }));
 
-export default function TableService(props) {
+const statusColors = {
+  delivered: 'success',
+  pending: 'info',
+  refunded: 'danger'
+};
+
+const LatestOrders = props => {
+  const { className, ...rest } = props;
+
   const classes = useStyles();
 
-  const {handleOpenReload} = props;
+  const [orders] = useState(mockData);
 
-  const [unpaid, setUnpaid] = React.useState([]);
-  const [loadOrder, setLoadOrder] = React.useState(true);
-
-  
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(() => {
-    if (loadOrder) {
-      OrderController.unpaidOrders()
-      .then(result =>{
-        if (result)
-          setUnpaid(result)
-        else
-          setUnpaid([]);
-      })
-      setLoadOrder(false)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  });
-
-  const handlesetLoadOrder = () =>{
-    setLoadOrder(true);
-  }
-
-  return unpaid.length === 0 ? (
-    <React.Fragment>
-      <Title>No tiene pedidos impagos</Title>
-    </React.Fragment>
-  ) : (
-    <React.Fragment>
-      <MuiThemeProvider theme={theme}>
-      <Title>Pedidos para servicio</Title>
-      <Table className={classes.tablaPedidos}>
-        <Thead>
-          <Tr style={{background: '#f5f5f5'}}> 
-            <Th>#</Th>
-            <Th>Nombre</Th>
-            <Th>Localidad</Th>
-            <Th>Dirección</Th>
-            <Th>Monto</Th>
-            <Th>Ver más...</Th>
-            <Th>Confirmar pago</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {unpaid.map((pedido, index, array) => (
-            <Tr key={pedido.id_pedido}>
-              <Td style={{ padding:'5px'}}>{index+1}</Td> 
-              <Td>{pedido.cliente.nombre +' ' +pedido.cliente.apellido}</Td>
-              <Td>{pedido.ciudad}</Td>
-              <Td>{pedido.direccion}</Td>
-              <Td>{pedido.monto_calculado}</Td>
-              
-            </Tr>
-          ))}
-        </Tbody>
-      </Table>
-      </MuiThemeProvider>
-    </React.Fragment>
+  return (
+    <Card
+      {...rest}
+      className={clsx(classes.root, className)}
+    >
+      <CardHeader
+        action={
+          <Button
+            color="primary"
+            size="small"
+            variant="outlined"
+          >
+            New entry
+          </Button>
+        }
+        title="Latest Orders"
+      />
+      <Divider />
+      <CardContent className={classes.content}>
+          <div className={classes.inner}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Order Ref</TableCell>
+                  <TableCell>Customer</TableCell>
+                  <TableCell sortDirection="desc">
+                    <Tooltip
+                      enterDelay={300}
+                      title="Sort"
+                    >
+                      <TableSortLabel
+                        active
+                        direction="desc"
+                      >
+                        Date
+                      </TableSortLabel>
+                    </Tooltip>
+                  </TableCell>
+                  <TableCell>Status</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {orders.map(order => (
+                  <TableRow
+                    hover
+                    key={order.id}
+                  >
+                    <TableCell>{order.ref}</TableCell>
+                    <TableCell>{order.customer.name}</TableCell>
+                    <TableCell>
+                      {moment(order.createdAt).format('DD/MM/YYYY')}
+                    </TableCell>
+                    <TableCell>
+                      <div className={classes.statusContainer}>
+                      <Base
+                         value={ 1 }
+                         color={ Color.open }
+                         label='Open'
+                      />
+                        {order.status}
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+      </CardContent>
+      <Divider />
+      <CardActions className={classes.actions}>
+        <Button
+          color="primary"
+          size="small"
+          variant="text"
+        >
+          View all <ArrowRightIcon />
+        </Button>
+      </CardActions>
+    </Card>
   );
-}
+};
+
+LatestOrders.propTypes = {
+  className: PropTypes.string
+};
+
+export default LatestOrders;

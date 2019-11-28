@@ -61,7 +61,7 @@ export default function TableAccount(props) {
   const classes = useStyles();
 
   const {handleOpenReload} = props;
-
+  const {reloadCumulativeTotal} = props;
   const [unpaid, setUnpaid] = React.useState([]);
   const [loadOrder, setLoadOrder] = React.useState(true);
 
@@ -78,14 +78,22 @@ export default function TableAccount(props) {
       })
       setLoadOrder(false)
     }
+    if (reloadCumulativeTotal) {
+        OrderController.unpaidOrders()
+      .then(result =>{
+        if (result)
+          setUnpaid(result)
+        else
+          setUnpaid([]);
+      })
+      setLoadOrder(false)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   });
 
   const handlesetLoadOrder = () =>{
     setLoadOrder(true);
   }
-  console.log(unpaid);
-  
 
   return unpaid.length === 0 ? (
     <React.Fragment>

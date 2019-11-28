@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -10,6 +11,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Visibility from '@material-ui/icons/Visibility';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import MenuItem from '@material-ui/core/MenuItem';
+
 const styles = theme => ({
     root: {
         margin: 0,
@@ -50,10 +54,9 @@ const DialogActions = withStyles(theme => ({
     },
 }))(MuiDialogActions);
 
-export default function DialogOrders(props) {
+export default function VisibilityClient(props) {
     const [open, setOpen] = React.useState(false);
-    const { pedido } = props;
-        
+    const { cliente } = props;
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -63,40 +66,37 @@ export default function DialogOrders(props) {
 
     return (
         <React.Fragment>
-            <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
-                <Visibility />
-            </IconButton>
+        <MenuItem onClick={handleClickOpen}>
+        <ListItemIcon>
+            <Visibility />
+        </ListItemIcon>
+        Info. del cliente
+      </MenuItem>
             <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Detalles del Pedido
+                    Informacion del Cliente
                 </DialogTitle>
                 <DialogContent dividers>
                     <Typography gutterBottom>
-                        <b>Cliente:</b> {pedido.cliente.nombre + ' ' + pedido.cliente.apellido}<br />
-                        <b>Teléfono:</b> {pedido.cliente.celular}<br />
-                        <b>E-mail:</b> {pedido.cliente.email}<br />
+                        <b>Nombre:</b> {cliente.nombre + ' ' + cliente.apellido}<br />
+                        <b>Teléfono:</b> {cliente.celular}<br />
+                        <b>E-mail:</b> {cliente.email}<br />
                     </Typography>
                     <Divider />
                     <Typography gutterBottom>
-                        <b>Responsable del pago:</b> {pedido.detalle_pedido.responsableDelPago}<br />
-                        <b>Forma de pago:</b> {pedido.detalle_pedido.formaDePago}<br />
-                        <b>Valor:</b> $ {pedido.monto_calculado}<br />
-                        <b>Fecha de Entrega:</b>  {pedido.fecha_entrega}<br />
-                        <b>Localidad:</b> {pedido.detalle_pedido.ciudad}<br />
-                        <b>Dirección:</b> {pedido.direccion}<br />
+                        <br />
+                            <b>Domicilio:</b> <br />{cliente.localidad+', '+cliente.calle+'-'+cliente.altura}
+                        <br />
                     </Typography>
                     <Divider />
                     <Typography gutterBottom>
-                        <b>Productos:</b><br />
-                        {pedido.listado_producto.map(producto => (
-                            <span key={producto.producto}>{producto.producto}: <b>({producto.cantidad} u.)</b><br /></span>
-                        ))}
+                    <br />
+                        <b>Rubro:</b> <br />{cliente.rubro}
                     </Typography>
                     <Divider />
                     <Typography gutterBottom>
-                        <b>Id. factura:</b><br />
-                        {pedido.id_pedido}
-                        
+                    <br />
+                        <b>Id Cliente:</b><br />{cliente.id}
                     </Typography>
                 </DialogContent>
                 <DialogActions>
