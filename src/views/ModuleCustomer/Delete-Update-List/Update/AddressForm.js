@@ -134,6 +134,7 @@ function AddressForm(props) {
               value={values.id}
               validators={['required', 'matchRegexp:(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]']}
               errorMessages={['Campo requerido', 'CUIT/CUIL no valido']}
+              disabled={true}
             />
           </Grid>
           <Grid item xs={12} sm={6}>

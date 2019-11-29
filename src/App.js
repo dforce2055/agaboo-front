@@ -13,7 +13,7 @@ import ListUsers from './views/ModuleUser/ListUsers/index';
 import indexCreateProduct from './views/ModuleProduct/Create/index'
 import indexUpdateProduct from './views/ModuleProduct/Update/index';
 import CreateOrder from './views/ModuleOrder/Create/index';
-import OrderReady from './views/ModuleOrder/Ready/index';
+import OrderReady from './views/ModuleOrder/index';
 import DeleteOrder from './views/ModuleOrder/Delete/index';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { CssBaseline } from '@material-ui/core'
@@ -24,7 +24,6 @@ import LoaderScreen from './views/LoaderScreen/LoaderScreen';
 import AccountStatus from './views/ModuleOrder/AccountStatus/index';
 import Service from './views/ModuleService/Index.js'
 import CustomizedTables from './views/ModuleOrder/Ready/Add-ID/ProductListOrder';
-
 const theme = createMuiTheme();
 
 
@@ -57,6 +56,7 @@ export default function App() {
                 <Route path = "/rellenarPedido" component={CustomizedTables}/>
                 <Route path = "/EstadoDeCuenta" component={AccountStatus}/>
                 <Route path = "/servicios" component={Service}/>
+
             </React.Fragment>
         </BrowserRouter>
     </MuiThemeProvider>
