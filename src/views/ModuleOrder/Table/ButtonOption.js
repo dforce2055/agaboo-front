@@ -64,7 +64,8 @@ function ButtonOption(props) {
               <MenuItem onClick ={ () => {
                 sessionStorage.setItem('pedido',JSON.stringify(order.id_pedido));
                 sessionStorage.setItem('listado_producto',JSON.stringify(order.listado_producto))
-                history.push('/rellenarPedido')}}>Completar pedido</MenuItem>
+                sessionStorage.setItem('order_complete',JSON.stringify(order))
+                history.push(/*'/rellenarPedido'*/'/orderdetail')}}>Completar pedido</MenuItem>
               <MenuItem onClick={handleDeleteOrder}>Eliminar pedido</MenuItem>
               <MenuItem>Ver pedido completo</MenuItem>
             </Menu>
