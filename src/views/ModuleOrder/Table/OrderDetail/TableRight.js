@@ -76,7 +76,6 @@ const onlyProduct = (order) => {
   });
   return result
 }
-
 export default function TableRight() {
   const classes = useStyles();
   const [order,setOrder] = React.useState([]); //Guardo listado de productos con su cantidad
@@ -88,6 +87,10 @@ export default function TableRight() {
         setLoad(false);
     }
   });
+
+  const handleChange = (event)=>{
+    console.log(event.target.value);
+  }
   return (
       <div className={classes.root}>
         <Table>
@@ -117,6 +120,7 @@ export default function TableRight() {
                   label="Codigo" 
                   multiline 
                   rowsMax="4"
+                  onChange={handleChange}
                   />
                 </TableCell>
               </TableRow>

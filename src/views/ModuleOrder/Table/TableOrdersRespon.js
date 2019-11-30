@@ -25,7 +25,7 @@ export default function TableOrdersRespon(props) {
   
   return (
     <div className={classes.root}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} key={i}>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>

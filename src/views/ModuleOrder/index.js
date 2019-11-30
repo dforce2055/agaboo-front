@@ -2,14 +2,17 @@ import React from 'react';
 import Navbar from '../Header/Navigation'
 import firebase from '../../config/firebase';
 import { withRouter } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
+import { fade,makeStyles } from '@material-ui/core/styles';
 import SimpleBottomNavigation from '../Footer/Footer';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-import { CardHeader } from '@material-ui/core';
-import { Paper } from '@material-ui/core';
+import { Paper,CardHeader,Grid } from '@material-ui/core';
 import IndexTable from './Table/index.js';
+import Filter from './Filter/index.js';
 
 const useStyles = makeStyles(theme => ({
+    root:{
+        flexGrow: 1,
+    },
     espacio:{
       margin: theme.spacing(3),
     }
@@ -25,18 +28,30 @@ function OrderReady(props) {
     }
 
     return (
-        <div>
+        <div className={classes.root}>
             <header>
                 <Navbar/>
             </header>
             <Paper className={classes.espacio}>
-                    <h1>
-                        <CardHeader titleTypographyProps = {'titulo'}title="Pedidos" />
-                    </h1>
-                </Paper>
-                <Paper className={classes.espacio}>
-                    <IndexTable/>
-                </Paper>
+                <h1>
+                    <CardHeader titleTypographyProps = {'titulo'}title="Pedidos" />
+                </h1>
+            </Paper>
+
+            <div className={classes.espacio}>
+            <Grid
+                container 
+                direction="row" 
+                justify="flex-end" 
+                alignItems="baseline" 
+            >
+                <Filter/>
+            </Grid> 
+            </div>         
+
+            <Paper className={classes.espacio}>
+                <IndexTable/>
+            </Paper>
             <footer>
                 <SimpleBottomNavigation/>
             </footer>

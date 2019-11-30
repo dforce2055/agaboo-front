@@ -39,13 +39,14 @@ const TableResponsive = (orders,updateArray) => {
     <React.Fragment>
       {orders.map((order,index)=>(
       <div>
-      <br/>
-      <Divider key={order.id} />
-      <TableOrdersRespon  
-      order={order} 
-      i={index+1} 
-      updateArray={updateArray}/>
-      <br/>
+        <br/>
+          <Divider key={order.id} />
+          <TableOrdersRespon  
+            order={order} 
+            i={index+1} 
+            updateArray={updateArray}
+          />
+        <br/>
       </div>
     ))}
     </React.Fragment>
@@ -84,10 +85,10 @@ const TableOrders = props =>{
           </TableRow>
             </TableHead>
               <TableBody>
-                {orders.map(order => (
+                {orders.map((order,index) => (
                   <TableRow
                     hover
-                    key={order.id}
+                    key={index}
                   >
                     <TableCell>{order.id_pedido}</TableCell>
                     <TableCell>{order.nombre}</TableCell>
