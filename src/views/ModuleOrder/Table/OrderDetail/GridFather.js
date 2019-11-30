@@ -1,7 +1,7 @@
 import React from 'react';
 import {Grid, Paper,ButtonGroup,Divider,Typography,makeStyles} from '@material-ui/core';
-import TableRight from './TableRight.js';
-import TableLeft from './TableLeft';
+import GridRight from './GridRight';
+import GridLeft from './GridLeft';
 
 const useStyles = makeStyles(theme => ({
   root:{
@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CSSGrid() {
+export default function GridFather() {
   const classes = useStyles();
 
   return (
@@ -27,17 +27,17 @@ export default function CSSGrid() {
      <Grid container justify='center'>
         <Grid item sm={4}>
           <Paper className={classes.paper}>
-            <TableLeft/>
+             <GridLeft/>
           </Paper>
         </Grid>
 
         <Grid item sm={8}>
           <Paper className={classes.paper}>
-            <TableRight/>
+            <GridRight/>
           </Paper>
         </Grid>
 
-        <Grid item>
+        <Grid item sm = {12}>
           <Paper className={classes.paperLast}>
             <h1>Info de abajo</h1>
           </Paper>

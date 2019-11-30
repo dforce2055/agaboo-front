@@ -76,7 +76,7 @@ const onlyProduct = (order) => {
   });
   return result
 }
-export default function TableRight() {
+export default function GridRight() {
   const classes = useStyles();
   const [order,setOrder] = React.useState([]); //Guardo listado de productos con su cantidad
   const [load,setLoad] = React.useState(true); //Lo utilizo para cuando se renderize
@@ -103,15 +103,14 @@ export default function TableRight() {
           </TableHead>
           <TableBody>
             {onlyProduct(order).map((row,index) => (
-                <TableRow key={row.index}>
+                <TableRow key={index}>
                 <TableCell 
-                  key={index}
                   component="th" 
                   scope="row"
                 >
                   {row.producto}
                 </TableCell>
-                <TableCell key={index} align="right">
+                <TableCell align="right">
                 {row.modelo}</TableCell>
                 <TableCell align="right">
                   <TextField 

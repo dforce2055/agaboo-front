@@ -3,7 +3,7 @@ import {Grid} from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import { Typography } from '@material-ui/core';
 
-const TableLeft = () =>{
+const GridLeft = () =>{
 
   const [order,setOrder] = React.useState({});
   const [load,setLoad] = React.useState(true);
@@ -70,4 +70,4 @@ const TableLeft = () =>{
   );
 }
 
-export default TableLeft;
+export default GridLeft;

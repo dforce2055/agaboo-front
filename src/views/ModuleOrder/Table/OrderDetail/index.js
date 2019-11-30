@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import SimpleBottomNavigation from '../../../Footer/Footer';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import { Paper,Typography,Grid,CardHeader } from '@material-ui/core';
-import CSSGrid from './CSSGrid';
+import GridFather from './GridFather';
 
 const useStyles = makeStyles(theme => ({
     espacio:{
@@ -49,7 +49,7 @@ function OrderReady(props) {
                 </Paper>
                 
               <div className={classes.espacio}>
-                <CSSGrid/>
+                <GridFather/>
               </div>
             <footer>
                 <SimpleBottomNavigation/>
