@@ -5,14 +5,17 @@ import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import SimpleBottomNavigation from '../../../Footer/Footer';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-import { CardHeader } from '@material-ui/core';
-import { Paper } from '@material-ui/core';
+import { Paper,Typography,Grid,CardHeader } from '@material-ui/core';
 import CSSGrid from './CSSGrid';
 
 const useStyles = makeStyles(theme => ({
     espacio:{
       margin: theme.spacing(3),
-    }
+    },
+    tittle: {
+    width:'300px',
+    margin: theme.spacing(3),
+    },
   }));
 
 function OrderReady(props) {
@@ -29,9 +32,22 @@ function OrderReady(props) {
             <header>
                 <Navbar/>
             </header>
+              {/* <Grid container justify='center'>
+                <Paper className={classes.tittle} >
+                  <Typography 
+                    style={{background:'#318377',color:'#fff'}}
+                    align='center'
+                    variant='h5'
+                    >Codigo de productos
+                  </Typography>
+                </Paper>
+              </Grid> */}
               <Paper className={classes.espacio}>
-                <h1>HOAA</h1>
-              </Paper>
+                    <h1>
+                        <CardHeader titleTypographyProps = {'titulo'}title="Detalle de pedido" />
+                    </h1>
+                </Paper>
+                
               <div className={classes.espacio}>
                 <CSSGrid/>
               </div>

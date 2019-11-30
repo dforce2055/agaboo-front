@@ -1,18 +1,21 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import {Grid, Paper} from '@material-ui/core';
-import CustomizedTables from './TableRight.js';
+import {Grid, Paper,ButtonGroup,Divider,Typography,makeStyles} from '@material-ui/core';
+import TableRight from './TableRight.js';
 import TableLeft from './TableLeft';
+
 const useStyles = makeStyles(theme => ({
-  paper: {
+  root:{
+    flexGrow: 1,
+  },
+  paperLast: {
     padding:10,
     marginTop:10,
-    marginBottom:10
+    marginBottom:55
   },
-  divider: {
-    margin: theme.spacing(2, 0),
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    margin:theme.spacing(1), //HACE MOVER LA PANTALLA<======
   },
 }));
 
@@ -20,23 +23,27 @@ export default function CSSGrid() {
   const classes = useStyles();
 
   return (
-    <div>
-    <Grid>
-     <Grid container justify='center' spacing={5}>
-        <Grid item sm>
+    <div className={classes.root}>
+     <Grid container justify='center'>
+        <Grid item sm={4}>
           <Paper className={classes.paper}>
             <TableLeft/>
           </Paper>
         </Grid>
 
-        <Grid item sm>
+        <Grid item sm={8}>
           <Paper className={classes.paper}>
-            <CustomizedTables/>
+            <TableRight/>
+          </Paper>
+        </Grid>
+
+        <Grid item>
+          <Paper className={classes.paperLast}>
+            <h1>Info de abajo</h1>
           </Paper>
         </Grid>
 
       </Grid>
-    </Grid>
     </div>
   );
 }

@@ -1,24 +1,30 @@
 import React from 'react';
 import {Grid} from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
+import { Typography } from '@material-ui/core';
+
 const TableLeft = () =>{
 
   const [order,setOrder] = React.useState({});
   const [load,setLoad] = React.useState(true);
-
+  
   React.useEffect(()=>{
     if (load) {  
         setOrder(JSON.parse(sessionStorage.getItem('order_complete')));
         setLoad(false);
     } 
   });
-  console.log(order);
-  
+
   return(
     <React.Fragment>
-    <br/>
-      <Divider />
-      <h1>Detalle del pedido</h1>
+      <Divider/>
+      <Typography 
+        style={{background:'#318377'}}
+        align='center'
+        variant='h5'
+      >
+        <spam style={{color:'#fff'}}>Informacion</spam>
+      </Typography>
       <Divider />
       <br/>
       <Grid container justify="space-between">
