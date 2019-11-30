@@ -9,11 +9,11 @@ import {
   Divider
 } from '@material-ui/core';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import OrderController from '../../../controllers/Order.js';
 import TableOrders from './TableOrders.js';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { withRouter } from "react-router-dom";
+
 const useStyles = makeStyles(theme => ({
   actions: {
     justifyContent: 'flex-end'
@@ -37,23 +37,11 @@ const IndexTable = props => {
 
   const classes = useStyles();
   const {history} = props;
-  React.useEffect(()=>{
-    if (loadData) {
-      OrderController.getOrders()
-        .then(result =>{
-          setOrders(result);
-          setLoadData(false);
-        }); 
-      setLoadData(false);
-    }
-  });
-
-  const [loadData,setLoadData] = useState(true);
-  const [orders,setOrders] = useState([]);
-
-  const updateArray = () => {
-    setLoadData(true);
-  }
+  const {
+    loadData,
+    orders,
+    updateArray,
+    } = props
 
   return (
     <React.Fragment>

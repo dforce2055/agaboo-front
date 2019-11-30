@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import Navbar from '../Header/Navigation'
 import firebase from '../../config/firebase';
 import { withRouter } from 'react-router-dom';
@@ -8,6 +8,7 @@ import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import { Paper,CardHeader,Grid } from '@material-ui/core';
 import IndexTable from './Table/index.js';
 import Filter from './Filter/index.js';
+import OrderController from '../../controllers/Order.js';
 
 const useStyles = makeStyles(theme => ({
     root:{
@@ -20,13 +21,40 @@ const useStyles = makeStyles(theme => ({
 
 function OrderReady(props) {
     const classes = useStyles();
+    const [orderFilters,setOrderFilters] = useState([]);
+    const [orders,setOrders] = useState([]);
+    const [state, setState] = React.useState({input:'',select:''});
+
+    //Se realizara la query para poder pasar la informacion a sus hijos
+
+    React.useEffect(()=>{
+       if (state.select != '') {
+        OrderController.filterByState(state.select)
+            .then(result=>{
+               setOrders(result)
+            })
+        }else{
+            OrderController.getOrders()
+            .then(result =>{
+            setOrders(result);
+            }); 
+        }
+    },[state]);
+  
+  const ChangeOrders = newOrder =>{
+      setOrders(newOrder);
+  }
+
+  const handleChangeFilter = name => event => {
+    setState({...state,[name]:event.target.value});
+  };
+  
     if (!firebase.getCurrentUsername()) {
         // not logged in
         alert('Por favor inicie sesión para acceder')
         props.history.replace('/login')
         return null
     }
-
     return (
         <div className={classes.root}>
             <header>
@@ -45,12 +73,19 @@ function OrderReady(props) {
                 justify="flex-end" 
                 alignItems="baseline" 
             >
-                <Filter/>
+                <Filter
+                    state={state}
+                    setState={setState}
+                    handleChangeFilter={handleChangeFilter}
+                />
             </Grid> 
             </div>         
 
             <Paper className={classes.espacio}>
-                <IndexTable/>
+                <IndexTable
+                    orders={orders}
+                    handleChangeFilter={handleChangeFilter}
+                />
             </Paper>
             <footer>
                 <SimpleBottomNavigation/>

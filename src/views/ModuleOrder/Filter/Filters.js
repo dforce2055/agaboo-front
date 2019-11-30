@@ -52,33 +52,23 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function NativeSelects() {
+export default function Filters(props) {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    age: '',
-    name: 'hai',
-  });
+  const {state,handleChangeFilter} = props;
 
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
-
-  const handleChange = name => event => {
-    setState({
-      ...state,
-      [name]: event.target.value,
-    });
-  };
-
+  
   return (
     <Paper style={{backgroundColor:'#fff',padding:10,marginTop:10}}>
     <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
     <Grid item>
       <div className={classes.search} style={{backgroundColor:'#E0E0E0'}}>
         <div className={classes.searchIcon}>
-          <SearchIcon />
+          <SearchIcon style={{color:'#949494'}}/>
         </div>
         <InputBase
           placeholder="Buscar..."
@@ -87,6 +77,7 @@ export default function NativeSelects() {
             input: classes.inputInput,
           }}
           inputProps={{ 'aria-label': 'search' }}
+          onChange={handleChangeFilter('input')}
         />
       </div>
     </Grid>
@@ -99,8 +90,8 @@ export default function NativeSelects() {
         </InputLabel>
         <Select
           native
-          value={state.age}
-          onChange={handleChange('age')}
+          value={state.select}
+          onChange={handleChangeFilter('select')}
           labelWidth={labelWidth}
           inputProps={{
             name: 'age',
@@ -108,9 +99,10 @@ export default function NativeSelects() {
           }}
         >
           <option value="" />
-          <option value={10}>Inicial</option>
-          <option value={20}>Pagado</option>
-          <option value={30}>Adeudado</option>
+          <option value=''>Niguno</option>
+          <option value={'INICIAL'}>Inicial</option>
+          <option value={'PAGADO'}>Pagado</option>
+          <option value={'ADEUDA'}>Adeudado</option>
         </Select>
       </FormControl>
       </Grid>

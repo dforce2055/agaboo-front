@@ -265,6 +265,26 @@ class OrderRepo extends Component {
     }
   }
 
+  async filterByState(state){
+    try {
+      if (!state) throw new Error('Error: No llego el estado a la base de datos que es necesario para su filtrado.');
+      let order = [];
+      await db.where("eliminado","==",false)
+        .get()
+        .then(result =>{
+          result.docs.map(doc =>{
+            if (doc.data().estado == state) {
+              order.push(doc.data())
+            }
+          })          
+        });        
+      return order;
+    } catch (error) {
+      console.log("Error en el controlador de pedidos",error);
+      
+    }
+  }
+
 }
 
 

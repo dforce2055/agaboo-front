@@ -1,28 +1,32 @@
 import React from 'react';
 import { 
-  Button,
+  //Button,
   makeStyles  } from '@material-ui/core';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import NativeSelects from './Filters';
+//import FilterListIcon from '@material-ui/icons/FilterList';
+import Filters from './Filters';
 
-const useStyles = makeStyles(theme => ({
-  rightIcon: {
-    marginLeft: theme.spacing(1),
-  },
-  iconSmall: {
-    fontSize: 20,
-  },
-}));
+// const useStyles = makeStyles(theme => ({
+//   rightIcon: {
+//     marginLeft: theme.spacing(1),
+//   },
+//   iconSmall: {
+//     fontSize: 20,
+//   },
+// }));
 
-const Filter = () =>{
-  const classes = useStyles();
-  
+const Filter = (props) =>{
+  //const classes = useStyles();
+  const {state,handleChangeFilter} = props;
+
   return(
     <div>
       {/* <Button style={{backgroundColor:'#fff'}} variant="outlined" color='primary'>
       <FilterListIcon className={classes.leftIcon} fontSize='large'/>
       </Button> */}
-      <NativeSelects/>
+      <Filters
+        state={state}
+        handleChangeFilter={handleChangeFilter}
+      />
     </div>
   );
 }
