@@ -76,21 +76,34 @@ const onlyProduct = (order) => {
   });
   return result
 }
+
 export default function GridRight() {
   const classes = useStyles();
+  const [arrayOnlyProduct] = React.useState([]);
   const [order,setOrder] = React.useState([]); //Guardo listado de productos con su cantidad
   const [load,setLoad] = React.useState(true); //Lo utilizo para cuando se renderize
   
   React.useEffect(()=>{
     if (load) {  
-        setOrder(JSON.parse(sessionStorage.getItem('listado_producto')));
+        setOrder(JSON.parse(sessionStorage.getItem('listado_producto')));     
         setLoad(false);
     }
+    if (arrayOnlyProduct.length == 0) {
+      
+    }
   });
+
+  React.useEffect(()=>{
+    onlyProduct(order).forEach(element => {
+      arrayOnlyProduct.push(element)
+    });
+    console.log("Array: ",arrayOnlyProduct);
+  },[order]);
 
   const handleChange = (event)=>{
     console.log(event.target.value);
   }
+
   return (
       <div className={classes.root}>
         <Table>

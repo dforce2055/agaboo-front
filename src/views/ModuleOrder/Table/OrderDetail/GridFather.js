@@ -2,6 +2,8 @@ import React from 'react';
 import {Grid, Paper,ButtonGroup,Divider,Typography,makeStyles} from '@material-ui/core';
 import GridRight from './GridRight';
 import GridLeft from './GridLeft';
+//import credentials from '../../../../config/credentials';
+// import Map from './Map.js';
 
 const useStyles = makeStyles(theme => ({
   root:{
@@ -18,6 +20,8 @@ const useStyles = makeStyles(theme => ({
     margin:theme.spacing(1), //HACE MOVER LA PANTALLA<======
   },
 }));
+
+// const mapURL = 'https://maps.googleapis.com/maps/api/js?v=3.exp&key=${credentials.mapsKey}'
 
 export default function GridFather() {
   const classes = useStyles();
@@ -39,7 +43,13 @@ export default function GridFather() {
 
         <Grid item sm = {12}>
           <Paper className={classes.paperLast}>
-            <h1>Info de abajo</h1>
+            <h1>Aqui va el Map</h1>
+            {/* <Map
+              googleMapURL=mapURL
+              containerElement=<div style={{height:'400px}} />
+              mapElement:<div style={{height:'100%}}/>
+              loadingElement=<p>Cargando</p>
+            /> */}
           </Paper>
         </Grid>
 
