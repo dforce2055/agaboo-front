@@ -14,6 +14,7 @@ function MenuItems(props) {
   //Pedido entero, asi lo puedo mapear en ProductListOrder.js. El cual es la pantalla para mostrar todos los productos y su cantidad, asi el empleado puede agregar un id's.
   const {id_pedido} = props;
   const {estado} = props;
+  let userRole = checkRoleAdmin();
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -33,6 +34,16 @@ function MenuItems(props) {
     }
   }
 
+  function checkRoleAdmin(){
+    let role = localStorage.userRole; //me guardo el rol del usuario
+
+    if(role==="ADMIN"){
+      return true;
+    }else if(role==="LOGISTICS"){
+      return false;
+    }
+  }
+
   return (
     <div>
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
@@ -48,8 +59,14 @@ function MenuItems(props) {
         <MenuItem onClick ={ () => {
           sessionStorage.setItem('pedido',JSON.stringify(id_pedido));
           sessionStorage.setItem('listado_producto',JSON.stringify(listado_producto))
-          history.push('/rellenarPedido') }}>Completar pedido</MenuItem>
-        <MenuItem onClick={handleDeleteOrder}>Eliminar pedido</MenuItem>
+          history.push('/rellenarPedido') }}>
+          Completar pedido
+        </MenuItem>
+        {userRole ? <MenuItem onClick={handleDeleteOrder}>
+          Eliminar pedido
+        </MenuItem> 
+        : ""
+        }
         <MenuItem>Ver pedido completo</MenuItem>
       </Menu>
     </div>

@@ -34,9 +34,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const IndexTable = props => {
-
   const classes = useStyles();
   const {history} = props;
+  let userRole = checkRoleAdmin();
+
   React.useEffect(()=>{
     if (loadData) {
       OrderController.getOrders()
@@ -55,13 +56,26 @@ const IndexTable = props => {
     setLoadData(true);
   }
 
+  function checkRoleAdmin(){
+    let role = localStorage.userRole; //me guardo el rol del usuario
+
+    if(role==="ADMIN"){
+      return true;
+    }else if(role==="LOGISTICS"){
+      return false;
+    }
+  }
+
   return (
     <React.Fragment>
-    <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarPedido')} >
-      <AddIcon />
-    </Fab> 
+      {userRole ? 
+        <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarPedido')} >
+          <AddIcon />
+        </Fab> : ""
+      }
+    
       <Card>
-        <Divider />
+        <Divider/>
         <CardContent>
           <TableOrders
             orders={orders}
