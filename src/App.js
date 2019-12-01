@@ -23,7 +23,6 @@ import LoaderScreen from './views/LoaderScreen/LoaderScreen';
 
 import AccountStatus from './views/ModuleOrder/AccountStatus/index';
 import Service from './views/ModuleService/Index.js'
-import ProductListOrder from './views/ModuleOrder/Table/Add-ID/index';
 import OrderDetail from './views/ModuleOrder/Table/OrderDetail/index'
 const theme = createMuiTheme();
 
@@ -54,7 +53,6 @@ export default function App() {
                 <Route path= "/registrarPedido" component={CreateOrder} />
                 <Route path= "/pedidosListos" component={OrderReady} />
                 <Route path= "/eliminarPedidos" component={DeleteOrder} />
-                <Route path = "/rellenarPedido" component={ProductListOrder}/>
                 <Route path = "/EstadoDeCuenta" component={AccountStatus}/>
                 <Route path = "/servicios" component={Service}/>
 
