@@ -1,13 +1,13 @@
 import React from 'react';
 import {
   GoogleMap,
-  withScriptJs,
+  withScriptjs,
   withGoogleMap
 } from 'react-google-maps';
 
 const ubicacion ={
-  lat: -34.397,
-  lng: 150.644
+  lat: -37.1167,
+  lng: -56.8333
 }
 
 const Map = (props) =>{
@@ -19,7 +19,7 @@ const Map = (props) =>{
   );
 }
 
-export default withScriptJs(
+export default withScriptjs(
   withGoogleMap(
     Map
   )

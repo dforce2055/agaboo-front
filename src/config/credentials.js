@@ -1,3 +1,3 @@
 export default {
-  mapsKey:'KEY'
+  mapsKey:'AIzSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik&callback=iniciar'
 }

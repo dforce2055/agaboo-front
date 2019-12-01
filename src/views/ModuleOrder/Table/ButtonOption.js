@@ -48,7 +48,7 @@ function ButtonOption(props) {
       alert('No se puede eliminar un pedido pagado.')
     }
   }
-
+  
   return (
     <div>
             <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
@@ -62,7 +62,7 @@ function ButtonOption(props) {
               onClose={handleClose}
             >
               <MenuItem onClick ={ () => {
-                sessionStorage.setItem('pedido',JSON.stringify(order.id_pedido));
+                sessionStorage.setItem('id_pedido',JSON.stringify(order.id_pedido));
                 sessionStorage.setItem('listado_producto',JSON.stringify(order.listado_producto))
                 sessionStorage.setItem('order_complete',JSON.stringify(order))
                 history.push(/*'/rellenarPedido'*/'/orderdetail')}}>Completar pedido</MenuItem>

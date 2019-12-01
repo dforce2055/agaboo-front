@@ -40,7 +40,7 @@ const TableResponsive = (orders,updateArray) => {
       {orders.map((order,index)=>(
       <div>
         <br/>
-          <Divider key={order.id} />
+          <Divider key={index} />
           <TableOrdersRespon  
             order={order} 
             i={index+1} 
