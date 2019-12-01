@@ -3,7 +3,8 @@ import {Grid, Paper,ButtonGroup,Divider,Typography,makeStyles} from '@material-u
 import GridRight from './GridRight';
 import GridLeft from './GridLeft';
 import credentials from '../../../../config/credentials';
-import Map from './Map.js';
+// import Map from './Map.js';
+import IndexMapquest from './MapQuest/index'
 
 const useStyles = makeStyles(theme => ({
   root:{
@@ -21,13 +22,14 @@ const useStyles = makeStyles(theme => ({
     margin:theme.spacing(1), //HACE MOVER LA PANTALLA<======
   },
   paperMap:{
+    padding:10,
+    marginTop:10,
     marginBottom:55,
     margin:theme.spacing(1)
   }
 }));
-//'https://maps.googleapis.com/maps/api/js?v=3.exp&key=${credentials.mapsKey}'
 
-const mapURL = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik'
+// const mapURL = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik'
 
 export default function GridFather() {
   const classes = useStyles();
@@ -52,12 +54,13 @@ export default function GridFather() {
       <Grid item sm={12}>
          <Paper className={classes.paperMap}>
             <h1>Ubicacion de entrega</h1>
-            <Map
+            {/* <Map
               googleMapURL={mapURL}
               containerElement={<div style={{height:'400px'}} />}
               mapElement={<div style={{height:'90%'}}/>}
               loadingElement={<p>Cargando</p>}
-            />
+            /> */}
+            <IndexMapquest />
           </Paper>
         </Grid>
     </div>
