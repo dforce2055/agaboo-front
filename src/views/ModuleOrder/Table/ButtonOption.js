@@ -8,6 +8,7 @@ import OrderController from '../../../controllers/Order';
 import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
 import { IconButton } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
+import DialogDeliveredOrder from './DialogDeliveredOrder';
 
 function ButtonOption(props) {
   
@@ -15,11 +16,12 @@ function ButtonOption(props) {
 
   const {order} = props;
   const {updateArray} = props;
-  const {estado} = props;
   
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [widthWindow, setWidthWindows] = React.useState(0); //Ancho de la ventana
-
+  const [open,setOpen] = React.useState(false)
+  const [openDialogFinishOrder,setOpenDialogFinishOrder] = React.useState(false)
+  
   //Actualiza el ancho de la ventana
   React.useEffect(() => {
     const updateWidth = () => {
@@ -40,7 +42,7 @@ function ButtonOption(props) {
   };
 
   const handleDeleteOrder = () =>{
-    if (estado !=='PAGADO') {
+    if (order.estado !=='PAGADO') {
       OrderController.deleteOrder(order.id_pedido)
     //Cambio estado para actualizar el listado de los pedidos. Cuando uno sea eliminado.
     updateArray();
@@ -60,9 +62,52 @@ function ButtonOption(props) {
     }
   }
 
+  const changeStateOrderENTREGADO = () =>{
+    if (order.id_pedido) {
+      if (order.estado === 'EN CAMINO') {
+         OrderController.changeStateOrder(order.id_pedido,'ENTREGADO')
+         handleCloseDialog()
+         updateArray()
+      }else{
+        alert('Su estado es distinto a "En camino" por ende no se puede cambiar su estado a "Entregado".')
+      }
+    }
+  }
+
+  const changeStateOrderFINALIZADO = () =>{
+    if (order.id_pedido) {
+      if (order.estado === 'ENTREGADO') {
+         OrderController.changeStateOrder(order.id_pedido,'FINALIZADO')
+         handleCloseDialog()
+         updateArray()
+      }else{
+        alert('Su estado es distinto a "Entregad" por ende no se puede cambiar su estado a "Finalizado".')
+      }
+    }
+  }
+
+  const handleCloseDialog = () => {
+    setOpen(false);
+  };
+
+  const handleOpenDialog = () => {
+    setOpen(true);
+  };
   
   return (
     <div>
+    <DialogDeliveredOrder 
+      open={open} 
+      handleClose={handleCloseDialog}
+      handleSave={changeStateOrderENTREGADO}
+      handleOpenDialog={handleOpenDialog}
+    />
+    <DialogDeliveredOrder 
+      open={open} 
+      handleClose={handleCloseDialog}
+      handleSave={changeStateOrderFINALIZADO}
+      handleOpenDialog={handleOpenDialog}
+    />
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
         <MoreHorizIcon fontSize='large'></MoreHorizIcon>
       </Button>
@@ -74,10 +119,17 @@ function ButtonOption(props) {
         onClose={handleClose}
       >
         <MenuItem onClick ={ () => {
-                sessionStorage.setItem('id_pedido',JSON.stringify(order.id_pedido));
+
+                sessionStorage.setItem('pedido_completo',JSON.stringify(order));
                 sessionStorage.setItem('listado_producto',JSON.stringify(order.listado_producto))
                 sessionStorage.setItem('order_complete',JSON.stringify(order))
                 history.push(/*'/rellenarPedido'*/'/orderdetail')}}>Ver detalle de pedido</MenuItem>
+                <MenuItem onClick={handleOpenDialog}>
+                 Marcar como entregado
+                </MenuItem> 
+                <MenuItem onClick={handleOpenDialog}>
+                 Marcar como finalizado
+                </MenuItem> 
               {
                 (userRole) ? 
                 <MenuItem onClick={handleDeleteOrder}>

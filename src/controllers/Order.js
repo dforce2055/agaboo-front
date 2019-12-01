@@ -50,7 +50,7 @@ class OrderController extends Component {
   saveOrderProductIds(id,list){
     try {
       //Paso el id y listado a repositories.
-      OrderRepo.saveIdsOrder(id,list);
+      return OrderRepo.saveOrderProductIds(id,list);
     } catch (error) {
       console.error("Error al traer el id con su listado.");
       
@@ -223,6 +223,16 @@ class OrderController extends Component {
       return OrderRepo.filterByState(state);
     } catch (error) {
       console.log("Error en el controlador de pedidos",error);
+      
+    }
+  }
+
+  DeliveredOrder (id_pedido){
+    try {
+      if (!id_pedido) throw new Error('Error: No llego el id del pedido.')
+      return OrderRepo.DeliveredOrder(id_pedido)
+    } catch (error) {
+      console.log("Error en el controlador de pedidos.",error);
       
     }
   }

@@ -104,12 +104,13 @@ const TableResponsive = (order,addIdForIndex) =>{
 export default function GridRight() {
   const classes = useStyles();
   const [arrayOnlyProduct] = React.useState([]); //Guardo el arreglo con los id
-  const [orderId,setOrderId] = React.useState(''); //Guardo el id del pedido
+  const [orderComplete,setOrderComplete] = React.useState(''); //Guardo el id del pedido
   const [order,setOrder] = React.useState([]); //Guardo listado de productos con su cantidad
-  const [load,setLoad] = React.useState(true); //Render y cargo datos
+  const [load,setLoad] = React.useState(true); //al renderizar cargo datos
   const [openDialog, setOpenDialog] = React.useState(false);//State de Dialog
-  const [disabled,setDisabled] = React.useState(true);
-  
+  const [disabled,setDisabled] = React.useState(true);//Oculta el boton de guardar
+  const [disabledText,setDisabledText] = React.useState(false);
+
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
@@ -121,7 +122,8 @@ export default function GridRight() {
   React.useEffect(()=>{ //Carga los datos la primera vez
     if (load) {  
         setOrder(JSON.parse(sessionStorage.getItem('listado_producto')));  
-        setOrderId(JSON.parse(sessionStorage.getItem('id_pedido')));            
+        setOrderComplete(JSON.parse(sessionStorage.getItem('pedido_completo')));
+        
         setLoad(false);
     }
   });
@@ -145,7 +147,8 @@ export default function GridRight() {
 
   const addIdForIndex = index => (event)=>{
     arrayOnlyProduct[index].id_producto = event.target.value;//Guardo el valor en id_producto en el indice dado
-
+    console.log(orderComplete);
+    
     if (arrayOnlyProduct.find(x=>x.id_producto =="")) { //Si existe un campo vacio pondra el boton invicible
       setDisabled(true)
     }else{
@@ -154,11 +157,21 @@ export default function GridRight() {
   }
 
   const save = () => {
-    OrderController.saveOrderProductIds(orderId,arrayOnlyProduct);
+    let productos_con_id = arrayOnlyProduct.slice()
+    OrderController.saveOrderProductIds(orderComplete.id_pedido,productos_con_id).then(res=>{
+      orderComplete.estado = res
+    })
+    setDisabled(true);
+    setDisabledText(true);
     console.log("guardo pedido con su lista.");
     console.log("lista:",arrayOnlyProduct);
-    console.log("id del pedido:",orderId);
+    console.log("id del pedido:",orderComplete.id_pedido);
     handleCloseDialog();
+  }
+
+  //Busco el id del producto ingresado 
+  const valueForIndex = (index) =>{
+    return orderComplete.lista_productos_con_ids[index]
   }
 
   return (
@@ -196,14 +209,29 @@ export default function GridRight() {
                 <TableCell align="right">
                 {row.modelo}</TableCell>
                 <TableCell align="right">
-                  <TextField 
-                  className={classes.TextField} 
-                  variant="outlined" 
-                  label="Codigo" 
-                  multiline 
-                  rowsMax="4"
-                  onChange={addIdForIndex(index)}
-                  />
+                  {
+                    (orderComplete.estado === 'INICIAL') ?
+                    <TextField 
+                    className={classes.TextField} 
+                    variant="outlined" 
+                    label="Codigo" 
+                    multiline 
+                    rowsMax="4"
+                    onChange={addIdForIndex(index)}
+                    disabled={disabledText}
+                    />
+                    :
+                    <TextField 
+                    className={classes.TextField} 
+                    variant="outlined" 
+                    label="Codigo" 
+                    multiline 
+                    rowsMax="4"
+                    //onChange={addIdForIndex(index)}
+                    value={valueForIndex(index).id_producto}
+                    disabled={true}
+                    />
+                  }
                 </TableCell>
               </TableRow>
             ))}

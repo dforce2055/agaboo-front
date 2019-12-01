@@ -25,8 +25,20 @@ function OrderReady(props) {
     const [orderFilters,setOrderFilters] = useState([]);
     const [orders,setOrders] = useState([]);
     const [state, setState] = React.useState({input:'',select:''});
+    const [updateList,setUpdateList] = React.useState(false);
 
     //Se realizara la query para poder pasar la informacion a sus hijos
+
+    React.useEffect(()=>{//Si cambio de estado un pedido se recargara la pagina
+        if (updateList) {
+            OrderController.getOrders()
+            .then(result =>{
+                setOrders(result)
+                setUpdateList(false)
+            })
+            setUpdateList(false)
+        }
+    })
 
     React.useEffect(()=>{
        if (state.select != '') {
@@ -46,6 +58,9 @@ function OrderReady(props) {
       setOrders(newOrder);
   }
 
+  const updateArray = () =>{
+      setUpdateList(true)
+  }
   const handleChangeFilter = name => event => {
     setState({...state,[name]:event.target.value});
   };
@@ -86,6 +101,7 @@ function OrderReady(props) {
                 <IndexTable
                     orders={orders}
                     handleChangeFilter={handleChangeFilter}
+                    updateArray={updateArray}
                 />
             </Paper>
             <footer>
