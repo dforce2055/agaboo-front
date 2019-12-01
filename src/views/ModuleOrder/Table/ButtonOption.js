@@ -30,6 +30,7 @@ function ButtonOption(props) {
     window.addEventListener("resize", updateWidth);
   }, []);
 
+  let userRole = checkRoleAdmin();
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -48,28 +49,46 @@ function ButtonOption(props) {
       alert('No se puede eliminar un pedido pagado.')
     }
   }
+
+  function checkRoleAdmin(){
+    let role = localStorage.userRole; //me guardo el rol del usuario
+
+    if(role==="ADMIN"){
+      return true;
+    }else if(role==="LOGISTICS"){
+      return false;
+    }
+  }
+
   
   return (
     <div>
-            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-              <MoreHorizIcon fontSize='large'></MoreHorizIcon>
-            </Button>
-            <Menu
-              id="simple-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItem onClick ={ () => {
+      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+        <MoreHorizIcon fontSize='large'></MoreHorizIcon>
+      </Button>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick ={ () => {
                 sessionStorage.setItem('id_pedido',JSON.stringify(order.id_pedido));
                 sessionStorage.setItem('listado_producto',JSON.stringify(order.listado_producto))
                 sessionStorage.setItem('order_complete',JSON.stringify(order))
                 history.push(/*'/rellenarPedido'*/'/orderdetail')}}>Ver detalle de pedido</MenuItem>
-              <MenuItem onClick={handleDeleteOrder}>Eliminar pedido</MenuItem>
-            </Menu>
+              {
+                (userRole) ? 
+                <MenuItem onClick={handleDeleteOrder}>
+                 Eliminar pedido
+                </MenuItem> 
+                : 
+                ""
+              }
+     </Menu>
     </div>
-  );
+        );
 }
 
 export default withRouter(ButtonOption);

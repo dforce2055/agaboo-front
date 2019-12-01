@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import Base, { Color } from 'react-bullet-status'
+import Base, { Color } from 'react-bullet-status' ;
 import {
   Card,
   CardActions,
