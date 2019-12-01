@@ -54,14 +54,8 @@ const useStyles = makeStyles(theme => ({
   TextField:{
     width:'125px'
   },
-  buttonLeft: {
-    marginRight:'2px',
-    marginLeft:'13px',
-    marginTop: theme.spacing(3),
-  },
   buttonRight: {
-    marginLeft:'20px',
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -69,6 +63,9 @@ const useStyles = makeStyles(theme => ({
 const onlyProduct = (order) => {
   let result = []; 
   order.forEach(element => {
+    if (element.modelo === " ") {
+      element.modelo = "---"
+    }
     for (let i = 0; i < element.cantidad; i++) {
       result.push({
         producto:element.producto,
@@ -111,8 +108,8 @@ export default function GridRight() {
   const [order,setOrder] = React.useState([]); //Guardo listado de productos con su cantidad
   const [load,setLoad] = React.useState(true); //Render y cargo datos
   const [openDialog, setOpenDialog] = React.useState(false);//State de Dialog
-  const [stateDisabled, setStateDisabled] = React.useState(false);//Estado de Disabled button y textFeid
-
+  const [disabled,setDisabled] = React.useState(true);
+  
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
@@ -121,7 +118,7 @@ export default function GridRight() {
     setOpenDialog(true);
   };
   
-  React.useEffect(()=>{
+  React.useEffect(()=>{ //Carga los datos la primera vez
     if (load) {  
         setOrder(JSON.parse(sessionStorage.getItem('listado_producto')));  
         setOrderId(JSON.parse(sessionStorage.getItem('id_pedido')));            
@@ -129,26 +126,31 @@ export default function GridRight() {
     }
   });
 
-  React.useEffect(()=>{
+  React.useEffect(()=>{ //Se ejecuta siempre que cambie el valor order
     onlyProduct(order).forEach(element => {
       arrayOnlyProduct.push(element)
-    });    
+    }); 
   },[order]);
 
   const [widthWindow, setWidthWindows] = React.useState(0); //Ancho de la ventana
-  //Actualiza el ancho de la ventana
-  React.useEffect(() => {
+
+  React.useEffect(() => {//Se ejecuta siempre que el tamaño de la pantalla cambie
     const updateWidth = () => {
       const width = document.body.clientWidth;
       setWidthWindows(width);
     };
-    updateWidth();
+    updateWidth();    
     window.addEventListener("resize", updateWidth);
   }, []);
 
   const addIdForIndex = index => (event)=>{
-    arrayOnlyProduct[index].id_producto = event.target.value;
-    console.log("Array:",arrayOnlyProduct);
+    arrayOnlyProduct[index].id_producto = event.target.value;//Guardo el valor en id_producto en el indice dado
+
+    if (arrayOnlyProduct.find(x=>x.id_producto =="")) { //Si existe un campo vacio pondra el boton invicible
+      setDisabled(true)
+    }else{
+      setDisabled(false)
+    }
   }
 
   const save = () => {
@@ -212,22 +214,16 @@ export default function GridRight() {
         }
 
         <MuiThemeProvider theme={themeMuiProvider}>
-          <ButtonGroup variant="text" size="large" aria-label="large contained secondary button group" >
-            <Button 
-            className={classes.buttonLeft} 
-            color="secondary" variant="contained" >
-                  Cancelar
-            </Button>
             
             <Button 
             onClick={handleOpenDialog} 
             className={classes.buttonRight} 
             color="primary" 
-            variant="contained" 
+            variant="contained"
+            disabled={disabled}
             > 
               Guardar 
             </Button>
-          </ButtonGroup>
         </MuiThemeProvider>
       </div>
   );
