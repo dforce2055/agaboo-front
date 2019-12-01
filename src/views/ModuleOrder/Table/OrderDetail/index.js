@@ -10,11 +10,11 @@ import GridFather from './GridFather';
 
 const useStyles = makeStyles(theme => ({
     espacio:{
-      margin: theme.spacing(3),
+      margin: theme.spacing(1),
     },
     tittle: {
     width:'300px',
-    margin: theme.spacing(3),
+    margin: theme.spacing(1),
     },
   }));
 
@@ -48,7 +48,7 @@ function OrderReady(props) {
                     </h1>
                 </Paper>
                 
-              <div className={classes.espacio}>
+              <div>
                 <GridFather/>
               </div>
             <footer>

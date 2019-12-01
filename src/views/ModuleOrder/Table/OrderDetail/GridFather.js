@@ -20,6 +20,10 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     margin:theme.spacing(1), //HACE MOVER LA PANTALLA<======
   },
+  paperMap:{
+    marginBottom:55,
+    margin:theme.spacing(1)
+  }
 }));
 //'https://maps.googleapis.com/maps/api/js?v=3.exp&key=${credentials.mapsKey}'
 
@@ -31,7 +35,7 @@ export default function GridFather() {
   return (
     <div className={classes.root}>
     
-     <Grid container justify='center'>
+     <Grid container justify='center' >
         <Grid item sm={4}>
           <Paper className={classes.paper}>
              <GridLeft/>
@@ -46,12 +50,12 @@ export default function GridFather() {
       </Grid>
 
       <Grid item sm={12}>
-         <Paper className={classes.paperLast}>
+         <Paper className={classes.paperMap}>
             <h1>Ubicacion de entrega</h1>
             <Map
               googleMapURL={mapURL}
               containerElement={<div style={{height:'400px'}} />}
-              mapElement={<div style={{height:'100%'}}/>}
+              mapElement={<div style={{height:'90%'}}/>}
               loadingElement={<p>Cargando</p>}
             />
           </Paper>

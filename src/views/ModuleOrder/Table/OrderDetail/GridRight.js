@@ -81,20 +81,22 @@ const onlyProduct = (order) => {
   return result
 }
 
-const TableResponsive = (order) =>{
+const TableResponsive = (order,addIdForIndex) =>{
   let array = onlyProduct(order)
   
   return(
     <React.Fragment>
     {array.map((row,index)=>(
       <div>
-        <br/>
           <Divider key={index} />
+        <br/>
           <GridRightResponsive
             data={row}
             i={index}
+            addIdForIndex={addIdForIndex}
           />
         <br/>
+        <Divider/>
       </div>
     ))}
     </React.Fragment>
@@ -206,7 +208,7 @@ export default function GridRight() {
           </TableBody>
         </Table>
         :
-        TableResponsive(order)
+        TableResponsive(order,addIdForIndex)
         }
 
         <MuiThemeProvider theme={themeMuiProvider}>
