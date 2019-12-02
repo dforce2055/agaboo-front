@@ -2,9 +2,8 @@ import React,{useState} from 'react';
 import Navbar from '../Header/Navigation'
 import firebase from '../../config/firebase';
 import { withRouter } from 'react-router-dom';
-import { fade,makeStyles } from '@material-ui/core/styles';
 import SimpleBottomNavigation from '../Footer/Footer';
-import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import {MuiThemeProvider, createMuiTheme ,makeStyles} from '@material-ui/core/styles';
 import { Paper,CardHeader,Grid } from '@material-ui/core';
 import IndexTable from './Table/index.js';
 import Filter from './Filter/index.js';

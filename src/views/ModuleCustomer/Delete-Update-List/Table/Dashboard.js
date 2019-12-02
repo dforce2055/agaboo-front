@@ -5,6 +5,8 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import ClientTable from './ClientTable.js';
+import CSS from '../../CSS';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -61,9 +63,7 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
+    boxShadow: CSS.borderShadow
   },
   fixedHeight: {
     height: 240,
@@ -102,9 +102,9 @@ export default function Dashboard() {
       <CssBaseline />
       <main className={classes.content}>
         <div className={classes.toolbar}/>
-        <Container maxWidth="lg" className={classes.container}>
+        <Container maxWidth="xl" className={classes.container}>
         
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             {/* Recent Orders */}
             <Grid item xs={12}>
             

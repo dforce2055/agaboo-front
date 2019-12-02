@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles,withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -17,9 +17,7 @@ import CustomerController from '../../../../controllers/Customer';
 import FullScreenDialog from '../Update/UpdateUser';
 import AlertDialog from '../Delete/DialogDelete';
 import VisibilityClient from '../Visibility/VisibilityClient';
-import { IconButton,  TextField } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import { IconButton,  TextField,Button } from '@material-ui/core';
 import { hideFooter } from './../../../Footer/HideFooter';
 import MenuItems from './MenuItems';
 import Grid from '@material-ui/core/Grid';
@@ -29,6 +27,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ComplexGrid from './TableColumn.js';
 import Divider from '@material-ui/core/Divider';
+
 const useStyles = makeStyles(theme => ({
   seeMore: {
     marginTop: theme.spacing(3),
@@ -48,42 +47,9 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: "#0ce8ca"
       },
     },
+    boxShadow: "1px 6px 15px #9E9E9E"
   },
 }));
-
-function inputSearch(Filter,handleChange,width) {
-  let widthInput;
-  if (width>415) {
-    let widthInput = "width:'300px'";
-  }else{
-    let widthInput = "width:'100px'";
-  }
-  return(
-    <div>
-        <TextField
-        onKeyUp={ 
-          event =>{
-              Filter()
-        }} 
-        onChange={handleChange('buscar')} 
-
-        style={{widthInput}} 
-
-        placeholder="Buscar Cliente"
-        variant="outlined"
-        InputProps={{
-          startAdornment: <InputAdornment position="start"><SearchIcon></SearchIcon></InputAdornment>,
-        }}
-        >
-          <IconButton 
-     style={{ padding: '10'}} 
-      aria-label="search">
-        <SearchIcon />
-        </IconButton>
-        </TextField>
-    </div>
-  )
-}
 
 function customList(items,updateStateArray) {
   return(
@@ -100,6 +66,16 @@ function customList(items,updateStateArray) {
   )
 }
 
+const StyledTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: '#318377',
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
 function table(clientes,updateStateArray,width) {
   return(
     <div>
@@ -108,10 +84,10 @@ function table(clientes,updateStateArray,width) {
             <Table size="small">
             <TableHead>
               <TableRow>
-              <TableCell>Opciones</TableCell>
-                <TableCell>Nombre</TableCell>
-                <TableCell>CUIT/CUIL</TableCell>
-                <TableCell align="right">Localidad</TableCell>
+              <StyledTableCell>Opciones</StyledTableCell>
+                <StyledTableCell>Nombre</StyledTableCell>
+                <StyledTableCell>CUIT/CUIL</StyledTableCell>
+                <StyledTableCell align="right">Localidad</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -129,7 +105,7 @@ function table(clientes,updateStateArray,width) {
                 </TableRow>
               ))}
             </TableBody>
-          </Table> 
+          </Table>
         :
           customList(clientes,updateStateArray) //Mapeo en columna los datos
       }
@@ -262,17 +238,17 @@ function ClientTable(props) {
     <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarCliente')} inputRef={'/registrarCliente'} ref={inputRef}>
       <AddIcon />
     </Fab>
-
-    {inputSearch(Filter,handleChange,widthWindow)}
     {(!validador) ? 
         table(clientes,updateStateArray,widthWindow) 
       : 
         table(data,updateStateArray,widthWindow) 
     }
       <div className={classes.seeMore}>
-        <Link color="primary" onClick={getPagination}>
-          Ver mas clientes
-        </Link>
+        <Button 
+        onClick={getPagination}
+        variant='outlined'>
+        Ver mas clientes
+        </Button>
       </div>
     </React.Fragment>
   );
