@@ -105,13 +105,12 @@ class OrderRepo extends Component {
 
   //Metodo para agregar los id's de los productos.
   //Se utiliza en ModulsOrders/addIdOrder/ProduictListOrder
-  async saveIdsOrder(id_order,lista_productos_con_ids){
+  async saveOrderProductIds(id_order,lista_productos_con_ids){
     if (!id_order) throw new Error(`Error: No llego el id del pedido correctamente.`);
-    try {
-      let list_products_ids = { lista_productos_con_ids };
-       
+    try {       
       db.doc(id_order)
-        .update(list_products_ids);
+        .update({lista_productos_con_ids,estado:'EN CAMINO'});
+      return 'EN CAMINO';
     } catch (error) {
       console.log("Error en base de datos: ",error);
     }
@@ -185,7 +184,7 @@ class OrderRepo extends Component {
       .then(result=>{
         //FILTRO
         result.docs.map( doc =>{
-          if (doc.data().estado !== "PAGADO")
+          if (doc.data().estado === "FINALIZADO")
             list.push(doc.data())
         })
       });
@@ -298,6 +297,19 @@ class OrderRepo extends Component {
       return order;
     } catch (error) {
       console.log("Error en el controlador de pedidos",error);
+      
+    }
+  }
+
+  async changeStateOrder(id_pedido,estado){
+    if (!id_pedido) throw new Error('Error: No llego el id del pedido.')
+    if (!estado) throw new Error('Error: No llego el estado del pedido.')
+    try {
+      await db.doc(id_pedido)
+      .update({estado:estado})
+      .then(()=>{ return true })
+    } catch (error) {
+      console.log("Error en la base de datos al cambiar el estado del pedido a "+estado+" .");
       
     }
   }

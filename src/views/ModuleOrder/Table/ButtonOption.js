@@ -6,6 +6,15 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { withRouter } from 'react-router-dom';
 import OrderController from '../../../controllers/Order';
 import firebase from '../../../config/firebase';
+import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
+import { IconButton } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+import DialogDeliveredOrder from './Dialog/DialogDeliveredOrder';
+import DialogFinishOrder from './Dialog/DialogFinishOrder';
+import DialogDeleteOrder from './Dialog/DialogDeleteOrder';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+
 
 function ButtonOption(props) {
   
@@ -13,11 +22,11 @@ function ButtonOption(props) {
 
   const {order} = props;
   const {updateArray} = props;
-  const {estado} = props;
   
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [widthWindow, setWidthWindows] = React.useState(0); //Ancho de la ventana
-
+  const [openDialogFinishOrder,setOpenDialogFinishOrder] = React.useState(false)
+  
   //Actualiza el ancho de la ventana
   React.useEffect(() => {
     const updateWidth = () => {
@@ -38,7 +47,7 @@ function ButtonOption(props) {
   };
 
   const handleDeleteOrder = () =>{
-    if (estado !=='PAGADO') {
+    if (order.estado !=='PAGADO') {
       OrderController.deleteOrder(order.id_pedido)
     //Cambio estado para actualizar el listado de los pedidos. Cuando uno sea eliminado.
     updateArray();
@@ -58,9 +67,9 @@ function ButtonOption(props) {
     }
   }
 
-  
   return (
     <div>
+    
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
         <MoreHorizIcon fontSize='large'></MoreHorizIcon>
       </Button>
@@ -71,19 +80,44 @@ function ButtonOption(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick ={ () => {
-                sessionStorage.setItem('id_pedido',JSON.stringify(order.id_pedido));
-                sessionStorage.setItem('listado_producto',JSON.stringify(order.listado_producto))
-                sessionStorage.setItem('order_complete',JSON.stringify(order))
-                history.push(/*'/rellenarPedido'*/'/orderdetail')}}>Ver detalle de pedido</MenuItem>
-              {
-                (userRole) ? 
-                <MenuItem onClick={handleDeleteOrder}>
-                 Eliminar pedido
-                </MenuItem> 
-                : 
-                ""
-              }
+        <MenuItem
+        onClick ={()=>{
+          sessionStorage.setItem('pedido_completo',JSON.stringify(order))
+          
+          sessionStorage.setItem('listado_producto',JSON.stringify(order.listado_producto))
+          
+          sessionStorage.setItem('order_complete',JSON.stringify(order))
+          
+          history.push(/*'/rellenarPedido'*/'/orderdetail')
+        }}>
+          <ListItemIcon>
+            <AssignmentIcon />
+          </ListItemIcon>
+          Ver detalle de pedido
+        </MenuItem>
+        
+        <DialogDeliveredOrder 
+        order={order} 
+        updateArray={updateArray}
+        handleCloseAnchor={handleClose}
+        />
+
+        <DialogFinishOrder 
+        order={order} 
+        updateArray={updateArray}
+        handleCloseAnchor={handleClose}
+        />
+
+        {
+          (userRole) ?
+            <DialogDeleteOrder 
+            order={order} 
+            updateArray={updateArray}
+            handleCloseAnchor={handleClose}
+            />
+          : 
+            ""
+        }
      </Menu>
     </div>
         );
