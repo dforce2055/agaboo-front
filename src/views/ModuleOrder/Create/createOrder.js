@@ -24,8 +24,10 @@ function nada() {
 
 function formulario(handleChange, value){
   const now = new Date();
-  const minDate = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
-  
+  const month = (now.getMonth() + 1) >= 10 ? (now.getMonth() + 1) : ('0' + (now.getMonth() + 1));
+  const day = now.getDate() >= 10 ? now.getDate() : ('0' + now.getDate());
+  const minDate = now.getFullYear() + '-' + month + '-' + day;
+  console.log(minDate);
   return(
     <form noValidate>
       <div className="password">
@@ -78,7 +80,7 @@ function formulario(handleChange, value){
               type="date"
               name="fecha_entrega"
               noValidate
-              min= {minDate}
+              min={minDate}
               onChange={handleChange('fecha_entrega')}
             />
           </div>
