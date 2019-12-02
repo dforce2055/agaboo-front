@@ -7,10 +7,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 // import ButtonColorStatus from './ButtonColorStatus.js';
 import Box from '@material-ui/core/Box';
 
-export default function GridRightResponsive(props) {
-  const {data} = props;
-  const {i} = props;  
-  const {addIdForIndex} = props;
+export default function GridRightResponsive({data,i,addIdForIndex,orderComplete,valueForIndex,disabledText}) {
 
   return (
     <div>
@@ -37,14 +34,30 @@ export default function GridRightResponsive(props) {
         </Grid>
 
         <Grid item>
-          <TextField 
-          style={{width:'100px'}} 
-          variant="outlined" 
-          label="Codigo" 
-          multiline 
-          rowsMax="4" 
-          onChange={addIdForIndex(i)}
-                  />
+                  {
+                    (orderComplete.estado === 'INICIAL') ?
+                    <TextField 
+                    style={{width:'100px'}}  
+                    variant="outlined" 
+                    label="Codigo" 
+                    multiline 
+                    rowsMax="4"
+                    onChange={addIdForIndex(i)}
+                    disabled={disabledText}
+                    />
+                    :
+                    <TextField 
+                    style={{width:'100px'}}  
+                    variant="outlined" 
+                    label="Codigo" 
+                    multiline 
+                    rowsMax="4"
+                    //onChange={addIdForIndex(index)}
+                    value={valueForIndex(i).id_producto}
+                    disabled={true}
+                    />
+                  }
+
         </Grid>
       </Grid>
     </div>

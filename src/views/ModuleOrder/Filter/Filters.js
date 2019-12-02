@@ -101,8 +101,11 @@ export default function Filters(props) {
           <option value="" />
           <option value=''>Niguno</option>
           <option value={'INICIAL'}>Inicial</option>
-          <option value={'PAGADO'}>Pagado</option>
-          <option value={'ADEUDA'}>Adeudado</option>
+          <option value={'EN CAMINO'}>En camino</option>
+          <option value={'ENTREGADO'}>Entregados</option>
+          <option value={'FINALIZADO'}>Finalizados</option>
+          <option value={'PAGADO'}>Pagados</option>
+          <option value={'ADEUDA'}>Adeudados</option>
         </Select>
       </FormControl>
       </Grid>

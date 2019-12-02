@@ -30,7 +30,10 @@ const ButtonColorStatus = props =>{
   var colors = {
     INICIAL:'#e65100',
     PAGADO:'#33691e',
-    ADEUDA:'#d50000'
+    ADEUDA:'#d50000',
+    'EN CAMINO':'#fbc02d',
+    ENTREGADO:'#2962ff',
+    FINALIZADO:'#66bb6a',
   };
   var colordefault = '';
   for (const pos in colors) {

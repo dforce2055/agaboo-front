@@ -73,7 +73,7 @@ const TableOrders = props =>{
   return(
     <React.Fragment>
       {
-        (widthWindow > 450) ? 
+        (widthWindow > 681) ? 
         <Table>
         <TableHead  >
           <TableRow hover={true}>

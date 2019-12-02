@@ -36,9 +36,8 @@ export default function GridFather() {
 
   return (
     <div className={classes.root}>
-    
-     <Grid container justify='center' >
-        <Grid item sm={4}>
+    <Grid container direction="row" justify="space-evenly" alignItems="center">
+      <Grid item sm={4}>
           <Paper className={classes.paper}>
              <GridLeft/>
           </Paper>
@@ -49,9 +48,8 @@ export default function GridFather() {
             <GridRight/>
           </Paper>
         </Grid>
-      </Grid>
 
-      <Grid item sm={12}>
+    </Grid>
          <Paper className={classes.paperMap}>
             <h1>Ubicacion de entrega</h1>
             {/* <Map
@@ -62,7 +60,6 @@ export default function GridFather() {
             /> */}
             <IndexMapquest />
           </Paper>
-        </Grid>
     </div>
   );
 }

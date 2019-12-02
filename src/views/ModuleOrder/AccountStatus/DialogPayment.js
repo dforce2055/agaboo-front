@@ -44,14 +44,14 @@ export default function DialogPayment(props) {
   const {id_pedido} = props;
   const {handleOpenReload}=props;
   const {handlesetLoadOrder} = props;
-
+  const {estado} = props;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(()=>{
     if (confirmPayment) {
-      OrderController.changeOrderPayment(id_pedido);
-      setConfirmPayment(false);
-      handleOpenReload();
-      handlesetLoadOrder();
+        OrderController.changeOrderPayment(id_pedido);
+        setConfirmPayment(false);
+        handleOpenReload();
+        handlesetLoadOrder();
     }
   });
 
