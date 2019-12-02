@@ -1,5 +1,34 @@
 import React,{useState} from 'react';
-import {Button,TextField } from '@material-ui/core';
+import {Button,TextField,makeStyle} from '@material-ui/core';
+import {
+  MuiThemeProvider, 
+  createMuiTheme} from '@material-ui/core/styles';
+
+
+const themeMuiProvider = createMuiTheme({
+  overrides: {
+    MuiButton: {
+      containedPrimary: {
+        backgroundColor: '#3fb5a5',
+        '&:hover': {
+          backgroundColor: '#0ce8ca',
+          "@media (hover: none)": {
+            backgroundColor: "#0ce8ca"
+          },
+        },
+      },
+      containedSecondary: {
+        backgroundColor: '#b53f3f',
+        '&:hover': {
+          backgroundColor: '#f30b0b',
+          "@media (hover: none)": {
+            backgroundColor: "#f30b0b"
+          },
+        },
+      },
+    }, 
+  }
+})
 
 const Busqueda = ({setCenter,addMarker,clearMarkers}) => {
   const [query,setQuery] = useState('');
@@ -52,14 +81,16 @@ const Busqueda = ({setCenter,addMarker,clearMarkers}) => {
           onChange={handleChange}
           />
       </div>
+      <MuiThemeProvider theme={themeMuiProvider}>
       <Button 
         type="submit" 
         disabled={!query.length}
-        color="secondary"
+        color="primary"
         variant="contained"
       >
         Buscar
       </Button>
+      </MuiThemeProvider>
     </form>
   );
 }

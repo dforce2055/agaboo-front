@@ -1,5 +1,34 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
+import {
+  MuiThemeProvider, 
+  createMuiTheme} from '@material-ui/core/styles';
+
+
+const themeMuiProvider = createMuiTheme({
+  overrides: {
+    MuiButton: {
+      containedPrimary: {
+        backgroundColor: '#3fb5a5',
+        '&:hover': {
+          backgroundColor: '#0ce8ca',
+          "@media (hover: none)": {
+            backgroundColor: "#0ce8ca"
+          },
+        },
+      },
+      containedSecondary: {
+        backgroundColor: '#b53f3f',
+        '&:hover': {
+          backgroundColor: '#f30b0b',
+          "@media (hover: none)": {
+            backgroundColor: "#f30b0b"
+          },
+        },
+      },
+    }, 
+  }
+})
 
 const MiUbicacion = ({ setCenter, setMarker }) =>{
   
@@ -25,12 +54,16 @@ const MiUbicacion = ({ setCenter, setMarker }) =>{
     )
   };
   return(
-    <Button
-    variant="contained"
-    type="button"
-    onClick={findMe}>
-    Mi ubicacion
-    </Button>
+    <MuiThemeProvider theme={themeMuiProvider}>
+      <Button
+        variant="contained"
+        type="button"
+        onClick={findMe}
+        color="primary"
+      >
+       Mi ubicacion
+      </Button>
+    </MuiThemeProvider>
   );
 }
 
