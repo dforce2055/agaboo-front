@@ -5,7 +5,7 @@ import SimpleBottomNavigation from '../../Footer/Footer';
 import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
 function DeleteUpdateUserAdmin(props) {
-
+    let userRole = firebase.getCurrentUserRole();
     if (!firebase.getCurrentUsername()) {
         // not logged in
         alert('Por favor inicie sesión para acceder')
@@ -13,7 +13,7 @@ function DeleteUpdateUserAdmin(props) {
         return null
     }
 
-    if (localStorage.userRole==="LOGISTICS"){ //si tiene rol de usuario de logistica
+    if (userRole==="LOGISTICS"){ //si tiene rol de usuario de logistica
       alert('No tenes permiso para acceder a esta ventana')
       props.history.goBack();
   }

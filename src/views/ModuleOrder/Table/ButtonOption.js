@@ -5,9 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { withRouter } from 'react-router-dom';
 import OrderController from '../../../controllers/Order';
-import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
-import { IconButton } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
+import firebase from '../../../config/firebase';
 
 function ButtonOption(props) {
   
@@ -50,8 +48,8 @@ function ButtonOption(props) {
     }
   }
 
-  function checkRoleAdmin(){
-    let role = localStorage.userRole; //me guardo el rol del usuario
+  async function checkRoleAdmin(){
+    let role = await firebase.getCurrentUserRole();
 
     if(role==="ADMIN"){
       return true;

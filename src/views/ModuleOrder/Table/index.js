@@ -13,6 +13,7 @@ import TableOrders from './TableOrders.js';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { withRouter } from "react-router-dom";
+import firebase from '../../../config/firebase';
 
 const useStyles = makeStyles(theme => ({
   actions: {
@@ -61,8 +62,9 @@ const IndexTable = props => {
   //   setLoadData(true);
   // }
 
-  function checkRoleAdmin(){
-    let role = localStorage.userRole; //me guardo el rol del usuario
+  async function checkRoleAdmin(){
+    
+    let role = await firebase.getCurrentUserRole();
 
     if(role==="ADMIN"){
       return true;

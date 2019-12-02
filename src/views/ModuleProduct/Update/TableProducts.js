@@ -9,7 +9,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { withRouter } from "react-router-dom";
 import { hideFooter } from './../../Footer/HideFooter';
-
+import firebase from '../../../config/firebase';
 import ProductController from '../../../controllers/Product';
 
 const StyledTableCell = withStyles(theme => ({
@@ -104,11 +104,11 @@ const useStyles = makeStyles(theme => ({
     return count;
   }
 
-  function checkRoleAdmin(){
-    let role = localStorage.userRole; //me guardo el rol del usuario
-
+  async function checkRoleAdmin(){
+    let role = await firebase.getCurrentUserRole();
+  
     if(role==="ADMIN"){
-      return true;
+      return false;
     }else if(role==="LOGISTICS"){
       return false;
     }
