@@ -21,6 +21,7 @@ class Firebase {
         this.db = app.firestore();
         this.googleProvider = new app.auth.GoogleAuthProvider();
         //this.admin = require("firebase-admin");
+        this.userValidated = null;
     }
 
     login(email, password) {
@@ -69,8 +70,8 @@ class Firebase {
     }
     
     async getCurrentUserRole() {
-        let role = await UserController.getUserStatusAndRole(this.auth.currentUser.email)
-        return role.role;
+        if (this.userValidated === null) this.userValidated = await UserController.getUserStatusAndRole(this.auth.currentUser.email)
+        return this.userValidated.role;
     }
 
 }
