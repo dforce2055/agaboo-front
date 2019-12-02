@@ -10,11 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { withRouter } from "react-router-dom";
 import { hideFooter } from './../../Footer/HideFooter';
 
-
-
 import ProductController from '../../../controllers/Product';
-
-
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -44,8 +40,8 @@ const useStyles = makeStyles(theme => ({
     overflowX: 'auto',
   },
   table: {
-    //minWidth: 300,
-    
+    minWidth: 300,
+    xs : 3, 
   },
 
   fab: {
@@ -68,7 +64,7 @@ const useStyles = makeStyles(theme => ({
   const {value, setValue} = props;
   const {update, setUpdate} = props;
   const {history} = props ;
-
+  let userRole = checkRoleAdmin();
   const classes = useStyles();
   const array = [] 
   const typesProduct = ["Baño Químico", "Oficina", "Boletería", "Garita"] // Hardcode de los tipos de productos
@@ -108,6 +104,16 @@ const useStyles = makeStyles(theme => ({
     return count;
   }
 
+  function checkRoleAdmin(){
+    let role = localStorage.userRole; //me guardo el rol del usuario
+
+    if(role==="ADMIN"){
+      return true;
+    }else if(role==="LOGISTICS"){
+      return false;
+    }
+  }
+
   const [widthWindow, setWidthWindows] = React.useState(0); //Ancho de la ventana
 /*
   React.useEffect(() => {
@@ -128,12 +134,11 @@ const useStyles = makeStyles(theme => ({
   
   useEffect(() => {
     const updateWidth = () => {
-      const width = document.body.clientWidth;
-      console.log(`updateWidth con ${width}`);
-      setWidthWindows(width);
+      const widthVariable = document.body.clientWidth;
+      console.log(`updateWidth con ${widthVariable}`);
+      setWidthWindows(widthVariable);
     }
     updateWidth();
-
 
     getProducts();
     hideFooter();
@@ -149,7 +154,7 @@ const useStyles = makeStyles(theme => ({
                     <StyledTableCell align="justify">Cantidad</StyledTableCell>
                 </TableRow>
                 </TableHead>
-                <TableBody>
+                <TableBody >
                 {rows.map(row => (
                     <StyledTableRow key={row.typeProduct}>
                     <StyledTableCell component="th" scope="row">
@@ -162,9 +167,12 @@ const useStyles = makeStyles(theme => ({
                 ))}
                 </TableBody>
            </Table>
-           <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/createProduct')} >
-             <AddIcon />
-           </Fab>  
+            {userRole ?
+              <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/createProduct')} >
+                <AddIcon />
+              </Fab> : ""
+            }
+             
       </React.Fragment>         
         
     

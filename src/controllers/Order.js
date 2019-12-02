@@ -217,6 +217,15 @@ class OrderController extends Component {
     }
   }
 
+  filterByState (state){
+    try {
+      if (!state) throw new Error('Error: No llego el estado necesario para su filtrado.')
+      return OrderRepo.filterByState(state);
+    } catch (error) {
+      console.log("Error en el controlador de pedidos",error);
+      
+    }
+  }
 }
 
 export default new OrderController();

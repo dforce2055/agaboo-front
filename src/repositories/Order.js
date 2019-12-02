@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import firebase from '../config/firebase';
+import moment from 'moment';
 
 const collection = '/orders';
 
@@ -59,7 +60,23 @@ class OrderRepo extends Component {
       await db.where("eliminado","==",false).get()
       .then(result =>{
         list = result.docs.map(doc => doc.data())
-   })
+      })
+      //Ordeno por MESES Y AÑO
+        list.sort(function(minor,higher) {
+          if (moment(minor.fecha_entrega).format('MM/YYYY') < moment(higher.fecha_entrega).format('MM/YYYY')){
+            return 1;
+          }else{
+            return -1
+          }
+        });
+        //Ordeno por dia
+        list.sort(function(minor,higher) {
+          if (moment(minor.fecha_entrega).format('DD/MM') < moment(higher.fecha_entrega).format('DD/MM')){
+            return 1;
+          }else{
+            return -1
+          }
+        });
       return list;
     } catch (error) {
       console.error("Error en base de datos: ",error);
@@ -262,6 +279,26 @@ class OrderRepo extends Component {
       return fmList;
     } catch(error){
       console.error("Error en la base de datos al devolver la suma de los chart.");
+    }
+  }
+
+  async filterByState(state){
+    try {
+      if (!state) throw new Error('Error: No llego el estado a la base de datos que es necesario para su filtrado.');
+      let order = [];
+      await db.where("eliminado","==",false)
+        .get()
+        .then(result =>{
+          result.docs.map(doc =>{
+            if (doc.data().estado == state) {
+              order.push(doc.data())
+            }
+          })          
+        });        
+      return order;
+    } catch (error) {
+      console.log("Error en el controlador de pedidos",error);
+      
     }
   }
 
