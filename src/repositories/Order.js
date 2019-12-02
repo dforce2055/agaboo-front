@@ -184,7 +184,7 @@ class OrderRepo extends Component {
       .then(result=>{
         //FILTRO
         result.docs.map( doc =>{
-          if (doc.data().estado === "ENTREGADO")
+          if (doc.data().estado === "FINALIZADO")
             list.push(doc.data())
         })
       });
