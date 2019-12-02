@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from 'react';
+import AuthContextProvider from './views/contexts/AuthContext';
 import './App.css';
 import { BrowserRouter, Route  } from "react-router-dom";
 //import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
@@ -27,6 +28,7 @@ import OrderDetail from './views/ModuleOrder/Table/OrderDetail/index'
 const theme = createMuiTheme();
 
 
+
 export default function App() {
   const [firebaseInitialized, setFirebaseInitialized] = useState(false);
 
@@ -39,6 +41,7 @@ export default function App() {
   return firebaseInitialized !== false ? (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
+      <AuthContextProvider>
         <BrowserRouter>
             <React.Fragment>
                 <Route path="/" component={HomePage} exact/>
@@ -55,11 +58,10 @@ export default function App() {
                 <Route path= "/eliminarPedidos" component={DeleteOrder} />
                 <Route path = "/EstadoDeCuenta" component={AccountStatus}/>
                 <Route path = "/servicios" component={Service}/>
-
                 <Route path = "/orderDetail" component={OrderDetail}/>
-
             </React.Fragment>
         </BrowserRouter>
+      </AuthContextProvider>
     </MuiThemeProvider>
     ) : <LoaderScreen/>
 }

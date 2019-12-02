@@ -236,7 +236,8 @@ class UserController extends Component {
                 const UserDTO = { estado: user.estado, role: user.role };
                 // console.log(UserDTO);
                 // no puedo devolver usuario, tengo que devolver estado y rol a la vista
-                localStorage.userRole = user.role;
+                //localStorage.userRole = user.role;//Esto hay que cambiarlo!!!
+
                 return UserDTO;
             } else {
                 const UserDTO = { estado: false, role: "inactivo" };

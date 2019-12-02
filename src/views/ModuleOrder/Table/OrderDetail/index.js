@@ -5,12 +5,12 @@ import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import SimpleBottomNavigation from '../../../Footer/Footer';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-import { Paper,Typography,Grid,CardHeader } from '@material-ui/core';
+import { Paper,Typography,Grid,CardHeader,Container} from '@material-ui/core';
 import GridFather from './GridFather';
 
 const useStyles = makeStyles(theme => ({
     espacio:{
-      margin: theme.spacing(1),
+      marginTop: theme.spacing(1),
     },
     tittle: {
     width:'300px',
@@ -42,11 +42,13 @@ function OrderReady(props) {
                   </Typography>
                 </Paper>
               </Grid> */}
+              <Container maxWidth="xl">
               <Paper className={classes.espacio}>
                     <h1>
                         <CardHeader titleTypographyProps = {'titulo'}title="Detalle de pedido" />
                     </h1>
                 </Paper>
+              </Container>
                 
               <div>
                 <GridFather/>
