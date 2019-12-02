@@ -5,6 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { withRouter } from 'react-router-dom';
 import OrderController from '../../../controllers/Order';
+import firebase from '../../../config/firebase';
 import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
 import { IconButton } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
@@ -13,6 +14,7 @@ import DialogFinishOrder from './Dialog/DialogFinishOrder';
 import DialogDeleteOrder from './Dialog/DialogDeleteOrder';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+
 
 function ButtonOption(props) {
   
@@ -44,8 +46,19 @@ function ButtonOption(props) {
     setAnchorEl(null);
   };
 
-  function checkRoleAdmin(){
-    let role = localStorage.userRole; //me guardo el rol del usuario
+  const handleDeleteOrder = () =>{
+    if (order.estado !=='PAGADO') {
+      OrderController.deleteOrder(order.id_pedido)
+    //Cambio estado para actualizar el listado de los pedidos. Cuando uno sea eliminado.
+    updateArray();
+    setAnchorEl(null);
+    }else{
+      alert('No se puede eliminar un pedido pagado.')
+    }
+  }
+
+  async function checkRoleAdmin(){
+    let role = await firebase.getCurrentUserRole();
 
     if(role==="ADMIN"){
       return true;

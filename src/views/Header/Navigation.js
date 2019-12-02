@@ -16,7 +16,7 @@ import { withRouter } from "react-router-dom";
 import ListAdmin from './ListAdmin';
 import ListLogistics from './ListLogistics';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-
+import firebase from '../../config/firebase';
 const drawerWidth = 240;
 
 
@@ -150,8 +150,8 @@ function Navbar(props) {
     setOpen(false);
   }
 
-  function checkRoleAdmin(){
-    let role = localStorage.userRole; //me guardo el rol del usuario
+  async function checkRoleAdmin(){
+    let role = await firebase.getCurrentUserRole();
 
     if(role==="ADMIN"){
       return true;

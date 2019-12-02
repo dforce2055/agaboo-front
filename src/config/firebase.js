@@ -3,6 +3,7 @@ import { firebaseConfig } from './firebase-config';
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firebase-firestore';
+import UserController from '../controllers/User';
 //import 'firebase-admin';
 /*
 let firebaseConfig;
@@ -65,6 +66,11 @@ class Firebase {
 
     getCurrentUserPhoto() {
         return this.auth.currentUser && this.auth.currentUser.photoURL
+    }
+    
+    async getCurrentUserRole() {
+        let role = await UserController.getUserStatusAndRole(this.auth.currentUser.email)
+        return role.role;
     }
 
 }
