@@ -14,6 +14,7 @@ import {
 import DeleteIcon from '@material-ui/icons/Delete';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import MenuItem from '@material-ui/core/MenuItem';
+import OrderController from '../../../../controllers/Order';
 
 const themeMuiProvider = createMuiTheme({
   overrides: {
@@ -61,12 +62,33 @@ function PaperComponent(props) {
   );
 }
 
-export default function DialogDeliveredState(props) {
-  const {open,handleClose,handleSave} = props;
+export default function DialogFinishOrder({order,updateArray,handleCloseAnchor}) {
   const classes = useStyles()
+  const [open,setOpen] = React.useState(false)
+
+  const handleDeleteOrder = () =>{
+    if (order.estado !=='PAGADO') {
+      OrderController.deleteOrder(order.id_pedido)
+    //Cambio estado para actualizar el listado de los pedidos. Cuando uno sea eliminado.
+    updateArray();
+    handleClose()
+    handleCloseAnchor();
+    }else{
+      alert('No se puede eliminar un pedido pagado.')
+      handleClose()
+    }
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
   return (
     <div>
-    <MenuItem >
+    <MenuItem onClick={handleOpen}>
         <ListItemIcon>
          <DeleteIcon />
         </ListItemIcon>
@@ -80,11 +102,11 @@ export default function DialogDeliveredState(props) {
         aria-labelledby="draggable-dialog-title"
       >
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-          ¿Estas seguro de poner entregado al pedido?
+          ¿Quieres eliminar este pedido?
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Si acepta, no podra agregarle nuevos id's al pedido.
+            Al eliminar este pedido no sera visible para nadie mas.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -104,7 +126,7 @@ export default function DialogDeliveredState(props) {
           <Grid item>
             <Button 
               className={classes.buttonRight}
-              onClick={handleSave} 
+              onClick={handleDeleteOrder} 
               color="primary"
               variant='contained'
             >

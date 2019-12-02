@@ -8,7 +8,11 @@ import OrderController from '../../../controllers/Order';
 import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
 import { IconButton } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import DialogDeliveredOrder from './DialogDeliveredOrder';
+import DialogDeliveredOrder from './Dialog/DialogDeliveredOrder';
+import DialogFinishOrder from './Dialog/DialogFinishOrder';
+import DialogDeleteOrder from './Dialog/DialogDeleteOrder';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 
 function ButtonOption(props) {
   
@@ -19,7 +23,6 @@ function ButtonOption(props) {
   
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [widthWindow, setWidthWindows] = React.useState(0); //Ancho de la ventana
-  const [open,setOpen] = React.useState(false)
   const [openDialogFinishOrder,setOpenDialogFinishOrder] = React.useState(false)
   
   //Actualiza el ancho de la ventana
@@ -41,17 +44,6 @@ function ButtonOption(props) {
     setAnchorEl(null);
   };
 
-  const handleDeleteOrder = () =>{
-    if (order.estado !=='PAGADO') {
-      OrderController.deleteOrder(order.id_pedido)
-    //Cambio estado para actualizar el listado de los pedidos. Cuando uno sea eliminado.
-    updateArray();
-    setAnchorEl(null);
-    }else{
-      alert('No se puede eliminar un pedido pagado.')
-    }
-  }
-
   function checkRoleAdmin(){
     let role = localStorage.userRole; //me guardo el rol del usuario
 
@@ -62,52 +54,9 @@ function ButtonOption(props) {
     }
   }
 
-  const changeStateOrderENTREGADO = () =>{
-    if (order.id_pedido) {
-      if (order.estado === 'EN CAMINO') {
-         OrderController.changeStateOrder(order.id_pedido,'ENTREGADO')
-         handleCloseDialog()
-         updateArray()
-      }else{
-        alert('Su estado es distinto a "En camino" por ende no se puede cambiar su estado a "Entregado".')
-      }
-    }
-  }
-
-  const changeStateOrderFINALIZADO = () =>{
-    if (order.id_pedido) {
-      if (order.estado === 'ENTREGADO') {
-         OrderController.changeStateOrder(order.id_pedido,'FINALIZADO')
-         handleCloseDialog()
-         updateArray()
-      }else{
-        alert('Su estado es distinto a "Entregad" por ende no se puede cambiar su estado a "Finalizado".')
-      }
-    }
-  }
-
-  const handleCloseDialog = () => {
-    setOpen(false);
-  };
-
-  const handleOpenDialog = () => {
-    setOpen(true);
-  };
-  
   return (
     <div>
-    <DialogDeliveredOrder 
-      open={open} 
-      handleClose={handleCloseDialog}
-      handleSave={changeStateOrderENTREGADO}
-      handleOpenDialog={handleOpenDialog}
-    />
-    <DialogDeliveredOrder 
-      open={open} 
-      handleClose={handleCloseDialog}
-      handleSave={changeStateOrderFINALIZADO}
-      handleOpenDialog={handleOpenDialog}
-    />
+    
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
         <MoreHorizIcon fontSize='large'></MoreHorizIcon>
       </Button>
@@ -118,26 +67,44 @@ function ButtonOption(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick ={ () => {
+        <MenuItem
+        onClick ={()=>{
+          sessionStorage.setItem('pedido_completo',JSON.stringify(order))
+          
+          sessionStorage.setItem('listado_producto',JSON.stringify(order.listado_producto))
+          
+          sessionStorage.setItem('order_complete',JSON.stringify(order))
+          
+          history.push(/*'/rellenarPedido'*/'/orderdetail')
+        }}>
+          <ListItemIcon>
+            <AssignmentIcon />
+          </ListItemIcon>
+          Ver detalle de pedido
+        </MenuItem>
+        
+        <DialogDeliveredOrder 
+        order={order} 
+        updateArray={updateArray}
+        handleCloseAnchor={handleClose}
+        />
 
-                sessionStorage.setItem('pedido_completo',JSON.stringify(order));
-                sessionStorage.setItem('listado_producto',JSON.stringify(order.listado_producto))
-                sessionStorage.setItem('order_complete',JSON.stringify(order))
-                history.push(/*'/rellenarPedido'*/'/orderdetail')}}>Ver detalle de pedido</MenuItem>
-                <MenuItem onClick={handleOpenDialog}>
-                 Marcar como entregado
-                </MenuItem> 
-                <MenuItem onClick={handleOpenDialog}>
-                 Marcar como finalizado
-                </MenuItem> 
-              {
-                (userRole) ? 
-                <MenuItem onClick={handleDeleteOrder}>
-                 Eliminar pedido
-                </MenuItem> 
-                : 
-                ""
-              }
+        <DialogFinishOrder 
+        order={order} 
+        updateArray={updateArray}
+        handleCloseAnchor={handleClose}
+        />
+
+        {
+          (userRole) ?
+            <DialogDeleteOrder 
+            order={order} 
+            updateArray={updateArray}
+            handleCloseAnchor={handleClose}
+            />
+          : 
+            ""
+        }
      </Menu>
     </div>
         );

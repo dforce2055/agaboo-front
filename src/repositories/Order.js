@@ -302,6 +302,8 @@ class OrderRepo extends Component {
   }
 
   async changeStateOrder(id_pedido,estado){
+    if (!id_pedido) throw new Error('Error: No llego el id del pedido.')
+    if (!estado) throw new Error('Error: No llego el estado del pedido.')
     try {
       await db.doc(id_pedido)
       .update({estado:estado})

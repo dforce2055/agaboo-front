@@ -10,7 +10,8 @@ import {
   Button,
   ButtonGroup,
   Grid,
-  Divider} from '@material-ui/core';
+  Divider,
+  Typography} from '@material-ui/core';
 import {
   MuiThemeProvider, 
   createMuiTheme} from '@material-ui/core/styles';
@@ -78,19 +79,61 @@ const onlyProduct = (order) => {
   return result
 }
 
-const TableResponsive = (order,addIdForIndex) =>{
+const TableResponsive = (order,addIdForIndex,orderComplete,valueForIndex,disabledText) =>{
   let array = onlyProduct(order)
   
   return(
     <React.Fragment>
+    
+    <Grid
+      style={{backgroundColor:'#318377'}}
+      container 
+      direction="row" 
+      justify="space-around" 
+      alignItems="center"
+      spacing={2}
+      >
+        <Grid item>
+       <Typography 
+        style={{background:'#318377'}}
+        align='center'
+        variant='h6'
+      >
+        <spam style={{color:'#fff'}}>Producto</spam>
+      </Typography>
+
+        </Grid>
+
+        <Grid item>
+        <Typography 
+        style={{background:'#318377'}}
+        align='center'
+        variant='h6'
+      >
+        <spam style={{color:'#fff'}}>Modelo</spam>
+      </Typography>
+        </Grid>
+
+        <Grid item>
+        <Typography 
+        style={{background:'#318377'}}
+        align='center'
+        variant='h6'
+      >
+        <spam style={{color:'#fff'}}>Codigo</spam>
+      </Typography>
+        </Grid>
+    </Grid>
     {array.map((row,index)=>(
-      <div>
-          <Divider key={index} />
+      <div key={index}>
         <br/>
           <GridRightResponsive
             data={row}
             i={index}
             addIdForIndex={addIdForIndex}
+            orderComplete={orderComplete}
+            valueForIndex={valueForIndex}
+            disabledText={disabledText}
           />
         <br/>
         <Divider/>
@@ -147,7 +190,6 @@ export default function GridRight() {
 
   const addIdForIndex = index => (event)=>{
     arrayOnlyProduct[index].id_producto = event.target.value;//Guardo el valor en id_producto en el indice dado
-    console.log(orderComplete);
     
     if (arrayOnlyProduct.find(x=>x.id_producto =="")) { //Si existe un campo vacio pondra el boton invicible
       setDisabled(true)
@@ -238,7 +280,7 @@ export default function GridRight() {
           </TableBody>
         </Table>
         :
-        TableResponsive(order,addIdForIndex)
+        TableResponsive(order,addIdForIndex,orderComplete,valueForIndex,disabledText)
         }
 
         <MuiThemeProvider theme={themeMuiProvider}>

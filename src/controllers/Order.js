@@ -227,10 +227,13 @@ class OrderController extends Component {
     }
   }
 
-  DeliveredOrder (id_pedido){
+  changeStateOrder(id_pedido,estado){
+    if (!id_pedido) throw new Error('Error: No llego el id del pedido.')
+    if (!estado) throw new Error('Error: No llego el estado del pedido.')
+    
     try {
-      if (!id_pedido) throw new Error('Error: No llego el id del pedido.')
-      return OrderRepo.DeliveredOrder(id_pedido)
+      
+      return OrderRepo.changeStateOrder(id_pedido,estado)
     } catch (error) {
       console.log("Error en el controlador de pedidos.",error);
       
