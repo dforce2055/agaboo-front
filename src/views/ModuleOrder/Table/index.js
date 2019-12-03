@@ -44,24 +44,6 @@ const IndexTable = props => {
     } = props
   let userRole = checkRoleAdmin();
 
-  // React.useEffect(()=>{
-  //   if (loadData) {
-  //     OrderController.getOrders()
-  //       .then(result =>{
-  //         setOrders(result);
-  //         setLoadData(false);
-  //       }); 
-  //     setLoadData(false);
-  //   }
-  // });
-
-  // const [loadData,setLoadData] = useState(true);
-  // const [orders,setOrders] = useState([]);
-
-  // const updateArray = () => {
-  //   setLoadData(true);
-  // }
-
   async function checkRoleAdmin(){
     
     let role = await firebase.getCurrentUserRole();

@@ -36,20 +36,24 @@ function OrderReady(props) {
                 setUpdateList(false)
             })
             setUpdateList(false)
+            console.log("SLDKNFGKLSADJGLÑASGÑLARGÑ{");
         }
     })
 
     React.useEffect(()=>{
-       if (state.select != '') {
+       if (state.select !== '') {
         OrderController.filterByState(state.select)
             .then(result=>{
                setOrders(result)
             })
+            console.log("SLDKNFGKLSADJGLÑASGÑLARGÑ{");
         }else{
             OrderController.getOrders()
             .then(result =>{
             setOrders(result);
             }); 
+            console.log("SLDKNFGKLSADJGLÑASGÑLARGÑ{");
+            
         }
     },[state]);
   

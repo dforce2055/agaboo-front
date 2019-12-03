@@ -6,7 +6,7 @@ import firebase from '../../config/firebase';
 import { withRouter } from 'react-router-dom';
 import { Container,Grid,Paper,CardHeader } from '@material-ui/core';
 import {MuiThemeProvider, createMuiTheme,makeStyles} from '@material-ui/core/styles';
-import InputSearch from './Delete-Update-List/Search/index.js';
+import InputSearch from './Delete-Update-List/Search';
 import CSS from './CSS';
 import CustomerController from '../../controllers/Customer';
 
@@ -61,7 +61,7 @@ function DeleteUpdateUserAdmin(props) {
   const [customers, setCustomers] = useState([]);  //Coleccion de customers
   const [stateArray,setStateArray] = useState(false);//Estado de la actualizacion de la lista
   const [stateSearch,setStateSearch] = useState(false); //Registra cambios en el componente de busqueda
-  const [search,setSearch] = useState();
+  const [search,setSearch] = useState('');
 
     let userRole = firebase.getCurrentUserRole();
     if (!firebase.getCurrentUsername()) {
@@ -84,7 +84,9 @@ function DeleteUpdateUserAdmin(props) {
   }
 
   const handleChangeFilter = (event) =>{
-      setSearch(event.target.value)
+    console.log(event.target.value);
+    
+    setSearch(event.target.value)
   }
 
     return (
@@ -98,8 +100,9 @@ function DeleteUpdateUserAdmin(props) {
                 </Paper>
                 <Grid item container justify="flex-end" alignItems="baseline">
                     <InputSearch
-                        stateSearch={stateSearch}
                         handleChangeFilter={handleChangeFilter}
+                        handleChangeCustomer={handleChangeCustomer}
+                        search={search}
                     />
                 </Grid>
                 <br/>

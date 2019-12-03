@@ -1,7 +1,8 @@
-import React from 'react';
+import React,{ useEffect } from 'react';
 import { fade,makeStyles } from '@material-ui/core/styles';
 import {FormControl,Paper,TextField,InputBase,Grid } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
+import CustomerController from '../../../../controllers/Customer';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -49,10 +50,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Filters({handleChangeFilter}) {
-  const classes = useStyles();
-  console.log();
-  
+export default function Filters({handleChangeFilter,handleChangeCustomer,search}) {
+  const classes = useStyles();  
+
+  useEffect(()=>{
+    console.log("ejecuntado al cambio");
+  },[]);
+
 
   const inputLabel = React.useRef(null);
   return (

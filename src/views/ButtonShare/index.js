@@ -4,13 +4,56 @@ import {
   FacebookIcon, 
   WhatsappShareButton,
   WhatsappIcon
-} from 'react-share'
+} from 'react-share';
+
+// import { //Funcionalidades
+//   FacebookIcon,
+//   TwitterIcon,
+//   TelegramIcon,
+//   WhatsappIcon,
+//   LinkedinIcon,
+//   PinterestIcon,
+//   VKIcon,
+//   OKIcon,
+//   RedditIcon,
+//   TumblrIcon,
+//   LivejournalIcon,
+//   MailruIcon,
+//   ViberIcon,
+//   WorkplaceIcon,
+//   LineIcon,
+//   PocketIcon,
+//   InstapaperIcon,
+//   EmailIcon,
+// } from 'react-share';
+
+// import { //Iconos de las apps
+//   FacebookShareButton,
+//   LinkedinShareButton,
+//   TwitterShareButton,
+//   TelegramShareButton,
+//   WhatsappShareButton,
+//   PinterestShareButton,
+//   VKShareButton,
+//   OKShareButton,
+//   RedditShareButton,
+//   TumblrShareButton,
+//   LivejournalShareButton,
+//   MailruShareButton,
+//   ViberShareButton,
+//   WorkplaceShareButton,
+//   LineShareButton,
+//   PocketShareButton,
+//   InstapaperShareButton,
+//   EmailShareButton,
+// } from 'react-share';
+
 import { Grid } from '@material-ui/core';
 
 const Facebook = () =>{
   const data = {
     url:String(window.location.href),
-    title:'Agaboo.com.ar'
+    title:'Agaboo'
   }
   
   return(
