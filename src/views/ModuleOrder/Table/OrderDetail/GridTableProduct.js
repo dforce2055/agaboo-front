@@ -144,7 +144,7 @@ const TableResponsive = (order,addIdForIndex,orderComplete,valueForIndex,disable
 }
 
 
-export default function GridRight() {
+export default function GridTableProduct() {
   const classes = useStyles();
   const [arrayOnlyProduct] = React.useState([]); //Guardo el arreglo con los id
   const [orderComplete,setOrderComplete] = React.useState(''); //Guardo el id del pedido

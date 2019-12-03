@@ -90,14 +90,15 @@ export default function TableProduct(props) {
     let infoDetalleValidation = JSON.parse(infoDetalle);
     let incomplete;
     if (infoDetalleValidation) {
-      if (!infoDetalleValidation.ContactoEnTrabajo) incomplete = true;     
-      if (!infoDetalleValidation.ciudad) incomplete = true;     
+      //if (!infoDetalleValidation.ContactoEnTrabajo) incomplete = true;     
+      //if (!infoDetalleValidation.ciudad) incomplete = true;     
       if (!infoDetalleValidation.fecha_entrega) incomplete = true;     
       if (!infoDetalleValidation.fecha_finalizacion) incomplete = true;     
-      if (!infoDetalleValidation.formaDePago) incomplete = true;     
-      if (!infoDetalleValidation.lugarDePago) incomplete = true;     
-      if (!infoDetalleValidation.responsableDelPago) incomplete = true;     
-      if (!infoDetalleValidation.ubicacionDeEntrega) incomplete = true;     
+      //if (!infoDetalleValidation.formaDePago) incomplete = true;     
+      //if (!infoDetalleValidation.lugarDePago) incomplete = true;     
+      //if (!infoDetalleValidation.responsableDelPago) incomplete = true;     
+      //if (!infoDetalleValidation.ubicacionDeEntrega) incomplete = true;
+      if (alquilables.length < 1) incomplete = true;
       
       if (!incomplete) setButtonState(false);
     }
