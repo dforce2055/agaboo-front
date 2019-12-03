@@ -83,7 +83,7 @@ export default function DialogDelete(props) {
         <ListItemIcon>
          <DeleteIcon />
         </ListItemIcon>
-        Eliminar pedido
+        Eliminar cliente
       </MenuItem>
       <Dialog
         open={open}
