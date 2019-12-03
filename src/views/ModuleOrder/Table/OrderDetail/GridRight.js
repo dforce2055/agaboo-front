@@ -200,9 +200,7 @@ export default function GridRight() {
 
   const save = () => {
     let productos_con_id = arrayOnlyProduct.slice()
-    OrderController.saveOrderProductIds(orderComplete.id_pedido,productos_con_id).then(res=>{
-      orderComplete.estado = res
-    })
+    OrderController.saveOrderProductIds(orderComplete.id_pedido,productos_con_id)
     setDisabled(true);
     setDisabledText(true);
     console.log("guardo pedido con su lista.");

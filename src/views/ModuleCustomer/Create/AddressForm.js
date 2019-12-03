@@ -68,7 +68,6 @@ function AddressForm(props) {
   };
 
   const handleOnClick = () => {
-    console.log('Guardando...')
     let data = {
       nombre: values.nombre,
       apellido: values.apellido,

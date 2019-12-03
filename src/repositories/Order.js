@@ -19,6 +19,7 @@ class OrderRepo extends Component {
       .then(()=>{
         return true;
       })  
+      
     } catch (error) {
       console.log("Error al agregar PEDIDO a DATABASE: ", error);
     }
@@ -77,6 +78,7 @@ class OrderRepo extends Component {
             return -1
           }
         });
+        
       return list;
     } catch (error) {
       console.error("Error en base de datos: ",error);
@@ -104,12 +106,12 @@ class OrderRepo extends Component {
   }
 
   //Metodo para agregar los id's de los productos.
-  //Se utiliza en ModulsOrders/addIdOrder/ProduictListOrder
   async saveOrderProductIds(id_order,lista_productos_con_ids){
     if (!id_order) throw new Error(`Error: No llego el id del pedido correctamente.`);
     try {       
       db.doc(id_order)
         .update({lista_productos_con_ids,estado:'EN CAMINO'});
+        
       return 'EN CAMINO';
     } catch (error) {
       console.log("Error en base de datos: ",error);
@@ -122,9 +124,6 @@ class OrderRepo extends Component {
     if(!fecha_ini) throw new Error('Error: No llego la fecha de inicio.')
 
     try {
-      console.log("fecha_ini",fecha_ini);
-      console.log("fecha_fin",fecha_fin);
-
       let query = {};
       await db
       .where("detalle_pedido.fecha_finalizacion",">=",fecha_ini)
@@ -184,10 +183,7 @@ class OrderRepo extends Component {
       .then(result=>{
         //FILTRO
         result.docs.map( doc =>{
-          if (doc.data().estado === "FINALIZADO" || doc.data().estado === "ADEUDA"){
-            
-          console.log(doc.data());
-          
+          if (doc.data().estado === "FINALIZADO" || doc.data().estado === "ADEUDA"){          
             list.push(doc.data())
           }
         })

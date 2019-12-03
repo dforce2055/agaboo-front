@@ -1,12 +1,7 @@
 import React from 'react';
 import { fade,makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import {FormControl,Paper,TextField,InputBase,Grid } from '@material-ui/core';
-import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import SearchIcon from '@material-ui/icons/Search';
-import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -54,12 +49,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Filters(props) {
+export default function Filters({handleChangeFilter}) {
   const classes = useStyles();
-  const {state,handleChangeFilter} = props;
+  console.log();
+  
 
   const inputLabel = React.useRef(null);
-  const [labelWidth, setLabelWidth] = React.useState(0);
   return (
     <Paper style={{backgroundColor:'#fff',padding:10,marginTop:10,boxShadow: "1px 6px 15px #9E9E9E"}}>
     <Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>

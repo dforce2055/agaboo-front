@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from '@material-ui/core/Link';
-import { makeStyles,withStyles } from '@material-ui/core/styles';
+import { makeStyles,withStyles,MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -9,15 +9,13 @@ import TableRow from '@material-ui/core/TableRow';
 import Fab from '@material-ui/core/Fab';
 import { withRouter } from "react-router-dom";
 import AddIcon from '@material-ui/icons/Add';
-
-
 //Agrego imports
 
 import CustomerController from '../../../../controllers/Customer';
 import FullScreenDialog from '../Update/UpdateUser';
 import AlertDialog from '../Delete/DialogDelete';
 import VisibilityClient from '../Visibility/VisibilityClient';
-import { IconButton,  TextField,Button } from '@material-ui/core';
+import { IconButton,  TextField,Button, Typography} from '@material-ui/core';
 import { hideFooter } from './../../../Footer/HideFooter';
 import MenuItems from './MenuItems';
 import Grid from '@material-ui/core/Grid';
@@ -27,6 +25,31 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ComplexGrid from './TableColumn.js';
 import Divider from '@material-ui/core/Divider';
+
+const themeMuiProvider = createMuiTheme({
+  overrides: {
+    MuiButton: {
+      containedPrimary: {
+        backgroundColor: '#3fb5a5',
+        '&:hover': {
+          backgroundColor: '#0ce8ca',
+          "@media (hover: none)": {
+            backgroundColor: "#0ce8ca"
+          },
+        },
+      },
+      containedSecondary: {
+        backgroundColor: '#b53f3f',
+        '&:hover': {
+          backgroundColor: '#f30b0b',
+          "@media (hover: none)": {
+            backgroundColor: "#f30b0b"
+          },
+        },
+      },
+    }, 
+  }
+})
 
 const useStyles = makeStyles(theme => ({
   seeMore: {
@@ -54,6 +77,23 @@ const useStyles = makeStyles(theme => ({
 function customList(items,updateStateArray) {
   return(
     <div>
+    <Grid
+      style={{backgroundColor:'#318377'}}
+      container 
+      direction="row" 
+      justify="space-around" 
+      alignItems="center"
+      spacing={2}
+      >
+        <Grid item>
+       <Typography 
+        style={{background:'#318377'}}
+        align='center'
+        variant='h6'>
+        <spam style={{color:'#fff'}}>Informacion</spam>
+      </Typography>
+      </Grid>
+      </Grid>
     {items.map((item,index)=>(
       <div>
       <br/>
@@ -76,7 +116,7 @@ const StyledTableCell = withStyles(theme => ({
   },
 }))(TableCell);
 
-function table(clientes,updateStateArray,width) {
+function table(customers,updateStateArray,width) {
   return(
     <div>
       {
@@ -91,7 +131,7 @@ function table(clientes,updateStateArray,width) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {clientes.map(row => (
+              {customers.map(row => (
                 <TableRow key={row.id}>
                 <TableCell>
                   <MenuItems
@@ -107,35 +147,17 @@ function table(clientes,updateStateArray,width) {
             </TableBody>
           </Table>
         :
-          customList(clientes,updateStateArray) //Mapeo en columna los datos
+          customList(customers,updateStateArray) //Mapeo en columna los datos
       }
     </div>
   )
 }
 
-function ClientTable(props) {
+function ClientTable({customers,updateStateArray,handleChangeCustomer,history}) {
   
     // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(()=>{
-    //Si se realizo un cambio
-    if(stateArray){
-      CustomerController.getCustomers()
-      .then(value=> {
-        setClientes(value);
-        setStateArray(false); //Finalizo el cambio
-    }).catch(error=>{
-      console.log("Error al traer el cliente: ",error);
-    })
-    }
-
-    if (clientes.length === 0) {
-        CustomerController.getCustomers()
-        .then(value=> {
-          setClientes(value);      
-      }).catch(error=>{
-        console.log("Error al traer el cliente: ",error);
-      })
-      }else if (search.buscar.length !== 0) { //Verifico que el campo de buscar este vacio
+     if (search.buscar.length !== 0) { //Verifico que el campo de buscar este vacio
         setValidador(true)
       }else if(search.buscar.length === 0){
         setValidador(false)
@@ -143,15 +165,15 @@ function ClientTable(props) {
 
       //Paginado de la tabla clientes.
       if(pagination === true){ 
-        var lastPosition = clientes[clientes.length-1];
-        var customerPag = clientes;        
+        var lastPosition = customers[customers.length-1];
+        var customerPag = customers;        
         CustomerController.getCustomerPagination(lastPosition.id)
           .then(result=>{
               if (result===false) {
                 return;
               }
               result.forEach((res) => customerPag.push(res));
-              setClientes(customerPag)
+              handleChangeCustomer(customerPag)
               setPagination(false);
           });
     }//Fin de useEffect
@@ -162,11 +184,8 @@ function ClientTable(props) {
   const [widthWindow, setWidthWindows] = React.useState(0); //Ancho de la ventana
 
   React.useEffect(() => {
-    console.log("useEffect");
-    // creamos una función para actualizar el estado con el clientWidth
     const updateWidth = () => {
       const width = document.body.clientWidth;
-      console.log(`updateWidth con ${width}`);
       setWidthWindows(width);
     };
 
@@ -177,17 +196,8 @@ function ClientTable(props) {
     window.addEventListener("resize", updateWidth);
   }, []);
   
-  const {history} = props;
-  function updateStateArray(){    
-    setStateArray(true)
-  }
-  
   const classes = useStyles();
-  //Coleccion de customers
-  const [clientes, setClientes] = React.useState([]);
-
-  //Avisa un cambio
-  const [stateArray,setStateArray] = React.useState(false);
+  
 
   //Buscador 
   const [search,setSearch] = React.useState({
@@ -211,26 +221,6 @@ function ClientTable(props) {
     setPagination(true);
   }
 
-  function Filter(){  
-    //El método filter() crea un nuevo array con todos los elementos que cumplan la condición implementada por la función dada.
-    const newData = clientes.filter(function(item){
-      //A los campo por el cual voy a buscar los pongo en mayuscula(toUpperCase) y los guardo en una variable.
-        const itemDataNombre = item.nombre.toUpperCase()
-        const itemDataId = item.id.toUpperCase()
-        const itemDataLocalidad = item.localidad.toUpperCase()
-        const itemDataApellido = item.apellido.toUpperCase()
-        const itemDataRubro = item.rubro.toUpperCase()
-
-        //Uno todos los campos por el cual los voy a filtrar.
-        const campo = itemDataNombre+" "+itemDataId+" "+itemDataLocalidad+" "+itemDataApellido+" "+itemDataRubro
-
-        //Pongo en mayuscula en toUpperCase para poder comparar todos los campos.
-        const textData = search.buscar.toUpperCase()
-        return campo.indexOf(textData) > -1
-    })
-    setData(newData); //Guardo resultados obtenidos en un nuevo arreglo para no modificar el arreglo clientes.
-  }  
-
   const inputRef = React.createRef(null);
 
   return (
@@ -239,16 +229,19 @@ function ClientTable(props) {
       <AddIcon />
     </Fab>
     {(!validador) ? 
-        table(clientes,updateStateArray,widthWindow) 
+        table(customers,updateStateArray,widthWindow) 
       : 
         table(data,updateStateArray,widthWindow) 
     }
       <div className={classes.seeMore}>
-        <Button 
-        onClick={getPagination}
-        variant='outlined'>
-        Ver mas clientes
-        </Button>
+      <MuiThemeProvider theme={themeMuiProvider}>
+          <Button 
+            onClick={getPagination}
+            color='primary'
+            variant='contained'>
+            Ver mas clientes
+          </Button>
+        </MuiThemeProvider>
       </div>
     </React.Fragment>
   );

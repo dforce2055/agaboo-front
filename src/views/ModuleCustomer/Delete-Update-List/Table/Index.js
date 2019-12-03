@@ -93,28 +93,27 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
 }
 });
 
-export default function Dashboard() {
+export default function IndexTable({updateStateArray,handleChangeCustomer,customers}) {
   const classes = useStyles();
 
   return (
     <MuiThemeProvider theme={theme2}>
     <div className={classes.root}>
       <CssBaseline />
-      <main className={classes.content}>
-        <div className={classes.toolbar}/>
-        <Container maxWidth="xl" className={classes.container}>
         
           <Grid container spacing={2}>
             {/* Recent Orders */}
             <Grid item xs={12}>
             
               <Paper className={classes.paper}>
-                 <ClientTable />
+                 <ClientTable
+                   updateStateArray={updateStateArray}
+                   handleChangeCustomer={handleChangeCustomer}
+                   customers={customers}
+                 />
               </Paper>
             </Grid>
           </Grid>
-        </Container>
-      </main>
     </div>
     </MuiThemeProvider>
   );
