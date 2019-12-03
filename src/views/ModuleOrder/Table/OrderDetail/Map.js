@@ -2,20 +2,24 @@ import React from 'react';
 import {
   GoogleMap,
   withScriptjs,
-  withGoogleMap
+  withGoogleMap,
+  Marker
 } from 'react-google-maps';
 
-const ubicacion ={
-  lat: -37.1167,
-  lng: -56.8333
+const deposito ={
+  lat: -37.126907,
+  lng: -56.914029
 }
 
 const Map = (props) =>{
   return(
     <GoogleMap 
-    defaultZoom={10}
-    defaultCenter={ubicacion}
-    />
+    defaultZoom={14}
+    defaultCenter={deposito}
+    >
+      <Marker position={deposito} text="Depósito ARGENBATH"
+         />
+    </GoogleMap>
   );
 }
 

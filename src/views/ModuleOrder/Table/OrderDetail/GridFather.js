@@ -43,9 +43,8 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(7),
   },
 }));
-//'https://maps.googleapis.com/maps/api/js?v=3.exp&key=${credentials.mapsKey}'
-
-const mapURL = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik'
+const mapURL = `https://maps.googleapis.com/maps/api/js?v=3.exp&key=${credentials.mapsKey}`;
+//const mapURL = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik'
 
 export default function GridFather() {
   const classes = useStyles();
