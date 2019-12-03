@@ -8,9 +8,9 @@ import {
   makeStyles,
   Container,
   CssBaseline} from '@material-ui/core';
-import GridRight from './GridRight';
-import GridLeft from './GridLeft';
-import credentials from '../../../../config/credentials';
+import GridInfoCustomer from './GridInfoCustomer';
+import GridTableProduct from './GridTableProduct';
+//import credentials from '../../../../config/credentials';
 import Map from './Map.js';
 import clsx from 'clsx';
 
@@ -43,38 +43,17 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(7),
   },
 }));
-const mapURL = `https://maps.googleapis.com/maps/api/js?v=3.exp&key=${credentials.mapsKey}`;
-//const mapURL = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik'
+
+// const mapURL = `https://maps.googleapis.com/maps/api/js?v=3.exp&key=${credentials.mapsKey}`;
+
+const mapURL = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik'
 
 export default function GridFather() {
   const classes = useStyles();
-const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const fixedHeightPaper2 = clsx(classes.paper);
   return (
     <div className={classes.root}>
-    {/* <Grid container direction="row" justify="space-evenly" alignItems="center">
-      <Grid item sm={4}>
-          <Paper className={classes.paper}>
-             <GridLeft/>
-          </Paper>
-        </Grid>
-
-        <Grid item sm={8}>
-          <Paper className={classes.paper}>
-            <GridRight/>
-          </Paper>
-        </Grid>
-
-    </Grid>
-         <Paper className={classes.paperMap}>
-            <h1>Ubicacion de entrega</h1>
-            <Map
-              googleMapURL={mapURL}
-              containerElement={<div style={{height:'400px'}} />}
-              mapElement={<div style={{height:'90%'}}/>}
-              loadingElement={<p>Cargando</p>}
-            />
-          </Paper> */}
 
           <CssBaseline />
       <main className={classes.content}>
@@ -84,14 +63,13 @@ const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
             {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
-                <GridRight
-                />
+                <GridTableProduct/>
               </Paper>
             </Grid>
             {/* Recent Deposits */}
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper2}>
-                <GridLeft  />
+                <GridInfoCustomer  />
               </Paper>
             </Grid>
             {/* Recent Orders */}
@@ -101,7 +79,7 @@ const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
             <Map
               googleMapURL={mapURL}
               containerElement={<div style={{height:'400px'}} />}
-              mapElement={<div style={{height:'90%'}}/>}
+              mapElement={<div style={{height:'100%'}}/>}
               loadingElement={<p>Cargando</p>}
             />
               </Paper>

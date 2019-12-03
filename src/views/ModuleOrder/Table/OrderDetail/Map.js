@@ -17,8 +17,7 @@ const Map = (props) =>{
     defaultZoom={14}
     defaultCenter={deposito}
     >
-      <Marker position={deposito} text="Depósito ARGENBATH"
-         />
+      <Marker position={deposito} text="Depósito ARGENBATH"/>
     </GoogleMap>
   );
 }
