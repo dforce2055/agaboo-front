@@ -10,10 +10,9 @@ import {
   CssBaseline} from '@material-ui/core';
 import GridInfoCustomer from './GridInfoCustomer';
 import GridTableProduct from './GridTableProduct';
-//import credentials from '../../../../config/credentials';
+import credentials from '../../../../config/credentials';
 import Map from './Map.js';
 import clsx from 'clsx';
-
 
 const useStyles = makeStyles(theme => ({
   root:{
@@ -44,9 +43,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-// const mapURL = `https://maps.googleapis.com/maps/api/js?v=3.exp&key=${credentials.mapsKey}`;
-
-const mapURL = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik'
+const mapURL = `https://maps.googleapis.com/maps/api/js?v=3.exp&key=${credentials.mapsKey}`;
 
 export default function GridFather() {
   const classes = useStyles();
