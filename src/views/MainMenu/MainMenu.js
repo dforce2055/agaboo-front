@@ -11,7 +11,9 @@ import firebase from '../../config/firebase';
 import { withRouter } from 'react-router-dom';
 import Dashboard from './dashboard/Dashboard';
 import SimpleBottomNavigation from '../Footer/Footer';
-import AuthContext from './../contexts/AuthContext'
+import AuthContext from './../contexts/AuthContext';
+import Facebook from '../ButtonShare';
+
 const theme = createMuiTheme({ /* Plantilla de edicion */
   overrides: {
     MuiAppBar: {
@@ -49,13 +51,23 @@ function MainMenu(props){
     return null
   }*/
 
+  const shareUrl = String(window.location.href);
+  const title = "https://agaboodforce.web.app/";
+  
   return (
     <div>
       <MuiThemeProvider theme={theme}>
         <Navbar />
         <Dashboard></Dashboard>
+
+
+        <div>
+        <Facebook/>
+        </div>
+
+
         <footer>
-          <SimpleBottomNavigation />
+          <SimpleBottomNavigation url = { shareUrl }/>
         </footer>
 
       </MuiThemeProvider>
