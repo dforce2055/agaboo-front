@@ -77,7 +77,7 @@ const IndexMapquest = () =>{
       </Grid>
       
       <Mapquest 
-        height="80vh"
+        height="400px"
         width="100%"
         center={[lat,lng]}
         tileLayer = {'map'} //map, dark
