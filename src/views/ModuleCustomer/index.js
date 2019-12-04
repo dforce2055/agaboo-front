@@ -84,6 +84,8 @@ function DeleteUpdateUserAdmin(props) {
             alert("Por favor establezca conexion a internet.")
           }
         }
+
+        
         hideFooter();
     })
 
@@ -110,20 +112,15 @@ function DeleteUpdateUserAdmin(props) {
     setCustomers(items)
   }
 
-  let sum = 0; //Evita buscar la primera letra
   const Typeahead = (event) =>{
-    if (event.target.value) { //Suma uno si es la primera letra
-      sum++;
-    }
-    if (event.target.value && sum > 1) { //Al detectar un cambio. Va a buscar
-     CustomerController.Typeahead(event.target.value)
+    if (event) { //Al detectar un cambio. Va a buscar
+     CustomerController.Typeahead(event)
       .then((result)=>{
         setTemporalCustomers(result)
         setValidador(true) //Si es verdadero muestra lo encontrado en la db
       })
       return
     }else{
-      
       setValidador(false) //Si es falso muestra el customers original
     }
   }
@@ -131,15 +128,14 @@ function DeleteUpdateUserAdmin(props) {
   const Pagination = () => {
     setPagination(true)
   }
-
     return (
         <div>
             <Navbar/>
             <Container maxWidth='xl'>
 
             <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarCliente')}>
-      <AddIcon />
-    </Fab>
+              <AddIcon />
+            </Fab>
                 <Paper className={classes.espacio}>
                     <h1>
                         <CardHeader titleTypographyProps = {'titulo'} title="Clientes" />

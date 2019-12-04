@@ -30,9 +30,9 @@ export default function ComplexGrid(props) {
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
-                {/* <Typography gutterBottom variant="subtitle1">
-                  #{i}-{items.nombre+' '+items.apellido}
-                </Typography> */}
+                <Typography gutterBottom variant="subtitle1">
+                  {items.nombre+' '+items.apellido}
+                </Typography>
                 <Typography variant="body2" gutterBottom>
                   {items.localidad+' - '+items.calle+': '+items.altura}
                 </Typography>
