@@ -9,11 +9,8 @@ import DialogDelete from '../Delete/DialogDelete';
 import UpdateUser from '../Update/UpdateUser';
 import VisibilityClient from '../Visibility/VisibilityClient.js';
 
-function MenuItems(props) {
+function MenuItems({updateStateArray,row}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const updateStateArray=props.updateStateArray
-  const row=props.row  
   
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -65,8 +62,9 @@ function MenuItems(props) {
         />
 {/* LLAMO A DIALOG DE ELIMINAR CLIENTE */}       
         <DialogDelete
-            updateStateArray={updateStateArray}
-            cliente={row}
+          updateStateArray={updateStateArray}
+          cliente={row}
+          handleCloseMenuItem={handleClose}
         />
       </Menu>
     </div>

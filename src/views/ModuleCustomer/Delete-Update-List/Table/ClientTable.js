@@ -6,17 +6,12 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Fab from '@material-ui/core/Fab';
-import { withRouter } from "react-router-dom";
-import AddIcon from '@material-ui/icons/Add';
-//Agrego imports
 
-import CustomerController from '../../../../controllers/Customer';
+//Agrego imports
 import FullScreenDialog from '../Update/UpdateUser';
 import AlertDialog from '../Delete/DialogDelete';
 import VisibilityClient from '../Visibility/VisibilityClient';
 import { IconButton,  TextField,Button, Typography} from '@material-ui/core';
-import { hideFooter } from './../../../Footer/HideFooter';
 import MenuItems from './MenuItems';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
@@ -57,21 +52,7 @@ const useStyles = makeStyles(theme => ({
   },
   root: {
     marginBottom: theme.spacing(3),
-  },
-  fab: {
-    position: 'fixed',
-    bottom: theme.spacing(12),
-    right: theme.spacing(7),
-    zIndex: 99,
-    backgroundColor: '#3fb5a5',
-    '&:hover': {
-      backgroundColor: '#0ce8ca',
-      "@media (hover: none)": {
-        backgroundColor: "#0ce8ca"
-      },
-    },
-    boxShadow: "1px 6px 15px #9E9E9E"
-  },
+  }
 }));
 
 function customList(items,updateStateArray) {
@@ -116,7 +97,7 @@ const StyledTableCell = withStyles(theme => ({
   },
 }))(TableCell);
 
-function table(customers,updateStateArray,width) {
+function table(customers,updateStateArray,width,Pagination) {
   return(
     <div>
       {
@@ -137,6 +118,7 @@ function table(customers,updateStateArray,width) {
                   <MenuItems
                     updateStateArray={updateStateArray}
                     row={row}
+                    Pagination={Pagination}
                   />
                 </TableCell>
                   <TableCell>{row.nombre+' '+row.apellido}</TableCell>
@@ -153,38 +135,7 @@ function table(customers,updateStateArray,width) {
   )
 }
 
-function ClientTable({customers,updateStateArray,handleChangeCustomer,history}) {
-  
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(()=>{
-     if (search.buscar.length !== 0) { //Verifico que el campo de buscar este vacio
-        setValidador(true)
-      }else if(search.buscar.length === 0){
-        setValidador(false)
-      }
-
-      //Paginado de la tabla clientes.
-      if(pagination === true){ 
-        var lastPosition = customers[customers.length-1];
-        var customerPag = customers;        
-        if (lastPosition) {
-          CustomerController.getCustomerPagination(lastPosition.id)
-          .then(result=>{
-              if (result===false) {
-                return;
-              }
-              result.forEach((res) => customerPag.push(res));
-              handleChangeCustomer(customerPag)
-              setPagination(false);
-          });
-        }else{
-          setPagination(false);
-          alert("Por favor establezca conexion a internet.")
-        }
-    }//Fin de useEffect
-    
-      hideFooter();
-    });
+function ClientTable({customers,updateStateArray,handleChangeCustomer,history,Pagination}) {
 
   const [widthWindow, setWidthWindows] = React.useState(0); //Ancho de la ventana
 
@@ -193,55 +144,21 @@ function ClientTable({customers,updateStateArray,handleChangeCustomer,history}) 
       const width = document.body.clientWidth;
       setWidthWindows(width);
     };
-
-    // actualizaremos el width al montar el componente
     updateWidth();
-
-    // nos suscribimos al evento resize de window
     window.addEventListener("resize", updateWidth);
   }, []);
   
   const classes = useStyles();
-  
-
-  //Buscador 
-  const [search,setSearch] = React.useState({
-    buscar:''
-  });
-  //Valido si el campo esta vacio o no.
-  const [validador,setValidador] = React.useState(false);
-
-
-  //Paginado
-  const [pagination,setPagination] = React.useState(false);
-
-  //Copia de arreglo de clientes. Para no modificar el original
-  const [data,setData] = React.useState([]);
-  
-  const handleChange = name => event => {
-    setSearch({ ...search, [name]: event.target.value });  
-  };
-
-  function getPagination(){ 
-    setPagination(true);
-  }
 
   const inputRef = React.createRef(null);
 
   return (
     <React.Fragment>
-    <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarCliente')} inputRef={'/registrarCliente'} ref={inputRef}>
-      <AddIcon />
-    </Fab>
-    {(!validador) ? 
-        table(customers,updateStateArray,widthWindow) 
-      : 
-        table(data,updateStateArray,widthWindow) 
-    }
+    {table(customers,updateStateArray,widthWindow,Pagination)}
       <div className={classes.seeMore}>
       <MuiThemeProvider theme={themeMuiProvider}>
           <Button 
-            onClick={getPagination}
+            onClick={Pagination}
             color='primary'
             variant='contained'>
             Ver mas clientes
@@ -252,4 +169,4 @@ function ClientTable({customers,updateStateArray,handleChangeCustomer,history}) 
   );
 }
 
-export default withRouter(ClientTable);
+export default ClientTable;

@@ -93,7 +93,7 @@ const theme2 = createMuiTheme({ /* Plantilla de edicion */
 }
 });
 
-export default function IndexTable({updateStateArray,handleChangeCustomer,customers}) {
+export default function IndexTable({updateStateArray,handleChangeCustomer,customers,Pagination}) {
   const classes = useStyles();
 
   return (
@@ -107,6 +107,7 @@ export default function IndexTable({updateStateArray,handleChangeCustomer,custom
             
               <Paper className={classes.paper}>
                  <ClientTable
+                 Pagination={Pagination}
                    updateStateArray={updateStateArray}
                    handleChangeCustomer={handleChangeCustomer}
                    customers={customers}

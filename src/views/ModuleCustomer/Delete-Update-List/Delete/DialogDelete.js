@@ -54,13 +54,10 @@ const useStyles = makeStyles(theme => ({
   
 }));
 
-export default function DialogDelete(props) {
+export default function DialogDelete({handleCloseMenuItem,cliente,updateStateArray}) {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
-  const {cliente} = props; //Cliente el cual selecciono para eliminar
-  const {updateStateArray} = props; //Si se elimina, se actualiza el array de clientes
-  //const {setUpdateList} = props;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -72,9 +69,10 @@ export default function DialogDelete(props) {
 
 
   const handleCloseAceptDelete = () => {
-    CustomerController.deleteCustomer(cliente.id);
-    updateStateArray();
-    setOpen(false);
+    CustomerController.deleteCustomer(cliente.id)
+    updateStateArray()
+    handleCloseMenuItem()
+    setOpen(false)
   };
 
   return (

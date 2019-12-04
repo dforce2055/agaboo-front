@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Filters({handleChangeFilter,methodTypeahead,search}) {
+export default function Filters({Typeahead,methodTypeahead,search}) {
   const classes = useStyles();  
 
   const inputLabel = React.useRef(null);
@@ -69,11 +69,11 @@ export default function Filters({handleChangeFilter,methodTypeahead,search}) {
             input: classes.inputInput,
           }}
           inputProps={{ 'aria-label': 'search' }}
-          onChange={handleChangeFilter}
-          onKeyUp={
-            event =>{
-              methodTypeahead(search);
-          }}
+          onChange={Typeahead}
+          // onKeyUp={
+          //   event =>{
+          //     methodTypeahead(search);
+          // }}
         />
       </div>
     </Grid>
