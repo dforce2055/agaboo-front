@@ -50,13 +50,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Filters({handleChangeFilter,handleChangeCustomer,search}) {
+export default function Filters({Typeahead,search}) {
   const classes = useStyles();  
-
-  useEffect(()=>{
-    console.log("ejecuntado al cambio");
-  },[]);
-
 
   const inputLabel = React.useRef(null);
   return (
@@ -74,7 +69,11 @@ export default function Filters({handleChangeFilter,handleChangeCustomer,search}
             input: classes.inputInput,
           }}
           inputProps={{ 'aria-label': 'search' }}
-          onChange={handleChangeFilter}
+          // onChange={Typeahead}
+          onKeyUp={
+            event =>{
+              Typeahead(event.target.value);
+          }}
         />
       </div>
     </Grid>

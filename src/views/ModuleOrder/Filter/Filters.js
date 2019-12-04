@@ -54,7 +54,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Filters(props) {
   const classes = useStyles();
-  const {state,handleChangeFilter} = props;
+  const {search,handleChangeFilter} = props;
 
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -90,7 +90,7 @@ export default function Filters(props) {
         </InputLabel>
         <Select
           native
-          value={state.select}
+          value={search.select}
           onChange={handleChangeFilter('select')}
           labelWidth={labelWidth}
           inputProps={{

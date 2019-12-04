@@ -314,6 +314,32 @@ class OrderRepo extends Component {
     }
   }
 
+  Typeahead = async (intput) =>{
+      try {
+          if (!intput) throw new Error(`Error: Es necesario ingresar una palabra.`);
+
+          let newOrder = [];
+          newOrder = this.getOrders().then(result=>{
+              return result.filter(function(item) {
+                  const itemDataNombre = item.nombre.toUpperCase()
+                  // const itemDataFech_creacion= item.fecha_creacion.toUpperCase()
+                  // const itemDataFech_entrega = item.fecha_entrega.toUpperCase()
+                  const itemDataId_cliente = item.id_cliente.toUpperCase()
+                  const itemDataUbicacionDeEntrega = item.detalle_pedido.ubicacionDeEntrega.toUpperCase()
+                  // const _search = itemDataNombre+" "+itemDataFech_creacion+" "+itemDataFech_entrega+" "+itemDataId_cliente+" "+itemDataUbicacionDeEntrega
+
+                  const _search = itemDataNombre+" "+itemDataId_cliente+" "+itemDataUbicacionDeEntrega
+
+                  const text = intput.toUpperCase()
+                  return _search.indexOf(text) > -1
+              });
+          })                        
+          return newOrder
+      } catch (error) {
+          
+      }
+  }
+
 }
 
 

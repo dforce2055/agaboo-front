@@ -171,6 +171,15 @@ class CustomerController extends Component {
             console.error("Error en controller: ",error);
         }
     }
+
+    Typeahead (intput){
+        try {
+            return CustomerRepo.Typeahead(intput);
+        } catch (error) {
+            console.error("Error en el controlador al utilizar Typeahead.",error);
+            
+        }
+    }
 }
 
 export default new CustomerController();

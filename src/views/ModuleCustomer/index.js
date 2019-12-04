@@ -4,64 +4,91 @@ import IndexTable from './Delete-Update-List/Table/Index';
 import SimpleBottomNavigation from '../Footer/Footer';
 import firebase from '../../config/firebase';
 import { withRouter } from 'react-router-dom';
-import { Container,Grid,Paper,CardHeader } from '@material-ui/core';
+import { Container,Grid,Paper,CardHeader,Fab } from '@material-ui/core';
 import {MuiThemeProvider, createMuiTheme,makeStyles} from '@material-ui/core/styles';
 import InputSearch from './Delete-Update-List/Search';
 import CSS from './CSS';
 import CustomerController from '../../controllers/Customer';
-
+import AddIcon from '@material-ui/icons/Add';
+import { hideFooter } from '../Footer/HideFooter';
 
 const useStyles = makeStyles(theme => ({
     espacio:{
       marginTop: theme.spacing(2),
       boxShadow: CSS.borderShadow
-    }
+    },
+      fab: {
+      position: 'fixed',
+      bottom: theme.spacing(12),
+      right: theme.spacing(7),
+      zIndex: 99,
+      backgroundColor: '#3fb5a5',
+      '&:hover': {
+        backgroundColor: '#0ce8ca',
+        "@media (hover: none)": {
+          backgroundColor: "#0ce8ca"
+        },
+      },
+      boxShadow: "1px 6px 15px #9E9E9E"
+    },
   }));
-
-const Filter = (word,customers) =>{  
-    const newData = customers.filter(function(item){
-        const itemDataNombre = item.nombre.toUpperCase()
-        const itemDataId = item.id.toUpperCase()
-        const itemDataLocalidad = item.localidad.toUpperCase()
-        const itemDataApellido = item.apellido.toUpperCase()
-        const itemDataRubro = item.rubro.toUpperCase()
-
-        const campo = itemDataNombre+" "+itemDataId+" "+itemDataLocalidad+" "+itemDataApellido+" "+itemDataRubro
-
-        const textData = word.toUpperCase()
-        return campo.indexOf(textData) > -1
-    })
-
-    return newData;
-  }  
 
 function DeleteUpdateUserAdmin(props) {
     const classes = useStyles();
+    const [search,setSearch] = useState("");
+    const {history} = props
+    const [customers, setCustomers] = useState([]);  //todos los customers
+    const [temporalCustomers,setTemporalCustomers] = useState([]); //guardo temporalmente
+    const [validador,setValidador] = useState(false); //Atento a busqueda
+    const [pagination,setPagination] = React.useState(false);
+    const [stateArray,setStateArray] = useState(false);//Estado de la actualizacion de la lista
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(()=>{
-    if(stateArray){
-      CustomerController.getCustomers()
-        .then(value=> {
-            setCustomers(value);
-            setStateArray(false); //Finalizo el cambio
-        }).catch(error=>{
-            console.log("Error al traer el cliente: ",error);
-        })
-    }
-    if (customers.length === 0) {
+      if(stateArray){
+        console.log("customers",customers);
+        CustomerController.getCustomers()
+          .then(value=> {
+              setCustomers(value);
+              setStateArray(false); //Finalizo el cambio
+          }).catch(error=>{
+              console.log("Error al traer el cliente: ",error);
+          })
+      }
+      if (customers.length === 0) {
+        console.log("customers.length === 0");
         CustomerController.getCustomers()
         .then(value=> {
-          setCustomers(value);      
-      }).catch(error=>{
-        console.log("Error al traer el cliente: ",error);
-      })
+            setCustomers(value);      
+        }).catch(error=>{
+          console.log("Error al traer el cliente: ",error);
+        })
       }
-  })
 
-  const [customers, setCustomers] = useState([]);  //Coleccion de customers
-  const [stateArray,setStateArray] = useState(false);//Estado de la actualizacion de la lista
-  const [stateSearch,setStateSearch] = useState(false); //Registra cambios en el componente de busqueda
-  const [search,setSearch] = useState('');
+      //Paginado de la tabla clientes.
+      if(pagination === true){ 
+          var lastPosition = customers[customers.length-1];
+          var customerPag = customers;        
+          if (lastPosition) {
+            CustomerController.getCustomerPagination(lastPosition.id)
+            .then(result=>{
+                if (result===false) {
+                  return;
+                }
+                result.forEach((res) => customerPag.push(res));
+                handleChangeCustomer(customerPag)
+                setPagination(false);
+            });
+          }else{
+            setPagination(false);
+            alert("Por favor establezca conexion a internet.")
+          }
+        }
+
+        
+        hideFooter();
+    })
+
 
     let userRole = firebase.getCurrentUserRole();
     if (!firebase.getCurrentUsername()) {
@@ -76,23 +103,39 @@ function DeleteUpdateUserAdmin(props) {
     }
 
   const updateStateArray = () => {  //Permite la actualizacion la lista
+    console.log("se ejecuto");
     setStateArray(true)
   }
 
   const handleChangeCustomer = items =>{
-      setCustomers(items)
+    console.log("handleChangeCustomer= ",items);
+    setCustomers(items)
   }
 
-  const handleChangeFilter = (event) =>{
-    console.log(event.target.value);
-    
-    setSearch(event.target.value)
+  const Typeahead = (event) =>{
+    if (event) { //Al detectar un cambio. Va a buscar
+     CustomerController.Typeahead(event)
+      .then((result)=>{
+        setTemporalCustomers(result)
+        setValidador(true) //Si es verdadero muestra lo encontrado en la db
+      })
+      return
+    }else{
+      setValidador(false) //Si es falso muestra el customers original
+    }
   }
 
+  const Pagination = () => {
+    setPagination(true)
+  }
     return (
         <div>
             <Navbar/>
             <Container maxWidth='xl'>
+
+            <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarCliente')}>
+              <AddIcon />
+            </Fab>
                 <Paper className={classes.espacio}>
                     <h1>
                         <CardHeader titleTypographyProps = {'titulo'} title="Clientes" />
@@ -100,18 +143,28 @@ function DeleteUpdateUserAdmin(props) {
                 </Paper>
                 <Grid item container justify="flex-end" alignItems="baseline">
                     <InputSearch
-                        handleChangeFilter={handleChangeFilter}
-                        handleChangeCustomer={handleChangeCustomer}
+                        Typeahead={Typeahead}
                         search={search}
                     />
                 </Grid>
                 <br/>
                 <Grid item>
+                  {
+                    (!validador) ? 
                     <IndexTable
+                        Pagination={Pagination}
                         handleChangeCustomer={handleChangeCustomer}
                         updateStateArray={updateStateArray}
                         customers={customers}
                     />
+                    :
+                    <IndexTable
+                        Pagination={Pagination}
+                        handleChangeCustomer={handleChangeCustomer}
+                        updateStateArray={updateStateArray}
+                        customers={temporalCustomers}
+                    />
+                  }
                 </Grid>
             </Container>
             <footer style={{marginTop:'65px'}}>

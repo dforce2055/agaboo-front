@@ -6,7 +6,7 @@ import SimpleBottomNavigation from '../Footer/Footer';
 import {MuiThemeProvider, createMuiTheme ,makeStyles} from '@material-ui/core/styles';
 import { Paper,CardHeader,Grid } from '@material-ui/core';
 import IndexTable from './Table/index.js';
-import Filter from './Filter/index.js';
+import Filters from './Filter/index.js';
 import OrderController from '../../controllers/Order.js';
 
 
@@ -23,11 +23,11 @@ function OrderReady(props) {
     const classes = useStyles();
     const [orderFilters,setOrderFilters] = useState([]);
     const [orders,setOrders] = useState([]);
-    const [state, setState] = React.useState({input:'',select:''});
+    const [search, setSearch] = React.useState({input:'',select:''});
     const [updateList,setUpdateList] = React.useState(false);
-
-    //Se realizara la query para poder pasar la informacion a sus hijos
-
+    const [temporalOrders,setTemporalOrders] = React.useState([]); //Donde matendre el resultado de la busqueda
+    const [validador,setValidador] = React.useState(false);
+    
     React.useEffect(()=>{//Si cambio de estado un pedido se recargara la pagina
         if (updateList) {
             OrderController.getOrders()
@@ -41,8 +41,8 @@ function OrderReady(props) {
     })
 
     React.useEffect(()=>{
-       if (state.select !== '') {
-        OrderController.filterByState(state.select)
+       if (search.select !== '') {
+        OrderController.filterByState(search.select)
             .then(result=>{
                setOrders(result)
             })
@@ -55,7 +55,7 @@ function OrderReady(props) {
             console.log("SLDKNFGKLSADJGLÑASGÑLARGÑ{");
             
         }
-    },[state]);
+    },[search]);
   
   const ChangeOrders = newOrder =>{
       setOrders(newOrder);
@@ -65,8 +65,21 @@ function OrderReady(props) {
       setUpdateList(true)
   }
   const handleChangeFilter = name => event => {
-    setState({...state,[name]:event.target.value});
+    setSearch({...search,[name]:event.target.value});
   };
+
+  const Typeahead = (string) =>{
+      if (string) {
+          OrderController.Typeahead(string)
+            .then(result=>{
+                console.log(result);
+                setTemporalOrders(result)
+                setValidador(true)
+            })
+      } else {
+          setValidador(false)
+      }
+  }
   
     if (!firebase.getCurrentUsername()) {
         // not logged in
@@ -90,22 +103,28 @@ function OrderReady(props) {
                 container 
                 direction="row" 
                 justify="flex-end" 
-                alignItems="baseline" 
-            >
-                <Filter
-                    state={state}
-                    setState={setState}
+                alignItems="baseline">
+                <Filters
+                    Typeahead={Typeahead}
+                    search={search}
                     handleChangeFilter={handleChangeFilter}
                 />
             </Grid> 
             </div>         
 
             <Paper className={classes.espacio}>
-                <IndexTable
-                    orders={orders}
-                    handleChangeFilter={handleChangeFilter}
-                    updateArray={updateArray}
-                />
+                {
+                    (!validador) ? 
+                        <IndexTable
+                            orders={orders}
+                            handleChangeFilter={handleChangeFilter}
+                            updateArray={updateArray}/>
+                    :
+                        <IndexTable
+                            orders={temporalOrders}
+                            handleChangeFilter={handleChangeFilter}
+                            updateArray={updateArray}/>
+                }
             </Paper>
             <footer>
                 <SimpleBottomNavigation/>

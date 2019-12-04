@@ -239,6 +239,16 @@ class OrderController extends Component {
       
     }
   }
+
+  Typeahead (intput){
+    try {
+        return OrderRepo.Typeahead(intput);
+    } catch (error) {
+        console.error("Error en el controlador al utilizar Typeahead.",error);
+        
+    }
+  } 
+
 }
 
 export default new OrderController();
