@@ -37,9 +37,27 @@ const Filter = (word,customers) =>{
 
 function DeleteUpdateUserAdmin(props) {
     const classes = useStyles();
+    const [search,setSearch] = useState("");
+    
+    const [customers, setCustomers] = useState([]);  //todos los customers
+    const [temporalCustomers,setTemporalCustomers] = useState([]); //guardo temporalmente
+    const [validador,setValidador] = useState(true); //Atento a busqueda
+
+    const [stateArray,setStateArray] = useState(false);//Estado de la actualizacion de la lista
 
     useEffect(()=>{
+      console.log("customers.length === 0");
+        CustomerController.getCustomers()
+        .then(value=> {
+          setCustomers(value);      
+      }).catch(error=>{
+        console.log("Error al traer el cliente: ",error);
+      })
+    },[])
+    
+    useEffect(()=>{
     if(stateArray){
+      console.log("customers",customers);
       CustomerController.getCustomers()
         .then(value=> {
             setCustomers(value);
@@ -48,20 +66,14 @@ function DeleteUpdateUserAdmin(props) {
             console.log("Error al traer el cliente: ",error);
         })
     }
-    if (customers.length === 0) {
-        CustomerController.getCustomers()
-        .then(value=> {
-          setCustomers(value);      
-      }).catch(error=>{
-        console.log("Error al traer el cliente: ",error);
-      })
-      }
+
+    if (search.length !== 0) {
+      setValidador(true)
+    }else{
+      setValidador(false)
+    }
   })
 
-  const [customers, setCustomers] = useState([]);  //Coleccion de customers
-  const [stateArray,setStateArray] = useState(false);//Estado de la actualizacion de la lista
-  const [stateSearch,setStateSearch] = useState(false); //Registra cambios en el componente de busqueda
-  const [search,setSearch] = useState('');
 
     let userRole = firebase.getCurrentUserRole();
     if (!firebase.getCurrentUsername()) {
@@ -76,17 +88,31 @@ function DeleteUpdateUserAdmin(props) {
     }
 
   const updateStateArray = () => {  //Permite la actualizacion la lista
+    console.log("se ejecuto");
     setStateArray(true)
   }
 
   const handleChangeCustomer = items =>{
-      setCustomers(items)
+    console.log("handleChangeCustomer= ",items);
+    setCustomers(items)
   }
 
   const handleChangeFilter = (event) =>{
-    console.log(event.target.value);
-    
-    setSearch(event.target.value)
+        setSearch(event.target.value)
+  }
+
+  const methodTypeahead = (inf) => {
+    let arr = []
+    if (inf) {
+     CustomerController.Typeahead(inf)
+      .then((result)=>{
+        console.log("result",result);
+        setTemporalCustomers(result)
+      })
+      console.log("temporalCustomers",temporalCustomers);
+      return
+    }
+    return arr;
   }
 
     return (
@@ -101,17 +127,26 @@ function DeleteUpdateUserAdmin(props) {
                 <Grid item container justify="flex-end" alignItems="baseline">
                     <InputSearch
                         handleChangeFilter={handleChangeFilter}
-                        handleChangeCustomer={handleChangeCustomer}
+                        methodTypeahead={methodTypeahead}
                         search={search}
                     />
                 </Grid>
                 <br/>
                 <Grid item>
+                  {
+                    (!validador) ? 
                     <IndexTable
                         handleChangeCustomer={handleChangeCustomer}
                         updateStateArray={updateStateArray}
                         customers={customers}
                     />
+                    :
+                    <IndexTable
+                        handleChangeCustomer={handleChangeCustomer}
+                        updateStateArray={updateStateArray}
+                        customers={temporalCustomers}
+                    />
+                  }
                 </Grid>
             </Container>
             <footer style={{marginTop:'65px'}}>

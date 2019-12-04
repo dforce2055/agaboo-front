@@ -97,8 +97,8 @@ function customList(items,updateStateArray) {
     {items.map((item,index)=>(
       <div>
       <br/>
-      <Divider key={item.id} />
-      <ComplexGrid  items={item} i={index+1} updateStateArray={updateStateArray}/>
+      <Divider/>
+      <ComplexGrid  items={item} i={index} updateStateArray={updateStateArray}/>
       <br/>
       </div>
     ))}
@@ -131,8 +131,8 @@ function table(customers,updateStateArray,width) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {customers.map(row => (
-                <TableRow key={row.id}>
+              {customers.map((row,index) => (
+                <TableRow key={index}>
                 <TableCell>
                   <MenuItems
                     updateStateArray={updateStateArray}
@@ -167,7 +167,8 @@ function ClientTable({customers,updateStateArray,handleChangeCustomer,history}) 
       if(pagination === true){ 
         var lastPosition = customers[customers.length-1];
         var customerPag = customers;        
-        CustomerController.getCustomerPagination(lastPosition.id)
+        if (lastPosition) {
+          CustomerController.getCustomerPagination(lastPosition.id)
           .then(result=>{
               if (result===false) {
                 return;
@@ -176,6 +177,10 @@ function ClientTable({customers,updateStateArray,handleChangeCustomer,history}) 
               handleChangeCustomer(customerPag)
               setPagination(false);
           });
+        }else{
+          setPagination(false);
+          alert("Por favor establezca conexion a internet.")
+        }
     }//Fin de useEffect
     
       hideFooter();

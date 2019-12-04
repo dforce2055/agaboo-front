@@ -81,7 +81,8 @@ function AddressForm(props) {
       label:values.nombre+' '+values.apellido+' ('+values.id+') ',
       eliminado:false,
     }
-    CustomerController.addCustomer(data)    
+
+    CustomerController.addCustomer(data)
     handleCloseDialog();
   }
 
