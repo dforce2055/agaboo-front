@@ -25,6 +25,7 @@ import LoaderScreen from './views/LoaderScreen/LoaderScreen';
 import AccountStatus from './views/ModuleOrder/AccountStatus/index';
 import Service from './views/ModuleService/Index.js'
 import OrderDetail from './views/ModuleOrder/Table/OrderDetail/index'
+import newCustomer from './views/ModuleCustomer/newCustomer';
 const theme = createMuiTheme();
 
 
@@ -49,6 +50,7 @@ export default function App() {
                 <Route path= "/mainMenu" component={MainMenu} />
                 <Route path="/registrar-usuario" component={CreateUserAdmOK} />
                 <Route path="/usuarios" component={ListUsers} />
+                <Route path="/usuarios-new" component={newCustomer} />
                 <Route path= "/tablaClientes" component={DeleteUpdateUserAdmin} />
                 <Route path= "/registrarCliente" component={CreateUserAdm} />
                 <Route path= "/createProduct" component={indexCreateProduct} />
