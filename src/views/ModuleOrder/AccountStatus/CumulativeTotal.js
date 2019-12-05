@@ -111,7 +111,7 @@ export default function CumulativeTotal(props) {
   return (
     <MuiThemeProvider theme={theme}>
       <div className={classes.root2}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} direction="row" justify="space-around" alignItems="center">
 
           <Grid item lg={3} sm={6} xl={3} xs={12}>
             <TotalProgress values={percentage}/>

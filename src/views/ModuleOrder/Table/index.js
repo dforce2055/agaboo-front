@@ -9,11 +9,12 @@ import {
   Divider
 } from '@material-ui/core';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import OrderController from '../../../controllers/Order.js';
 import TableOrders from './TableOrders.js';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { withRouter } from "react-router-dom";
+import firebase from '../../../config/firebase';
+
 const useStyles = makeStyles(theme => ({
   actions: {
     justifyContent: 'flex-end'
@@ -34,34 +35,36 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const IndexTable = props => {
-
   const classes = useStyles();
   const {history} = props;
-  React.useEffect(()=>{
-    if (loadData) {
-      OrderController.getOrders()
-        .then(result =>{
-          setOrders(result);
-          setLoadData(false);
-        }); 
-      setLoadData(false);
+  const {
+    loadData,
+    orders,
+    updateArray,
+    } = props
+  let userRole = checkRoleAdmin();
+
+  async function checkRoleAdmin(){
+    
+    let role = await firebase.getCurrentUserRole();
+
+    if(role==="ADMIN"){
+      return true;
+    }else if(role==="LOGISTICS"){
+      return false;
     }
-  });
-
-  const [loadData,setLoadData] = useState(true);
-  const [orders,setOrders] = useState([]);
-
-  const updateArray = () => {
-    setLoadData(true);
   }
 
   return (
     <React.Fragment>
-    <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarPedido')} >
-      <AddIcon />
-    </Fab> 
+      {userRole ? 
+        <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/registrarPedido')} >
+          <AddIcon />
+        </Fab> : ""
+      }
+    
       <Card>
-        <Divider />
+        <Divider/>
         <CardContent>
           <TableOrders
             orders={orders}
@@ -73,9 +76,9 @@ const IndexTable = props => {
           <Button
             color="primary"
             size="small"
-            variant="text"
+            variant="outlined"
           >
-            View all <ArrowRightIcon />
+           Ver mas <ArrowRightIcon />
           </Button>
         </CardActions>
       </Card>

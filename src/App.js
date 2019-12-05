@@ -1,11 +1,12 @@
 import React, { useState, useEffect} from 'react';
+import AuthContextProvider from './views/contexts/AuthContext';
 import './App.css';
 import { BrowserRouter, Route  } from "react-router-dom";
 //import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import HomePage from "./views/HomePage/HomePage";
 import MainMenu from "./views/MainMenu/MainMenu";
 import LogIn from './views/LogIn/Login';
-import DeleteUpdateUserAdmin from "./views/ModuleCustomer/Delete-Update-List/index";
+import DeleteUpdateUserAdmin from "./views/ModuleCustomer/index";
 import * as serviceWorker from './serviceWorker';
 import CreateUserAdm from './views/ModuleCustomer/Create/index'; //Componente para registrar un nuevo cliente¿
 import CreateUserAdmOK from './views/ModuleUser/Create/index';
@@ -23,8 +24,10 @@ import LoaderScreen from './views/LoaderScreen/LoaderScreen';
 
 import AccountStatus from './views/ModuleOrder/AccountStatus/index';
 import Service from './views/ModuleService/Index.js'
-import CustomizedTables from './views/ModuleOrder/Table/Add-ID/ProductListOrder';
+import OrderDetail from './views/ModuleOrder/Table/OrderDetail/index'
+import newCustomer from './views/ModuleCustomer/newCustomer';
 const theme = createMuiTheme();
+
 
 
 export default function App() {
@@ -39,6 +42,7 @@ export default function App() {
   return firebaseInitialized !== false ? (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
+      <AuthContextProvider>
         <BrowserRouter>
             <React.Fragment>
                 <Route path="/" component={HomePage} exact/>
@@ -46,6 +50,7 @@ export default function App() {
                 <Route path= "/mainMenu" component={MainMenu} />
                 <Route path="/registrar-usuario" component={CreateUserAdmOK} />
                 <Route path="/usuarios" component={ListUsers} />
+                <Route path="/usuarios-new" component={newCustomer} />
                 <Route path= "/tablaClientes" component={DeleteUpdateUserAdmin} />
                 <Route path= "/registrarCliente" component={CreateUserAdm} />
                 <Route path= "/createProduct" component={indexCreateProduct} />
@@ -53,12 +58,12 @@ export default function App() {
                 <Route path= "/registrarPedido" component={CreateOrder} />
                 <Route path= "/pedidosListos" component={OrderReady} />
                 <Route path= "/eliminarPedidos" component={DeleteOrder} />
-                <Route path = "/rellenarPedido" component={CustomizedTables}/>
                 <Route path = "/EstadoDeCuenta" component={AccountStatus}/>
                 <Route path = "/servicios" component={Service}/>
-
+                <Route path = "/orderDetail" component={OrderDetail}/>
             </React.Fragment>
         </BrowserRouter>
+      </AuthContextProvider>
     </MuiThemeProvider>
     ) : <LoaderScreen/>
 }

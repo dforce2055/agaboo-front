@@ -128,6 +128,7 @@ export default function TableAccount(props) {
               </Td>
               <Td>
                 <DialogPayment 
+                  estado = {pedido.estado}
                   id_pedido={pedido.id_pedido} 
                   handleOpenReload={handleOpenReload} //Si acepta cobrar el pedido, se recarga el "Total Acumulado"
                   handlesetLoadOrder={handlesetLoadOrder} //Si acepta el eliminar se actualizara el array

@@ -1,10 +1,11 @@
-import React from 'react';
+import React ,{ useContext, useEffect } from 'react';
 import { Typography, Paper, Avatar, Button } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { withRouter } from 'react-router-dom';
 import firebase from '../../config/firebase';
 import userController from '../../controllers/User';
+import { AuthContext } from '../contexts/AuthContext';
 
 
 const styles = theme => ({
@@ -41,11 +42,15 @@ const styles = theme => ({
 
 function SignIn(props) {
     const { classes } = props;
+    const { usuarioValidado, setUsuarioValidado } = useContext(AuthContext);
 
     // const [email, setEmail] = useState('');
     // const [password, setPassword] = useState('');
 
-
+    useEffect(() => {
+        setUsuarioValidado({ nombre: 'Diego', apellido: 'Pérez', role: 'USER' });
+        console.log('Usiario Validado => ', usuarioValidado);
+    }, []);
     return (
         <main className={classes.main}>
             <Paper className={classes.paper}>
@@ -125,10 +130,10 @@ function SignIn(props) {
             // verifico que el usuario exista en la bbdd y este habilitado
             userController.getUserStatusAndRole(userGoogleEmail)
                 .then(async (userStatus)  => {
-                    console.log(`Estado y Rol del usuario:`);
-                    console.log(userStatus);
+                    console.log(`Estado y Rol del usuario:`);                    
 
                     if ( userStatus.estado ) {
+                        setUsuarioValidado({ estado: userStatus.estado, role: userStatus.role });
                         props.history.replace('/mainMenu');
                     } else {
                         alert("Su usuario no esta habilitado, comuniquese con el administrador");

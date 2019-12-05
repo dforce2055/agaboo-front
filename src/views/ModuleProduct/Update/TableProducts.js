@@ -9,15 +9,8 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { withRouter } from "react-router-dom";
 import { hideFooter } from './../../Footer/HideFooter';
-
-
-
+import firebase from '../../../config/firebase';
 import ProductController from '../../../controllers/Product';
-
-
-
-
-
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -71,7 +64,7 @@ const useStyles = makeStyles(theme => ({
   const {value, setValue} = props;
   const {update, setUpdate} = props;
   const {history} = props ;
-
+  let userRole = checkRoleAdmin();
   const classes = useStyles();
   const array = [] 
   const typesProduct = ["Baño Químico", "Oficina", "Boletería", "Garita"] // Hardcode de los tipos de productos
@@ -109,6 +102,16 @@ const useStyles = makeStyles(theme => ({
     }
 
     return count;
+  }
+
+  async function checkRoleAdmin(){
+    let role = await firebase.getCurrentUserRole();
+  
+    if(role==="ADMIN"){
+      return false;
+    }else if(role==="LOGISTICS"){
+      return false;
+    }
   }
 
   const [widthWindow, setWidthWindows] = React.useState(0); //Ancho de la ventana
@@ -164,9 +167,12 @@ const useStyles = makeStyles(theme => ({
                 ))}
                 </TableBody>
            </Table>
-           <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/createProduct')} >
-             <AddIcon />
-           </Fab>  
+            {userRole ?
+              <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/createProduct')} >
+                <AddIcon />
+              </Fab> : ""
+            }
+             
       </React.Fragment>         
         
     

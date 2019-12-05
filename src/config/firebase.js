@@ -3,6 +3,7 @@ import { firebaseConfig } from './firebase-config';
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firebase-firestore';
+import UserController from '../controllers/User';
 //import 'firebase-admin';
 /*
 let firebaseConfig;
@@ -20,6 +21,7 @@ class Firebase {
         this.db = app.firestore();
         this.googleProvider = new app.auth.GoogleAuthProvider();
         //this.admin = require("firebase-admin");
+        this.userValidated = null;
     }
 
     login(email, password) {
@@ -65,6 +67,11 @@ class Firebase {
 
     getCurrentUserPhoto() {
         return this.auth.currentUser && this.auth.currentUser.photoURL
+    }
+    
+    async getCurrentUserRole() {
+        if (this.userValidated === null) this.userValidated = await UserController.getUserStatusAndRole(this.auth.currentUser.email)
+        return this.userValidated.role;
     }
 
 }

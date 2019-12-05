@@ -79,10 +79,10 @@ function ListLogistics(props){
         (width > 450) &&
             <List className={classes.footer}>
             <ListItem button onClick={logOut}> 
-                <ListItemIcon>      
+                <ListItemIcon style={{color:'#fff'}}>      
                     <HttpsTwoToneIcon/>
                 </ListItemIcon> 
-                <ListItemText primary="Cerrar Sesion" />
+                <ListItemText primary="Cerrar Sesion" style={{color:'#fff'}}/>
             </ListItem>
             </List>
     }

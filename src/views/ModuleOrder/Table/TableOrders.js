@@ -22,6 +22,7 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ButtonColorStatus from './ButtonColorStatus';
 import OrderController from '../../../controllers/Order.js';
 import ButtonOption from './ButtonOption.js';
+import TableOrdersRespon from './TableOrdersRespon.js';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -36,7 +37,18 @@ const StyledTableCell = withStyles(theme => ({
 const TableResponsive = (orders,updateArray) => {
   return(
     <React.Fragment>
-      
+      {orders.map((order,index)=>(
+      <div>
+        <br/>
+          <Divider key={index} />
+          <TableOrdersRespon  
+            order={order} 
+            i={index+1} 
+            updateArray={updateArray}
+          />
+        <br/>
+      </div>
+    ))}
     </React.Fragment>
   );
 }
@@ -59,44 +71,51 @@ const TableOrders = props =>{
   }, []);
 
   return(
-    <Table>
-      <TableHead  >
-        <TableRow hover={true}>
-            <StyledTableCell>Nro. Pedido</StyledTableCell>
-            <StyledTableCell>Cliente</StyledTableCell>
-            <StyledTableCell>Fecha Entrega</StyledTableCell>
-            <StyledTableCell>Estado</StyledTableCell>
-            <StyledTableCell>Opciones</StyledTableCell>
-        </TableRow>
-          </TableHead>
-            <TableBody>
-              {orders.map(order => (
-                <TableRow
-                  hover
-                  key={order.id}
-                >
-                  <TableCell>{order.id_pedido}</TableCell>
-                  <TableCell>{order.nombre}</TableCell>
+    <React.Fragment>
+      {
+        (widthWindow > 681) ? 
+        <Table>
+        <TableHead  >
+          <TableRow hover={true}>
+              <StyledTableCell>Nro. Pedido</StyledTableCell>
+              <StyledTableCell>Cliente</StyledTableCell>
+              <StyledTableCell>Fecha Entrega</StyledTableCell>
+              <StyledTableCell>Estado</StyledTableCell>
+              <StyledTableCell>Opciones</StyledTableCell>
+          </TableRow>
+            </TableHead>
+              <TableBody>
+                {orders.map((order,index) => (
+                  <TableRow
+                    hover
+                    key={index}
+                  >
+                    <TableCell>{order.id_pedido}</TableCell>
+                    <TableCell>{order.nombre}</TableCell>
+                    <TableCell>
+                      {moment(order.fecha_entrega).format('DD/MM/YYYY')}
+                    </TableCell>
                   <TableCell>
-                    {moment(order.fecha_entrega).format('DD/MM/YYYY')}
+                    <div>
+                      <ButtonColorStatus 
+                      status ={order.estado} />
+                    </div>
                   </TableCell>
-                <TableCell>
-                  <div>
-                    <ButtonColorStatus status ={order.estado} />
-                  </div>
-                </TableCell>
-                <TableCell>
-                    <ButtonOption 
-                      updateArray={updateArray}
-                      listado_producto = {order.listado_producto} //Listado producto entero
-                      id_pedido={order.id_pedido} //Id del pedido seleccionado
-                      estado={order.estado}
-                    />    
-                  </TableCell>
-                </TableRow>
-              ))}
-        </TableBody>
-      </Table>
+                  <TableCell>
+                      <ButtonOption 
+                        updateArray={updateArray}
+                        order={order}
+                        estado = {order.estado}
+                      />    
+                    </TableCell>
+                  </TableRow>
+                ))}
+          </TableBody>
+        </Table>
+        :
+        TableResponsive(orders,updateArray)
+      }
+    </React.Fragment>
   );
 }
 

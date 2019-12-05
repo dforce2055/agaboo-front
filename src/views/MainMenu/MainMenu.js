@@ -1,5 +1,5 @@
 //Dependencias
-import React from 'react';
+import React, { useContext } from 'react';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
 
@@ -11,6 +11,8 @@ import firebase from '../../config/firebase';
 import { withRouter } from 'react-router-dom';
 import Dashboard from './dashboard/Dashboard';
 import SimpleBottomNavigation from '../Footer/Footer';
+import AuthContext from './../contexts/AuthContext';
+import Facebook from '../ButtonShare';
 
 const theme = createMuiTheme({ /* Plantilla de edicion */
   overrides: {
@@ -34,27 +36,43 @@ const theme = createMuiTheme({ /* Plantilla de edicion */
 });
 
 function MainMenu(props){
+  //const { usuarioValidado } = useContext(AuthContext);
+  if (!firebase.getCurrentUsername()) {
+    // not logged in
+    alert('Por favor inicie sesión para acceder')
+    props.history.replace('/login')
+    return null
+  }
+
+  /*if (!usuarioValidado) {
+    // not logged in
+    alert('Por favor inicie sesión para acceder')
+    props.history.replace('/login')
+    return null
+  }*/
+
+  const shareUrl = String(window.location.href);
+  const title = "https://agaboodforce.web.app/";
   
-    
-      if (!firebase.getCurrentUsername()) {
-        // not logged in
-        alert('Por favor inicie sesión para acceder')
-        props.history.replace('/login')
-        return null
-      }
+  return (
+    <div>
+      <MuiThemeProvider theme={theme}>
+        <Navbar />
+        <Dashboard></Dashboard>
 
-        return(
-            <div>
-              <MuiThemeProvider theme={theme}>
-                 <Navbar/>
-                 <Dashboard></Dashboard>
-                <footer>
-                  <SimpleBottomNavigation/>
-                </footer>
 
-              </MuiThemeProvider>
-            </div>
-          )
+        <div>
+        <Facebook/>
+        </div>
+
+
+        <footer>
+          <SimpleBottomNavigation url = { shareUrl }/>
+        </footer>
+
+      </MuiThemeProvider>
+    </div>
+  )
 }
 
 export default withRouter(MainMenu);

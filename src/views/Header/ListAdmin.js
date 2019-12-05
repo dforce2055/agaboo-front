@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   footer: {
     marginTop: 'auto',
     marginBottom: theme.spacing(2),
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    background: 'linear-gradient(45deg, #2c7369 20%, #3fb5a5 90%)',
   },
 }));
 
@@ -112,10 +112,10 @@ function ListAdmin(props){
     (width > 450) &&
     <List className={classes.footer}>
     <ListItem button onClick={logOut}> 
-      <ListItemIcon>      
+      <ListItemIcon style={{color:'#fff'}}>      
       <HttpsTwoToneIcon/>
       </ListItemIcon> 
-    <ListItemText primary="Cerrar Sesion" />
+    <ListItemText primary="Cerrar Sesion" style={{color:'#fff'}}/>
   </ListItem>
   </List>
   

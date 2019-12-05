@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Button,ButtonGroup,Typography} from '@material-ui/core';
 import CustomerController from '../../../controllers/Customer';
-import DialogAcept from './dialogAcept';
+import DialogAcept from './DialogAcept';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { withRouter } from "react-router-dom";
 import {MuiThemeProvider, createMuiTheme, makeStyles} from '@material-ui/core/styles';
@@ -68,7 +68,6 @@ function AddressForm(props) {
   };
 
   const handleOnClick = () => {
-    console.log('Guardando...')
     let data = {
       nombre: values.nombre,
       apellido: values.apellido,
@@ -82,7 +81,8 @@ function AddressForm(props) {
       label:values.nombre+' '+values.apellido+' ('+values.id+') ',
       eliminado:false,
     }
-    CustomerController.addCustomer(data)    
+
+    CustomerController.addCustomer(data)
     handleCloseDialog();
   }
 

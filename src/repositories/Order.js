@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import firebase from '../config/firebase';
+import moment from 'moment';
 
 const collection = '/orders';
 
@@ -18,6 +19,7 @@ class OrderRepo extends Component {
       .then(()=>{
         return true;
       })  
+      
     } catch (error) {
       console.log("Error al agregar PEDIDO a DATABASE: ", error);
     }
@@ -59,7 +61,24 @@ class OrderRepo extends Component {
       await db.where("eliminado","==",false).get()
       .then(result =>{
         list = result.docs.map(doc => doc.data())
-   })
+      })
+      //Ordeno por MESES Y AÑO
+        list.sort(function(minor,higher) {
+          if (moment(minor.fecha_entrega).format('MM/YYYY') < moment(higher.fecha_entrega).format('MM/YYYY')){
+            return 1;
+          }else{
+            return -1
+          }
+        });
+        //Ordeno por dia
+        list.sort(function(minor,higher) {
+          if (moment(minor.fecha_entrega).format('DD/MM') < moment(higher.fecha_entrega).format('DD/MM')){
+            return 1;
+          }else{
+            return -1
+          }
+        });
+        
       return list;
     } catch (error) {
       console.error("Error en base de datos: ",error);
@@ -87,14 +106,13 @@ class OrderRepo extends Component {
   }
 
   //Metodo para agregar los id's de los productos.
-  //Se utiliza en ModulsOrders/addIdOrder/ProduictListOrder
-  async saveIdsOrder(id_order,lista_productos_con_ids){
+  async saveOrderProductIds(id_order,lista_productos_con_ids){
     if (!id_order) throw new Error(`Error: No llego el id del pedido correctamente.`);
-    try {
-      let list_products_ids = { lista_productos_con_ids };
-       
+    try {       
       db.doc(id_order)
-        .update(list_products_ids);
+        .update({lista_productos_con_ids,estado:'EN CAMINO'});
+        
+      return 'EN CAMINO';
     } catch (error) {
       console.log("Error en base de datos: ",error);
     }
@@ -106,9 +124,6 @@ class OrderRepo extends Component {
     if(!fecha_ini) throw new Error('Error: No llego la fecha de inicio.')
 
     try {
-      console.log("fecha_ini",fecha_ini);
-      console.log("fecha_fin",fecha_fin);
-
       let query = {};
       await db
       .where("detalle_pedido.fecha_finalizacion",">=",fecha_ini)
@@ -168,8 +183,9 @@ class OrderRepo extends Component {
       .then(result=>{
         //FILTRO
         result.docs.map( doc =>{
-          if (doc.data().estado !== "PAGADO")
+          if (doc.data().estado === "FINALIZADO" || doc.data().estado === "ADEUDA"){          
             list.push(doc.data())
+          }
         })
       });
 
@@ -263,6 +279,65 @@ class OrderRepo extends Component {
     } catch(error){
       console.error("Error en la base de datos al devolver la suma de los chart.");
     }
+  }
+
+  async filterByState(state){
+    try {
+      if (!state) throw new Error('Error: No llego el estado a la base de datos que es necesario para su filtrado.');
+      let order = [];
+      await db.where("eliminado","==",false)
+        .get()
+        .then(result =>{
+          result.docs.map(doc =>{
+            if (doc.data().estado == state) {
+              order.push(doc.data())
+            }
+          })          
+        });        
+      return order;
+    } catch (error) {
+      console.log("Error en el controlador de pedidos",error);
+      
+    }
+  }
+
+  async changeStateOrder(id_pedido,estado){
+    if (!id_pedido) throw new Error('Error: No llego el id del pedido.')
+    if (!estado) throw new Error('Error: No llego el estado del pedido.')
+    try {
+      await db.doc(id_pedido)
+      .update({estado:estado})
+      .then(()=>{ return true })
+    } catch (error) {
+      console.log("Error en la base de datos al cambiar el estado del pedido a "+estado+" .");
+      
+    }
+  }
+
+  Typeahead = async (intput) =>{
+      try {
+          if (!intput) throw new Error(`Error: Es necesario ingresar una palabra.`);
+
+          let newOrder = [];
+          newOrder = this.getOrders().then(result=>{
+              return result.filter(function(item) {
+                  const itemDataNombre = item.nombre.toUpperCase()
+                  // const itemDataFech_creacion= item.fecha_creacion.toUpperCase()
+                  // const itemDataFech_entrega = item.fecha_entrega.toUpperCase()
+                  const itemDataId_cliente = item.id_cliente.toUpperCase()
+                  const itemDataUbicacionDeEntrega = item.detalle_pedido.ubicacionDeEntrega.toUpperCase()
+                  // const _search = itemDataNombre+" "+itemDataFech_creacion+" "+itemDataFech_entrega+" "+itemDataId_cliente+" "+itemDataUbicacionDeEntrega
+
+                  const _search = itemDataNombre+" "+itemDataId_cliente+" "+itemDataUbicacionDeEntrega
+
+                  const text = intput.toUpperCase()
+                  return _search.indexOf(text) > -1
+              });
+          })                        
+          return newOrder
+      } catch (error) {
+          
+      }
   }
 
 }

@@ -30,6 +30,7 @@ yarn.lock
 
 # config Firebase
 /src/config/firebase-config.js
+/src/config/credentials.js
 ### Firebase ###
 .idea
 **/node_modules/*

@@ -6,17 +6,58 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import MenuItem from '@material-ui/core/MenuItem';
+import {MenuItem,Grid} from '@material-ui/core';
+import {
+  MuiThemeProvider, 
+  createMuiTheme,
+   makeStyles} from '@material-ui/core/styles';
 
 //Imports agregados
 import {IconButton, Button } from '@material-ui/core';
 import CustomerController from '../../../../controllers/Customer';
 
-export default function DialogDelete(props) {
+const themeMuiProvider = createMuiTheme({
+  overrides: {
+    MuiButton: {
+      containedPrimary: {
+        backgroundColor: '#3fb5a5',
+        '&:hover': {
+          backgroundColor: '#0ce8ca',
+          "@media (hover: none)": {
+            backgroundColor: "#0ce8ca"
+          },
+        },
+      },
+      containedSecondary: {
+        backgroundColor: '#b53f3f',
+        '&:hover': {
+          backgroundColor: '#f30b0b',
+          "@media (hover: none)": {
+            backgroundColor: "#f30b0b"
+          },
+        },
+      },
+    }, 
+  }
+})
+
+const useStyles = makeStyles(theme => ({
+  buttonLeft: {
+    marginRight:'2px',
+    marginLeft:'13px',
+    marginTop: theme.spacing(3),
+  },
+  buttonRight: {
+    marginLeft:'20px',
+    marginTop: theme.spacing(3),
+  },
+  
+}));
+
+export default function DialogDelete({handleCloseMenuItem,cliente,updateStateArray}) {
+  const classes = useStyles();
+
   const [open, setOpen] = React.useState(false);
-  const {cliente} = props; //Cliente el cual selecciono para eliminar
-  const {updateStateArray} = props; //Si se elimina, se actualiza el array de clientes
-  //const {setUpdateList} = props;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -28,9 +69,10 @@ export default function DialogDelete(props) {
 
 
   const handleCloseAceptDelete = () => {
-    CustomerController.deleteCustomer(cliente.id);
-    updateStateArray();
-    setOpen(false);
+    CustomerController.deleteCustomer(cliente.id)
+    updateStateArray()
+    handleCloseMenuItem()
+    setOpen(false)
   };
 
   return (
@@ -39,7 +81,7 @@ export default function DialogDelete(props) {
         <ListItemIcon>
          <DeleteIcon />
         </ListItemIcon>
-        Eliminar pedido
+        Eliminar cliente
       </MenuItem>
       <Dialog
         open={open}
@@ -47,19 +89,40 @@ export default function DialogDelete(props) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"¿Está seguro que desea eliminar el cliente seleccionado?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"¿Eliminar este cliente?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             El cliente seleccionado será eliminado del sistema.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancelar
-          </Button>
-          <Button onClick={handleCloseAceptDelete} color="primary" autoFocus>
-            Aceptar
-          </Button>
+
+          <MuiThemeProvider theme={themeMuiProvider}>
+          <Grid container direction="row" justify="space-around" alignItems="center">
+            <Grid item >
+              <Button 
+              autoFocus 
+              className={classes.buttonLeft}
+              onClick={handleClose} 
+              color="secondary"
+              variant='contained'
+              >
+                cancelar
+              </Button>
+            </Grid>
+          <Grid item>
+            <Button 
+              className={classes.buttonRight}
+              onClick={handleCloseAceptDelete} 
+              color="primary"
+              variant='contained'
+            >
+              aceptar
+            </Button>
+          </Grid>
+          </Grid>
+        </MuiThemeProvider>
+
         </DialogActions>
       </Dialog>
     </div>

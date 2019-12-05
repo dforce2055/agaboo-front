@@ -21,7 +21,8 @@ class CustomerRepo extends Component {
     getCustomerAll = async () =>{
         try {
             let coleccion = await firebase.db.collection(collection).where('eliminado','==', false).get();
-            let clientes = coleccion.docs.map(doc => doc.data());return clientes;
+            let clientes = coleccion.docs.map(doc => doc.data());
+            return clientes;
         } catch (error) {
             throw new Error();
         }
@@ -185,6 +186,32 @@ class CustomerRepo extends Component {
             return customer;
         } catch (error) {
             console.log("Error en la base de datos:", error);
+        }
+    }
+
+    Typeahead = async (intput) =>{
+        try {
+            if (!intput) throw new Error(`Error: Es necesario ingresar una palabra.`);
+
+            let newCustomers = [];
+            let newCustomers2 = [];
+            newCustomers2=this.getCustomerAll().then(result=>{
+               return result.filter(function(item) {
+                    const itemDataNombre = item.nombre.toUpperCase()+" "+item.apellido.toUpperCase()
+                    const itemDataId = item.id.toUpperCase()
+                    const itemDataLocalidad = item.localidad.toUpperCase()
+                    const itemDataRubro = item.rubro.toUpperCase()
+                    const itemDataEmail = item.email.toUpperCase()
+
+                    const _search = itemDataNombre+" "+itemDataId+" "+itemDataLocalidad+" "+itemDataRubro+" "+itemDataEmail
+
+                    const text = intput.toUpperCase()
+                    return _search.indexOf(text) > -1
+                });
+            })                        
+            return newCustomers2
+        } catch (error) {
+            
         }
     }
 }
