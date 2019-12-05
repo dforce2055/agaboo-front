@@ -5,7 +5,6 @@ import {
   withGoogleMap,
   Marker
 } from 'react-google-maps';
-
 const deposito ={
   lat: -37.126907,
   lng: -56.914029
@@ -13,12 +12,14 @@ const deposito ={
 
 const Map = (props) =>{
   return(
+    <div>
     <GoogleMap 
     defaultZoom={14}
     defaultCenter={deposito}
     >
       <Marker position={deposito} text="Depósito ARGENBATH"/>
     </GoogleMap>
+    </div>
   );
 }
 

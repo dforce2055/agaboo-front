@@ -16,7 +16,9 @@ import {
   TableHead,
   TableRow,
   Tooltip,
-  TableSortLabel
+  TableSortLabel,
+  Grid,
+  Typography
 } from '@material-ui/core';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ButtonColorStatus from './ButtonColorStatus';
@@ -37,6 +39,23 @@ const StyledTableCell = withStyles(theme => ({
 const TableResponsive = (orders,updateArray) => {
   return(
     <React.Fragment>
+    <Grid
+      style={{backgroundColor:'#318377'}}
+      container 
+      direction="row" 
+      justify="space-around" 
+      alignItems="center"
+      spacing={2}
+      >
+        <Grid item>
+       <Typography 
+        style={{background:'#318377'}}
+        align='center'
+        variant='h6'>
+        <spam style={{color:'#fff'}}>Informacion</spam>
+      </Typography>
+      </Grid>
+      </Grid>
       {orders.map((order,index)=>(
       <div>
         <br/>

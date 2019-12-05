@@ -7,7 +7,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 // import ButtonColorStatus from './ButtonColorStatus.js';
 import Box from '@material-ui/core/Box';
 
-export default function GridRightResponsive({data,i,addIdForIndex,orderComplete,valueForIndex,disabledText}) {
+export default function GridTableProductRespon({data,i,addIdForIndex,orderComplete,valueForIndex,disabledText}) {
 
   return (
     <div>
