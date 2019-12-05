@@ -22,11 +22,18 @@ const useStyles = makeStyles(theme => ({
     },
   
 
-  dialog : {
-    background : 'red',
-
+   buttonsDialogDelete :{
+    backgroundColor : '#e41313' ,
+    color : '#f5f5f5'
+  },
+  buttonsDialogUpdate :{
+    backgroundColor : '#3fb5a5' ,
+    color : '#f5f5f5'
+  },
+  dialogActions : {
+    justifyContent : 'center' ,
+    marginTop : 50
   }
-  
     
     }));
 
@@ -69,7 +76,8 @@ const typeProduct = [
 
 export default function DialogUpdateProduct(props) {
   const [open, setOpen] = useState(props.setDialog);
-  const [openAlert, setOpenAlert] = useState(false) 
+  const [openAlert, setOpenAlert] = useState(false);
+  const [openEmpty, setOpenEmpty] = useState(false); 
   const [values, setValues] = useState(props.values);
   const [code, setCode] = useState(-1);
   const {getCode} = props;  
@@ -105,10 +113,13 @@ export default function DialogUpdateProduct(props) {
     setCode(getCode);
     const product = await ProductController.getProductByCode(code);
     setValues(product);
+    if( product === -1) {
+      setOpenEmpty(true);
+    }else
     if(  product !== 1  ) {
       setOpen(true)
     } else {
-      setOpenAlert(true);
+      setOpenAlert(true); 
     }
   }
 
@@ -148,7 +159,8 @@ export default function DialogUpdateProduct(props) {
 
   const handleCloseAlert = () =>{
     setSearch("");
-    setOpenAlert(false) ;
+    setOpenEmpty(false);
+    setOpenAlert(false);
   };
 
   const handleOpenDelete  = () => {
@@ -176,7 +188,7 @@ export default function DialogUpdateProduct(props) {
       
       
       <Dialog 
-        //className = {}
+        
         open={open} 
         aria-labelledby="form-dialog-title"
         onClose={handleClose}
@@ -187,9 +199,9 @@ export default function DialogUpdateProduct(props) {
 
       >
         <DialogTitle id="form-dialog-title" alignItems = {"center"} >Modificar Producto</DialogTitle>
-        <DialogContent>
-            <Grid container spacing = {1} justify = { "center" } className = { "grid"} >
-             <Grid item xs = {6} xl = {6} alignItems = {"center"} md = {3} justify-content = {'initial'} >
+        <DialogContent >
+            <Grid container spacing = {1}  className = { "grid"} md = {3} >
+             <Grid md = {6} >
 
                 <TextField
                     id="type-product"
@@ -270,16 +282,19 @@ export default function DialogUpdateProduct(props) {
                  </TextField>
                 </Grid> 
             </Grid>
-            <DialogActions calssName = {classes.buttonsDialog}>
-          <Button  onClick = {updateProduct}color="primary">
+            <DialogActions  className = {classes.dialogActions}>
+          <Button  className = {classes.buttonsDialogUpdate}
+          onClick = {updateProduct}>
             Modificar
           </Button>
-          <Button 
-          onClick = {handleOpenDelete} color="primary">
-            Eliminar
-          </Button>
-          <Button onClick={handleClose} color="primary">
+          
+          <Button className = {classes.buttonsDialogUpdate }
+          onClick={handleClose} >
             Cancelar
+          </Button>
+          <Button className = {classes.buttonsDialogDelete}
+          onClick = {handleOpenDelete} >
+            Eliminar
           </Button>
         </DialogActions>
         </DialogContent>
@@ -299,6 +314,26 @@ export default function DialogUpdateProduct(props) {
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             El producto no existe intente de nuevo.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseAlert} color="primary" autoFocus>
+            Aceptar
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+{/* -------------------------------------------------------------DIALOG EMPTY FIELD---------------------------------------------- */}      
+      <Dialog
+        open={openEmpty}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Campo vacío"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Debe ingresar un código.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

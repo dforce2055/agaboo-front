@@ -56,18 +56,23 @@ class ProductController extends Component {
 
     }
     getProductByCode = async (code) => {
-        if (!code) throw new Error(`Error: el Código de producto es obligatorio`);
-        try {
-            let product = await ProductRepo.getProductByCode(code);
-            if ( product ) {
-                return product
-            } else {
-                console.log(`El code: ${ code } de Producto no se encuentra`);
-                return 1;
+        if (!code || code === -1 ) { // No se porque la función se llama dos veces, pero así funciona
+            console.log("Entro en el if de getProduct : " , code);
+            return -1 }
+        else{
+            try {
+                let product = await ProductRepo.getProductByCode(code);
+                if ( product ) {
+                    return product
+                } else {
+                    console.log(`El code: ${ code } de Producto no se encuentra`);
+                    return 1;
+                }
+            } catch(error) {
+                throw new Error();
             }
-        } catch(error) {
-            throw new Error();
         }
+        
 
     }
 

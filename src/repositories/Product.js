@@ -78,7 +78,7 @@ class ProductRepo extends Component {
     }
 
     getProductByCode = async (code) => {
-        if (!code) throw new Error(`Error: el código de producto es obligatorio`);
+        if (!code) return -1 ;
         let product = null ;
         await firebase.db.collection(collection)
             .where('code', '==', code)

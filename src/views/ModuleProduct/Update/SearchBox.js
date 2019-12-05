@@ -54,7 +54,6 @@ export default function SearchBox() {
   function pushEnter(e){
     if(e.key === 'Enter'){
       setGoSearch(true);
-      
     }
   }
 
