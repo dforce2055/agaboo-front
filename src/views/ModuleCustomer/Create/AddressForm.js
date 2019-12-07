@@ -6,7 +6,7 @@ import DialogAcept from './DialogAcept';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { withRouter } from "react-router-dom";
 import {MuiThemeProvider, createMuiTheme, makeStyles} from '@material-ui/core/styles';
-
+import PlaceMaps from './PlaceMaps'
 
 const themeMuiProvider = createMuiTheme({
   overrides: {
@@ -172,46 +172,11 @@ function AddressForm(props) {
               validators={['matchRegexp:^[a-zA-Z0-9.!#$%&*+/=?^_{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$']}
               errorMessages={[ 'Email no valido']}
             />
-          </Grid>      
-          <Grid item xs={12} sm={6}>
-            <TextValidator
-              onChange={handleChange('localidad')}
-              value={values.localidad}                   
-              required
-              label="Localidad"
-              fullWidth
-              variant="outlined"     
-              value={values.localidad}
-              validators={['required','matchRegexp:^[a-zA-Z ]*$']}
-              errorMessages={['Campo requerido', 'Localidad no valida']}
-            />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextValidator
-              onChange={handleChange('calle')}
-              label="Calle"
-              variant="outlined"
-              fullWidth
-              required
-              value={values.calle}
-              validators={['required','matchRegexp:[0-9a-zA-Z]+$']}
-              errorMessages={['Campo requerido', 'Calle no valida']}
-            />
+          <Grid item xs={12}>
+            <PlaceMaps/>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextValidator
-              onChange={handleChange('altura')}
-              variant="outlined"
-              label="Altura"
-              fullWidth
-              required
-              value={values.altura}
-              type='number'
-              validators={['required']}
-              errorMessages={['Campo requerido']}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <TextValidator            
               variant="outlined"
               label="Celular"
