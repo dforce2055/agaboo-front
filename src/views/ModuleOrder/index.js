@@ -8,7 +8,6 @@ import { Paper,CardHeader,Grid } from '@material-ui/core';
 import IndexTable from './Table/index.js';
 import Filters from './Filter/index.js';
 import OrderController from '../../controllers/Order.js';
-import PlaceMaps from './PlaceMaps';
 
 const useStyles = makeStyles(theme => ({
     root:{
@@ -110,8 +109,6 @@ function OrderReady(props) {
                 />
             </Grid> 
             </div>  
-
-            <PlaceMaps/>    
 
             <Paper className={classes.espacio}>
                 {

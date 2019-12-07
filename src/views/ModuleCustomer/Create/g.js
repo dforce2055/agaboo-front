@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
-import credentials from '../../config/credentials';
 
 function loadScript(src, position, id) {
   if (!position) {
@@ -21,8 +20,6 @@ function loadScript(src, position, id) {
   position.appendChild(script);
 }
 
-const placeKey = `https://maps.googleapis.com/maps/api/js?key=${credentials.placeKey}&libraries=places`;
-
 const autocompleteService = { current: null };
 
 const useStyles = makeStyles(theme => ({
@@ -32,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function PlaceMaps() {
+export default function GoogleMaps() {
   const classes = useStyles();
   const [inputValue, setInputValue] = React.useState('');
   const [options, setOptions] = React.useState([]);
@@ -41,7 +38,7 @@ export default function PlaceMaps() {
   if (typeof window !== 'undefined' && !loaded.current) {
     if (!document.querySelector('#google-maps')) {
       loadScript(
-        placeKey,
+        'https://maps.googleapis.com/maps/api/js?key=AIzaSyBwRp1e12ec1vOTtGiA4fcCt2sCUS78UYc&libraries=places',
         document.querySelector('head'),
         'google-maps',
       );
