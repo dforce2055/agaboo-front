@@ -85,13 +85,13 @@ export default function GridFather() {
               </Paper>
             </Grid>
 
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <h1>Ubicacion de entrega</h1>
-                {/* Si lo quieren eliminar, tienen que eliminar tambien los script que estan en public/index.html. Hay dos script de mapquest */}
+                {/* Si lo quieren eliminar, tienen que eliminar tambien los script que estan en public/index.html. Hay dos script de mapquest
                 <IndexMapquest/> 
               </Paper>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Container>
       </main>

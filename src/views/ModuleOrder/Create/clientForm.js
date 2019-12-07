@@ -30,6 +30,13 @@ function clientExist(seleccionado2) {
        readOnly
       />
     </div>
+  <div className="lastName">   
+    <label htmlFor="lastName">Celular</label> 
+    <input
+     value={seleccionado.celular}
+     readOnly
+    />
+  </div>
   <div className="email">
     <label htmlFor="email">Email</label>
     <input
@@ -37,17 +44,10 @@ function clientExist(seleccionado2) {
       readOnly
     />
   </div>
-  <div className="firstName">   
-    <label htmlFor="firstName">Celular</label> 
-    <input
-     value={seleccionado.celular}
-     readOnly
-    />
-  </div>
   <div className="password">
-    <label htmlFor="location">Localidad</label>
+    <label htmlFor="location">Domicilio</label>
     <input
-      value = {seleccionado.localidad}
+      value = {seleccionado.domicilio}
       readOnly
     />
   </div>

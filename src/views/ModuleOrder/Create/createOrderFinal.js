@@ -147,12 +147,12 @@ function CreateOrderFinal(props) {
       detalle_pedido,
       monto_calculado,
       estado:'INICIAL', //Estado en cual se encuentra el pedido
-
       fecha_entrega:detalle_pedido.fecha_entrega,
+      fecha_finalizacion:detalle_pedido.fecha_finalizacion,
       nombre:cliente.nombre+' '+cliente.apellido,
       id_cliente:cliente.id,
-      ciudad:detalle_pedido.ciudad,
-      direccion:detalle_pedido.ubicacionDeEntrega,
+      ubicacionDeEntrega:detalle_pedido.ubicacionDeEntrega,
+      coordinates_ubicacionDeEntrega:detalle_pedido.coordinates_ubicacionDeEntrega,
       celular:cliente.celular,
       eliminado:false
     };   
@@ -181,7 +181,7 @@ function CreateOrderFinal(props) {
     })
       .then(estado => {
         if (estado) {
-          setValidado("Pedido realizado exitosamente");
+          setValidado("Pedido guardado exitosamente");
           //Guardo la informacion del pedido en firestore.
           OrderController.addOrder(data);
          } else {

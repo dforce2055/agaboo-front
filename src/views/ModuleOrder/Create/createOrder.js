@@ -44,8 +44,9 @@ function formulario(handleChange, value){
           
           
           <div className="password"> 
-            <label htmlFor="firstName">Responsable de pago</label> 
-            <input
+            <TextField
+              variant="outlined"
+              label="Respondasble de pago"
               placeholder="Nombre y Apellido"
               type="text"
               noValidate
@@ -54,8 +55,9 @@ function formulario(handleChange, value){
           </div>
 
           <div className="password"> 
-            <label htmlFor="lastName">Contacto en obra</label> 
-            <input
+            <TextField
+              label="Contacto en obra"
+              variant="outlined"
               placeholder="Nombre y Apellido"
               type="text"
               noValidate
@@ -64,8 +66,9 @@ function formulario(handleChange, value){
           </div>
 
           <div className="password">
-            <label htmlFor="lastName">Forma de pago</label> 
-            <input
+            <TextField
+              label="Forma de pago"
+              variant="outlined"
               placeholder="Cheque, Efectivo..."
               type="text"
               noValidate
@@ -151,17 +154,47 @@ export default function CreateOrder(props) {
     }
   });
 
-  const [values,setValues] = React.useState({
-    lugarDePago:address2,
-    coordinates_lugarDePago:coordinates2,
+  const [data,setData] = React.useState({ //guardo los datos completos
+    lugarDePago:'',
+    coordinates_lugarDePago:'',
     responsableDelPago:'',
     ContactoEnTrabajo:'',
     formaDePago:'',
     fecha_entrega: '',
     fecha_finalizacion: '',
-    ubicacionDeEntrega:address,
-    coordinates_ubicacionDeEntrega:coordinates
+    ubicacionDeEntrega:'',
+    coordinates_ubicacionDeEntrega:''
+  });
+
+    const [values,setValues] = React.useState({
+    lugarDePago:'',
+    coordinates_lugarDePago:'',
+    responsableDelPago:'',
+    ContactoEnTrabajo:'',
+    formaDePago:'',
+    fecha_entrega: '',
+    fecha_finalizacion: '',
+    ubicacionDeEntrega:'',
+    coordinates_ubicacionDeEntrega:''
     });
+
+  React.useEffect(()=>{ //Se ejecutara siempre que detecte un cambio
+    data.lugarDePago = address2
+    data.coordinates_lugarDePago = coordinates2
+
+    data.responsableDelPago = values.responsableDelPago
+    data.ContactoEnTrabajo = values.ContactoEnTrabajo
+    data.formaDePago = values.formaDePago
+    data.fecha_entrega = values.fecha_entrega
+    data.fecha_finalizacion = values.fecha_finalizacion
+
+    data.ubicacionDeEntrega = address
+    data.coordinates_ubicacionDeEntrega = coordinates
+
+    console.log("data",data);
+    
+    sessionStorage.setItem('info_detalle_pedido',JSON.stringify(data)); 
+  },[address,address2,values]);
 
     
   const handleChange = name => event => {    
@@ -170,7 +203,7 @@ export default function CreateOrder(props) {
     if (name == 'fecha_finalizacion' || name == 'fecha_entrega') {
       setLoadData(true)
     }
-    sessionStorage.setItem('info_detalle_pedido',JSON.stringify(values));    
+       
   };
 
   const handleSubmit= () =>{    

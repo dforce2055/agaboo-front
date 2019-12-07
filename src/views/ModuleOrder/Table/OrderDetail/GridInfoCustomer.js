@@ -11,10 +11,12 @@ const GridInfoCustomer = () =>{
   React.useEffect(()=>{
     if (load) {  
         setOrder(JSON.parse(sessionStorage.getItem('order_complete')));
+        sessionStorage.setItem('LatLng_order',JSON.stringify(order))
         setLoad(false);
     } 
   });
-
+  console.log(order);
+  
   return(
     <React.Fragment>
       <Divider/>
@@ -40,7 +42,7 @@ const GridInfoCustomer = () =>{
       <Grid container justify="space-between">
           Zona de entrega:
         <Grid >
-          {order.ciudad+'/'+order.direccion}
+          {order.ubicacionDeEntrega}
         </Grid>
       </Grid>
     <br/>
