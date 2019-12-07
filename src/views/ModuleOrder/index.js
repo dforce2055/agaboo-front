@@ -9,7 +9,6 @@ import IndexTable from './Table/index.js';
 import Filters from './Filter/index.js';
 import OrderController from '../../controllers/Order.js';
 
-
 const useStyles = makeStyles(theme => ({
     root:{
         flexGrow: 1,
@@ -97,7 +96,6 @@ function OrderReady(props) {
                     <CardHeader titleTypographyProps = {'titulo'}title="Pedidos" />
                 </h1>
             </Paper>
-
             <div className={classes.espacio}>
             <Grid
                 container 
@@ -110,7 +108,7 @@ function OrderReady(props) {
                     handleChangeFilter={handleChangeFilter}
                 />
             </Grid> 
-            </div>         
+            </div>  
 
             <Paper className={classes.espacio}>
                 {

@@ -1,9 +1,9 @@
 import React from 'react';
 import Navbar from '../../Header/Navigation';
-import Checkout from './createOrderFinal';
 import firebase from '../../../config/firebase';
 import SimpleBottomNavigation from '../../Footer/Footer';
 import { withRouter } from 'react-router-dom';
+import CreateOrderFinal from './CreateOrderFinal.js';
 
 function CreateOrder(props) {
     let userRole = firebase.getCurrentUserRole();
@@ -23,7 +23,7 @@ function CreateOrder(props) {
     return (
         <div className="UsersScreen">
             <Navbar/>
-            <Checkout/>
+            <CreateOrderFinal/>
             <footer>
                 <SimpleBottomNavigation/>
             </footer>

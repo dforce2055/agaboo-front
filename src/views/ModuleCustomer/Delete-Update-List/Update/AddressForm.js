@@ -6,7 +6,7 @@ import DialogAcept from './DialogAcept';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { withRouter } from "react-router-dom";
 import {MuiThemeProvider, createMuiTheme, makeStyles} from '@material-ui/core/styles';
-
+import PlaceMaps from './PlaceMaps';
 
 
 const themeMuiProvider = createMuiTheme({
@@ -58,15 +58,23 @@ function AddressForm(props) {
     setValues({ ...values, [name]: event.target.value });  
   };
 
+  const [address, setAddress] = React.useState(values.domicilio);
+  const [coordinates, setCoordinates] = React.useState({
+    lat: null,
+    lng: null
+  });
+
   const handleOnClick = () => {
     let data = {
       nombre: values.nombre,
       apellido: values.apellido,
       id: values.id,
       rubro: values.rubro,
-      calle:values.calle,
-      altura: values.altura,
-      localidad:values.localidad,
+      domicilio:address,
+      coordinates:coordinates,
+      // calle:values.calle,
+      // altura: values.altura,
+      // localidad:values.localidad,
       celular:values.celular,
       email:values.email,
     }
@@ -90,7 +98,7 @@ function AddressForm(props) {
     handleClose={handleClose}
     />
       <Typography variant="h6" gutterBottom>
-        Modifique los campos que desee cambiar.
+        Modificar campos necesarios.
       </Typography>
       
       <ValidatorForm onSubmit={handleOnClick} onError={errors =>  console.log(errors)}>    
@@ -126,19 +134,19 @@ function AddressForm(props) {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextValidator
+            <TextValidator            
               variant="outlined"
-              label="Cuit/Cuil"
+              label="Celular"
+              onChange={handleChange('celular')}
+              name="Celular"
               fullWidth
               required
-              helperText="No se puede editar este campo."
-              name="id"
-              value={values.id}
-              validators={['required', 'matchRegexp:(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]']}
-              errorMessages={['Campo requerido', 'CUIT/CUIL no valido']}
-              disabled={true}
+              value={values.celular}
+              type='number'
+              validators={['required', 'matchRegexp:^(\D)?[0-9]']}
+              errorMessages={['Campo requerido', 'Celular es invalido']}
             />
-          </Grid>
+          </Grid> 
           <Grid item xs={12} sm={6}>
             <TextValidator
               variant="outlined"
@@ -164,58 +172,29 @@ function AddressForm(props) {
               errorMessages={[ 'Email no valido']}
             />
           </Grid>      
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
+            <PlaceMaps
+              address={address}
+              setAddress={setAddress}
+              coordinates={coordinates}
+              setCoordinates={setCoordinates}
+            />
+          </Grid>
+          <Grid item xs={12}>
             <TextValidator
-              onChange={handleChange('localidad')}
-              value={values.localidad}                   
-              required
-              label="Localidad"
-              fullWidth
-              variant="outlined"     
-              value={values.localidad}
-              validators={['required','matchRegexp:^[a-zA-Z ]*$']}
-              errorMessages={['Campo requerido', 'Localidad no valida']}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextValidator      
-              onChange={handleChange('calle')}
-              label="Calle"
+              error={true}
               variant="outlined"
-              fullWidth 
-              required
-              value={values.calle}
-              validators={['required','matchRegexp:^[a-zA-Z ]*$']}
-              errorMessages={['Campo requerido', 'Calle no valida']}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextValidator   
-              onChange={handleChange('altura')}
-              variant="outlined"
-              label="Altura"
+              label="Cuit/Cuil"
               fullWidth
               required
-              value={values.altura}
-              type='number'
-              validators={['required']}
-              errorMessages={['Campo requerido']}
+              helperText="No se puede editar este campo."
+              name="id"
+              value={values.id}
+              validators={['required', 'matchRegexp:(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]']}
+              errorMessages={['Campo requerido', 'CUIT/CUIL no valido']}
+              disabled={true}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextValidator            
-              variant="outlined"
-              label="Celular"
-              onChange={handleChange('celular')}
-              name="Celular"
-              fullWidth
-              required
-              value={values.celular}
-              type='number'
-              validators={['required', 'matchRegexp:^(\D)?[0-9]']}
-              errorMessages={['Campo requerido', 'Celular es invalido']}
-            />
-          </Grid> 
 
           <ButtonGroup 
               variant="text"

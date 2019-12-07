@@ -17,7 +17,7 @@ import {
   createMuiTheme} from '@material-ui/core/styles';
 import DialogSave from './DialogSaveOrder';
 import OrderController from '../../../../controllers/Order';
-import GridRightResponsive from './GridRightRespon';
+import GridTableProductRespon from './GridTableProductRespon';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -127,7 +127,7 @@ const TableResponsive = (order,addIdForIndex,orderComplete,valueForIndex,disable
     {array.map((row,index)=>(
       <div key={index}>
         <br/>
-          <GridRightResponsive
+          <GridTableProductRespon
             data={row}
             i={index}
             addIdForIndex={addIdForIndex}
