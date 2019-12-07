@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import React from "react";
 import PlacesAutocomplete, {
   geocodeByAddress,
@@ -8,8 +7,7 @@ import {
   TextField,
   Grid,
   Container,
-  Button,
-  Typography } from '@material-ui/core';
+  Typography,MenuItem } from '@material-ui/core';
 import RoomIcon from '@material-ui/icons/Room';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -20,21 +18,39 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const List = (suggestion,hanldeChange) => {
-  // var string = suggestion.description;
-  // var stringPart = string.split(",");
-  // console.log(stringPart);
+function List(suggestion,handleChange) {
+  const stringPart = suggestion.description.split(",")
+  console.log(stringPart);
   
-  // // \d{1,2}[\,\.]{1}\d{1,2}
   return(
-    <div>
-    {/* {suggestion.description} */}
-    
-    </div>
+    <MenuItem onClick={()=>handleChange(suggestion.description)}>
+    <Grid container spacing={1}>
+          <Grid item xs={12} sm container>
+          <Grid item>
+          <RoomIcon style={{color:"#3fb5a5"}}/>
+        </Grid>
+            <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs>
+                <Typography gutterBottom variant="subtitle1">
+                  {stringPart[0]}
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                  {stringPart.map(x =>{
+                     if(stringPart[0] !== x){
+                      return x+". "
+                    }
+                  })}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+    </MenuItem>
   );
 }
 
 export default function PlaceMaps() {
+  const classes = useStyles();
 
   const [address, setAddress] = React.useState("");
   const [coordinates, setCoordinates] = React.useState({
@@ -51,16 +67,12 @@ export default function PlaceMaps() {
     setCoordinates(latLng);
   };
 
-  const hanldeChange = (e) =>{
+  const handleChange = (e) =>{
     setAddress(e)
   }
-  const view = () =>{
-    console.log(address);
-    
-  }
+
   return (
     <div>
-    <Button onClick={view}>VER</Button>
       <PlacesAutocomplete
         value={address}
         onChange={setAddress}
@@ -78,14 +90,15 @@ export default function PlaceMaps() {
               {suggestions.map(suggestion => {
                 const style = {
                   backgroundColor: suggestion.active ? 
-                  "#41b6e6" : "#fff"
+                  "#e0f2f1" : "#fff"
                 };
 
                 return (
                   <div {...getSuggestionItemProps(suggestion, { style })}>
-                    {/* {List(suggestion,hanldeChange)} */}
-                    {suggestion.description}
-                  </div>
+                    <div type="button">
+                    {List(suggestion,handleChange)}
+                    </div>
+                    </div>
                 );
               })}
             </div>
