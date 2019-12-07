@@ -108,7 +108,7 @@ function table(customers,updateStateArray,width,Pagination) {
               <StyledTableCell>Opciones</StyledTableCell>
                 <StyledTableCell>Nombre</StyledTableCell>
                 <StyledTableCell>CUIT/CUIL</StyledTableCell>
-                <StyledTableCell align="right">Localidad</StyledTableCell>
+                <StyledTableCell align="right">Domicilio</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -123,7 +123,7 @@ function table(customers,updateStateArray,width,Pagination) {
                 </TableCell>
                   <TableCell>{row.nombre+' '+row.apellido}</TableCell>
                   <TableCell>{row.id}</TableCell>
-                  <TableCell align="right">{row.localidad}</TableCell>
+                  <TableCell align="right">{row.domicilio}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

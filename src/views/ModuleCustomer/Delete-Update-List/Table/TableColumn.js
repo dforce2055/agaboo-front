@@ -34,7 +34,7 @@ export default function ComplexGrid(props) {
                   {items.nombre+' '+items.apellido}
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  {items.localidad+' - '+items.calle+': '+items.altura}
+                  {items.domicilio}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
                   ID: {items.id}

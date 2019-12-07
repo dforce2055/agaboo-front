@@ -5,7 +5,6 @@ import SimpleBottomNavigation from '../../Footer/Footer';
 import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
 import PlaceMaps from './PlaceMaps';
-import { GoogleComponent } from 'react-google-location' 
 import credentials from '../../../config/credentials';
 
 function CreateUserAdm(props) {
@@ -30,7 +29,7 @@ function CreateUserAdm(props) {
     return (        
         
         <div className="UsersScreen">
-            <Navbar/> <PlaceMaps style={{marginBottom:"515151px"}}></PlaceMaps>
+            <Navbar/>
             <Checkout></Checkout>
              
             <footer>

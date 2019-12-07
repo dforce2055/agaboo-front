@@ -63,6 +63,12 @@ function AddressForm(props) {
     mostrarDialog:false,
   });  
 
+  const [address, setAddress] = React.useState("");
+  const [coordinates, setCoordinates] = React.useState({
+    lat: null,
+    lng: null
+  });
+
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });  
   };
@@ -73,15 +79,13 @@ function AddressForm(props) {
       apellido: values.apellido,
       id: values.id,
       rubro: values.rubro,
-      calle:values.calle,
-      altura: values.altura,
-      localidad:values.localidad,
+      domicilio: address,
+      coordinates: coordinates,
       celular:values.celular,
       email:values.email,
-      label:values.nombre+' '+values.apellido+' ('+values.id+') ',
+      label:values.nombre+' '+values.apellido+' ,'+values.id,
       eliminado:false,
     }
-
     CustomerController.addCustomer(data)
     handleCloseDialog();
   }
@@ -134,20 +138,22 @@ function AddressForm(props) {
               fullWidth
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextValidator
+
+          <Grid  item xs={12} sm={6}>
+            <TextValidator            
               variant="outlined"
-              label="Cuit/Cuil"
+              label="Celular"
+              onChange={handleChange('celular')}
+              name="Celular"
               fullWidth
               required
-              onChange={handleChange('id')}
-              helperText="Introducir solo numeros!"
-              name="id"
-              value={values.id}
-              validators={['required', 'matchRegexp:(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]']}
-              errorMessages={['Campo requerido', 'CUIT no valido']}
+              value={values.celular}
+              type='number'
+              validators={['required', 'matchRegexp:^(\D)?[0-9]']}
+              errorMessages={['Campo requerido', 'Celular es invalido']}
             />
-          </Grid>
+          </Grid> 
+          
           <Grid item xs={12} sm={6}>
             <TextValidator
               variant="outlined"
@@ -174,22 +180,26 @@ function AddressForm(props) {
             />
           </Grid>
           <Grid item xs={12}>
-            <PlaceMaps/>
+            <PlaceMaps
+              address = {address}
+              setAddress ={setAddress}
+              coordinates = {coordinates}
+              setCoordinates = {setCoordinates}
+            />
           </Grid>
           <Grid item xs={12}>
-            <TextValidator            
+            <TextValidator
               variant="outlined"
-              label="Celular"
-              onChange={handleChange('celular')}
-              name="Celular"
+              label="Cuit/Cuil"
               fullWidth
               required
-              value={values.celular}
-              type='number'
-              validators={['required', 'matchRegexp:^(\D)?[0-9]']}
-              errorMessages={['Campo requerido', 'Celular es invalido']}
+              onChange={handleChange('id')}
+              name="id"
+              value={values.id}
+              validators={['required', 'matchRegexp:(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]']}
+              errorMessages={['Campo requerido', 'CUIT no valido']}
             />
-          </Grid> 
+          </Grid>
             <ButtonGroup 
               variant="text"
               size="large"

@@ -199,11 +199,11 @@ class CustomerRepo extends Component {
                return result.filter(function(item) {
                     const itemDataNombre = item.nombre.toUpperCase()+" "+item.apellido.toUpperCase()
                     const itemDataId = item.id.toUpperCase()
-                    const itemDataLocalidad = item.localidad.toUpperCase()
+                    const itemDataDomicilio = item.domicilio.toUpperCase()
                     const itemDataRubro = item.rubro.toUpperCase()
                     const itemDataEmail = item.email.toUpperCase()
 
-                    const _search = itemDataNombre+" "+itemDataId+" "+itemDataLocalidad+" "+itemDataRubro+" "+itemDataEmail
+                    const _search = itemDataNombre+" "+itemDataId+" "+itemDataDomicilio+" "+itemDataRubro+" "+itemDataEmail
 
                     const text = intput.toUpperCase()
                     return _search.indexOf(text) > -1

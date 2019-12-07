@@ -112,7 +112,7 @@ function getStepContent(step, setButtonState ) {
   }
 }
 
-function Checkout(props) {
+function CreateOrderFinal(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const {history} = props;
@@ -279,4 +279,4 @@ function Checkout(props) {
     </MuiThemeProvider>
   );
 }
-export default withRouter(Checkout);
+export default withRouter(CreateOrderFinal);
