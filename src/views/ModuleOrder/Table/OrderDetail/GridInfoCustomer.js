@@ -15,7 +15,6 @@ const GridInfoCustomer = () =>{
         setLoad(false);
     } 
   });
-  console.log(order);
   
   return(
     <React.Fragment>
