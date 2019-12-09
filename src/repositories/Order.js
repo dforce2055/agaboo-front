@@ -3,7 +3,7 @@ import firebase from '../config/firebase';
 import moment from 'moment';
 
 const collection = '/orders';
-const cant_order = 10;
+const cant_order = 5;
 const db = firebase.db.collection(collection)
 
 class OrderRepo extends Component {
@@ -328,19 +328,22 @@ class OrderRepo extends Component {
 
           let newOrder = [];
           newOrder = this.getOrdersALL().then(result=>{
+            if (result) {
+              console.log("entre a filter order");
+              
               return result.filter(function(item) {
                   const itemDataNombre = item.nombre.toUpperCase()
-                  // const itemDataFech_creacion= item.fecha_creacion.toUpperCase()
-                  // const itemDataFech_entrega = item.fecha_entrega.toUpperCase()
+                  const itemDataFech_finalizacion= item.fecha_finalizacion.toUpperCase()
+                  const itemDataFech_entrega = item.fecha_entrega.toUpperCase()
                   const itemDataId_cliente = item.id_cliente.toUpperCase()
                   const itemDataUbicacionDeEntrega = item.detalle_pedido.ubicacionDeEntrega.toUpperCase()
-                  // const _search = itemDataNombre+" "+itemDataFech_creacion+" "+itemDataFech_entrega+" "+itemDataId_cliente+" "+itemDataUbicacionDeEntrega
-
-                  const _search = itemDataNombre+" "+itemDataId_cliente+" "+itemDataUbicacionDeEntrega
+                  
+                  const _search = itemDataNombre+" "+itemDataFech_finalizacion+" "+itemDataFech_entrega+" "+itemDataId_cliente+" "+itemDataUbicacionDeEntrega
 
                   const text = intput.toUpperCase()
                   return _search.indexOf(text) > -1
               });
+            }
           })                        
           return newOrder
       } catch (error) {
