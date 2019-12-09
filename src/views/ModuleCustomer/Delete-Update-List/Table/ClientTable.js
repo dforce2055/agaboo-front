@@ -20,6 +20,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ComplexGrid from './TableColumn.js';
 import Divider from '@material-ui/core/Divider';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
 const themeMuiProvider = createMuiTheme({
   overrides: {
@@ -173,7 +174,7 @@ function ClientTable({customers,updateStateArray,handleChangeCustomer,history,Pa
             onClick={Pagination}
             color='primary'
             variant='contained'>
-            Ver mas clientes
+            Ver mas clientes <ArrowRightIcon />
           </Button>
         </MuiThemeProvider>
       </div>
