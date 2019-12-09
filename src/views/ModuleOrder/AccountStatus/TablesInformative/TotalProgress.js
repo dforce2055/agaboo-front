@@ -54,23 +54,22 @@ const TotalProgress = props => {
       <CardContent>
         <Grid
           container
+          display="row"
           justify="space-between"
+          alignItems="baseline"
         >
           <Grid item>
             <Typography
               className={classes.title}
               color="textSecondary"
               gutterBottom
-              variant="body2"
+              variant="h5"
             >
               Porcentaje de dinero sin cobrar
             </Typography>
-            <Typography variant="h3">{values}%</Typography>
+            <Typography variant="h4">{values}%</Typography>
           </Grid>
           <Grid item>
-            <Avatar className={classes.avatar}>
-              <InsertChartIcon className={classes.icon} />
-            </Avatar>
           </Grid>
         </Grid>
         <LinearProgress

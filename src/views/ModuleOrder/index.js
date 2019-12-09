@@ -31,6 +31,7 @@ function OrderReady(props) {
         if (updateList) {
             OrderController.getOrders()
             .then(result =>{
+                console.log("Seguridad");
                 setOrders(result)
                 setUpdateList(false)
             })
@@ -43,12 +44,14 @@ function OrderReady(props) {
        if (search.select !== '') {
         OrderController.filterByState(search.select)
             .then(result=>{
+                console.log("Seguridad");
                setOrders(result)
             })
             console.log("SLDKNFGKLSADJGLÑASGÑLARGÑ{");
         }else{
             OrderController.getOrders()
             .then(result =>{
+            console.log("Seguridad");
             setOrders(result);
             }); 
             console.log("SLDKNFGKLSADJGLÑASGÑLARGÑ{");

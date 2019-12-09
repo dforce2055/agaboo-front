@@ -85,20 +85,25 @@ class OrderRepo extends Component {
     }
   }
 
-
   //Devuelvo todos los pedidos
   async getOrdersNow() {
     try {
       let fechaHoy = new Date();
-       //La función devuelve mes actual menos uno
-      let fechaFormat = fechaHoy.getFullYear() +'-'+(fechaHoy.getMonth()+1) +'-'+(fechaHoy.getDate());
-      
-      let list = {};
-      await db
-        .where("eliminado", "==", false)
-        .where("fecha_entrega", "==", fechaFormat)
+       //La función devuelve mes actual
+      let fechaFormat = moment().format("YYYY-MM-DD")
+
+      let list = [];
+      await db.where("eliminado", "==", false)
         .get()
-        .then(result => list = result.docs.map(doc => doc.data()))
+        .then(result =>{
+          return result.docs.map(doc=>{
+            if (doc.data().estado === "ENTREGADO" && doc.data().fecha_finalizacion === fechaFormat) {
+              return list.push(doc.data())
+            }else if (doc.data().fecha_entrega === fechaFormat) {
+              return list.push(doc.data())
+            }
+          })
+        })      
       return list;
     } catch (error) {
       console.error("Error en base de datos: ", error);

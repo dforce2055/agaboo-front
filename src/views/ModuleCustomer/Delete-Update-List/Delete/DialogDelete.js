@@ -51,7 +51,6 @@ const useStyles = makeStyles(theme => ({
     marginLeft:'20px',
     marginTop: theme.spacing(3),
   },
-  
 }));
 
 export default function DialogDelete({handleCloseMenuItem,cliente,updateStateArray}) {
