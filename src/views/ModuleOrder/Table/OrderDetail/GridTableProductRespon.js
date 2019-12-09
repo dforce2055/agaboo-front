@@ -19,7 +19,7 @@ export default function GridTableProductRespon({data,i,addIdForIndex,orderComple
       >
         <Grid item>
           <Typography gutterBottom variant="subtitle1" >
-            <Box fontSize="h5.fontSize" m={1}>
+            <Box fontSize="subtitle1">
               {data.producto}
             </Box>
           </Typography>
@@ -27,7 +27,7 @@ export default function GridTableProductRespon({data,i,addIdForIndex,orderComple
 
         <Grid item>
           <Typography gutterBottom variant="subtitle1" >
-            <Box fontSize="h5.fontSize" m={1}>
+            <Box fontSize="subtitle1">
               { (data.modelo == "")? "---" : data.modelo }
             </Box>
           </Typography>

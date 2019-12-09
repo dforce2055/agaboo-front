@@ -29,9 +29,13 @@ const GridInfoCustomer = () =>{
       <Divider />
       <br/>
       <Grid container justify="space-between">
-          Cliente:
+          <Typography variant="subtitle1">
+            Cliente:
+          </Typography>
         <Grid >
+          <Typography variant="subtitle1">
           {order.nombre}
+          </Typography>
         </Grid>
       </Grid>
       <br/>
@@ -39,9 +43,13 @@ const GridInfoCustomer = () =>{
 
       <br/>
       <Grid container justify="space-between">
+        <Typography variant="subtitle1">
           Zona de entrega:
+        </Typography>
         <Grid >
+        <Typography variant="subtitle1">
           {order.ubicacionDeEntrega}
+        </Typography>
         </Grid>
       </Grid>
     <br/>
@@ -49,9 +57,13 @@ const GridInfoCustomer = () =>{
 
        <br/>
       <Grid container justify="space-between">
-          Entrega-Finalizacion
+        <Typography variant="subtitle1">
+            Entrega-Finalizacion
+        </Typography>
         <Grid >
-          {order.fecha_entrega+'/'+order.fecha_finalizacion}
+          <Typography variant="subtitle1">
+            {order.fecha_entrega+'/'+order.fecha_finalizacion}
+          </Typography>
         </Grid>
       </Grid>
       <br/>
@@ -59,9 +71,13 @@ const GridInfoCustomer = () =>{
 
        <br/>
       <Grid container justify="space-between">
+        <Typography variant="subtitle1">
           Id pedido:
+        </Typography>
         <Grid >
+        <Typography variant="subtitle1">
           {order.id_pedido}
+        </Typography>
         </Grid>
       </Grid>
       

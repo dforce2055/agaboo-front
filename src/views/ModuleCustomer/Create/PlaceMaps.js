@@ -79,6 +79,7 @@ export default function PlaceMaps({address,setAddress,coordinates,setCoordinates
             <p>Longitude: {coordinates.lng}</p> */}
 
             <TextValidator
+            autoComplete
              validators={['required','matchRegexp:^[a-zA-Z0-9,.!? ]*$']}
               errorMessages={['Campo requerido', 'Ubicacion no valida']} 
             required

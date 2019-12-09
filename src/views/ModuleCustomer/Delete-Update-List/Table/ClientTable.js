@@ -121,9 +121,21 @@ function table(customers,updateStateArray,width,Pagination) {
                     Pagination={Pagination}
                   />
                 </TableCell>
-                  <TableCell>{row.nombre+' '+row.apellido}</TableCell>
-                  <TableCell>{row.id}</TableCell>
-                  <TableCell align="right">{row.domicilio}</TableCell>
+                  <TableCell>
+                    <Typography gutterBottom variant="subtitle1">
+                      {row.nombre+' '+row.apellido}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography gutterBottom variant="subtitle1">
+                      {row.id}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right">
+                    <Typography gutterBottom variant="subtitle1">
+                      {row.domicilio}
+                    </Typography>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

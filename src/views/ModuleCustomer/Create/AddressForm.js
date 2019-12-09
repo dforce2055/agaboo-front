@@ -111,6 +111,7 @@ function AddressForm(props) {
         <Grid container spacing={3}  justify = { "center" }>
           <Grid item xs={12} sm={6}>
               <TextValidator //TextValidator obligatorio
+                autoComplete
                 variant="outlined"
                 fullWidth
                 id="nombre"
@@ -126,6 +127,7 @@ function AddressForm(props) {
             </Grid>
           <Grid item xs={12} sm={6}>
             <TextValidator
+            autoComplete
               variant="outlined"
               id="nombre"
               label="Apellido"
@@ -141,6 +143,7 @@ function AddressForm(props) {
 
           <Grid  item xs={12} sm={6}>
             <TextValidator            
+            autoComplete
               variant="outlined"
               label="Celular"
               onChange={handleChange('celular')}
@@ -156,6 +159,7 @@ function AddressForm(props) {
           
           <Grid item xs={12} sm={6}>
             <TextValidator
+            autoComplete
               variant="outlined"
               label="Rubro"
               fullWidth

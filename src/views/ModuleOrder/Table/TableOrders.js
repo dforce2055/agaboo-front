@@ -109,10 +109,20 @@ const TableOrders = props =>{
                     hover
                     key={index}
                   >
-                    <TableCell>{order.id_pedido}</TableCell>
-                    <TableCell>{order.nombre}</TableCell>
                     <TableCell>
+                      <Typography gutterBottom variant="subtitle1">
+                        {order.id_pedido}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                    <Typography gutterBottom variant="subtitle1">
+                    {order.nombre}
+                    </Typography>
+                    </TableCell>
+                    <TableCell>
+                    <Typography gutterBottom variant="subtitle1">
                       {moment(order.fecha_entrega).format('DD/MM/YYYY')}
+                    </Typography>
                     </TableCell>
                   <TableCell>
                     <div>
