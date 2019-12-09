@@ -41,6 +41,7 @@ const IndexTable = props => {
     loadData,
     orders,
     updateArray,
+    Pagination,
     } = props
   let userRole = checkRoleAdmin();
 
@@ -77,6 +78,7 @@ const IndexTable = props => {
             color="primary"
             size="small"
             variant="outlined"
+            onClick={Pagination}
           >
            Ver mas <ArrowRightIcon />
           </Button>

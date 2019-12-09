@@ -26,7 +26,8 @@ function OrderReady(props) {
     const [updateList,setUpdateList] = React.useState(false);
     const [temporalOrders,setTemporalOrders] = React.useState([]); //Donde matendre el resultado de la busqueda
     const [validador,setValidador] = React.useState(false);
-    
+    const [pagination,setPagination] = React.useState(false);
+
     React.useEffect(()=>{//Si cambio de estado un pedido se recargara la pagina
         if (updateList) {
             OrderController.getOrders()
@@ -37,6 +38,37 @@ function OrderReady(props) {
             })
             setUpdateList(false)
             console.log("SLDKNFGKLSADJGLÑASGÑLARGÑ{");
+        }
+
+        if (orders.length === 0) {
+            OrderController.getOrders().then(result=>{
+                if (result) {
+                    setOrders(result)
+                }
+            })
+        }
+
+        //Paginado de la tabla pedidos.
+        if(pagination === true){ 
+            var lastPosition = orders[orders.length-1];
+            var orderPag = orders;        
+            if (lastPosition) {
+                console.log("entre");
+                
+                OrderController.getOrderPagination(lastPosition.id_pedido)
+                .then(result=>{
+                    if (result===false) {
+                    return;
+                    }
+
+                    result.forEach((res) => orderPag.push(res));
+                    ChangeOrders(orderPag)
+                    setPagination(false);
+                });
+            }else{
+                setPagination(false);
+                alert("Por favor establezca conexion a internet.")
+            }
         }
     })
 
@@ -55,7 +87,6 @@ function OrderReady(props) {
             setOrders(result);
             }); 
             console.log("SLDKNFGKLSADJGLÑASGÑLARGÑ{");
-            
         }
     },[search]);
   
@@ -81,6 +112,10 @@ function OrderReady(props) {
       } else {
           setValidador(false)
       }
+  }
+  
+  const Pagination = () => {
+    setPagination(true)
   }
   
     if (!firebase.getCurrentUsername()) {
@@ -117,6 +152,7 @@ function OrderReady(props) {
                 {
                     (!validador) ? 
                         <IndexTable
+                            Pagination={Pagination}
                             orders={orders}
                             handleChangeFilter={handleChangeFilter}
                             updateArray={updateArray}/>

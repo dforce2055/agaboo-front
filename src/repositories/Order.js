@@ -3,7 +3,7 @@ import firebase from '../config/firebase';
 import moment from 'moment';
 
 const collection = '/orders';
-
+const cant_order = 10;
 const db = firebase.db.collection(collection)
 
 class OrderRepo extends Component {
@@ -54,31 +54,34 @@ class OrderRepo extends Component {
     }
   }
 
-  //Devuelvo todos los pedidos
+  //Devuelvo todos los pedidos paginados
   async getOrders(){
     try {
       let list = {};
-      await db.where("eliminado","==",false).get()
+      await db.where("eliminado","==",false)
+      .limit(cant_order)
+      .get()
       .then(result =>{
         list = result.docs.map(doc => doc.data())
       })
       //Ordeno por MESES Y AÑO
-        list.sort(function(minor,higher) {
-          if (moment(minor.fecha_entrega).format('MM/YYYY') < moment(higher.fecha_entrega).format('MM/YYYY')){
-            return 1;
-          }else{
-            return -1
-          }
-        });
-        //Ordeno por dia
-        list.sort(function(minor,higher) {
-          if (moment(minor.fecha_entrega).format('DD/MM') < moment(higher.fecha_entrega).format('DD/MM')){
-            return 1;
-          }else{
-            return -1
-          }
-        });
-        
+      
+      return list;
+    } catch (error) {
+      console.error("Error en base de datos: ",error);
+    }
+  }
+  //Lo uitilizo para el typeahead.
+    async getOrdersALL(){
+    try {
+      let list = {};
+      await db.where("eliminado","==",false)
+      .get()
+      .then(result =>{
+        list = result.docs.map(doc => doc.data())
+      })
+      //Ordeno por MESES Y AÑO
+      
       return list;
     } catch (error) {
       console.error("Error en base de datos: ",error);
@@ -324,7 +327,7 @@ class OrderRepo extends Component {
           if (!intput) throw new Error(`Error: Es necesario ingresar una palabra.`);
 
           let newOrder = [];
-          newOrder = this.getOrders().then(result=>{
+          newOrder = this.getOrdersALL().then(result=>{
               return result.filter(function(item) {
                   const itemDataNombre = item.nombre.toUpperCase()
                   // const itemDataFech_creacion= item.fecha_creacion.toUpperCase()
@@ -343,6 +346,31 @@ class OrderRepo extends Component {
       } catch (error) {
           
       }
+  }
+
+  getOrderPagination = async (lastId) => {
+    try {
+        let order = [];
+        await db.where("eliminado","==",false)
+            .orderBy("id_pedido")
+            .startAfter(lastId)
+            .limit(cant_order)
+            .get()
+            .then(function (querySnapshot) {
+              console.log("llegue a repo",querySnapshot);
+              
+                querySnapshot.forEach(function(doc) {
+                    order.push(doc.data());
+                });
+            })
+            .catch(function (error) {
+                console.log("Error al paginar pedidos: ", error);
+                order = null;
+            });
+        return order;
+    } catch (error) {
+        console.log("Error en la base de datos:", error);
+    }
   }
 
 }

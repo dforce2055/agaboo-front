@@ -137,7 +137,6 @@ class CustomerController extends Component {
                 return customer;
             } else {
                 console.log("No se pudo obtener e llistado de usuarios paginados");
-                
                 return false;
             }
         } catch (error) {
