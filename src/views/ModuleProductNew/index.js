@@ -59,8 +59,9 @@ const ModuleProduct = (props) =>{
     input:"",
     select:""
   });
-  const [prod,setProd] = useState({});
+  const [productSelect,setProductSelect] = useState({});
   const [open, setOpen] = useState(false);
+  const [optionAutocomplete,setOptionAutocomplete] = useState([]);
 
   useEffect(()=>{ //Se ejecuta solamente cuando se renderiza
     ProductController.cantidad_sin_Alquilar()
@@ -103,16 +104,10 @@ const ModuleProduct = (props) =>{
 
   const Typeahead = (string) =>{
     if (string !== "") {
-      ProductController.getProductById(string)
+      ProductController.Typeahead(string)
       .then(result=>{
-        setProd(result)
-        console.log("producto por id=",result);
-        handleClickOpen();
+        setOptionAutocomplete(result)
       })
-    }else{
-      console.log("entre al else");
-      handleClose();
-      setProd({})
     }
   }
 
@@ -130,9 +125,9 @@ const ModuleProduct = (props) =>{
     <header>
       <NavBar/>
     </header>
-    
+
     <DialogResultSearch
-      prod = {prod}
+      productSelect = {productSelect}
       open = {open}
       handleClickOpen={handleClickOpen}
       handleClose={handleClose}
@@ -147,7 +142,10 @@ const ModuleProduct = (props) =>{
     <div className={classes.espacio}>
       <Grid container direction="row" justify="flex-end" alignItems="baseline">
         <Filters
+          handleClickOpen={handleClickOpen}
+          optionAutocomplete={optionAutocomplete}
           search={search}
+          setProductSelect={setProductSelect}
           Typeahead={Typeahead}
           handleChangeFilter={handleChangeFilter}
         />

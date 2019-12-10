@@ -79,6 +79,15 @@ function ListAdmin(props){
     <ListItemText primary="Productos" onClick ={ () => history.push('/tableProduct')} /> 
     </ListItem> 
   </List>
+
+    <List>
+    <ListItem button onClick={handleClickProductos}>
+      <ListItemIcon>         
+        <StoreIcon/> 
+      </ListItemIcon>
+    <ListItemText primary="Productos NEW BETA" onClick ={ () => history.push('/productos')} /> 
+    </ListItem> 
+  </List>
 {/* //******************************LISTA PEDIDOS********************************** */}
 <List>
             <ListItem button onClick={() => history.push('/pedidosListos')}>

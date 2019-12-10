@@ -6,9 +6,8 @@ import {FormControl,Paper,TextField,InputBase,Grid } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import SearchIcon from '@material-ui/icons/Search';
-
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -56,24 +55,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Filters({search,handleChangeFilter,Typeahead}) {
+export default function Filters({setProductSelect,handleClickOpen,optionAutocomplete,search,handleChangeFilter,Typeahead}) {
   const classes = useStyles();
-
-   const [age, setAge] = React.useState('');
-  const [open, setOpen] = React.useState(false);
-
-  const handleChange2 = event => {
-    setAge(event.target.value);
-  };
-
-  const handleClose2 = () => {
-    setOpen(false);
-  };
-
-  const handleOpen2 = () => {
-    setOpen(true);
-  };
-
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
@@ -84,50 +67,39 @@ export default function Filters({search,handleChangeFilter,Typeahead}) {
     <Paper style={{backgroundColor:'#fff',padding:10,marginTop:10}}>
     <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
 
-<div>
-      <FormControl className={classes.formControl}>
-          <InputLabel id="demo-controlled-open-select-label">Age</InputLabel>
-          <Select
-            labelId="demo-controlled-open-select-label"
-            id="demo-controlled-open-select"
-            open={open}
-            onClose={handleClose2}
-            onOpen={handleOpen2}
-            value={age}
-            onChange={handleChange2}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
-</div>
-
-
-
     {/*Input*/}
     <Grid item>
       <div className={classes.search} style={{backgroundColor:'#E0E0E0'}}>
-        <div className={classes.searchIcon}>
-          <SearchIcon style={{color:'#949494'}}/>
-        </div>
-        <InputBase
-          placeholder="Buscar..."
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput,
-          }}
-          inputProps={{ 'aria-label': 'search' }}
-          // onChange={handleChangeFilter('input')}
-          onKeyUp = {
-            event => {
-                Typeahead(event.target.value);
+      <Autocomplete
+        options={optionAutocomplete} //Arreglo con datos
+        getOptionLabel={option => option.code} //Map de arreglo
+        style={{ width: 300 }}
+        renderInput={params => (
+          <TextField 
+            {...params} 
+            placeholder="Buscar..."
+            variant="outlined" 
+            InputProps={{
+              startAdornment: <InputAdornment position="start" ><SearchIcon style={{color:'#949494'}}></SearchIcon></InputAdornment>,
+            }}
+            fullWidth 
+            onKeyUp = {
+              event => {
+                if(event.keyCode === 13){ //Si es igual al enter ejecuto el dialog
+                  optionAutocomplete.map(x=>{
+                    if(x.code === event.target.value){
+                      setProductSelect(x)
+                      handleClickOpen()
+                    }
+                  })
+                }else{
+                  Typeahead(event.target.value); //En caso de que no este el enter, sigo buscando
+                }
+              }
             }
-          }
-        />
+        /> 
+      )}
+    />
       </div>
     </Grid>
 

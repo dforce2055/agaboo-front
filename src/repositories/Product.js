@@ -40,6 +40,7 @@ class ProductRepo extends Component {
         }
         return true;
     }
+
     getProduct = async (id) => {
         if (!id) throw new Error(`Error: el id es obligatorio`);
         try {
@@ -305,5 +306,29 @@ class ProductRepo extends Component {
             )
         })
     }
+
+      Typeahead = async (intput) =>{
+      try {
+          if (!intput) throw new Error(`Error: Es necesario ingresar una palabra.`);
+
+          let newOrder = [];
+          newOrder = this.getProducts().then(result=>{
+            if (result) {
+              console.log("entre a filter order");
+              
+              return result.filter(function(item) {
+                  const itemDataCode = item.code.toUpperCase()
+                  
+                  const _search = itemDataCode
+                  const text = intput.toUpperCase()
+                  return _search.indexOf(text) > -1
+              });
+            }
+          })                        
+          return newOrder
+      } catch (error) {
+          
+      }
+  }
 }
 export default new ProductRepo();
