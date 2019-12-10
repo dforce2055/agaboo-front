@@ -17,7 +17,7 @@ class CustomerRepo extends Component {
         
     }
 
-    ////Se utiliza en ModulOrders/SelectCustomer
+    ////Se utiliza en el TypeAhead. Al momento de utilizar el "getCustomer" no me filtra todos los datos
     getCustomerAll = async () =>{
         try {
             let coleccion = await firebase.db.collection(collection).where('eliminado','==', false).get();
@@ -39,24 +39,7 @@ class CustomerRepo extends Component {
             throw new Error();
         }
     };
-
-    //Se utiliza en ModulsClient/Delete-Update-List/Table LINEA-84 y CONTROLLER LINEA-147
-    getCustomerCant10 = async (e)=>{
-        try {
-            var data = e.id; //ID del ultimo elemento de array ubicado Table
-            console.log("muestro id:",data);
-            var next = await firebase.db.collection(collection)
-                .orderBy("id")
-                .startAfter(data)
-                .limit(5) 
-                console.log("Muestro next: ",next);
-
-            return next;
-        } catch (error) {
-          console.log("Error:",error);
-        }
-    }
-
+    
     //Se usa en editCustomer pero se va a eliminar
     getCustomerByCUIL = async (cuil) => {
         try {
@@ -196,6 +179,7 @@ class CustomerRepo extends Component {
             let newCustomers = [];
             let newCustomers2 = [];
             newCustomers2=this.getCustomerAll().then(result=>{
+                console.log("entre a filter customer");
                return result.filter(function(item) {
                     const itemDataNombre = item.nombre.toUpperCase()+" "+item.apellido.toUpperCase()
                     const itemDataId = item.id.toUpperCase()

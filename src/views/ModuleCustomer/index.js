@@ -75,6 +75,7 @@ function DeleteUpdateUserAdmin(props) {
                 if (result===false) {
                   return;
                 }
+                
                 result.forEach((res) => customerPag.push(res));
                 handleChangeCustomer(customerPag)
                 setPagination(false);

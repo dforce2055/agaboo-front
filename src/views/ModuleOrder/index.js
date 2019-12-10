@@ -15,6 +15,10 @@ const useStyles = makeStyles(theme => ({
     },
     espacio:{
       margin: theme.spacing(3),
+    },
+    espacioArribaFooter:{
+        margin: theme.spacing(3),
+        marginBottom:'75px'
     }
   }));
 
@@ -26,36 +30,54 @@ function OrderReady(props) {
     const [updateList,setUpdateList] = React.useState(false);
     const [temporalOrders,setTemporalOrders] = React.useState([]); //Donde matendre el resultado de la busqueda
     const [validador,setValidador] = React.useState(false);
-    
+    const [pagination,setPagination] = React.useState(false);
+
+    React.useEffect(()=>{
+        console.log("entre a ejevutar get order");
+        
+         OrderController.getOrders().then(result=>{
+                if (result) {
+                    setOrders(result)
+                }
+            })
+    },[])
+
     React.useEffect(()=>{//Si cambio de estado un pedido se recargara la pagina
         if (updateList) {
             OrderController.getOrders()
             .then(result =>{
+                console.log("Seguridad");
                 setOrders(result)
                 setUpdateList(false)
             })
             setUpdateList(false)
             console.log("SLDKNFGKLSADJGLÑASGÑLARGÑ{");
         }
+
+        //Paginado de la tabla pedidos.
+        if(pagination === true){ 
+            var lastPosition = orders[orders.length-1];
+            var orderPag = orders;        
+            if (lastPosition) {
+                console.log("entre");
+                
+                OrderController.getOrderPagination(lastPosition.id_pedido)
+                .then(result=>{
+                    if (result===false) {
+                    return;
+                    }
+
+                    result.forEach((res) => orderPag.push(res));
+                    ChangeOrders(orderPag)
+                    setPagination(false);
+                });
+            }else{
+                setPagination(false);
+                alert("Por favor establezca conexion a internet.")
+            }
+        }
     })
 
-    React.useEffect(()=>{
-       if (search.select !== '') {
-        OrderController.filterByState(search.select)
-            .then(result=>{
-               setOrders(result)
-            })
-            console.log("SLDKNFGKLSADJGLÑASGÑLARGÑ{");
-        }else{
-            OrderController.getOrders()
-            .then(result =>{
-            setOrders(result);
-            }); 
-            console.log("SLDKNFGKLSADJGLÑASGÑLARGÑ{");
-            
-        }
-    },[search]);
-  
   const ChangeOrders = newOrder =>{
       setOrders(newOrder);
   }
@@ -63,8 +85,23 @@ function OrderReady(props) {
   const updateArray = () =>{
       setUpdateList(true)
   }
-  const handleChangeFilter = name => event => {
-    setSearch({...search,[name]:event.target.value});
+  const handleChangeFilter = name => event => { //Ejevuto los metodos de buscar por estado. Y el parametro que me llega es la informacion que tendra el input del filtrado.
+    if (event.target.value !== "") {
+        setSearch({...search,[name]:event.target.value})
+        OrderController.filterByState(event.target.value)
+            .then(result=>{
+                console.log("Seguridad");
+               setOrders(result)
+            })
+    }else{
+        setSearch({...search,[name]:event.target.value})
+        OrderController.getOrders()
+            .then(result =>{
+            console.log("Seguridad");
+            setOrders(result);
+            }); 
+            console.log("SLDKNFGKLSADJGLÑASGÑLARGÑ{"); 
+    }
   };
 
   const Typeahead = (string) =>{
@@ -78,6 +115,10 @@ function OrderReady(props) {
       } else {
           setValidador(false)
       }
+  }
+  
+  const Pagination = () => {
+    setPagination(true)
   }
   
     if (!firebase.getCurrentUsername()) {
@@ -110,10 +151,11 @@ function OrderReady(props) {
             </Grid> 
             </div>  
 
-            <Paper className={classes.espacio}>
+            <Paper className={classes.espacioArribaFooter}>
                 {
                     (!validador) ? 
                         <IndexTable
+                            Pagination={Pagination}
                             orders={orders}
                             handleChangeFilter={handleChangeFilter}
                             updateArray={updateArray}/>

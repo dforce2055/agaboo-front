@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
 import {
   Card,
   CardActions,
@@ -14,10 +13,36 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { withRouter } from "react-router-dom";
 import firebase from '../../../config/firebase';
+import { makeStyles,withStyles,MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+const themeMuiProvider = createMuiTheme({
+  overrides: {
+    MuiButton: {
+      containedPrimary: {
+        backgroundColor: '#3fb5a5',
+        '&:hover': {
+          backgroundColor: '#0ce8ca',
+          "@media (hover: none)": {
+            backgroundColor: "#0ce8ca"
+          },
+        },
+      },
+      containedSecondary: {
+        backgroundColor: '#b53f3f',
+        '&:hover': {
+          backgroundColor: '#f30b0b',
+          "@media (hover: none)": {
+            backgroundColor: "#f30b0b"
+          },
+        },
+      },
+    }, 
+  }
+})
 
 const useStyles = makeStyles(theme => ({
   actions: {
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-start'
   },
   fab: {
     position: 'fixed',
@@ -41,6 +66,7 @@ const IndexTable = props => {
     loadData,
     orders,
     updateArray,
+    Pagination,
     } = props
   let userRole = checkRoleAdmin();
 
@@ -73,13 +99,16 @@ const IndexTable = props => {
         </CardContent>
         <Divider />
         <CardActions className={classes.actions}>
-          <Button
-            color="primary"
-            size="small"
-            variant="outlined"
-          >
-           Ver mas <ArrowRightIcon />
-          </Button>
+          <MuiThemeProvider theme={themeMuiProvider}>
+            <Button
+              color="primary"
+              size="small"
+              variant="contained"
+              onClick={Pagination}
+            >
+            Ver mas <ArrowRightIcon />
+            </Button>
+          </MuiThemeProvider>
         </CardActions>
       </Card>
     </React.Fragment>

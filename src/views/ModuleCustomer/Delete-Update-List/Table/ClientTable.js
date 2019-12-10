@@ -20,6 +20,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ComplexGrid from './TableColumn.js';
 import Divider from '@material-ui/core/Divider';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
 const themeMuiProvider = createMuiTheme({
   overrides: {
@@ -121,9 +122,21 @@ function table(customers,updateStateArray,width,Pagination) {
                     Pagination={Pagination}
                   />
                 </TableCell>
-                  <TableCell>{row.nombre+' '+row.apellido}</TableCell>
-                  <TableCell>{row.id}</TableCell>
-                  <TableCell align="right">{row.domicilio}</TableCell>
+                  <TableCell>
+                    <Typography gutterBottom variant="subtitle1">
+                      {row.nombre+' '+row.apellido}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography gutterBottom variant="subtitle1">
+                      {row.id}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right">
+                    <Typography gutterBottom variant="subtitle1">
+                      {row.domicilio}
+                    </Typography>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -161,7 +174,7 @@ function ClientTable({customers,updateStateArray,handleChangeCustomer,history,Pa
             onClick={Pagination}
             color='primary'
             variant='contained'>
-            Ver mas clientes
+            Ver mas clientes <ArrowRightIcon />
           </Button>
         </MuiThemeProvider>
       </div>

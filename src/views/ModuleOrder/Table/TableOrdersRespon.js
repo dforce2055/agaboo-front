@@ -36,7 +36,7 @@ export default function TableOrdersRespon(props) {
                 </Typography>
                 <Typography variant="body2" gutterBottom>
                   <Box fontSize="h6.fontSize" m={1}>
-                   {order.detalle_pedido.ciudad+'/'+order.detalle_pedido.ubicacionDeEntrega}
+                   {order.detalle_pedido.ubicacionDeEntrega}
                   </Box>
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
@@ -44,8 +44,10 @@ export default function TableOrdersRespon(props) {
                    Fecha de entrega: {order.fecha_entrega}
                   </Box>
                 </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  ID:{order.id_pedido}
+                <Typography color="textSecondary">
+                  <Box m={1}>
+                   ID:{order.id_pedido}
+                  </Box>
                 </Typography>
               </Grid>
             </Grid>
@@ -62,7 +64,6 @@ export default function TableOrdersRespon(props) {
               className={classes.menuButton}
             >
               <ButtonColorStatus
-                
                 status ={order.estado}
               />
             </Grid>

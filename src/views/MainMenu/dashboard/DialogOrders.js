@@ -82,8 +82,7 @@ export default function DialogOrders(props) {
                         <b>Forma de pago:</b> {pedido.detalle_pedido.formaDePago}<br />
                         <b>Valor:</b> $ {pedido.monto_calculado}<br />
                         <b>Fecha de Entrega:</b>  {pedido.fecha_entrega}<br />
-                        <b>Localidad:</b> {pedido.detalle_pedido.ciudad}<br />
-                        <b>Dirección:</b> {pedido.direccion}<br />
+                        <b>Dirección:</b> {pedido.ubicacionDeEntrega}<br />
                     </Typography>
                     <Divider />
                     <Typography gutterBottom>
@@ -94,6 +93,9 @@ export default function DialogOrders(props) {
                     </Typography>
                     <Divider />
                     <Typography gutterBottom>
+                        <b>Estado pedido:</b><br />
+                        {pedido.estado}<br />
+
                         <b>Id. factura:</b><br />
                         {pedido.id_pedido}
                         

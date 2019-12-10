@@ -249,6 +249,23 @@ class OrderController extends Component {
     }
   } 
 
+  getOrderPagination(last_id){
+      if (!last_id) throw new Error(`Error: el ultimo id es obligatorio para poder paginar los clientes.`);
+      //Si NO llega cant, devuelvo los 10 siguientes
+      try {
+          let order = OrderRepo.getOrderPagination(last_id);            
+          console.log(`########### PAGINACIÓN -${last_id}- #################`);
+          if (order) {
+              return order;
+          } else {
+              console.log("No se pudo obtener e llistado de usuarios paginados");
+              return false;
+          }
+      } catch (error) {
+          console.log("Error:", error);
+      }
+  }
+
 }
 
 export default new OrderController();

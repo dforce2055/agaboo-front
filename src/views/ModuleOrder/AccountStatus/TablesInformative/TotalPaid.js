@@ -21,8 +21,6 @@ const useStyles = makeStyles(theme => ({
   avatar: {
     backgroundColor: theme.palette.white,
     color: theme.palette.primary.main,
-    height: 56,
-    width: 56
   },
   icon: {
     height: 32,
@@ -50,13 +48,13 @@ const TotalPaid = props => {
               className={classes.title}
               color="inherit"
               gutterBottom
-              variant="body2"
+              variant="h5"
             >
-              TOTAL COBRADO
+              COBRADO
             </Typography>
             <Typography
               color="inherit"
-              variant="h3"
+              variant="h4"
             >
               ${value_paid}
             </Typography>

@@ -1,13 +1,15 @@
 import React from "react";
 import "./Form.css";
-import Container from '@material-ui/core/Container';
+import {Container,TextField,Grid} from '@material-ui/core';
 import TableProduct from './OrderDetail/TableProduct';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 //IMPORTO 
 import OrderController from '../../../controllers/Order';
 import TableOrderDisp from './TableOrderDisp.js';
- 
+import PlaceMaps from './PlaceMaps.js';
+
 const theme = createMuiTheme({ /* Plantilla de edicion */
   overrides: {
       MuiContainer:{
@@ -30,7 +32,7 @@ function formulario(handleChange, value){
   console.log(minDate);
   return(
     <form noValidate>
-      <div className="password">
+      {/* <div className="password">
             <label htmlFor="dni">Direccion de cobro</label> 
             <input
               placeholder="Direccion de cobro"
@@ -38,12 +40,13 @@ function formulario(handleChange, value){
               noValidate
               onChange={handleChange('lugarDePago')}
             />
-          </div>
+          </div> */}
           
           
           <div className="password"> 
-            <label htmlFor="firstName">Responsable de pago</label> 
-            <input
+            <TextField
+              variant="outlined"
+              label="Respondasble de pago"
               placeholder="Nombre y Apellido"
               type="text"
               noValidate
@@ -52,8 +55,9 @@ function formulario(handleChange, value){
           </div>
 
           <div className="password"> 
-            <label htmlFor="lastName">Contacto en obra</label> 
-            <input
+            <TextField
+              label="Contacto en obra"
+              variant="outlined"
               placeholder="Nombre y Apellido"
               type="text"
               noValidate
@@ -62,8 +66,9 @@ function formulario(handleChange, value){
           </div>
 
           <div className="password">
-            <label htmlFor="lastName">Forma de pago</label> 
-            <input
+            <TextField
+              label="Forma de pago"
+              variant="outlined"
               placeholder="Cheque, Efectivo..."
               type="text"
               noValidate
@@ -97,7 +102,7 @@ function formulario(handleChange, value){
             />
           </div>
 
-          <div className="password"> 
+          {/* <div className="password"> 
             <label htmlFor="lastName">Ciudad</label> 
             <input
               placeholder="Ciudad"
@@ -105,18 +110,17 @@ function formulario(handleChange, value){
               noValidate
               onChange={handleChange('ciudad')} 
             />              
-          </div>
+          </div> */}
 
-          <div className="password"> 
+          {/* <div className="password"> 
             <label htmlFor="lastName">Direccion de entrega</label> 
             <input
               placeholder="Direccion de entrega"
               type="text"
               noValidate
-
               onChange={handleChange('ubicacionDeEntrega')} 
             />              
-          </div>
+          </div> */}
     </form>
   );
 }
@@ -125,6 +129,18 @@ export default function CreateOrder(props) {
   const { setButtonState } = props; 
   const [loadData,setLoadData] = React.useState(true);
   const [alquilables,setAlquilables] = React.useState([]);
+
+  const [address, setAddress] = React.useState("");
+  const [coordinates, setCoordinates] = React.useState({
+    lat: null,
+    lng: null
+  });
+
+  const [address2, setAddress2] = React.useState("");
+  const [coordinates2, setCoordinates2] = React.useState({
+    lat: null,
+    lng: null
+  });
 
   React.useEffect(()=>{
     if (values.fecha_entrega != '' && values.fecha_finalizacion != '' && loadData) {
@@ -138,24 +154,56 @@ export default function CreateOrder(props) {
     }
   });
 
-  const [values,setValues] = React.useState({
+  const [data,setData] = React.useState({ //guardo los datos completos
     lugarDePago:'',
+    coordinates_lugarDePago:'',
     responsableDelPago:'',
     ContactoEnTrabajo:'',
     formaDePago:'',
     fecha_entrega: '',
     fecha_finalizacion: '',
     ubicacionDeEntrega:'',
-    ciudad:''
+    coordinates_ubicacionDeEntrega:''
+  });
+
+    const [values,setValues] = React.useState({
+    lugarDePago:'',
+    coordinates_lugarDePago:'',
+    responsableDelPago:'',
+    ContactoEnTrabajo:'',
+    formaDePago:'',
+    fecha_entrega: '',
+    fecha_finalizacion: '',
+    ubicacionDeEntrega:'',
+    coordinates_ubicacionDeEntrega:''
     });
 
+  React.useEffect(()=>{ //Se ejecutara siempre que detecte un cambio
+    data.lugarDePago = address2
+    data.coordinates_lugarDePago = coordinates2
+
+    data.responsableDelPago = values.responsableDelPago
+    data.ContactoEnTrabajo = values.ContactoEnTrabajo
+    data.formaDePago = values.formaDePago
+    data.fecha_entrega = values.fecha_entrega
+    data.fecha_finalizacion = values.fecha_finalizacion
+
+    data.ubicacionDeEntrega = address
+    data.coordinates_ubicacionDeEntrega = coordinates
+
+    console.log("data",data);
+    
+    sessionStorage.setItem('info_detalle_pedido',JSON.stringify(data)); 
+  },[address,address2,values]);
+
+    
   const handleChange = name => event => {    
     setValues({ ...values, [name]: event.target.value }); 
     //Recalcula la cantidad luego de haber cambiado la fecha de entrega o de finalizacion
     if (name == 'fecha_finalizacion' || name == 'fecha_entrega') {
       setLoadData(true)
     }
-    sessionStorage.setItem('info_detalle_pedido',JSON.stringify(values));    
+       
   };
 
   const handleSubmit= () =>{    
@@ -168,9 +216,26 @@ export default function CreateOrder(props) {
     <MuiThemeProvider theme={theme}>
       <Container  maxWidth="md" className='nuevo'>
           <form onSubmit={handleSubmit} noValidate>
+          <Grid xs={12} style={{marginBottom:"15px"}}>
+            <PlaceMaps
+              address = {address2}
+              setAddress ={setAddress2}
+              coordinates = {coordinates2}
+              setCoordinates = {setCoordinates2}
+              labelString = "Direccion de cobro"
+            />
+          </Grid>
             {formulario(handleChange, values.fecha_entrega)}
+            <Grid xs={12} style={{marginBottom:"25px"}}>
+            <PlaceMaps
+              address = {address}
+              setAddress ={setAddress}
+              coordinates = {coordinates}
+              setCoordinates = {setCoordinates}
+              labelString = "Direccion de entrega"
+            />
+            </Grid>
             {alquilables.length > 0  && <TableOrderDisp rows={alquilables}/>}  {/*Renderizo la tabla que contiene la cantidad de productos disponibles para su alquiler*/}
-
             <TableProduct 
             alquilables = {alquilables} //Paso alquilables, para verificar cada vez que se introduzca un valor nuevo al arreglo.
             setButtonState={setButtonState}/>

@@ -4,8 +4,8 @@ import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
 import SimpleBottomNavigation from '../../Footer/Footer';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper } from '@material-ui/core';
-import CumulativeTotal from './CumulativeTotal';
+import { Paper,CardHeader } from '@material-ui/core';
+import CumulativeTotal from './TablesInformative/Index';
 //Import componentes
 import TableAccount from './TableAccount';
 import { Grid } from '@material-ui/core';
@@ -45,6 +45,12 @@ function AccountStatus(props) {
                 <Navbar/>
             </header>
             <div>
+            <Paper className={classes.espacio}>
+                <h1>
+                    <CardHeader titleTypographyProps = {'title'}title="Estado de cuenta" />
+                </h1>
+            </Paper>
+
             <CumulativeTotal 
                 handleCloseReload={handleCloseReload}
                 handleOpenReload={handleOpenReload}

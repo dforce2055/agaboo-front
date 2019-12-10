@@ -76,7 +76,6 @@ export default function Orders() {
           <Tr>
             <Th>#</Th>
             <Th>Nombre</Th>
-            <Th>Localidad</Th>
             <Th>Dirección</Th>
             <Th>Ver más...</Th>
           </Tr>
@@ -86,8 +85,7 @@ export default function Orders() {
             <Tr key={pedido.id_pedido}>
               <Td>{index+1}</Td> 
               <Td>{pedido.cliente.nombre +' ' +pedido.cliente.apellido}</Td>
-              <Td>{pedido.ciudad}</Td>
-              <Td>{pedido.direccion}</Td>
+              <Td>{pedido.ubicacionDeEntrega}</Td>
               <Td>
                 <DialogOrders pedido={pedido}/>
               </Td>

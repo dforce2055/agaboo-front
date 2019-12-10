@@ -240,14 +240,16 @@ export default function GridTableProduct() {
                 >
                   {index}
                 </TableCell>
-                <TableCell 
-                  component="th" 
-                  scope="row"
-                >
-                  {row.producto}
+                <TableCell component="th" scope="row" >
+                  <Typography gutterBottom variant="subtitle1">
+                    {row.producto}
+                  </Typography>
                 </TableCell>
                 <TableCell align="right">
-                {row.modelo}</TableCell>
+                  <Typography gutterBottom variant="subtitle1">
+                    {row.modelo}
+                  </Typography>
+                </TableCell>
                 <TableCell align="right">
                   {
                     (orderComplete.estado === 'INICIAL') ?

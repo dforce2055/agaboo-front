@@ -49,7 +49,7 @@ function List(suggestion,handleChange) {
   );
 }
 
-export default function PlaceMaps({address,setAddress,coordinates,setCoordinates}) {
+export default function PlaceMaps({address,setAddress,coordinates,setCoordinates,labelString}) {
   const classes = useStyles();
 
 
@@ -78,14 +78,13 @@ export default function PlaceMaps({address,setAddress,coordinates,setCoordinates
             {/* <p>Latitude: {coordinates.lat}</p> 
             <p>Longitude: {coordinates.lng}</p> */}
 
-            <TextValidator
-            autoComplete
-             validators={['required','matchRegexp:^[a-zA-Z0-9,.!? ]*$']}
-              errorMessages={['Campo requerido', 'Ubicacion no valida']} 
+            <TextField
+            label={labelString}
+            type="text"
+            fullWidth
+            variant="outlined"
+            noValidate
             required
-            label="Domicilio"
-            fullWidth 
-            variant="outlined" 
             {...getInputProps()}/>
 
               {loading ? <div>...loading</div> : null}

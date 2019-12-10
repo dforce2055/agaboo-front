@@ -3,7 +3,7 @@ import firebase from '../config/firebase';
 import moment from 'moment';
 
 const collection = '/orders';
-
+const cant_order = 5;
 const db = firebase.db.collection(collection)
 
 class OrderRepo extends Component {
@@ -54,51 +54,59 @@ class OrderRepo extends Component {
     }
   }
 
-  //Devuelvo todos los pedidos
+  //Devuelvo todos los pedidos paginados
   async getOrders(){
     try {
       let list = {};
-      await db.where("eliminado","==",false).get()
+      await db.where("eliminado","==",false)
+      .limit(cant_order)
+      .get()
       .then(result =>{
         list = result.docs.map(doc => doc.data())
       })
       //Ordeno por MESES Y AÑO
-        list.sort(function(minor,higher) {
-          if (moment(minor.fecha_entrega).format('MM/YYYY') < moment(higher.fecha_entrega).format('MM/YYYY')){
-            return 1;
-          }else{
-            return -1
-          }
-        });
-        //Ordeno por dia
-        list.sort(function(minor,higher) {
-          if (moment(minor.fecha_entrega).format('DD/MM') < moment(higher.fecha_entrega).format('DD/MM')){
-            return 1;
-          }else{
-            return -1
-          }
-        });
-        
+      
+      return list;
+    } catch (error) {
+      console.error("Error en base de datos: ",error);
+    }
+  }
+  //Lo uitilizo para el typeahead.
+    async getOrdersALL(){
+    try {
+      let list = {};
+      await db.where("eliminado","==",false)
+      .get()
+      .then(result =>{
+        list = result.docs.map(doc => doc.data())
+      })
+      //Ordeno por MESES Y AÑO
+      
       return list;
     } catch (error) {
       console.error("Error en base de datos: ",error);
     }
   }
 
-
   //Devuelvo todos los pedidos
   async getOrdersNow() {
     try {
       let fechaHoy = new Date();
-       //La función devuelve mes actual menos uno
-      let fechaFormat = fechaHoy.getFullYear() +'-'+(fechaHoy.getMonth()+1) +'-'+(fechaHoy.getDate());
-      
-      let list = {};
-      await db
-        .where("eliminado", "==", false)
-        .where("fecha_entrega", "==", fechaFormat)
+       //La función devuelve mes actual
+      let fechaFormat = moment().format("YYYY-MM-DD")
+
+      let list = [];
+      await db.where("eliminado", "==", false)
         .get()
-        .then(result => list = result.docs.map(doc => doc.data()))
+        .then(result =>{
+          return result.docs.map(doc=>{
+            if (doc.data().estado === "ENTREGADO" && doc.data().fecha_finalizacion === fechaFormat) {
+              return list.push(doc.data())
+            }else if (doc.data().fecha_entrega === fechaFormat) {
+              return list.push(doc.data())
+            }
+          })
+        })      
       return list;
     } catch (error) {
       console.error("Error en base de datos: ", error);
@@ -319,25 +327,53 @@ class OrderRepo extends Component {
           if (!intput) throw new Error(`Error: Es necesario ingresar una palabra.`);
 
           let newOrder = [];
-          newOrder = this.getOrders().then(result=>{
+          newOrder = this.getOrdersALL().then(result=>{
+            if (result) {
+              console.log("entre a filter order");
+              
               return result.filter(function(item) {
                   const itemDataNombre = item.nombre.toUpperCase()
-                  // const itemDataFech_creacion= item.fecha_creacion.toUpperCase()
-                  // const itemDataFech_entrega = item.fecha_entrega.toUpperCase()
+                  const itemDataFech_finalizacion= item.fecha_finalizacion.toUpperCase()
+                  const itemDataFech_entrega = item.fecha_entrega.toUpperCase()
                   const itemDataId_cliente = item.id_cliente.toUpperCase()
                   const itemDataUbicacionDeEntrega = item.detalle_pedido.ubicacionDeEntrega.toUpperCase()
-                  // const _search = itemDataNombre+" "+itemDataFech_creacion+" "+itemDataFech_entrega+" "+itemDataId_cliente+" "+itemDataUbicacionDeEntrega
-
-                  const _search = itemDataNombre+" "+itemDataId_cliente+" "+itemDataUbicacionDeEntrega
+                  
+                  const _search = itemDataNombre+" "+itemDataFech_finalizacion+" "+itemDataFech_entrega+" "+itemDataId_cliente+" "+itemDataUbicacionDeEntrega
 
                   const text = intput.toUpperCase()
                   return _search.indexOf(text) > -1
               });
+            }
           })                        
           return newOrder
       } catch (error) {
           
       }
+  }
+
+  getOrderPagination = async (lastId) => {
+    try {
+        let order = [];
+        await db.where("eliminado","==",false)
+            .orderBy("id_pedido")
+            .startAfter(lastId)
+            .limit(cant_order)
+            .get()
+            .then(function (querySnapshot) {
+              console.log("llegue a repo",querySnapshot);
+              
+                querySnapshot.forEach(function(doc) {
+                    order.push(doc.data());
+                });
+            })
+            .catch(function (error) {
+                console.log("Error al paginar pedidos: ", error);
+                order = null;
+            });
+        return order;
+    } catch (error) {
+        console.log("Error en la base de datos:", error);
+    }
   }
 
 }

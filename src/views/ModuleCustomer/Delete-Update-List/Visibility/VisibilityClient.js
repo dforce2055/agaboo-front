@@ -13,6 +13,48 @@ import Divider from '@material-ui/core/Divider';
 import Visibility from '@material-ui/icons/Visibility';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import MenuItem from '@material-ui/core/MenuItem';
+import {
+  MuiThemeProvider, 
+  createMuiTheme,
+   makeStyles} from '@material-ui/core/styles';
+
+
+const themeMuiProvider = createMuiTheme({
+  overrides: {
+    MuiButton: {
+      containedPrimary: {
+        backgroundColor: '#3fb5a5',
+        '&:hover': {
+          backgroundColor: '#0ce8ca',
+          "@media (hover: none)": {
+            backgroundColor: "#0ce8ca"
+          },
+        },
+      },
+      containedSecondary: {
+        backgroundColor: '#b53f3f',
+        '&:hover': {
+          backgroundColor: '#f30b0b',
+          "@media (hover: none)": {
+            backgroundColor: "#f30b0b"
+          },
+        },
+      },
+    }, 
+  }
+})
+
+const useStyles = makeStyles(theme => ({
+  buttonLeft: {
+    marginRight:'2px',
+    marginLeft:'13px',
+    marginTop: theme.spacing(3),
+  },
+  buttonRight: {
+    marginLeft:'20px',
+    marginTop: theme.spacing(3),
+  },
+}));
 
 const styles = theme => ({
     root: {
@@ -84,25 +126,24 @@ export default function VisibilityClient(props) {
                     </Typography>
                     <Divider />
                     <Typography gutterBottom>
-                        <br />
                             <b>Domicilio:</b> <br />{cliente.localidad+', '+cliente.calle+'-'+cliente.altura}
                         <br />
                     </Typography>
                     <Divider />
                     <Typography gutterBottom>
-                    <br />
                         <b>Rubro:</b> <br />{cliente.rubro}
                     </Typography>
                     <Divider />
                     <Typography gutterBottom>
-                    <br />
                         <b>Id Cliente:</b><br />{cliente.id}
                     </Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={handleClose} color="primary">
+                <MuiThemeProvider theme={themeMuiProvider}>
+                <Button autoFocus onClick={handleClose} variant="contained" color="primary">
                         Cerrar
                     </Button>
+                </MuiThemeProvider>
                 </DialogActions>
             </Dialog>
         </React.Fragment>

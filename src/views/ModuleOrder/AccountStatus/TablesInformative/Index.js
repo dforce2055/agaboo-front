@@ -1,15 +1,15 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import OrderController from '../../../controllers/Order.js';
+import OrderController from '../../../../controllers/Order.js';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import { Paper } from '@material-ui/core';
+import { Paper,Container } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import TotalProgress from './TablesInformative/TotalProgress';
-import TotalPaid from './TablesInformative/TotalPaid';
-import TotalUnpaid from './TablesInformative/TotalUnpaid';
+import TotalProgress from './TotalProgress';
+import TotalPaid from './TotalPaid';
+import TotalUnpaid from './TotalUnpaid';
 
 const theme = createMuiTheme({ /* Plantilla de edicion */
   overrides: {
@@ -110,23 +110,25 @@ export default function CumulativeTotal(props) {
 
   return (
     <MuiThemeProvider theme={theme}>
-      <div className={classes.root2}>
-        <Grid container spacing={2} direction="row" justify="space-around" alignItems="center">
-
-          <Grid item lg={3} sm={6} xl={3} xs={12}>
-            <TotalProgress values={percentage}/>
-          </Grid>
-
-          <Grid item lg={3} sm={6} xl={3} xs={12} >
-            <TotalPaid value_paid={value_paid}/>
-          </Grid>
-
-          <Grid item lg={3} sm={6} xl={3} xs={12}>
-            <TotalUnpaid value_unpaid={value_unpaid}/>
-          </Grid>
-
-      </Grid>
-      </div>
+<Container fixed>
+        <div className={classes.root2}>
+          <Grid container spacing={2} direction="row" justify="space-evenly" alignItems="baseline">
+  
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <TotalProgress values={percentage}/>
+            </Grid>
+  
+            <Grid item lg={3} sm={6} xl={3} xs={12} >
+              <TotalPaid value_paid={value_paid}/>
+            </Grid>
+  
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <TotalUnpaid value_unpaid={value_unpaid}/>
+            </Grid>
+  
+        </Grid>
+        </div>
+</Container>
     </MuiThemeProvider>
   );
 }

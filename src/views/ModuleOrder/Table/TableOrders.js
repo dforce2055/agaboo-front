@@ -22,7 +22,6 @@ import {
 } from '@material-ui/core';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ButtonColorStatus from './ButtonColorStatus';
-import OrderController from '../../../controllers/Order.js';
 import ButtonOption from './ButtonOption.js';
 import TableOrdersRespon from './TableOrdersRespon.js';
 
@@ -109,10 +108,20 @@ const TableOrders = props =>{
                     hover
                     key={index}
                   >
-                    <TableCell>{order.id_pedido}</TableCell>
-                    <TableCell>{order.nombre}</TableCell>
                     <TableCell>
+                      <Typography gutterBottom variant="subtitle1">
+                        {order.id_pedido}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                    <Typography gutterBottom variant="subtitle1">
+                    {order.nombre}
+                    </Typography>
+                    </TableCell>
+                    <TableCell>
+                    <Typography gutterBottom variant="subtitle1">
                       {moment(order.fecha_entrega).format('DD/MM/YYYY')}
+                    </Typography>
                     </TableCell>
                   <TableCell>
                     <div>
