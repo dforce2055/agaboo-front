@@ -1,6 +1,6 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import Form from './createOrder';
+import Form from './CreateOrder';
 
 export default function OrderForm(props) {
   const { setButtonState } = props; 

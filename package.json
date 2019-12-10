@@ -19,6 +19,7 @@
     "firebase-functions": "^3.3.0",
     "firebase-tools": "^7.6.1",
     "formik": "^1.5.8",
+    "google-map-react": "^1.1.5",
     "http2": "^3.3.7",
     "lodash": "^4.17.15",
     "material-ui": "^0.20.2",
