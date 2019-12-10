@@ -99,6 +99,7 @@ class ProductRepo extends Component {
         return product;
     }
 
+    //Permite devolver todos los productos con el estado que es pasado por parametro
     getProductsByState = async (state) => {
         if (!state) throw new Error(`Error: el estado de producto es obligatorio`);
         let products = [];
@@ -116,7 +117,8 @@ class ProductRepo extends Component {
                 console.log("Error getting documents: ", error);
                 products = null;
             });
-        //console.log(products);
+        
+        
         return products;
     }
 
@@ -160,6 +162,34 @@ class ProductRepo extends Component {
 
             await firebase.db.collection(collection)
                 .where('state', '==', 'DISPONIBLE')
+                .get()
+                .then(result=>{   
+                     sin_alquilar = result.docs.map(doc=>doc.data())
+                })       
+
+                const array= [];
+                sin_alquilar.reduce(function(res,value) {
+                        if (!res[value.type]) { //FILTRO
+                            res[value.type] = {type:value.type ,cantidad:0} //Creo el tipo de coleccion de objetos
+                            array.push(res[value.type]) //agrego sin alquilar
+                        }
+                        res[value.type].cantidad++;
+                        return res;
+                    },{})  
+                    
+            return array;
+        } catch (error) {
+            console.error("Error al devolver la cantidad de productos disponibles desde repo.",error);
+            
+        }
+    }
+
+        async cantidad_sin_Alquilar_state(state){
+        try {
+            let sin_alquilar = []; //Se guardara la cantidad disp. con su tipo de prod
+
+            await firebase.db.collection(collection)
+                .where('state', '==', state)
                 .get()
                 .then(result=>{   
                      sin_alquilar = result.docs.map(doc=>doc.data())
@@ -275,7 +305,5 @@ class ProductRepo extends Component {
             )
         })
     }
-
-    //Se usan en repositories/Order.js
 }
 export default new ProductRepo();

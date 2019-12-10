@@ -139,7 +139,7 @@ function DeleteUpdateUserAdmin(props) {
             </Fab>
                 <Paper className={classes.espacio}>
                     <h1>
-                        <CardHeader titleTypographyProps = {'titulo'} title="Clientes" />
+                        <CardHeader title="Clientes" />
                     </h1>
                 </Paper>
                 <Grid item container justify="flex-end" alignItems="baseline">

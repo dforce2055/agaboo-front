@@ -94,6 +94,15 @@ class ProductController extends Component {
         }
     }
 
+    cantidad_sin_Alquilar_state = (state) =>{
+        try {            
+            return ProductRepo.cantidad_sin_Alquilar_state(state);
+        } catch (error) {
+            console.error("Error en el controlador de productos al devolver la cantidad de productos.");
+            
+        }
+    }
+
     getCantProductsByType = async (type) => {
         if (!type) throw new Error(`Error: no se envió el tipo de producto para buscar en Productos`);
 

@@ -11,7 +11,7 @@ import * as serviceWorker from './serviceWorker';
 import CreateUserAdm from './views/ModuleCustomer/Create/index'; //Componente para registrar un nuevo cliente¿
 import CreateUserAdmOK from './views/ModuleUser/Create/index';
 import ListUsers from './views/ModuleUser/ListUsers/index';
-import indexCreateProduct from './views/ModuleProduct/Create/index'
+import IndexCreateProduct from './views/ModuleProduct/Create/index'
 import indexUpdateProduct from './views/ModuleProduct/Update/index';
 import CreateOrder from './views/ModuleOrder/Create/index';
 import OrderReady from './views/ModuleOrder/index';
@@ -26,6 +26,10 @@ import AccountStatus from './views/ModuleOrder/AccountStatus/index';
 import Service from './views/ModuleService/Index.js'
 import OrderDetail from './views/ModuleOrder/Table/OrderDetail/index'
 import newCustomer from './views/ModuleCustomer/newCustomer';
+
+import ModuleProduct from './views/ModuleProductNew'; //NUEVO DE PRUEBA
+
+
 const theme = createMuiTheme();
 
 
@@ -53,7 +57,7 @@ export default function App() {
                 <Route path="/usuarios-new" component={newCustomer} />
                 <Route path= "/tablaClientes" component={DeleteUpdateUserAdmin} />
                 <Route path= "/registrarCliente" component={CreateUserAdm} />
-                <Route path= "/createProduct" component={indexCreateProduct} />
+                <Route path= "/createProduct" component={IndexCreateProduct} />
                 <Route path= "/tableProduct" component= {indexUpdateProduct}/>
                 <Route path= "/registrarPedido" component={CreateOrder} />
                 <Route path= "/pedidosListos" component={OrderReady} />
@@ -61,6 +65,10 @@ export default function App() {
                 <Route path = "/EstadoDeCuenta" component={AccountStatus}/>
                 <Route path = "/servicios" component={Service}/>
                 <Route path = "/orderDetail" component={OrderDetail}/>
+
+                <Route path = "/productos" component={ModuleProduct}/>
+
+
             </React.Fragment>
         </BrowserRouter>
       </AuthContextProvider>

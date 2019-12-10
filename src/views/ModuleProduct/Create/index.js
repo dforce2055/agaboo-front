@@ -5,7 +5,8 @@ import SimpleBottomNavigation from '../../Footer/Footer';
 import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
 
-function indexCreateProduct(props) {
+function IndexCreateProduct(props) {
+
     let userRole = firebase.getCurrentUserRole();
     if (!firebase.getCurrentUsername()) {
         // not logged in
@@ -30,4 +31,4 @@ function indexCreateProduct(props) {
     )
 }
 
-export default withRouter(indexCreateProduct);
+export default withRouter(IndexCreateProduct);

@@ -173,8 +173,6 @@ export default function DialogUpdateProduct(props) {
           <SearchIcon />
       </IconButton>
       
-      
-      
       <Dialog 
         //className = {}
         open={open} 
