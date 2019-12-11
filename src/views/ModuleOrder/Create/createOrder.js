@@ -194,7 +194,7 @@ export default function CreateOrder(props) {
     console.log("data",data);
     
     sessionStorage.setItem('info_detalle_pedido',JSON.stringify(data)); 
-  },[address,address2,values]);
+  },[address,address2,values,coordinates]); //Se ejecuta este uuseEffect cuando detecte algun cambio en los siguientes campos
 
     
   const handleChange = name => event => {    
