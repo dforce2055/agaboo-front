@@ -10,7 +10,7 @@ import ProductController from '../../controllers/Product';
 import Filters from './Filter';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import DialogResultSearch from './Filter/DialogResultSearch'
+import DialogResultSearch from './Dialog/DialogResultSearch'
 
 const useStyles = makeStyles(theme => ({
     root:{

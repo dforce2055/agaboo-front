@@ -5,7 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {Paper,Grid} from '@material-ui/core';
+import {Paper,Grid,TextField} from '@material-ui/core';
 import Draggable from 'react-draggable';
 import {
   MuiThemeProvider, 
@@ -80,9 +80,9 @@ const classes = useStyles();
   return (
     <div>
     <MuiThemeProvider theme={themeMuiProvider}>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+      {/* <Button variant="contained" color="primary" onClick={handleClickOpen}>
         Open form dialog
-      </Button>
+      </Button> */}
       <Dialog
         open={open}
         onClose={handleClose}
@@ -115,8 +115,15 @@ const classes = useStyles();
                       <MenuItem value={20}>Twenty</MenuItem>
                       <MenuItem value={30}>Thirty</MenuItem>
                     </Select>
-                </FormControl>
+                </FormControl>                
               </Grid>
+              <TextField></TextField>
+
+              <TextField></TextField>
+
+              <TextField></TextField>
+
+              <TextField></TextField>
             </Grid>
           </DialogContentText>
         </DialogContent>
