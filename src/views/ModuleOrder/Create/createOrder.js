@@ -46,7 +46,7 @@ function formulario(handleChange, value){
           <div className="password"> 
             <TextField
               variant="outlined"
-              label="Respondasble de pago"
+              label="Responsable de pago"
               placeholder="Nombre y Apellido"
               type="text"
               noValidate
