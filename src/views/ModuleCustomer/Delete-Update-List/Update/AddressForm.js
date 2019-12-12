@@ -54,7 +54,7 @@ function AddressForm(props) {
   const {handleClose} = props;
   const {updateStateArray} = props;
 
-  const handleChange = name => event => {
+  const handleChange = name => event => { 
     setValues({ ...values, [name]: event.target.value });  
   };
 
