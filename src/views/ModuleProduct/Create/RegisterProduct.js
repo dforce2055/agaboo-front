@@ -3,8 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import './ModuleProduct.css';
 // import Button from './Button' ;
-import { Button, ButtonGroup } from '@material-ui/core/';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { Button, ButtonGroup,FormControl,InputLabel,Select} from '@material-ui/core';
+import { MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid'
 import {withRouter} from 'react-router-dom' ;
 import Paper from '@material-ui/core/Paper';
@@ -57,6 +57,9 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexWrap: "wrap",
     border: "1px" ,
+  },
+  formControl: {
+    minWidth: 175,
   },
   paper: {
     padding: theme.spacing(1),
@@ -132,7 +135,7 @@ const useStyles = makeStyles(theme => ({
     };
     
     console.log("product : ", product);
-    ProductController.addProduct(product);
+    // ProductController.addProduct(product);
     alert("El producto está registrado");
     setValues({
       code: "",
@@ -156,8 +159,27 @@ const useStyles = makeStyles(theme => ({
       </Grid>
           <form className={classes.container} noValidate autoComplete="off" >
                 <Grid container direction="column" justify="center" alignItems="center">
-                  <Grid item >
-                    <TextField
+                  <Grid item style={{marginTop:"25px"}}>
+
+                  <FormControl 
+                    variant="outlined" 
+                    className={classes.formControl}>
+                      <InputLabel style={{width:"200px"}} htmlFor="outlined-age-native-simple">
+                        Filtrado por estado
+                      </InputLabel>
+                      <Select
+                        native
+                        value={values.typeProduct}
+                        onChange={handleChange("typeProduct")} /*Guardo en el estado search de index el estado que haya seleccionado para su filtrado.*/
+                      >
+                        <option value=""></option>{/*Pongo un valor vacio asi no se superpone con el placeholder*/}
+                        <option value={'Baño Quimico'}>Baño Quimico</option>
+                        <option value={'Oficina'}>Oficina</option>
+                        <option value={'Boleteria'}>Boleteria</option>
+                        <option value={'Garita'}>Garita</option>
+                      </Select>
+                    </FormControl>
+                    {/* <TextField
                       id="type-product"
                       select
                       label="Producto"
@@ -180,7 +202,7 @@ const useStyles = makeStyles(theme => ({
                             {option.value}
                         </option>
                       ))}
-                    </TextField>  
+                    </TextField>   */}
                     </Grid>
                   
                     <Grid item >
@@ -238,16 +260,6 @@ const useStyles = makeStyles(theme => ({
                 </Grid>
             </form>
             <Grid container direction="row" justify="space-evenly" alignItems="center" >
-               <Grid item>
-                 <Button
-                    className={classes.buttonLeft}
-                    color="secondary"
-                    variant="contained"
-                    onClick={ () => history.goBack()  }
-                  >
-                    Cancelar
-                  </Button>
-               </Grid>
                 <Grid item>
                   <Button
                     className={classes.buttonRight}
@@ -260,6 +272,17 @@ const useStyles = makeStyles(theme => ({
                     Guardar
                   </Button>
                 </Grid>
+
+               <Grid item>
+                 <Button
+                    className={classes.buttonLeft}
+                    color="secondary"
+                    variant="contained"
+                    onClick={ () => history.goBack()  }
+                  >
+                    Cancelar
+                  </Button>
+               </Grid>
             </Grid>
       </Paper>
       </MuiThemeProvider>
