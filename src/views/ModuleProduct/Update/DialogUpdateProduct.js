@@ -145,14 +145,12 @@ export default function DialogUpdateProduct(props) {
     setOpenDelete(false);
     setOpen(false);
     setSearch("");
-
   }
 
 
   const handleClose = () => {
     setOpen(false);
     setSearch("");
-
   };
 
   
@@ -185,122 +183,103 @@ export default function DialogUpdateProduct(props) {
           <SearchIcon />
       </IconButton>
       
-      <Dialog 
-        
-        open={open} 
-        aria-labelledby="form-dialog-title"
-        onClose={handleClose}
-        fullScreen={fullScreen}
-        
-        
-      
-
-      >
+      <Dialog open={open} aria-labelledby="form-dialog-title" onClose={handleClose} fullScreen={fullScreen} >
         <DialogTitle id="form-dialog-title" alignItems = {"center"} >Modificar Producto</DialogTitle>
         <DialogContent>
             <Grid container direction="column" justify="center" alignItems="center" >
-            <Grid item>
-            <TextField
-                    id="type-product"
-                    select  
-                    label="Producto"
-                    className={classes.textField}
-                    value={values.typeProduct }
-                    disabled = "true"
-                    
-                    onChange={handleChange("type")}
-                    SelectProps={{
-                      native: true,
-                      MenuProps: {
-                        className: classes.menu
-                      }
-                    }}
-                    helperText="Tipo de producto a registrar "
-                    margin="normal"
-                    variant="outlined"
-                  >
+              <Grid item>
+                <TextField
+                  id="type-product"
+                  select  
+                  label="Producto"
+                  className={classes.textField}
+                  value={values.typeProduct }
+                  disabled = "true"
+                  onChange={handleChange("type")}
+                  SelectProps={{
+                    native: true,
+                    MenuProps: {
+                      className: classes.menu
+                    }
+                  }}
+                  helperText="Tipo de producto a registrar "
+                  margin="normal"
+                  variant="outlined" >
                     {typeProduct.map(option => (
                       <option key={option.value} value={option.value}>
                         {option.label}
                       </option>
                     ))}
-                    
                   </TextField>  
-            </Grid>
-                  
-                  <Grid item>
-                    <TextField
-                    
-                  
-                    id="Code"
-                    label="Codigo"
-                    className={classes.textField}
-                    type= "number"
-                    value={values.code}
-                    onChange={handleChange("code")}
-                    margin="normal"
-                    variant="outlined"
-                    disabled = "true"
+              </Grid>
+              
+              <Grid item>
+                <TextField
+                  id="Code"
+                  label="Codigo"
+                  className={classes.textField}
+                  type= "number"
+                  value={values.code}
+                  onChange={handleChange("code")}
+                  margin="normal"
+                  variant="outlined"
+                  disabled = "true" />   
+              </Grid>          
+              
+              <Grid item>
+                <TextField
+                  id="outlined-name"
+                  label="Descripcion"
+                  className={classes.textField}
+                  value={values.description}
+                  onChange={handleChange("description")}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </Grid>
 
-                  />   
-                  </Grid>           
-                
-
-                  <Grid item>
-                    <TextField
-                    id="outlined-name"
-                    label="Descripcion"
-                    className={classes.textField}
-                    value={values.description}
-                    onChange={handleChange("description")}
-                    margin="normal"
-                    variant="outlined"
-                  />
-                  </Grid>
-                  <Grid item>
-                                      <TextField
-                    id="type-product"
-                    select
-                    label="Estado"
-                    className={classes.textField}
-                    value={values.state }
-                    
-                    onChange={handleChange("state")}
-                    SelectProps={{
-                        native: true,
-                        MenuProps: {
-                        className: classes.menu 
-                        }
-                    }}
-                    
-                    margin="normal"
-                    variant="outlined"
-                    >
-                    {typeState.map(option => (
-                        <option key={option.value} value={option.value}>
-                        {option.label}
-                        </option>
-                    ))}
-                    
+              <Grid item>
+                <TextField
+                  id="type-product" 
+                  select 
+                  label="Estado"
+                  className={classes.textField}
+                  value={values.state }
+                  onChange={handleChange("state")}
+                  SelectProps={{
+                    native: true,
+                    MenuProps: {
+                      className: classes.menu 
+                    }
+                  }}
+                  margin="normal"
+                  variant="outlined" >
+                  {typeState.map(option => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
                  </TextField>
-                  </Grid>
+              </Grid>
             </Grid>
         </DialogContent>
-<Grid container direction="row" justify="center" alignItems="flex-end" >
-            <Grid item>
-          <Button  onClick = {updateProduct}color="primary">
-            Modificar
-          </Button>
-          </Grid>
+        
+        <Grid container direction="row" justify="center" alignItems="flex-end" >
           <Grid item>
-          <Button 
-          onClick = {handleOpenDelete} color="primary">
-            Eliminar
-          </Button>
+            <Button  onClick = {updateProduct}color="primary">
+              Modificar
+            </Button>
           </Grid>
-          <Button onClick={handleClose} color="primary">
-            Cancelar
-          </Button></Grid>
+
+          <Grid item>
+            <Button onClick = {handleOpenDelete} color="primary">
+              Eliminar
+            </Button>
+          </Grid>
+            <Button onClick={handleClose} color="primary">
+              Cancelar
+            </Button>
+          </Grid>
         
       </Dialog>
 

@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Filters({setProductSelect,handleChangeInput,handleClickOpen,optionAutocomplete,search,handleChangeFilter,Typeahead}) {
+export default function Filters({handleChangeInput,handleClickOpen,optionAutocomplete,search,handleChangeFilter,Typeahead}) {
   const classes = useStyles();
   const inputLabel = React.useRef(null);
  
@@ -80,10 +80,8 @@ export default function Filters({setProductSelect,handleChangeInput,handleClickO
         getOptionLabel={option => option.code} //Map de arreglo
         style={{ width: 300 }}
         onChange={(event,value) => {
-          handleChangeInput(value)
-          console.log(value)
+          handleChangeInput(value) //Guardo el valor en el estado search de index
         }}
-        // onChange={handleChangeCopy(inputProps)}
         renderInput={params => (
           <TextField 
             {...params} 
@@ -91,29 +89,15 @@ export default function Filters({setProductSelect,handleChangeInput,handleClickO
             variant="outlined" 
             InputProps={{
               startAdornment: <InputAdornment position="start" style={{backgroundColor:"#f20"}}>
-                <IconButton onClick={handleClickOpen}>
+                <IconButton onClick={handleClickOpen}> {/*Abro dialog con la informacion del objeto seleccionado*/}
                   <SearchIcon style={{color:'#949494'}}/>
                 </IconButton>
               </InputAdornment>
             }}
-            onChange={(event, newValue) => {
-              console.log(newValue);
-            }}
             fullWidth
             onKeyUp = {
               event => {
-                console.log(params)
-                if(event.keyCode === 13){ //Si es igual al enter ejecuto el dialog
-                  optionAutocomplete.map(x=>{
-                    if(x.code === event.target.value){
-                      console.log("adetro del map",event.target.value)
-                      setProductSelect(x)
-                      handleClickOpen()
-                    }
-                  })
-                }else{
-                  Typeahead(event.target.value); //En caso de que no este el enter, sigo buscando
-                }
+                  Typeahead(event.target.value); //Busco cada vez que introduzca una letra si existe en la db.
               }
             }
         /> 
@@ -133,14 +117,14 @@ export default function Filters({setProductSelect,handleChangeInput,handleClickO
         <Select
           native
           value={search.select}
-          onChange={handleChangeFilter('select')}
+          onChange={handleChangeFilter('select')} /*Guardo en el estado search de index el estado que haya seleccionado para su filtrado.*/
           labelWidth={labelWidth}
           inputProps={{
             name: 'age',
             id: 'outlined-age-native-simple',
           }}
         >
-          <option value=""></option>
+          <option value=""></option>{/*Pongo un valor vacio asi no se superpone con el placeholder*/}
           <option value={'DISPONIBLE'}>Disponibles</option>
           <option value={'ALQUILADO'}>Alquilados</option>
           <option value={'EN MANTENIMIENTO'}>En Mantenimiento</option>

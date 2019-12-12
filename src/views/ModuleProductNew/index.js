@@ -10,7 +10,7 @@ import ProductController from '../../controllers/Product';
 import Filters from './Filter';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import DialogResultSearch from './Dialog/DialogResultSearch'
+import ResponsiveDialog from './Dialog/NewDialog.js'
 
 const useStyles = makeStyles(theme => ({
     root:{
@@ -56,12 +56,13 @@ const ModuleProduct = (props) =>{
   let userRole = checkRoleAdmin();
   const {history} = props;
   const [search,setSearch] = useState({
-    input:{},
+    input:'',
     select:""
   });
   const [productSelect,setProductSelect] = useState({});
   const [open, setOpen] = useState(false);
   const [optionAutocomplete,setOptionAutocomplete] = useState([]);
+
 
   console.log(search);
   useEffect(()=>{ //Se ejecuta solamente cuando se renderiza
@@ -102,10 +103,12 @@ const ModuleProduct = (props) =>{
       })
     }
   }
+
   const handleChangeInput = (value) =>{
     console.log("Muestro valor en index=",value);
     setSearch({...search,['input']:value})
   }
+
   const Typeahead = (string) =>{
     if (string !== "") {
       ProductController.Typeahead(string)
@@ -132,8 +135,8 @@ const ModuleProduct = (props) =>{
       <NavBar/>
     </header>
 
-    <DialogResultSearch
-      search = {search.input}
+    <ResponsiveDialog
+      value={search.input}
       open = {open}
       handleClickOpen={handleClickOpen}
       handleClose={handleClose}
