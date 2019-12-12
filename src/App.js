@@ -12,22 +12,19 @@ import CreateUserAdm from './views/ModuleCustomer/Create/index'; //Componente pa
 import CreateUserAdmOK from './views/ModuleUser/Create/index';
 import ListUsers from './views/ModuleUser/ListUsers/index';
 import IndexCreateProduct from './views/ModuleProduct/Create/index'
-import indexUpdateProduct from './views/ModuleProduct/Update/index';
 import CreateOrder from './views/ModuleOrder/Create/index';
 import OrderReady from './views/ModuleOrder/index';
 import DeleteOrder from './views/ModuleOrder/Delete/index';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { CssBaseline } from '@material-ui/core'
-
 import firebase from '../src/config/firebase';
 import LoaderScreen from './views/LoaderScreen/LoaderScreen';
-
 import AccountStatus from './views/ModuleOrder/AccountStatus/index';
 import Service from './views/ModuleService/Index.js'
 import OrderDetail from './views/ModuleOrder/Table/OrderDetail/index'
 import newCustomer from './views/ModuleCustomer/newCustomer';
 
-import ModuleProduct from './views/ModuleProductNew'; //NUEVO DE PRUEBA
+import ModuleProduct from './views/ModuleProduct'; //Productos
 
 
 const theme = createMuiTheme();
@@ -58,16 +55,13 @@ export default function App() {
                 <Route path= "/tablaClientes" component={DeleteUpdateUserAdmin} />
                 <Route path= "/registrarCliente" component={CreateUserAdm} />
                 <Route path= "/createProduct" component={IndexCreateProduct} />
-                <Route path= "/tableProduct" component= {indexUpdateProduct}/>
+                <Route path = "/productos" component={ModuleProduct}/>
                 <Route path= "/registrarPedido" component={CreateOrder} />
                 <Route path= "/pedidosListos" component={OrderReady} />
                 <Route path= "/eliminarPedidos" component={DeleteOrder} />
                 <Route path = "/EstadoDeCuenta" component={AccountStatus}/>
                 <Route path = "/servicios" component={Service}/>
                 <Route path = "/orderDetail" component={OrderDetail}/>
-
-                <Route path = "/productos" component={ModuleProduct}/>
-
 
             </React.Fragment>
         </BrowserRouter>

@@ -125,9 +125,17 @@ class ProductRepo extends Component {
 
     getProducts = async (res) => {
         try {
-            let coleccion = await firebase.db.collection(collection).get();
-            let products = coleccion.docs.map(doc => doc.data());
-            return products;
+            let list = [];
+            await firebase.db.collection(collection)
+            .get()
+            .then(result=>{
+                //FILTRO
+                result.docs.map( doc =>{
+                    if (doc.data().state !== "ELIMINADO"){      
+                        list.push(doc.data())}
+                    })
+            });
+            return list;
         } catch (error) {
             throw new Error();
         }

@@ -8,6 +8,7 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import DialogUpdateProduct from '../Dialog/DialogUpdateProduct.js'
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -55,21 +56,42 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Filters({handleChangeInput,handleClickOpen,optionAutocomplete,search,handleChangeFilter,Typeahead}) {
+export default function Filters({optionAutocomplete,search,handleChangeFilter,Typeahead}) {
   const classes = useStyles();
   const inputLabel = React.useRef(null);
- 
   const [labelWidth, setLabelWidth] = React.useState(0);
+  const [product,setProduct] = React.useState();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    if (product !== null) {
+      setOpen(true);
+    }
+  };
+
+  const handleChange = (event) => {
+    setProduct(event)
+  }
+
+  const handleChangeProduct = name => event =>{
+    setProduct({...product,[name]:event.target.value})
+  }
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
-  const handleChangeCopy = (event) =>{
-    console.log("event",event);
-  }
   return (
     <Paper style={{backgroundColor:'#fff',padding:10,marginTop:10}}>
+    <DialogUpdateProduct
+      value={product} //Producto seleccionado por el autocomplete
+      open = {open} //Estado que permite abrir el dialog 
+      handleChangeProduct={handleChangeProduct} //Permite modificar el producto seleccionado
+      handleClose={handleClose} //Permite cerrar el dialog
+    />
     <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
 
     {/*Input*/}
@@ -80,7 +102,7 @@ export default function Filters({handleChangeInput,handleClickOpen,optionAutocom
         getOptionLabel={option => option.code} //Map de arreglo
         style={{ width: 300 }}
         onChange={(event,value) => {
-          handleChangeInput(value) //Guardo el valor en el estado search de index
+          handleChange(value) //Guardo el valor en el estado product
         }}
         renderInput={params => (
           <TextField 

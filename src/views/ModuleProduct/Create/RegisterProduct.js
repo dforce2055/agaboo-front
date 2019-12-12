@@ -60,9 +60,7 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     padding: theme.spacing(1),
-    marginBottom: theme.spacing(9),
-    margin: 'auto',
-    maxWidth: 500,
+    margin: theme.spacing(3),
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -150,121 +148,119 @@ const useStyles = makeStyles(theme => ({
     <React.Fragment>
       <div style={{marginTop:'20px'}}>
       <MuiThemeProvider theme={themeMuiProvider}>
-      <Paper className={classes.paper} > 
-        <Grid container justify = { "center" } className = { "grid"} >
-          <Grid item xs = {12} sm = {6}>
-              <h1 >Registro de productos</h1>
-              <form className={classes.container} noValidate autoComplete="off" >
-                <Grid item xs = {12} alignItems = {"center"}  >
+      <Paper className={classes.paper} >
+      <Grid container direction="row" justify="space-evenly" alignItems="center" >
+        <Grid item>
+          <h1 >Registro de productos</h1>
+        </Grid>
+      </Grid>
+          <form className={classes.container} noValidate autoComplete="off" >
+                <Grid container direction="column" justify="center" alignItems="center">
+                  <Grid item >
+                    <TextField
+                      id="type-product"
+                      select
+                      label="Producto"
+                      className={classes.textField}
+                      value={values.typeProduct}
+                      onChange={handleChange("typeProduct")}
+                      onClick={getTypesOfProducts}
+                      SelectProps={{
+                        native: true,
+                        MenuProps: {
+                          className: classes.menu
+                        }
+                      }}
+                      helperText="Tipo de producto a registrar "
+                      margin="normal"
+                      variant="outlined"
+                    >
+                        {typeProduct.map(option => (
+                          <option key={option.value} value={option.value}>
+                            {option.value}
+                        </option>
+                      ))}
+                    </TextField>  
+                    </Grid>
                   
-                  <TextField
+                    <Grid item >
+                    <TextField
+                      required
+                      id="Code"
+                      label="Codigo"
+                      className={classes.textField}
+                      type= "number"
+                      value={values.code}
+                      onChange={handleChange("code")}
+                      margin="normal"
+                      variant="outlined"
+                    />              
+                  </Grid>
+                  
+                  
+                  <Grid item>
+                    <TextField
+                      id="outlined-name"
+                      label="Descripcion"
+                      className={classes.textField}
+                      value={values.description}
+                      onChange={handleChange("description")}
+                      margin="normal"
+                      variant="outlined"
+                    />
+                  </Grid>
+                  <Grid item>
+                    <TextField
                     id="type-product"
                     select
-                    label="Producto"
+                    label="Estado"
                     className={classes.textField}
-                    value={values.typeProduct}
-                    onChange={handleChange("typeProduct")}
-                    onClick={getTypesOfProducts}
+                    value={values.state }
+                    
+                    
+                    onChange={handleChange("state")}
                     SelectProps={{
                       native: true,
                       MenuProps: {
                         className: classes.menu
                       }
                     }}
-                    helperText="Tipo de producto a registrar "
                     margin="normal"
                     variant="outlined"
                   >
-                      {typeProduct.map(option => (
-                        <option key={option.value} value={option.value}>
-                          {option.value}
+                    {typeState.map(option => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
                       </option>
                     ))}
-                    
-                  </TextField>  
-                  
-                  <TextField
-                    required
-                    id="Code"
-                    label="Codigo"
-                    className={classes.textField}
-                    type= "number"
-                    value={values.code}
-                    onChange={handleChange("code")}
-                    margin="normal"
-                    variant="outlined"
-                  />              
+                  </TextField>
+                  </Grid>
                 </Grid>
-                
-
-                <Grid item xs = {12} alignItems = {"center"}>
-                  <TextField
-                    id="outlined-name"
-                    label="Descripcion"
-                    className={classes.textField}
-                    value={values.description}
-                    onChange={handleChange("description")}
-                    margin="normal"
-                    variant="outlined"
-                  />
-                  <TextField
-                  id="type-product"
-                  select
-                  label="Estado"
-                  className={classes.textField}
-                  value={values.state }
-                  
-                  
-                  onChange={handleChange("state")}
-                  SelectProps={{
-                    native: true,
-                    MenuProps: {
-                      className: classes.menu
-                    }
-                  }}
-                  
-                  margin="normal"
-                  variant="outlined"
-                >
-                  {typeState.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                  
-                </TextField>
-              </Grid>
-                
-                
             </form>
-            <Grid item xs = {12} alignItems = {"center"}>
-            <ButtonGroup
-                variant="text"
-                size="large"
-                aria-label="large contained  button group"
-            >
-               <Button
-                  className={classes.buttonLeft}
-                  color="secondary"
-                  variant="contained"
-                  onClick={ () => history.goBack()  }
-                >
-                  Cancelar
-                </Button>
-                <Button
-                  className={classes.buttonRight}
-                  label={"Registrar Usuario"}
-                  color="primary"
-                  variant="contained"
-                  type=" submit "
-                  onClick = { registerProduct }
-                >
-                  Guardar
-                </Button>
-            </ButtonGroup>
+            <Grid container direction="row" justify="space-evenly" alignItems="center" >
+               <Grid item>
+                 <Button
+                    className={classes.buttonLeft}
+                    color="secondary"
+                    variant="contained"
+                    onClick={ () => history.goBack()  }
+                  >
+                    Cancelar
+                  </Button>
+               </Grid>
+                <Grid item>
+                  <Button
+                    className={classes.buttonRight}
+                    label={"Registrar Usuario"}
+                    color="primary"
+                    variant="contained"
+                    type=" submit "
+                    onClick = { registerProduct }
+                  >
+                    Guardar
+                  </Button>
+                </Grid>
             </Grid>
-          </Grid>
-        </Grid>
       </Paper>
       </MuiThemeProvider>
       </div>

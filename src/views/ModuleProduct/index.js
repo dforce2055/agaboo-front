@@ -10,7 +10,6 @@ import ProductController from '../../controllers/Product';
 import Filters from './Filter';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import ResponsiveDialog from './Dialog/NewDialog.js'
 
 const useStyles = makeStyles(theme => ({
     root:{
@@ -59,12 +58,9 @@ const ModuleProduct = (props) =>{
     input:'',
     select:""
   });
-  const [productSelect,setProductSelect] = useState({});
-  const [open, setOpen] = useState(false);
+
   const [optionAutocomplete,setOptionAutocomplete] = useState([]);
 
-
-  console.log(search);
   useEffect(()=>{ //Se ejecuta solamente cuando se renderiza
     ProductController.cantidad_sin_Alquilar()
       .then(result=>{
@@ -104,11 +100,6 @@ const ModuleProduct = (props) =>{
     }
   }
 
-  const handleChangeInput = (value) =>{
-    console.log("Muestro valor en index=",value);
-    setSearch({...search,['input']:value})
-  }
-
   const Typeahead = (string) =>{
     if (string !== "") {
       ProductController.Typeahead(string)
@@ -118,29 +109,12 @@ const ModuleProduct = (props) =>{
     }
   }
 
-  const handleClickOpen = () => {
-    if (search.input !== null) {
-      setOpen(true);
-    }
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return(
     <div className={classes.root}>
 
     <header>
       <NavBar/>
     </header>
-
-    <ResponsiveDialog
-      value={search.input}
-      open = {open}
-      handleClickOpen={handleClickOpen}
-      handleClose={handleClose}
-    />
 
     <Paper className={classes.espacio}>
       <h1>
@@ -151,11 +125,8 @@ const ModuleProduct = (props) =>{
     <div className={classes.espacio}>
       <Grid container direction="row" justify="flex-end" alignItems="baseline">
         <Filters
-          setProductSelect={setProductSelect}
-          handleClickOpen={handleClickOpen}
           optionAutocomplete={optionAutocomplete}
           search={search}
-          handleChangeInput={handleChangeInput}
           Typeahead={Typeahead}
           handleChangeFilter={handleChangeFilter}
         />
