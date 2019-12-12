@@ -80,7 +80,7 @@ function AddressForm(props) {
       id: values.id,
       rubro: values.rubro,
       domicilio: address,
-      coordinates: coordinates,
+      coordinates_domicilio: coordinates,
       celular:values.celular,
       email:values.email,
       label:values.nombre+' '+values.apellido+' ,'+values.id,

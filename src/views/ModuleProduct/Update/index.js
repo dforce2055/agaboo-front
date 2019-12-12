@@ -6,11 +6,8 @@ import firebase from '../../../config/firebase';
 import { withRouter } from 'react-router-dom';
 import SearchBox from './SearchBox';
 import FilterProduct from './FilterProduct';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';  
-import Paper from '@material-ui/core/Paper';
-import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-
+import {MuiThemeProvider, createMuiTheme, makeStyles} from '@material-ui/core/styles';
+import { Paper,CardHeader,Grid } from '@material-ui/core';
 
 const theme = createMuiTheme({ /* Plantilla de edicion */
   overrides: {
@@ -40,6 +37,9 @@ const useStyles = makeStyles(theme => ({
       padding: theme.spacing(2),
       marginBottom: theme.spacing(8),
     },
+    espacio:{
+      margin: theme.spacing(3),
+    }
 }));
 
 
@@ -63,7 +63,15 @@ function useIndexUpdateProduct(props) {
       <React.Fragment>
         <MuiThemeProvider theme={theme}>
           <NavBar/>
-          <Grid container className={classes.root}>
+
+          <Paper className={classes.espacio}>
+            <h1>
+              <CardHeader titleTypographyProps = {'titulo'}title="Productos" />
+            </h1>
+          </Paper>
+
+          <Paper className={classes.espacio}>
+            <Grid container className={classes.root}>
               <Grid item xs={12}>
                   <Grid container justify="center">
                       <Grid key={1} item>
@@ -80,22 +88,26 @@ function useIndexUpdateProduct(props) {
                       </Grid>
                   </Grid>
               </Grid>
+            </Grid>
+          </Paper>
               
-          </Grid>
-          <Grid container className={classes.table}>
-              <Grid item xs = {12} xl = {6}>
-                  <Paper>
-                      <CustomizedTables
-                              setUpdate = {setUpdate}
-                              update = {update}
-                              rows = {rows}
-                              setRows = {setRows}
-                              value = {value}
-                              setValue = {setValue}
-                          />
-                  </Paper>
-              </Grid>
-          </Grid>
+            
+            <Paper className={classes.espacio}>
+            <Grid container className={classes.table}>
+                <Grid item xs = {12} xl = {6}>
+                    <Paper>
+                        <CustomizedTables
+                                setUpdate = {setUpdate}
+                                update = {update}
+                                rows = {rows}
+                                setRows = {setRows}
+                                value = {value}
+                                setValue = {setValue}
+                            />
+                    </Paper>
+                </Grid>
+            </Grid>
+          </Paper>
           <footer>
                <SimpleBottomNavigation/>
           </footer>

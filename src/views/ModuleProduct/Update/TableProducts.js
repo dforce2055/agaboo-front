@@ -22,16 +22,6 @@ const StyledTableCell = withStyles(theme => ({
   },
 }))(TableCell);
 
-const StyledTableRow = withStyles(theme => ({
-  root: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.background.default,
-    },
-  },
-}))(TableRow);
-
-
-
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -39,11 +29,6 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(3),
     overflowX: 'auto',
   },
-  table: {
-    minWidth: 300,
-    xs : 3, 
-  },
-
   fab: {
     position: 'fixed',
     bottom: theme.spacing(12),
@@ -146,7 +131,7 @@ const useStyles = makeStyles(theme => ({
   
   return (
       <React.Fragment>
-            <Table className={classes.table}>
+            <Table>
                 <TableHead>
                 <TableRow>
                     <StyledTableCell align = "justify" wir>Producto</StyledTableCell>
@@ -156,14 +141,13 @@ const useStyles = makeStyles(theme => ({
                 </TableHead>
                 <TableBody >
                 {rows.map(row => (
-                    <StyledTableRow key={row.typeProduct}>
-                    <StyledTableCell component="th" scope="row">
-                      
+                    <TableRow key={row.typeProduct}>
+                    <TableCell component="th" scope="row">
                       {row.product}
-                    </StyledTableCell>
+                    </TableCell>
                     {/* <StyledTableCell align="justyfy">{row.value}</StyledTableCell> */}
-                    <StyledTableCell align="justify">{row.count}</StyledTableCell>
-                    </StyledTableRow>
+                    <TableCell align="justify">{row.count}</TableCell>
+                    </TableRow>
                 ))}
                 </TableBody>
            </Table>

@@ -134,7 +134,7 @@ function OrderReady(props) {
             </header>
             <Paper className={classes.espacio}>
                 <h1>
-                    <CardHeader titleTypographyProps = {'titulo'}title="Pedidos" />
+                    <CardHeader title="Pedidos" />
                 </h1>
             </Paper>
             <div className={classes.espacio}>

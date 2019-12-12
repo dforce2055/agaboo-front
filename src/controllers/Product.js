@@ -90,9 +90,27 @@ class ProductController extends Component {
 
     }
 
+    Typeahead (intput){
+    try {
+        return ProductRepo.Typeahead(intput);
+    } catch (error) {
+        console.error("Error en el controlador al utilizar Typeahead.",error);
+        
+    }
+  } 
+
     cantidad_sin_Alquilar = () =>{
         try {            
             return ProductRepo.cantidad_sin_Alquilar();
+        } catch (error) {
+            console.error("Error en el controlador de productos al devolver la cantidad de productos.");
+            
+        }
+    }
+
+    cantidad_sin_Alquilar_state = (state) =>{
+        try {            
+            return ProductRepo.cantidad_sin_Alquilar_state(state);
         } catch (error) {
             console.error("Error en el controlador de productos al devolver la cantidad de productos.");
             
