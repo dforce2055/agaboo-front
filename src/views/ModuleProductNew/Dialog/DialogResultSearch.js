@@ -59,12 +59,17 @@ function PaperComponent(props) {
   );
 }
 
-export default function DialogResultSearch({productSelect,open,handleClickOpen,handleClose}) {
+export default function DialogResultSearch({search,open,handleClickOpen,handleClose}) {
   // console.log("producto en dialog",productSelect);
   const classes = useStyles();
   const [age, setAge] = React.useState('');
   const [open2, setOpen2] = React.useState(false);
 
+  if (!search) {
+    handleClose();
+  }
+  console.log("dialog",search);
+  
   const handleChange = event => {
     setAge(event.target.value);
   };
@@ -83,14 +88,16 @@ export default function DialogResultSearch({productSelect,open,handleClickOpen,h
       {/* <Button variant="contained" color="primary" onClick={handleClickOpen}>
         Open form dialog
       </Button> */}
-      <Dialog
+      {
+        search !== null ? 
+              <Dialog
         open={open}
         onClose={handleClose}
         PaperComponent={PaperComponent}
         aria-labelledby="draggable-dialog-title"
       >
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-          ¿Desea modificar el producto {productSelect.code} ? 
+          ¿Desea modificar el producto {search.code} ? 
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -138,6 +145,9 @@ export default function DialogResultSearch({productSelect,open,handleClickOpen,h
           </Grid>
         </DialogActions>
       </Dialog>
+      :
+      handleClose()
+      }
       </MuiThemeProvider>
     </div>
   );

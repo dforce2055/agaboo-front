@@ -55,18 +55,18 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Filters({searchProductById,setProductSelect,handleClickOpen,optionAutocomplete,search,handleChangeFilter,Typeahead}) {
+export default function Filters({setProductSelect,handleChangeInput,handleClickOpen,optionAutocomplete,search,handleChangeFilter,Typeahead}) {
   const classes = useStyles();
   const inputLabel = React.useRef(null);
-  const [copyTargetValue,setCopyTargetValue] = React.useState(); //Lo utilizo para guardar cada dato introducido y poder pasarlo al searchProductById
  
   const [labelWidth, setLabelWidth] = React.useState(0);
+
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
   const handleChangeCopy = (event) =>{
-    setCopyTargetValue(event.target.pa)
+    console.log("event",event);
   }
   return (
     <Paper style={{backgroundColor:'#fff',padding:10,marginTop:10}}>
@@ -79,6 +79,11 @@ export default function Filters({searchProductById,setProductSelect,handleClickO
         options={optionAutocomplete} //Arreglo con datos
         getOptionLabel={option => option.code} //Map de arreglo
         style={{ width: 300 }}
+        onChange={(event,value) => {
+          handleChangeInput(value)
+          console.log(value)
+        }}
+        // onChange={handleChangeCopy(inputProps)}
         renderInput={params => (
           <TextField 
             {...params} 
@@ -86,19 +91,22 @@ export default function Filters({searchProductById,setProductSelect,handleClickO
             variant="outlined" 
             InputProps={{
               startAdornment: <InputAdornment position="start" style={{backgroundColor:"#f20"}}>
-                <IconButton onClick={()=>{searchProductById(copyTargetValue)}}>
+                <IconButton onClick={handleClickOpen}>
                   <SearchIcon style={{color:'#949494'}}/>
                 </IconButton>
-              </InputAdornment>,
+              </InputAdornment>
+            }}
+            onChange={(event, newValue) => {
+              console.log(newValue);
             }}
             fullWidth
-            onChange={handleChangeCopy}
             onKeyUp = {
               event => {
+                console.log(params)
                 if(event.keyCode === 13){ //Si es igual al enter ejecuto el dialog
                   optionAutocomplete.map(x=>{
                     if(x.code === event.target.value){
-                      console.log(event.target.value)
+                      console.log("adetro del map",event.target.value)
                       setProductSelect(x)
                       handleClickOpen()
                     }

@@ -56,13 +56,14 @@ const ModuleProduct = (props) =>{
   let userRole = checkRoleAdmin();
   const {history} = props;
   const [search,setSearch] = useState({
-    input:"",
+    input:{},
     select:""
   });
   const [productSelect,setProductSelect] = useState({});
   const [open, setOpen] = useState(false);
   const [optionAutocomplete,setOptionAutocomplete] = useState([]);
 
+  console.log(search);
   useEffect(()=>{ //Se ejecuta solamente cuando se renderiza
     ProductController.cantidad_sin_Alquilar()
       .then(result=>{
@@ -101,7 +102,10 @@ const ModuleProduct = (props) =>{
       })
     }
   }
-
+  const handleChangeInput = (value) =>{
+    console.log("Muestro valor en index=",value);
+    setSearch({...search,['input']:value})
+  }
   const Typeahead = (string) =>{
     if (string !== "") {
       ProductController.Typeahead(string)
@@ -112,33 +116,14 @@ const ModuleProduct = (props) =>{
   }
 
   const handleClickOpen = () => {
-    setOpen(true);
+    if (search.input !== null) {
+      setOpen(true);
+    }
   };
 
   const handleClose = () => {
     setOpen(false);
   };
-
-  const searchProductById = (id) =>{
-    console.log("id=",id);
-    
-    if (id) {
-      console.log(id);
-      
-      ProductController.getProductById(id)
-      .then(result=>{
-        if (result.code === id) {
-          console.log(result);
-          setProductSelect(result)
-          handleClickOpen();
-        }else{
-          alert("Producto no existente.")
-        }
-      })
-    }else{
-      alert("Poner datos en campo buscar")
-    }
-  }
 
   return(
     <div className={classes.root}>
@@ -148,7 +133,7 @@ const ModuleProduct = (props) =>{
     </header>
 
     <DialogResultSearch
-      productSelect = {productSelect}
+      search = {search.input}
       open = {open}
       handleClickOpen={handleClickOpen}
       handleClose={handleClose}
@@ -163,11 +148,11 @@ const ModuleProduct = (props) =>{
     <div className={classes.espacio}>
       <Grid container direction="row" justify="flex-end" alignItems="baseline">
         <Filters
-          searchProductById={searchProductById}
+          setProductSelect={setProductSelect}
           handleClickOpen={handleClickOpen}
           optionAutocomplete={optionAutocomplete}
           search={search}
-          setProductSelect={setProductSelect}
+          handleChangeInput={handleChangeInput}
           Typeahead={Typeahead}
           handleChangeFilter={handleChangeFilter}
         />
