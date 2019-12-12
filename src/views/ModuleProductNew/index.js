@@ -77,7 +77,7 @@ const ModuleProduct = (props) =>{
     alert('Por favor inicie sesión para acceder')
     props.history.replace('/login')
     return null
-    }
+  }
 
   const handleChangeFilter = name => (event) => {
     if (event.target.value !== "") { //Si el seleccionar cambia de estado busco por estado seleccionado
@@ -119,6 +119,27 @@ const ModuleProduct = (props) =>{
     setOpen(false);
   };
 
+  const searchProductById = (id) =>{
+    console.log("id=",id);
+    
+    if (id) {
+      console.log(id);
+      
+      ProductController.getProductById(id)
+      .then(result=>{
+        if (result.code === id) {
+          console.log(result);
+          setProductSelect(result)
+          handleClickOpen();
+        }else{
+          alert("Producto no existente.")
+        }
+      })
+    }else{
+      alert("Poner datos en campo buscar")
+    }
+  }
+
   return(
     <div className={classes.root}>
 
@@ -142,6 +163,7 @@ const ModuleProduct = (props) =>{
     <div className={classes.espacio}>
       <Grid container direction="row" justify="flex-end" alignItems="baseline">
         <Filters
+          searchProductById={searchProductById}
           handleClickOpen={handleClickOpen}
           optionAutocomplete={optionAutocomplete}
           search={search}

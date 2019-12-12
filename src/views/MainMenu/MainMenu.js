@@ -60,10 +60,10 @@ function MainMenu(props){
         <Navbar />
         <Dashboard></Dashboard>
 
-
-        <div>
+        {/* Botones de compartir en redes sociales */}
+        {/* <div>
         <Facebook/>
-        </div>
+        </div> */}
 
 
         <footer>

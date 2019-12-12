@@ -2,7 +2,7 @@ import React from 'react';
 import { fade,makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import {FormControl,Paper,TextField,InputBase,Grid } from '@material-ui/core';
+import {FormControl,Paper,TextField,InputBase,Grid, IconButton } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import SearchIcon from '@material-ui/icons/Search';
@@ -55,14 +55,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Filters({setProductSelect,handleClickOpen,optionAutocomplete,search,handleChangeFilter,Typeahead}) {
+export default function Filters({searchProductById,setProductSelect,handleClickOpen,optionAutocomplete,search,handleChangeFilter,Typeahead}) {
   const classes = useStyles();
   const inputLabel = React.useRef(null);
+  const [copyTargetValue,setCopyTargetValue] = React.useState(); //Lo utilizo para guardar cada dato introducido y poder pasarlo al searchProductById
+ 
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
-  
+
+  const handleChangeCopy = (event) =>{
+    setCopyTargetValue(event.target.pa)
+  }
   return (
     <Paper style={{backgroundColor:'#fff',padding:10,marginTop:10}}>
     <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
@@ -80,14 +85,20 @@ export default function Filters({setProductSelect,handleClickOpen,optionAutocomp
             placeholder="Buscar..."
             variant="outlined" 
             InputProps={{
-              startAdornment: <InputAdornment position="start" ><SearchIcon style={{color:'#949494'}}></SearchIcon></InputAdornment>,
+              startAdornment: <InputAdornment position="start" style={{backgroundColor:"#f20"}}>
+                <IconButton onClick={()=>{searchProductById(copyTargetValue)}}>
+                  <SearchIcon style={{color:'#949494'}}/>
+                </IconButton>
+              </InputAdornment>,
             }}
-            fullWidth 
+            fullWidth
+            onChange={handleChangeCopy}
             onKeyUp = {
               event => {
                 if(event.keyCode === 13){ //Si es igual al enter ejecuto el dialog
                   optionAutocomplete.map(x=>{
                     if(x.code === event.target.value){
+                      console.log(event.target.value)
                       setProductSelect(x)
                       handleClickOpen()
                     }

@@ -60,8 +60,8 @@ function PaperComponent(props) {
 }
 
 export default function DialogResultSearch({productSelect,open,handleClickOpen,handleClose}) {
-  console.log("producto en dialog",productSelect);
-const classes = useStyles();
+  // console.log("producto en dialog",productSelect);
+  const classes = useStyles();
   const [age, setAge] = React.useState('');
   const [open2, setOpen2] = React.useState(false);
 

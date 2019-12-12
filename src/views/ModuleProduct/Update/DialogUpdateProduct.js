@@ -186,10 +186,9 @@ export default function DialogUpdateProduct(props) {
       >
         <DialogTitle id="form-dialog-title" alignItems = {"center"} >Modificar Producto</DialogTitle>
         <DialogContent>
-            <Grid container spacing = {1} justify = { "center" } className = { "grid"} >
-             <Grid item xs = {6} xl = {6} alignItems = {"center"} md = {3} justify-content = {'initial'} >
-
-                <TextField
+            <Grid container direction="column" justify="center" alignItems="center" >
+            <Grid item>
+            <TextField
                     id="type-product"
                     select  
                     label="Producto"
@@ -215,8 +214,10 @@ export default function DialogUpdateProduct(props) {
                     ))}
                     
                   </TextField>  
+            </Grid>
                   
-                  <TextField
+                  <Grid item>
+                    <TextField
                     
                   
                     id="Code"
@@ -229,10 +230,12 @@ export default function DialogUpdateProduct(props) {
                     variant="outlined"
                     disabled = "true"
 
-                  />              
+                  />   
+                  </Grid>           
                 
 
-                  <TextField
+                  <Grid item>
+                    <TextField
                     id="outlined-name"
                     label="Descripcion"
                     className={classes.textField}
@@ -241,7 +244,9 @@ export default function DialogUpdateProduct(props) {
                     margin="normal"
                     variant="outlined"
                   />
-                  <TextField
+                  </Grid>
+                  <Grid item>
+                                      <TextField
                     id="type-product"
                     select
                     label="Estado"
@@ -266,22 +271,24 @@ export default function DialogUpdateProduct(props) {
                     ))}
                     
                  </TextField>
-                </Grid> 
+                  </Grid>
             </Grid>
-            <DialogActions calssName = {classes.buttonsDialog}>
+        </DialogContent>
+<Grid container direction="row" justify="center" alignItems="flex-end" >
+            <Grid item>
           <Button  onClick = {updateProduct}color="primary">
             Modificar
           </Button>
+          </Grid>
+          <Grid item>
           <Button 
           onClick = {handleOpenDelete} color="primary">
             Eliminar
           </Button>
+          </Grid>
           <Button onClick={handleClose} color="primary">
             Cancelar
-          </Button>
-        </DialogActions>
-        </DialogContent>
-
+          </Button></Grid>
         
       </Dialog>
 
